@@ -31,13 +31,22 @@ define('COMP',59);
 define('LANGDINGPAGE',12);
 define('BDS',11);
 
-define('DB_DRIVER', 'mongodb');
-define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_DATABASE', 'admin');
-define('DB_PORT', '27017');
-define('DB_PREFIX', 'asdh1_');
+define('DB_DRIVER', 'mysqli');
+if(DB_DRIVER == 'mongodb') {
+    define('DB_HOSTNAME', 'localhost');
+    define('DB_USERNAME', 'root');
+    define('DB_PASSWORD', '');
+    define('DB_DATABASE', 'admin');
+    define('DB_PORT', '27017');
+    define('DB_PREFIX', 'asdh1_');
+}else{
+    define('DB_HOSTNAME', 'localhost');
+    define('DB_USERNAME', 'root');
+    define('DB_PASSWORD', '');
+    define('DB_DATABASE', 'admin');
+    define('DB_PORT', '3306');
+    define('DB_PREFIX', 'asdh1_');
+}
 // Register object.
 include_once(DIR_PUBLIC.'default_object.php');
 
