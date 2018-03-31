@@ -46,6 +46,7 @@ if(DB_DRIVER == 'mysqli') {
     //$query = $db->query("select Title,Photo,Address,CityID,DistrictID,Latitude,Longitude,ListingTypeName from listing where CityID = 1 limit 0,10000");
     $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
     var_dump($db);
+    die();
     $registry->set('db', $db);
 }
 if(DB_DRIVER == 'mongodb') {
