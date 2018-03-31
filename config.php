@@ -31,7 +31,7 @@ define('COMP',59);
 define('LANGDINGPAGE',12);
 define('BDS',11);
 
-define('DB_DRIVER', 'mysqli');
+define('DB_DRIVER', 'mysql');
 if(DB_DRIVER == 'mongodb') {
     define('DB_HOSTNAME', 'localhost');
     define('DB_USERNAME', 'root');
