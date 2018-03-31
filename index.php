@@ -43,7 +43,7 @@ $registry->set('objects', $objects);
 // Database
 if(DB_DRIVER == 'mysqli') {
 
-    $db = new DB("mysqli", "35.224.9.146", "rent_rooms", "ada$@#sf323", "rent_rooms");
+    $db = new DB("mysqli", "localhost", "rent_rooms", "ada$@#sf323", "rent_rooms");
     $query = $db->query("show databases");
     var_dump($query->rows);
     var_dump($db);
