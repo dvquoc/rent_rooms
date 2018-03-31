@@ -1,0 +1,56 @@
+.login-w .tab {
+    font-size: 28px;
+    margin-right: 15px;
+    padding-bottom: 15px;
+    margin: 0 15px 10px 0;
+    display: inline-block;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.login-w p,.login-w h2,.login-w label{
+    color:#fff;
+    text-align: center;
+}
+.login-html {
+    height: 100%;
+    border-radius: 10px;
+
+}
+.form-group .form-control {
+    border: none;
+    padding: 20px 20px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.1);
+    color: #fff !important;
+}
+.cen
+{
+    text-align: center;
+}
+.cenn{
+    padding: 7px 24px;
+}
+.login-w{
+    border-radius: 10px;
+    max-width: 450px;
+    position: relative;
+    background-color: rgba(40, 57, 101, 0.45);
+    padding: 30px;
+}
+.button-option-login{
+    color: #fff;
+}
+.button-option-login .btn-vline{
+    border-color: #fff;
+    padding: 7px 15px;
+    background-color: transparent;
+    color: #fff;
+}
+.button-option-login .or{
+    margin: 0px 30px;
+}
+.page-login{
+    margin: 40px auto;
+}

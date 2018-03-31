@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Editor Opencart 2.x</name>
+    <version>1.0</version>
+    <author>DVquoc -CHILI</author>
+    <link>chili.vn</link>
+    <code>Editor_Opencart_2.x_DV</code>
+    <file path="admin/view/template/*/*.tpl">
+        <operation>
+            <search regex="true"><![CDATA[(\$\(\'\#input-description\<\?php\secho\s{0,}\$language\[\'language_id\'\]\;\s{0,}\?\>\'\)\.summernote\(([^\n]*\n+)?\{\s{0,}([^\n]*\n+)?\s{0,}height\:\s{0,}\d{1,}\s{0,}([^\n]*\n+)?\}([^\n]*\n+)?\s{0,}\)\;)]]></search>
+            <add position="replace"><![CDATA[
+				var option_tinymce = {
+					selector: '#input-description<?php echo $language['language_id']; ?>',
+					language:'<?php global $registry;  echo $registry->get("language")->get('code');  ?>',
+					/*skin: 'light',*/
+					height:500,
+					app_default: 'cdv',
+					relative_urls: false,
+					remove_script_host: false,
+					document_base_url : "<?php echo HTTP_CATALOG; ?>",
+					plugin_url : "<?php echo HTTP_SERVER; ?>view/javascript/tinymce/plugins/",
+					plugins: [
+					  "imagetools advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+					  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+					  "save table contextmenu directionality emoticons template textcolor paste codesample example header"
+					],
+					setup: function(ed) {
+							ed.addContextToolbar('a', 'link unlink');
+					},
+					toolbar1: "undo redo imagetools newdocument cut copy paste pastetext searchreplace print ltr rtl spellchecker visualchars visualblocks nonbreaking code preview fullscreen",
+					toolbar2: "bullist numlist outdent indent blockquote link unlink imagetools example media table anchor removeformat insertdatetime hr  charmap emoticons template pagebreak restoredraft codesample",
+					toolbar3: "bold italic underline strikethrough subscript superscript forecolor backcolor alignleft aligncenter alignright alignjustify header fontselect fontsizeselect",
+					fontsize_formats: '8pt 9pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt',
+					document_app: "<?php echo DIR_APPLICATION; ?>",
+					verify_html: false,
+					forced_root_block : "p",
+				}
+
+				$('#input-description<?php echo $language['language_id']; ?>').before('<div id="myGrid<?php echo $language['language_id']; ?>"></div>');
+				var id<?php echo $language['language_id']; ?> = "input-description<?php echo $language['language_id']; ?>";
+				$('#myGrid<?php echo $language['language_id']; ?>').gridEditor({
+                        source_textarea: '#input-description<?php echo $language['language_id']; ?>',
+                        option_tinymce: option_tinymce,
+                });
+
+				$('#input-description<?php echo $language['language_id']; ?>').addClass('editor_chili');
+			]]></add>
+        </operation>
+    </file>
+</modification> 

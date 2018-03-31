@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'harmonia';
+    src: url('/public/assets/fonts/RV-Harmonia-Regular.eot');
+    src: url('/public/assets/fonts/RV-Harmonia-Regular.eot?#iefix') format('embedded-opentype'), url('/public/assets/fonts/RV-Harmonia-Regular.woff') format('woff'), url('/public/assets/fonts/RV-Harmonia-Regular.ttf') format('truetype');
+    font-weight: 400
+}
+@font-face {
+    font-family: 'harmonia';
+    src: url('/public/assets/fonts/RV-Harmonia-Light.eot');
+    src: url('/public/assets/fonts/RV-Harmonia-Light.eot?#iefix') format('embedded-opentype'), url('/public/assets/fonts/RV-Harmonia-Light.woff') format('woff'), url('/public/assets/fonts/RV-Harmonia-Light.ttf') format('truetype');
+    font-weight: 200
+}
+@font-face {
+    font-family: 'harmonia';
+    src: url('/public/assets/fonts/RV-Harmonia-SemiBold.eot');
+    src: url('/public/assets/fonts/RV-Harmonia-SemiBold.eot?#iefix') format('embedded-opentype'), url('/public/assets/fonts/RV-Harmonia-SemiBold.woff') format('woff'), url('/public/assets/fonts/RV-Harmonia-SemiBold.ttf') format('truetype');
+    font-weight: 500
+}
+@font-face {
+    font-family: 'harmonia';
+    src: url('/public/assets/fonts/RV-Harmonia-Bold.eot');
+    src: url('/public/assets/fonts/RV-Harmonia-Bold.eot?#iefix') format('embedded-opentype'), url('/public/assets/fonts/RV-Harmonia-Bold.woff') format('woff'), url('/public/assets/fonts/RV-Harmonia-Bold.ttf') format('truetype');
+    font-weight: 600
+}
+@font-face {
+    font-family: 'Tiempos';
+    src: url('/public/assets/fonts/TiemposHeadline-Medium.eot');
+    src: url('/public/assets/fonts/TiemposHeadline-Medium.eot?#iefix') format('embedded-opentype'), url('/public/assets/fonts/TiemposHeadline-Medium.woff') format('woff'), url('/public/assets/fonts/TiemposHeadline-Medium.ttf') format('truetype');
+    font-weight: 400
+}
+@font-face {
+    font-family: 'Tiempos';
+    src: url('/public/assets/fonts/TiemposHeadline-Regular.eot');
+    src: url('/public/assets/fonts/TiemposHeadline-Regular.eot?#iefix') format('embedded-opentype'), url('/public/assets/fonts/TiemposHeadline-Regular.woff') format('woff'), url('/public/assets/fonts/TiemposHeadline-Regular.ttf') format('truetype');
+    font-weight: 200
+}

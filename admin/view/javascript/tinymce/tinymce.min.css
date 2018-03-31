@@ -1,0 +1,22 @@
+.swicht_html .button{
+    padding: 10px 15px;
+    border: 1px solid #cacaca;
+    display: inline-block;
+    margin-bottom: -1px;
+    background: #fff;
+    color: #616161;
+    font-weight: 600;
+    margin-left: 5px;
+    cursor:pointer;
+}
+.swicht_html .button.active{
+    background: #eee;
+}
+.editor_chili{
+    border: 1px solid #cacaca!important;
+    background-color: #fff!important;
+    min-height: 500px;
+    border-radius: 0px;
+    width: 100%;
+    padding: 10px;
+}

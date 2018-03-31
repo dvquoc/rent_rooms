@@ -1,0 +1,85 @@
+
+/* phone contact */
+@-moz-keyframes animationSwing{
+    0% {
+        -moz-transform:  rotate(0deg) ;
+    }
+    20% {
+        -moz-transform:  rotate(25deg) ;
+    }
+    40% {
+        -moz-transform:  rotate(-15deg) ;
+    }
+    60% {
+        -moz-transform:  rotate(5deg) ;
+    }
+    80% {
+        -moz-transform:  rotate(-5deg) ;
+    }
+    100% {
+        -moz-transform:  rotate(0deg) ;
+    }
+}
+
+@-webkit-keyframes animationSwing {
+    0% {
+        -webkit-transform:  rotate(0deg) ;
+    }
+    20% {
+        -webkit-transform:  rotate(25deg) ;
+    }
+    40% {
+        -webkit-transform:  rotate(-15deg) ;
+    }
+    60% {
+        -webkit-transform:  rotate(5deg) ;
+    }
+    80% {
+        -webkit-transform:  rotate(-5deg) ;
+    }
+    100% {
+        -webkit-transform:  rotate(0deg) ;
+    }
+}
+
+@-o-keyframes animationSwing {
+    0% {
+        -o-transform:  rotate(0deg) ;
+    }
+    20% {
+        -o-transform:  rotate(25deg) ;
+    }
+    40% {
+        -o-transform:  rotate(-15deg) ;
+    }
+    60% {
+        -o-transform:  rotate(5deg) ;
+    }
+    80% {
+        -o-transform:  rotate(-5deg) ;
+    }
+    100% {
+        -o-transform:  rotate(0deg) ;
+    }
+}
+
+@-ms-keyframes animationSwing {
+    0% {
+        -ms-transform:  rotate(0deg) ;
+    }
+    20% {
+        -ms-transform:  rotate(25deg) ;
+    }
+    40% {
+        -ms-transform:  rotate(-15deg) ;
+    }
+    60% {
+        -ms-transform:  rotate(5deg) ;
+    }
+    80% {
+        -ms-transform:  rotate(-5deg) ;
+    }
+    100% {
+        -ms-transform:  rotate(0deg) ;
+    }
+}

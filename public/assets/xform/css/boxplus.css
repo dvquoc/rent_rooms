@@ -1,0 +1,183 @@
+
+.form-wrapper p.form-desc {
+  /* border-bottom: 1px solid #DADADA; */
+  padding: 10px 10px;
+  margin: 0px 10px;
+  display: block;
+  background-color: #8BC34A;
+  color: #fff;
+  border-radius: 3px;
+}
+
+
+.form-wrapper .form-ul {
+  margin: 0;
+  padding: 0;
+  padding: 20px 5px;
+}
+
+.form-wrapper .form-ul  li {
+    list-style: none outside none;
+    padding: 5px;
+	 margin-bottom: 10px;
+}
+
+.form-wrapper .form-ul  li .error-block {
+      color: #E89999;
+     display: block;
+     margin-bottom: 0;
+     margin-top: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.form-wrapper .form-ul  li .help-block {
+  color: #737373;
+  display: block;
+  margin-bottom: 0;
+  margin-top: 5px;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.form-wrapper .form-ul li.li-captcha span {
+    margin-left: 3px;
+}
+.form-wrapper .form-ul li.li-captcha span img {
+    margin-top: 1px;
+    vertical-align: middle;
+}
+.form-wrapper .form-ul  li label {
+    margin: 0 0 3px 0;
+    padding: 0;
+    display: block;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    /* text-transform: uppercase; */
+}
+.form-wrapper .form-ul  li label label{
+  font-weight: normal;
+}
+.form-wrapper .form-ul li input[type="file"] {
+    border: 1px solid #cccccc;
+    padding: 6px;
+    background-image: none;
+    color: #555;
+    height: 34px;
+    line-height: 1.428571429;
+    outline:0;
+    border-radius: 4px;
+}
+.form-wrapper .form-ul li input[type="text"], .form-wrapper .form-ul li input[type="password"] {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    padding: 7px;
+    background-image: none;
+    color: #555;
+    line-height: 1.428571429;
+    outline:0;
+    -webkit-transition: all .30s ease-in-out;
+    transition: all .30s ease-in-out;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    width: 100%;
+}
+
+.form-wrapper .form-ul li .address-wrapper .address-line{
+    margin-bottom: 8px;
+}
+.form-wrapper .form-ul li .address-wrapper input.street {
+    width: 63.3%;
+}
+.form-wrapper .form-ul li .address-wrapper input.city {
+    width: 31%;
+}
+.form-wrapper .form-ul li .address-wrapper input.state {
+    margin-left: 10px;
+    width: 31%;
+}
+.form-wrapper .form-ul li .address-wrapper input.zip {
+    width: 31%;
+}
+.form-wrapper .form-ul li .address-wrapper select.country {
+    margin-left: 10px;
+    width: 31%;
+}
+
+.form-wrapper .form-ul  li label abbr {
+    color: #f00;
+    font-size: 10px;
+    margin-left: 2px;
+}
+.form-wrapper .form-ul li .radio-wrapper label, .form-wrapper .form-ul li .checkbox-wrapper label, .form-wrapper .form-ul li .price-wrapper label {
+    font-weight: normal;
+}
+
+.form-wrapper .form-ul li .radio-wrapper label input, .form-wrapper .form-ul li .checkbox-wrapper label input, .form-wrapper .form-ul li .price-wrapper label input{
+   margin-left:3px;
+}
+
+.form-wrapper .form-ul li .date-wrapper input.day, .form-wrapper .form-ul li .date-wrapper input.month, .form-wrapper .form-ul li .date-wrapper input.year {
+    width: 75px;
+}
+
+.form-wrapper .form-ul li .time-wrapper input.hour, .form-wrapper .form-ul li .time-wrapper input.minute {
+    width: 75px;
+}
+
+.form-wrapper .form-ul li .time-wrapper select.ampm { min-width:60px; width:60px;}
+
+
+.form-wrapper .form-ul li select {
+     background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cccccc;
+	min-width:150px;
+	background-image: none;
+    color: #555;
+    padding: 7px;
+    outline:0;
+    -webkit-transition: all .30s ease-in-out;
+    transition: all .30s ease-in-out;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    height: 35px;
+  line-height: 15px;
+}
+
+.form-wrapper .form-ul li textarea {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    padding: 7px;
+    background-image: none;
+    height: 120px;
+    width: 100%;
+    outline:0;
+    -webkit-transition: all .30s ease-in-out;
+    transition: all .30s ease-in-out;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+.form-wrapper .form-ul li.li-submit {
+    margin-top: 15px;
+    text-align: center;
+}
+.form-wrapper .form-ul li.li-submit div.xform-submit {
+  background: #0567a7;
+  border: 2px solid #0567a7;
+  padding: 10px 25px 10px 25px;
+  color: #ffffff;
+  width: 100%;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.form-wrapper .form-ul li.li-submit div.xform-submit:hover {
+  color: #fff;
+  background-color: #0567a7;
+  border-color: #0567a7;
+}
+
+.form-wrapper .form-ul li input[type="text"]:focus, .form-wrapper .form-ul li input[type="password"]:focus, .form-wrapper .form-ul li textarea:focus, .form-wrapper .form-ul li select:focus {
+  
+}

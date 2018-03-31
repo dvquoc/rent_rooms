@@ -1,0 +1,91 @@
+.cont{
+    padding: 10px 10px;
+    background-color: #e1eaec;
+    margin-bottom: 7px;
+}
+.cont a{
+    color: #000;
+    font-size: 14px;
+}
+.tbl-price {
+    text-align: center;
+    color: #444444;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.benefit-tbl .fa {
+    color: #7daaef;
+    font-size: 18px;
+    margin-right: 5px;
+}
+.benefit-tbl .content {
+    color: #222222;
+    text-align: left;
+    margin: 0px 50px;
+}
+.benefit{
+    text-align:center;
+    margin: 10px 0;
+    padding: 20px 0px;
+}
+@media (max-width: 768px){
+    .benefit-tbl .content{
+        color: #222222;
+        text-align: center;
+        padding: 5px 0px !important;
+    }
+}
+
+
+.section-two-colum .column {
+    background-color: #47a04a;
+    text-align: right;
+    color: #fff;
+    padding: 20px 0;
+}
+.section-two-colum .column.column-chart {
+    position: relative;
+    text-align: left;
+    background-color:#3eb746;
+
+}
+.section-two-colum .column h3 {
+    color: #fff !important;
+}
+.section-two-colum .column.column-mobile .column-icon {
+    display: inline-block;
+    height: 72px;
+    width: 70px;
+    background-image: url(https://www.chili.vn/App_Themes/images/icon/device-005.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+.section-two-colum .column.column-chart .column-icon {
+    background-image: url(https://www.chili.vn/App_Themes/images/icon/char-004.png);
+    display: inline-block;
+    height: 72px;
+    width: 70px;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+.section-two-colum {
+    background-color: #47a04a;
+}
+
+.excerpt {
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+.section-two-colum .column h3 {
+    font-size: 1.600em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.section-two-colum .container-fluid{
+    padding: 0;
+}
+.section-two-colum .conn{
+    margin: 0 50px;
+}
