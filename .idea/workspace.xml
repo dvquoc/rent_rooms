@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e10a1fb-9ef0-4141-b7df-9cf5ad3668ce" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalog/controller/common/home.php" afterPath="$PROJECT_DIR$/catalog/controller/common/home.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -56,11 +56,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="config.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="725">
               <caret line="47" column="31" lean-forward="false" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/catalog/controller/common/home.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -295,6 +305,7 @@
         <option value="$PROJECT_DIR$/system/library/db/mysqli.php" />
         <option value="$PROJECT_DIR$/config.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/catalog/controller/common/home.php" />
       </list>
     </option>
   </component>
@@ -348,25 +359,25 @@
             <path>
               <item name="html" type="b2602c69:ProjectViewProjectNode" />
               <item name="html" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="catalog" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="html" type="b2602c69:ProjectViewProjectNode" />
+              <item name="html" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="catalog" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="html" type="b2602c69:ProjectViewProjectNode" />
+              <item name="html" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="catalog" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="common" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="html" type="b2602c69:ProjectViewProjectNode" />
               <item name="html" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="system" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="html" type="b2602c69:ProjectViewProjectNode" />
-              <item name="html" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="system" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="library" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="html" type="b2602c69:ProjectViewProjectNode" />
-              <item name="html" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="system" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="library" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="db" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -434,7 +445,7 @@
       <workItem from="1522377002291" duration="27491000" />
       <workItem from="1522471406273" duration="601000" />
       <workItem from="1522491449640" duration="1410000" />
-      <workItem from="1522507269641" duration="7855000" />
+      <workItem from="1522507269641" duration="8248000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1522508062333</created>
@@ -461,7 +472,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92453000" />
+    <option name="totallyTimeSpent" value="92846000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -504,14 +515,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/catalog/model/catalog/test.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/catalog/view/theme/default/template/common/header.tpl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
@@ -1017,6 +1020,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="725">
           <caret line="47" column="31" lean-forward="false" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalog/controller/common/home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
