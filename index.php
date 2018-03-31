@@ -44,7 +44,6 @@ $registry->set('objects', $objects);
 if(DB_DRIVER == 'mysqli') {
     //$db = new DB("mysqli", "124.158.14.30", "propzydeveloper", "DevPropzy2017!@#", "propzy_vietnam");
     //$query = $db->query("select Title,Photo,Address,CityID,DistrictID,Latitude,Longitude,ListingTypeName from listing where CityID = 1 limit 0,10000");
-    die("asdsad");
     $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
     var_dump($db);
     die();
