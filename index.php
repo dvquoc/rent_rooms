@@ -42,7 +42,7 @@ $registry->set('objects', $objects);
 
 // Database
 if(DB_DRIVER == 'mysqli') {
-    $test_connect = new \mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, '3306');
+    $test_connect = new DB("mysqli", "35.224.9.146", "rent_rooms", "ada$@#sf323", "rent_rooms");
     var_dump($test_connect);
     die();
     //$db = new DB("mysqli", "124.158.14.30", "propzydeveloper", "DevPropzy2017!@#", "propzy_vietnam");
