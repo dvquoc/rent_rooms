@@ -42,7 +42,7 @@ $registry->set('objects', $objects);
 
 // Database
 if(DB_DRIVER == 'mysqli') {
-    var_dump(DB_HOSTNAME. DB_USERNAME. DB_PASSWORD. DB_DATABASE. '3306')
+    var_dump(DB_HOSTNAME. DB_USERNAME. DB_PASSWORD. DB_DATABASE. '3306'); die();
     $test_connect = new \mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, '3306');
     var_dump($test_connect);
     die();
