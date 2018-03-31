@@ -1,5 +1,6 @@
 <?php
-phpinfo(); die();
+//phpinfo();
+die("dvquoc");
 // Version
 define('VERSION', '2.0.3.1');
 // Configuration
