@@ -42,8 +42,8 @@ if(DB_DRIVER == 'mongodb') {
 }else{
     define('DB_HOSTNAME', 'localhost');
     define('DB_USERNAME', 'root');
-    define('DB_PASSWORD', '');
-    define('DB_DATABASE', 'admin');
+    define('DB_PASSWORD', 'root');
+    define('DB_DATABASE', 'rent_rooms');
     define('DB_PORT', '3306');
     define('DB_PREFIX', 'asdh1_');
 }
