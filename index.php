@@ -43,8 +43,8 @@ $registry->set('objects', $objects);
 // Database
 if(DB_DRIVER == 'mysqli') {
 
-    $db = new DB("mysqli", "localhost", "propzydeveloper", "DevPropzy2017!@#", "propzy_vietnam");
-    $query = $db->query("select Title,Photo,Address,CityID,DistrictID,Latitude,Longitude,ListingTypeName from listing where CityID = 1 limit 0,10000");
+    $db = new DB("mysqli", "35.224.9.146", "rent_rooms", "ada$@#sf323", "rent_rooms");
+    $query = $db->query("show databases");
     var_dump($query->rows);
     var_dump($db);
     die();

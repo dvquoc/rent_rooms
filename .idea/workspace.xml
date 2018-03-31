@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e10a1fb-9ef0-4141-b7df-9cf5ad3668ce" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,11 +26,9 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-              <folding>
-                <marker date="1522521364130" expanded="true" signature="881:1004" ph="select Title... listing" />
-              </folding>
+            <state relative-caret-position="700">
+              <caret line="46" column="39" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -434,7 +431,7 @@
       <workItem from="1522377002291" duration="27491000" />
       <workItem from="1522471406273" duration="601000" />
       <workItem from="1522491449640" duration="1410000" />
-      <workItem from="1522507269641" duration="7410000" />
+      <workItem from="1522507269641" duration="7622000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1522508062333</created>
@@ -461,7 +458,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92008000" />
+    <option name="totallyTimeSpent" value="92220000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1012,11 +1009,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding>
-            <marker date="1522521364130" expanded="true" signature="881:1004" ph="select Title... listing" />
-          </folding>
+        <state relative-caret-position="700">
+          <caret line="46" column="39" lean-forward="false" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
