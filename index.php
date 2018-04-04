@@ -8,12 +8,6 @@ if (is_file('config.php')) {
 
 require 'vendor/autoload.php';
 
-// Install
-if (!defined('DIR_APPLICATION')) {
-	header('Location: install/index.php');
-	exit;
-}
-
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
@@ -23,18 +17,6 @@ $registry = new Registry();
 // Loader
 $loader = new Loader($registry);
 $registry->set('load', $loader);
-
-// Config
-$config = new Config();
-$registry->set('config', $config);
-
-// Alias
-$alias = new Alias();
-$registry->set('alias', $alias);
-
-// object
-$objects = new Objects();
-$registry->set('objects', $objects);
 
 // Dom
 //$domNode = new simple_html_dom();
@@ -166,90 +148,11 @@ $registry->set('response', $response);
 $session = new Session();
 $registry->set('session', $session);
 
-// Language Detection
-$languages = array();
-$data_languages =array();
-$data_languages[0]['languages_id'] = 2;
-$data_languages[0]['name'] = 'Việt Nam';
-$data_languages[0]['code'] = 'vi';
-$data_languages[0]['locale'] = 'vi';
-$data_languages[0]['image'] = 'vn.png';
-$data_languages[0]['directory'] = 'vietnamese';
-$data_languages[0]['order'] = 1;
-$data_languages[0]['status'] = 1;
-
-foreach ($data_languages as $result) {
-	$languages[$result['code']] = $result;
-}
-
-if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
-	$code = $session->data['language'];
-} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages)) {
-	$code = $request->cookie['language'];
-} else {
-	$detect = '';
-
-	if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
-		$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
-
-		foreach ($browser_languages as $browser_language) {
-			foreach ($languages as $key => $value) {
-				if ($value['status']) {
-					$locale = explode(',', $value['locale']);
-
-					if (in_array($browser_language, $locale)) {
-						$detect = $key;
-						break 2;
-					}
-				}
-			}
-		}
-	}
-
-	$code = $detect ? $detect : $config->get('config_language');
-}
-
-if (!isset($session->data['language']) || $session->data['language'] != $code) {
-	$session->data['language'] = $code;
-}
-
-if (!isset($request->cookie['language']) || $request->cookie['language'] != $code) {
-	setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $request->server['HTTP_HOST']);
-}
-
-$config->set('config_language_id', $languages[$code]['language_id']);
-$config->set('config_language', $languages[$code]['code']);
-
-// Language
-$language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['directory']);
-$registry->set('language', $language);
-
-
-foreach($oject_alias as $key=>$vaule){
-	$config->set($key, $vaule);
-}
-
-// Set các đối tượng alias vào object
-foreach($default_object_project as $key=>$object){
-	$objects->set($key,$object);
-}
-
 // Document
 $registry->set('document', new Document());
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
-
-// Event
-$event = new Event($registry);
-$registry->set('event', $event);
-
-$events =array();
-
-foreach ($events as $result) {
-	$event->register($result['trigger'], $result['action']);
-}
 
 // Front Controller
 $controller = new Front($registry);
