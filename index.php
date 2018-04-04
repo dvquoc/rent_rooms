@@ -18,6 +18,10 @@ $registry = new Registry();
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Config
+$config = new Config();
+$registry->set('config', $config);
+
 // Dom
 //$domNode = new simple_html_dom();
 //$registry->set('domNode', $domNode);
