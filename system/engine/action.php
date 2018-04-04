@@ -58,11 +58,10 @@ final class Action {
 			include_once($this->file);
 
 			$class = $this->class;
-
 			$controller = new $class($registry);
 
 			if (is_callable(array($controller, $this->method))) {
-				return call_user_func(array($controller, $this->method), $this->args);
+                return call_user_func(array($controller, $this->method), $this->args);
 			} else {
 				return false;
 			}

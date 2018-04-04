@@ -8,7 +8,6 @@ final class Loader {
 
 	public function controller($route, $args = array()) {
 		$action = new Action($route, $args);
-
 		return $action->execute($this->registry);
 	}
 
