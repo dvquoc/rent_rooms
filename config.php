@@ -25,7 +25,7 @@ define('DIR_MODIFICATION', DIR_HOME.'/system/modification/');
 define('DIR_LOGS', DIR_HOME.'/system/logs/');
 
 
-define('DB_DRIVER', 'mysql');
+define('DB_DRIVER', 'mongodb');
 if(DB_DRIVER == 'mongodb') {
     define('DB_HOSTNAME', 'localhost');
     define('DB_USERNAME', 'root');
