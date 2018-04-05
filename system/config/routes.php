@@ -7,5 +7,5 @@
  */
 $router =  $registry->get('routes');
 $router->add(['/tim-kiem-theo-ban-do','find/map']);
-$router->add(['/test/{id}','find/map/test']);
+$router->add(['/tim-kiem-theo-list','find/list']);
 

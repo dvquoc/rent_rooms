@@ -41,7 +41,7 @@
                     <ul class="nav navbar-nav menu-nav">
                         <li><a href="/">Trang chủ</a></li>
                         <li><a href="<?php echo $menu_map; ?>">Tìm theo bản đồ</a></li>
-                        <li><a href="<?php echo $test; ?>">Test</a></li>
+                        <li><a href="<?php echo $list; ?>">Test</a></li>
                     </ul>
                 </div>
             </nav>

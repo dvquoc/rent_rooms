@@ -257,6 +257,7 @@ class ControllerUserUserPermission extends Controller {
 	}
 
 	protected function getForm() {
+        $this->load->language('user/user_group');
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -335,6 +336,9 @@ class ControllerUserUserPermission extends Controller {
 			'common/logout',
 			'common/forgotten',
 			'common/reset',
+			'common/column_left',
+			'common/menu',
+			'common/profile',
 			'error/not_found',
 			'error/permission',
 			'common/footer',
@@ -357,9 +361,9 @@ class ControllerUserUserPermission extends Controller {
 			$part = explode('/', dirname($file));
 
 			$permission = end($part) . '/' . basename($file, '.php');
-
 			if (!in_array($permission, $ignore)) {
-				$data['permissions'][] = $permission;
+				$data['permissions']['permissions'][] = $permission;
+				$data['permissions']['name'][] = $this->language->get($permission) ? $this->language->get($permission): $permission;
 			}
 		}
 

@@ -21,4 +21,13 @@ $_['entry_modify']     = 'Quyền Được sửa:';
 $_['error_permission'] = 'Cảnh báo: Bạn không được phép sửa đổi các nhóm người sử dụng!';
 $_['error_name']       = 'Tên Nhóm phải lớn hơn 3 và nhỏ hơn 64 ký tự!';
 $_['error_user']       = 'Cảnh báo:Không thể xóa nhóm này, vì hiện đang có %s Tài khoản!';
+
+
+$_['catalog/category']       = 'Danh mục';
+$_['catalog/information']       = 'Quản lý thông tin';
+$_['common/filemanager']       = 'Hình ảnh';
+$_['user/user']       = 'Danh sách người dùng';
+$_['design/banner']       = 'Quảng cáo';
+$_['user/user_permission']       = 'Phân quyền';
+$_['setting/setting']       = 'Cài đặt';
 ?>

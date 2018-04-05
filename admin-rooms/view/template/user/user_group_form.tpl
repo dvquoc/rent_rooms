@@ -39,7 +39,7 @@
             <div class="col-sm-12">
               <div class="well well-sm" style="padding:10px 20px 0px 20px;">
                   <div class="row">
-                        <?php foreach ($permissions as $permission) { ?>
+                        <?php foreach ($permissions['permissions'] as $key => $permission) { ?>
                         <div class="col-md-3">
                                 <div class="row" style="box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05); margin-bottom: 10px; border: 1px solid #eee; margin-right: -10px;  margin-left: -10px; border-radius: 3px;">
                                      <div class="inner-item">
@@ -62,7 +62,7 @@
                                               </label>
                                          </div>
                                          <div class="col-md-12 text-center" style="background-color: #f5f5f5; border-top: 1px solid #eee;  padding-top: 15px; padding-bottom: 15px;">
-                                             <b><?php echo $permission; ?></b>
+                                             <b><?php echo $permissions['name'][$key]; ?></b>
                                          </div>
                                      </div>
                                 </div>
