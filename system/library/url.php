@@ -9,28 +9,25 @@ class Url {
 		$this->ssl = $ssl;
 	}
 
-	public function addRewrite($rewrite) {
-		$this->rewrite[] = $rewrite;
-	}
-
-	public function link($route, $args = '', $secure = false) {
-
+	public function link($link_seo, $args = array(), $secure = false) {
 		if (!$secure) {
 			$url = $this->domain;
 		} else {
 			$url = $this->ssl;
 		}
+		$url .=  $link_seo;
 
-		$url .= 'index.php?route=' . $route;
-
-		if ($args) {
-			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+		if (!empty($args)) {
+		    $query ='';
+		    foreach ($args as $segment=>$value){
+		        if(!empty($segment)){
+                    $query.=$segment.'='.$value.'&';
+                }else{
+		            break;
+                }
+            }
+            $url .= $query != '' ? '?'. $query : '';
 		}
-
-		foreach ($this->rewrite as $rewrite) {
-			$url = $rewrite->rewrite($url);
-		}
-
 		return $url;
 	}
 }

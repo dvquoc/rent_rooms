@@ -1,26 +1,6 @@
 <footer>
-
   <div class="suport-footer">
     <div class="container">
-      <div class="row">
-          <div class="col-md-4">
-            <h3 class="title-footer hidden"><span>Thông tin</span></h3>
-            <div class="logo-footer row">
-              <div class="col-md-4"><img style="background-color: #fff;border-radius: 3px;" src="/image/cache/catalog/doi_tac/logo175x150px-150x100.png" alt="RedBull" class="img-responsive"></div>
-              <div class="col-md-4"><img style="background-color: #fff;border-radius: 3px;" src="/image/cache/catalog/doi_tac/LogoVinDs-150x100.png" alt="RedBull" class="img-responsive"></div>
-              <div class="col-md-4"><img style="background-color: #fff;border-radius: 3px;" src="/image/cache/catalog/doi_tac/vinhomes-150x100.png" alt="RedBull" class="img-responsive"></div>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="address">
-              <div class="title-company">
-                <h3 class="text-left">VIN HOME GROUP</h3>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-            </div>
-          </div>
-
-      </div>
       <div class="row">
         <div class="col-md-6">
           <p><i class="fa fa-home"></i> LA-01.05 Lexington, 67 Mai Chí Thọ, Quận 2, TP. Hồ Chí Minh</p>

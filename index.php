@@ -88,6 +88,8 @@ if($setting && false) {
 $config->set('config_url', HTTP_SERVER);
 $config->set('config_ssl', HTTPS_SERVER);
 
+// Set seo
+$config->set('config_seo_url', 1);
 
 // Url
 $url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));
@@ -164,8 +166,13 @@ $controller = new Front($registry);
 // Maintenance Mode
 //$controller->addPreAction(new Action('common/maintenance'));
 
+// router
+$routes = new Routes();
+$registry->set('routes', $routes);
+require_once(DIR_SYSTEM.'config/'. 'routes.php');
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));
+
 
 // Router
 if (isset($request->get['route'])) {

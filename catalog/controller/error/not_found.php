@@ -1,16 +1,14 @@
 <?php
 class ControllerErrorNotFound extends Controller {
 	public function index() {
-		$this->load->language('error/not_found');
-
 		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle("404 Not Found");
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
+			'text' => 'Về trang chủ',
 			'href' => $this->url->link('common/home')
 		);
 
@@ -30,25 +28,20 @@ class ControllerErrorNotFound extends Controller {
 			}
 
 			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
+				'text' => "Lỗi 404",
 				'href' => $this->url->link($route, $url, $this->request->server['HTTPS'])
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = "Lỗi 404";
 
-		$data['text_error'] = $this->language->get('text_error');
+		$data['text_error'] = 'Trang bạn không tìm thấy';
 
-		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] ='Tiếp tục';
 
 		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 
 		$data['continue'] = $this->url->link('common/home');
-
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 

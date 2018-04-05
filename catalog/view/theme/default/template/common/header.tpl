@@ -27,8 +27,7 @@
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css"/>
     <link href="/public/assets/css/amination.css" rel="stylesheet">
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet">
-    <link href="/public/assets/css/post_style.css" rel="stylesheet">
-    <div class="menu-main hidden">
+    <div class="menu-main">
             <nav id="menu-main" class="navbar navbar-inverse">
                 <div class="container">
                     <div class="navbar-header">
@@ -41,6 +40,8 @@
                     </div>
                     <ul class="nav navbar-nav menu-nav">
                         <li><a href="/">Trang chủ</a></li>
+                        <li><a href="<?php echo $menu_map; ?>">Tìm theo bản đồ</a></li>
+                        <li><a href="<?php echo $test; ?>">Test</a></li>
                     </ul>
                 </div>
             </nav>
