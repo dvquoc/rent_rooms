@@ -16,7 +16,7 @@ class ControllerFindMap extends Controller {
 			$this->response->setOutput($this->load->view('default/template/common/test.tpl', $data));
 		}
 	}
-	public function test($id){
-	    var_dump($id);
+	public function test($data){
+	    var_dump($data['id']);
     }
 }

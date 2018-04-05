@@ -9,7 +9,7 @@ class ControllerCommonSeoUrl extends Controller {
 
             if($router_define && $this->config->get(config_seo_url)) {
                 $this->request->get['route'] = $router_define['action'];
-                $args = $router_define['action'];
+                $args = $router_define['params'];
             } else {
                 $this->request->get['route'] = 'error/not_found';
             }
