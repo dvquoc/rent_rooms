@@ -52,7 +52,7 @@
         }
     </style>
   <ul id="list-left" class="pull-left" style="margin-left: 250px; list-style-type: none; padding: 0px; margin-bottom: 0px;">
-      <li><a href="/"><b style="text-transform: uppercase; font-weight: bold; color: #000;  font-size: 24px;"><img src="/image/logo.png" height="50px"></b></a></li>
+      <li><a href="/"><b style="text-transform: uppercase; font-weight: bold; color: #000;  font-size: 24px;">Conphong.com</b></a></li>
   </ul>
   <ul class="nav pull-right">
     <li><a href="<?php echo $logout; ?>"><span class="hidden-xs hidden-sm hidden-md"><?php echo $text_logout; ?></span> <i class="fa fa-sign-out fa-lg"></i></a></li>
