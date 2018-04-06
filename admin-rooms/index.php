@@ -15,6 +15,9 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+// Include config;
+require_once(DIR_SYSTEM . 'config/contans.php');
+
 // Registry
 $registry = new Registry();
 
@@ -59,16 +62,9 @@ if(DB_DRIVER == 'mongodb') {
     */
 }
 // Settings
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
-
-foreach ($query->rows as $setting) {
-	if (!$setting['serialized']) {
-		$config->set($setting['key'], $setting['value']);
-	} else {
-		$config->set($setting['key'], unserialize($setting['value']));
-	}
+foreach ($configs as $key => $setting) {
+    $config->set($key, $setting['value']);
 }
-
 // Loader
 $loader = new Loader($registry);
 $registry->set('load', $loader);
@@ -147,6 +143,9 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 // User
 $registry->set('user', new User($registry));
+
+// Currency
+$registry->set('Currency', new Currency($registry));
 
 // Front Controller
 $controller = new Front($registry);

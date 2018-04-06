@@ -172,15 +172,4 @@ $_['tab_voucher_history']     = 'Lịch sử chứng từ';
 $_['tab_recurring']           = 'Thanh Toán Định Kỳ';
 $_['tab_activity']            = 'Hoạt động gần đây';
 $_['tab_log']                 = 'Bản ghi lịch sử';
-
-
-// Error
-$_['error_upload_1']          = 'Cảnh báo: Tệp tin được tải lên vượt quá qui định trong tệp  php.ini!';
-$_['error_upload_2']          = 'Cảnh báo: Tệp tin được tải lên vượt quá qui định đã được xác định trong mã HTML!';
-$_['error_upload_3']          = 'Cảnh báo: Tệp tin chỉ có một phần đã được tải lên!';
-$_['error_upload_4']          = 'Cảnh báo: Không tải được!';
-$_['error_upload_6']          = 'Cảnh báo: Không có thư mục!';
-$_['error_upload_7']          = 'Cảnh báo: Không thể ghi tập tin vào đĩa!';
-$_['error_upload_8']          = 'Cảnh báo: Tệp tin bị ngừng do các thành phần khác!';
-$_['error_upload_999']        = 'Cảnh báo: Lỗi mã nguồn!';
 ?>

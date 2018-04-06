@@ -10,10 +10,10 @@ class ControllerFindMap extends Controller {
         $data['listing'] = $this->model_find_map->regionListing($data['region']);
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/test.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/test.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/map.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/map.tpl', $data));
 		} else {
-			$this->response->setOutput($this->load->view('default/template/common/test.tpl', $data));
+			$this->response->setOutput($this->load->view('default/template/common/map.tpl', $data));
 		}
 	}
 	public function test($data){
