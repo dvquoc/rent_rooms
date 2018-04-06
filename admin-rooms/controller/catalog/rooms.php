@@ -18,11 +18,11 @@ class ControllerCatalogRooms extends Controller {
 				$this->request->post['rooms_images']=array();
 
 			$this->model_catalog_rooms->addRooms($this->request->post);
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = "Thêm thành công";
 
             $url = http_build_query(array_diff_key($this->request->get, ['route'=>'']));
 
-			$this->response->redirect($this->url->link('catalog/information', $url, 'SSL'));
+			$this->response->redirect($this->url->link('catalog/rooms', $url, 'SSL'));
 		}
 
 		$this->getForm();
@@ -33,37 +33,18 @@ class ControllerCatalogRooms extends Controller {
         $this->document->setTitle("Chỉnh sửa phòng trọ");
 
         $this->load->public_model('catalog/rooms');
-
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            if(empty($this->request->post['room_images']))
-                $this->request->post['room_images']=array();
-            $this->model_catalog_room->editInformation($this->request->get['room_id'], $this->request->post);
+            $this->request->post['images'] = serialize($this->request->post['images']);
+            if(empty($this->request->post['images']))
+                $this->request->post['images']=array();
+
+            $this->model_catalog_rooms->editRooms($this->request->get['room_id'], $this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $url = '';
-
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-
-            if (isset($this->request->get['filter_category_id'])) {
-                $url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
-            }
-
-            $url .= '&object_type=' . $this->objects->object_type;
-
-            $this->response->redirect($this->url->link('catalog/room', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            $url = http_build_query(array_diff_key($this->request->get, ['route'=>'','room_id'=>'']));
+            $this->response->redirect($this->url->link('catalog/rooms',$url, 'SSL'));
         }
-
         $this->getForm();
     }
 
@@ -202,18 +183,6 @@ class ControllerCatalogRooms extends Controller {
         if (isset($this->error['error_name']))
             $data['error_name'] = $this->error['error_name'];
 
-        $data['error_description'] = array();
-        if (isset($this->error['description']))
-            $data['error_description'] = $this->error['description'];
-
-        $data['error_meta_title'] = array();
-        if (isset($this->error['meta_title']))
-            $data['error_meta_title'] = $this->error['meta_title'];
-
-        $data['error_keyword'] = '';
-        if (isset($this->error['keyword']))
-            $data['error_keyword'] = $this->error['keyword'];
-
         $url = http_build_query(array_diff_key($this->request->get, ['route'=>'']));
 
         if (!isset($this->request->get['room_id'])) {
@@ -234,50 +203,26 @@ class ControllerCatalogRooms extends Controller {
                 if(in_array($col, $array_fomat_txt))
                     $data['txt_'.$col] = format_currency($vaule);
             }
-
         }
         $data['token'] = $this->session->data['token'];
 
-        // Main image
-        if (isset($this->request->post['image'])) {
-            $data['image'] = $this->request->post['image'];
-        } elseif (!empty($room_info) && is_file(DIR_IMAGE . $room_info['image'])) {
-            $data['image'] = $room_info['image'];
-        } else {
-            $data['image'] = 'no_image.png';
-        }
-
         $this->load->model('tool/image');
-        $data['thumb'] = $this->model_tool_image->resize($data['image'], 100, 100);
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         // Images list thumb
-        if (isset($this->request->post['room_images'])) {
-            $room_images = $this->request->post['room_images'];
-        } elseif (isset($room_info['room_images'])) {
-            $room_images = unserialize($room_info['room_images']);
-        } else {
-            $room_images = array();
-        }
+        $room_images = unserialize($room_info['images']);
+        if (isset($this->request->post['images']))
+            $room_images = $this->request->post['images'];
+
         $data['room_images'] = array();
         foreach ($room_images as $room_image) {
-            if (is_file(DIR_IMAGE . $room_image)) {
+            $image = 'no_image.png';
+            if (is_file(DIR_IMAGE . $room_image))
                 $image = $room_image;
-            } else {
-                $image = 'no_image.png';
-            }
             $data['room_images'][] = array(
                 'image'      => $image,
                 'thumb'      => $this->model_tool_image->resize($image, 100, 100),
             );
-        }
-
-        if (isset($this->request->post['sort_order'])) {
-            $data['sort_order'] = $this->request->post['sort_order'];
-        } elseif (!empty($room_info)) {
-            $data['sort_order'] = $room_info['sort_order'];
-        } else {
-            $data['sort_order'] = '';
         }
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -287,27 +232,22 @@ class ControllerCatalogRooms extends Controller {
     }
 
 	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'catalog/information')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+
+		if (!$this->user->hasPermission('modify', 'catalog/rooms')) {
+			$this->error['warning'] = "Không có quyền chỉnh sửa";
 		}
 
-		foreach ($this->request->post['information_description'] as $language_id => $value) {
-			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 64)) {
-				$this->error['title'][$language_id] = $this->language->get('error_title');
-			}
+		if(empty($this->request->post['name']))
+            $this->error['error_name'] = "Tiêu đề không được để trống";
 
-			if (utf8_strlen($value['description']) < 3) {
-				$this->error['description'][$language_id] = $this->language->get('error_description');
-			}
+        if(empty($this->request->post['address']))
+            $this->error['address'] = "Địa chỉ không được để trống";
 
-			if ((utf8_strlen($value['meta_title']) < 3) || (utf8_strlen($value['meta_title']) > 255)) {
-				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
-			}
-		}
+        if(empty($this->request->post['lat']))
+            $this->error['lat'] = "Kinh độ không được để trống";
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
-		}
+        if(empty($this->request->post['lng']))
+            $this->error['lng'] = "Vĩ độ không được để trống";
 
 		return !$this->error;
 	}

@@ -25,9 +25,11 @@ $_['error_user']       = 'Cảnh báo:Không thể xóa nhóm này, vì hiện �
 
 $_['catalog/category']       = 'Danh mục';
 $_['catalog/information']       = 'Quản lý thông tin';
-$_['common/filemanager']       = 'Hình ảnh';
-$_['user/user']       = 'Danh sách người dùng';
+$_['common/filemanager']       = 'Quảng lý hình ảnh';
+$_['user/user']       = 'Quản lý người dùng';
 $_['design/banner']       = 'Quảng cáo';
-$_['user/user_permission']       = 'Phân quyền';
+$_['user/user_permission']       = 'Phân quyền người dùng';
 $_['setting/setting']       = 'Cài đặt';
+
+$_['catalog/rooms']       = 'Quản lý phòng trọ';
 ?>

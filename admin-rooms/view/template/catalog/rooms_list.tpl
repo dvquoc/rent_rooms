@@ -217,18 +217,19 @@
 </div>
 <script type="text/javascript"><!--
     $('#button-filter').on('click', function() {
-        var url = '<?php echo $action_fitler ; ?>';
+        var url = '<?php echo $action_fitler ; ?>&';
         var parts = [];
         var flag = false;
         $.each(params,function (key , item) {
-            if(item[0].trim()!=0) {
+            if(item[0].trim().length!=0) {
                 parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(item[0]));
                 flag = true;
             }
         });
         if(flag)
             url += parts.join('&');
-        location = url;
+
+        //location = url;
     });
     //--></script>
 <?php echo $footer; ?>

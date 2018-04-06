@@ -339,6 +339,7 @@ class ControllerUserUserPermission extends Controller {
 			'common/column_left',
 			'common/menu',
 			'common/profile',
+            'part/breadcrum',
 			'error/not_found',
 			'error/permission',
 			'common/footer',

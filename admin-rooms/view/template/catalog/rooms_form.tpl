@@ -38,25 +38,21 @@
                                           <button type="button" onclick="addImage();" title="" class="add-image pull-right">Thêm ảnh [+]</button>
                                       </div>
                                       <div id="img-list" class="col-md-12">
-                                          <div class="img-main pull-left">
-                                              <a href="" style="border:2px solid #27c2f0; margin-right: 3px" id="thumb-image" data-toggle="image" class="img-thumbnail">
-                                                  <img width="100%" class="img-resposive" src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />
-                                              </a>
-                                              <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
-                                          </div>
                                           <div class="img">
                                               <?php $image_row = 0; ?>
-                                              <?php if($information_images) { ?>
-                                              <?php foreach($information_images as $key=>$item){ ?>
-                                              <div class="item-image" id="item-<?php echo $key; ?>">
-                                                  <a href="" style="border: 3px solid #e4e4e4" id="thumb-image<?php echo $key; ?>" data-toggle="image" class="img-thumbnail">
-                                                      <img width="100%" src="<?php echo $item['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />
-                                                  </a>
-                                                  <input type="hidden" name="information_images[<?php echo $key; ?>]" value="<?php echo $item['image']; ?>" id="input-image<?php echo $key; ?>" />
-                                                  <button type="button" onclick="$('#item-<?php echo $key; ?>').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>
+                                              <div class="row">
+                                                  <?php if($room_images) { ?>
+                                                          <?php foreach($room_images as $key=>$item){ ?>
+                                                              <div class="item-image col-md-3" id="item-<?php echo $key; ?>">
+                                                                  <a href="" style="border: 3px solid #e4e4e4" id="thumb-image<?php echo $key; ?>" data-toggle="image" class="img-thumbnail">
+                                                                      <img width="100%" src="<?php echo $item['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />
+                                                                  </a>
+                                                                  <input type="hidden" name="images[<?php echo $key; ?>]" value="<?php echo $item['image']; ?>" id="input-image<?php echo $key; ?>" />
+                                                                  <button type="button" onclick="$('#item-<?php echo $key; ?>').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>
+                                                              </div>
+                                                          <?php $image_row ++;  } ?>
+                                                  <?php } ?>
                                               </div>
-                                              <?php $image_row ++;  } ?>
-                                              <?php } ?>
                                           </div>
                                       </div>
                                   </div>
@@ -133,11 +129,13 @@
                                               <div class="col-md-4 item">
                                                   <div class="feature">
                                                       <b>Lượt xem: </b> <?php echo $view; ?> Lượt
+                                                      <input name="view" class="hidden" value="<?php echo $view; ?>">
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature">
                                                       <b>Gọi liên hệ: </b> <?php echo $call; ?> lần
+                                                      <input name="call" class="hidden" value="<?php echo $call; ?>">
                                                   </div>
                                               </div>
                                           </div>
@@ -199,7 +197,7 @@
                                           <div class="form-group">
                                               <label class="col-sm-12">Mã chủ phòng</label>
                                               <div class="col-md-12">
-                                                  <input type="text" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
+                                                  <input type="text" class="form-control" name="master_id" value="<?php echo $master_id; ?>" >
                                               </div>
                                           </div>
                                       </div>
@@ -307,57 +305,27 @@
 </script>
 <script type="text/javascript">
     var map= new google.maps.Map(document.getElementById('map-address'), {
-        center: {lat: <?php echo $lat; ?>, lng: <?php echo $lng; ?>},
+        center: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
         zoom: 16
     });
     var marker = new google.maps.Marker({
-        position: {lat: <?php echo $lat; ?>, lng: <?php echo $lng; ?>},
+        position: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
         map: map,
         title: '<?php echo $address;  ?>'
     });
 
     var image_row = <?php echo $image_row; ?>;
     function addImage() {
-      html  = '<div class="item-image" id="item-' + image_row + '">';
+      html  = '<div class="item-image col-md-3" id="item-' + image_row + '">';
         html  += '<a href="" style="border: 1px solid #e4e4e4" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail">';
           html  += '<img width="100%" src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />';
         html  += '</a>';
-        html  += '<input type="hidden" name="information_images[' + image_row + ']" value="" id="input-image' + image_row + '" />';
+        html  += '<input type="hidden" name="images[' + image_row + ']" value="" id="input-image' + image_row + '" />';
         html  += '<button type="button" onclick="$(\'#item-' + image_row + '\').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>';
       html  += '</div>';
-
-      $('#img-list .img').append(html);
-
+      $('#img-list .img .row').append(html);
       image_row++;
     }
-    <?php if(isset($information_tags)) { ?>
-        $('input[name=\'tag\']').autocomplete({
-          'source': function(request, response) {
-            $.ajax({
-              url: '<?php echo $tag_autocomplete;  ?>',
-              dataType: 'json',
-              success: function(json) {
-                response($.map(json, function(item) {
-                  return {
-                    label: item['name'],
-                    value: item['tag_id']
-                  }
-                }));
-              }
-            });
-          },
-          'select': function(item) {
-            $('input[name=\'tag\']').val('');
-
-            $('#information-tags' + item['value']).remove();
-
-            $('#information-tags').append('<div id="information-tags' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="information_tags[]" value="<?php echo $prefix_tag; ?>' + item['value'] + '" /></div>');
-          }
-        });
-        $('#information-tags').delegate('.fa-minus-circle', 'click', function() {
-          $(this).parent().remove();
-        });
-    <?php } ?>
     $('.datetime').datetimepicker({
         pickDate: true,
         pickTime: true
@@ -367,9 +335,27 @@
 $('#language a:first').tab('show');
 //--></script></div>
 <style type="text/css">
-  .img-thumbnail{width: 100px; height: 100px;}
-  .item-image{ position: relative; display: inline-block; margin-right: 5px; }
-  .item-image .remove-imge{ position: absolute; right:0; top: 0;  background-color: red; border: 0px; color: #fff; }
+  .img-thumbnail{width: 100%;}
+  #img-list .img .row{
+      margin-left: -5px;
+      margin-right: -5px;
+  }
+  .item-image{
+      padding: 5px;
+      margin-bottom: 5px;
+  }
+  .item-image .remove-imge{
+      position: absolute;
+      right: -6px;
+      top: -6px;
+      background-color: #ea4335;
+      border: 0px;
+      color: #fff;
+      height: 25px;
+      width: 25px;
+      border-radius: 100%;
+      z-index: 1;
+  }
   .add-image,.add-image:focus{
       font-size: 14px;
       background-color: transparent;

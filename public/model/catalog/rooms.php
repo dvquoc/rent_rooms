@@ -1,10 +1,39 @@
 <?php
-
 class ModelCatalogRooms extends Model {
+    protected $_table = '1_1_rooms';
+    protected $_name_col;
+
+    public function __construct($registry)
+    {
+        parent::__construct($registry);
+        $abc = preg_grep("/^int$/"  , ['integer'=>'int', 'int'=>'tinyint', 'float'=>'float','double'=>'double','datetime'=>'datetime']);
+        //var_dump($abc); die();
+    }
+
     public function find($data_search){
-        $query = $this->db->query('SELECT * FROM `1_1_rooms` WHERE `status` ='.$data_search['status']);
+        $query = $this->db->query('SELECT * FROM `'. $this->_table .'` WHERE `status` ='.$data_search['status']);
         return $query->rows;
     }
+
+    public function addRooms($data){
+        $set_tring = $this->__setStringUpdate($data);
+        $sql="INSERT `" . $this->_table . "` SET " . trim($set_tring,",");
+        //var_dump($sql); die();
+        $this->db->query($sql);
+        $this->cache->delete('rooms');
+        $this->cache->delete('alias-cache-'.$this->config->get('config_language_id'));
+    }
+
+    public function editRooms($rooms_id, $data = array()){
+        $set_tring = $this->__setStringUpdate($data);
+        $sql="UPDATE `" . $this->_table . "` SET " . trim($set_tring,",");
+        $sql.=" WHERE room_id = " . (int)$rooms_id ;
+        //var_dump($sql); die();
+        $this->db->query($sql);
+        $this->cache->delete('rooms');
+        $this->cache->delete('alias-cache-'.$this->config->get('config_language_id'));
+    }
+
     public function getRoom($rooms_id){
         $query = $this->db->query("SELECT DISTINCT * FROM "."1_1_rooms WHERE room_id = '" . (int)$rooms_id . "'");
         return $query->row;
