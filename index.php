@@ -1,5 +1,6 @@
-﻿<?php
+?<?php
 sadada
+
 // Version
 define('VERSION', '2.0.3.1');
 // Configuration
@@ -72,7 +73,7 @@ $registry->set('cache', $cache);
 $setting = $cache->get('setting-cache');
 if(!$setting) {
 	$query = "query config by mongodb";
-	$cache->set('setting-cache', 'Kết quả lấy từ mongdb');
+	$cache->set('setting-cache', 'K?t qu? l?y t? mongdb');
 	$setting=false;
 }
 if($setting && false) {
