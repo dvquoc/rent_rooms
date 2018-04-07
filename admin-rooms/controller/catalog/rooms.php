@@ -14,17 +14,18 @@ class ControllerCatalogRooms extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
-			if(empty($this->request->post['rooms_images']))
-				$this->request->post['rooms_images']=array();
+            $this->request->post['images'] = serialize($this->request->post['images']);
+            if(empty($this->request->post['images']))
+                $this->request->post['images']=array();
 
 			$this->model_catalog_rooms->addRooms($this->request->post);
+
 			$this->session->data['success'] = "Thêm thành công";
 
             $url = http_build_query(array_diff_key($this->request->get, ['route'=>'']));
 
 			$this->response->redirect($this->url->link('catalog/rooms', $url, 'SSL'));
 		}
-
 		$this->getForm();
 	}
 
@@ -85,9 +86,10 @@ class ControllerCatalogRooms extends Controller {
 	}
 
 	protected function getList() {
-        $page = 1;
         if (isset($this->request->get['page']))
             $page = $this->request->get['page'];
+        else
+            $page = $this->request->get['page'] = 1;
         $filter_data = array(
             'sort'  => 'name',
             'order' => 'ASC',
@@ -96,27 +98,12 @@ class ControllerCatalogRooms extends Controller {
             'limit' => $this->config->get('config_limit_admin')
         );
 
-		if (isset($this->request->get['city'])) {
-            $filter_data['city'] = $this->request->get['city'];
-		} else {
-            $filter_data['city'] = null;
-		}
-        if (isset($this->request->get['district'])) {
-            $filter_data['district'] = $this->request->get['district'];
-        } else {
-            $filter_data['district'] = null;
-        }
+        $filter_data = array_merge($filter_data, $this->request->get);
 
-		if (isset($this->request->get['sort']))
-            $filter_data['sort'] = $this->request->get['sort'];
-		if (isset($this->request->get['order']))
-            $filter_data['sort'] = $this->request->get['order'];
+		$url = http_build_query(array_diff_key($filter_data, ['route'=>'','room_id'=>'']));
 
-		$url = http_build_query($filter_data);
-        $url .= '&page=' . $page;
-
-		$data['add'] = $this->url->link('catalog/rooms/add', 'token=' . $this->session->data['token']."&" . $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/rooms/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('catalog/rooms/add', $url, 'SSL');
+		$data['delete'] = $this->url->link('catalog/rooms/delete', $url, 'SSL');
 		$data['action_fitler'] = str_replace('&amp;','&',$this->url->link('catalog/rooms', 'token=' . $this->session->data['token'], 'SSL'));
 
 		$data['rooms'] = array();
@@ -136,7 +123,7 @@ class ControllerCatalogRooms extends Controller {
 					'room_id' => $result['room_id'],
 					'image'          => $data['image'],
 					'name'          => $result['name'],
-					'edit'           => $this->url->link('catalog/rooms/edit', 'token=' . $this->session->data['token'] . '&room_id=' . $result['room_id']."&" . $url, 'SSL')
+					'edit'           => $this->url->link('catalog/rooms/edit','&room_id=' . $result['room_id']."&" . $url, 'SSL')
 			);
 		}
 
@@ -191,6 +178,7 @@ class ControllerCatalogRooms extends Controller {
             $data['action'] = $this->url->link('catalog/rooms/edit', $url, 'SSL');
         }
 
+        $url = http_build_query(array_diff_key($this->request->get, ['route'=>'','room_id'=>'']));
         $data['cancel'] = $this->url->link('catalog/rooms', $url, 'SSL');
 
         if (isset($this->request->get['room_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {

@@ -136,7 +136,7 @@ $registry->set('session', $session);
 
 // Language
 $language = new Language();
-$language->load(DIR_LANGUAGE."vietnamese/");
+$language->load('vietnamese');
 $registry->set('language', $language);
 
 // Document
