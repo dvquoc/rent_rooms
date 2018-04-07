@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ?<?php
 sadada
 
+=======
+﻿<?php
+>>>>>>> 200aa1d8faec613f2e148f5e9bdfcb32ccc2784d
 // Version
 define('VERSION', '2.0.3.1');
 // Configuration
