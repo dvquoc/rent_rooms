@@ -21,7 +21,7 @@ class ModelFindMap extends Model {
             'location'=>['$geoWithin'=>['$geometry'=>$data]],
         ),
         array(
-            'limit'=>12
+            'limit'=>200
         )
         );
         if(count($result) > 0)

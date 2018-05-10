@@ -15,10 +15,6 @@
 <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap-notify.js"></script>
-<script src="view/javascript/addgrid/jquery.grideditor.js"></script>
-<link href="view/javascript/tinymce_4_7_1_2/tinymce.min.css" type="text/css" rel="stylesheet" />
-<script src="view/javascript/tinymce_4_7_1_2/tinymce.min.js"></script>
-<script src="view/javascript/tinymce_4_7_1_2/jquery.tinymce.min.js"></script>
 <link href="view/javascript/bootstrap/opencart/opencart.css" type="text/css" rel="stylesheet" />
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
@@ -27,7 +23,6 @@
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
-<link rel="stylesheet" type="text/css" href="view/javascript/addgrid/grideditor.css" />
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>

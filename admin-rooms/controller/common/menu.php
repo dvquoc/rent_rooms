@@ -22,6 +22,10 @@ class ControllerCommonMenu extends Controller {
         $data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['rooms'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'], 'SSL');
 
+        $data['district'] = $this->url->link('location/districts', 'token=' . $this->session->data['token'], 'SSL');
+        $data['street'] = $this->url->link('location/street', 'token=' . $this->session->data['token'], 'SSL');
+        $data['special'] = $this->url->link('location/special', 'token=' . $this->session->data['token'], 'SSL');
+
 		$data['banner'] = $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL');
 		$data['setting'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL');
 		$data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL');

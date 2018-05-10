@@ -33,7 +33,8 @@ class ControllerLocationSpecial extends Controller
         );
 
         $url = http_build_query($data_filter);
-        $data["add"] = $this->url->link('location/special/edit', 'token=' . $this->session->data['token'] , 'SSL');
+
+        $data["add"] = $this->url->link('location/special/edit', 'token=' . $this->session->data['token']."&".$url , 'SSL');
         $data['action_fitler'] = str_replace('&amp;','&',$this->url->link('location/special', 'token=' . $this->session->data['token'], 'SSL'));
 
         $total_special = $this->model_location_location_admin->getSpecialTotalByDistrict($data_filter);

@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=vi" type="text/javascript"></script>
 <?php echo $column_left; ?>
 <div id="content">
   <div class="page-header">
@@ -58,8 +58,46 @@
                                   </div>
                                   <div class="form-group">
                                       <div class="text-center title-info"><h3>Địa chỉ chính xác (Map)</h3></div>
+                                      <div class="col-sm-12">
+                                          <div class="row">
+                                              <div class="col-sm-6" style="margin-bottom: 10px;">
+                                                  <label class="">Tỉnh/Thành phố</label>
+                                                  <select class="form-control" name="city">
+                                                      <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
+                                                      <?php foreach($citys as $item) { ?>
+                                                          <?php if($item["city_id"] == $city) { ?>
+                                                                <option selected="selected" value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
+                                                          <?php } else{  ?>
+                                                                <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
+                                                          <?php } ?>
+                                                      <?php } ?>
+                                                  </select>
+                                              </div>
+                                              <div class="col-sm-6" style="margin-bottom: 10px;">
+                                                  <label class="">Quận/Huyện</label>
+                                                  <select class="form-control" name="district">
+                                                      <option value="null">--- Chọn Quận/Huyện ---</option>
+                                                      <?php foreach($districts as $item) { ?>
+                                                          <?php if($item["district_id"] == $district) { ?>
+                                                                <option selected="selected" value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
+                                                          <?php } else { ?>
+                                                                <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
+                                                          <?php } ?>
+                                                      <?php } ?>
+                                                  </select>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-12 dropdown" style="margin-bottom: 10px;">
+                                          <label class="">Địa chỉ: <i style="font-size: 12px; color: red; ">Gõ địa chỉ chính xác hay có có thể lấy từ BẢN ĐỒ</i></label>
+                                          <div class="dropdown">
+                                              <input name="address" id="input-address" class="form-control " value="<?php echo $address; ?>">
+                                              <div id="address-suggest" style="width: 100%" class="dropdown-menu" style="display: none"></div>
+                                          </div>
+
+                                      </div>
                                       <div class="col-md-12">
-                                          <div id="map-address" style="width: 100%; height: 300px;"></div>
+                                          <div id="map-address" style="width: 100%; height: 400px;"></div>
                                           <br>
                                           <div class="row">
                                               <div class="col-sm-6">
@@ -88,23 +126,18 @@
                                                   <div><input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>"></div>
                                               </div>
 
-                                              <div class="col-sm-12" style="margin-bottom: 10px;">
-                                                  <label class="">Địa chỉ: <i style="font-size: 12px; color: red; ">Gõ địa chỉ chính xác hay có có thể lấy từ BẢN ĐỒ</i></label>
-                                                  <div><input name="address" id="input-address" class="form-control" value="<?php echo $address; ?>"></div>
-                                              </div>
-
                                               <?php $class = 'show'; if(isset($room_id)) $class = 'hidden';  ?>
 
                                               <div class="col-md-4 item">
                                                   <div class="feature price">
                                                       <b>Tiền thuê: </b> <?php echo $txt_price; ?>
-                                                      <input name="price" class="<?php echo $class; ?> form-control" value="<?php echo $price; ?>">
+                                                      <input name="price" placeholder="Giá: nhập số và bắt buộc" class="<?php echo $class; ?> form-control" value="<?php echo $price; ?>">
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature acreage">
                                                       <b>Diện tích: </b> <?php echo $acreage; ?> m2
-                                                      <input name="acreage" class="<?php echo $class; ?> form-control" value="<?php echo $acreage; ?>">
+                                                      <input name="acreage" placeholder="Giá: Nhập số và bắt buộc" class="<?php echo $class; ?> form-control" value="<?php echo $acreage; ?>">
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
@@ -246,7 +279,7 @@
                                           <div class="form-group">
                                               <label class="col-sm-12">Nổi bật phòng trọ</label>
                                               <div class="col-md-12">
-                                                  <textarea type="text" name="highlight" value="<?php echo  $highlight;  ?>" class="form-control" rows="5"><?php echo  $highlight; ?></textarea>
+                                                  <textarea id="highlight-rooms" type="text" name="highlight" value="<?php echo  $highlight;  ?>" class="form-control" rows="5"><?php echo  $highlight; ?></textarea>
                                               </div>
                                           </div>
 
@@ -265,47 +298,33 @@
           </div>
       </form>
   </div>
-  <script type="text/javascript">
-<?php foreach ($languages as $language) { ?>
-          var option_tinymce = {
-              selector: '#input-description<?php echo $language['language_id']; ?>',
-              language:'<?php global $registry;  echo $registry->get("language")->get('code');  ?>',
-              /*skin: 'light',*/
-              height:500,
-              app_default: 'cdv',
-              relative_urls: false,
-              remove_script_host: false,
-              document_base_url : "<?php echo HTTP_CATALOG; ?>",
-              plugin_url : "<?php echo HTTP_SERVER; ?>view/javascript/tinymce/plugins/",
-              plugins: [
-                  "imagetools linktarget advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                  "save table contextmenu directionality emoticons template textcolor paste codesample example header"
-              ],
-              setup: function(ed) {
-                  ed.addContextToolbar('a', 'link unlink');
-              },
-              toolbar1: "undo redo imagetools newdocument cut copy paste pastetext searchreplace print ltr rtl spellchecker visualchars visualblocks nonbreaking code preview fullscreen",
-              toolbar2: "bullist numlist outdent indent blockquote link unlink imagetools example media table anchor removeformat insertdatetime hr  charmap emoticons template pagebreak restoredraft codesample",
-              toolbar3: "bold italic underline strikethrough subscript superscript forecolor backcolor alignleft aligncenter alignright alignjustify header fontselect fontsizeselect",
-              fontsize_formats: '8pt 9pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt',
-              document_app: "<?php echo DIR_APPLICATION; ?>",
-              verify_html: false,
-              forced_root_block : "p",
-          }
-
-          $('#input-description<?php echo $language['language_id']; ?>').before('<div id="myGrid<?php echo $language['language_id']; ?>"></div>');
-          var id<?php echo $language['language_id']; ?> = "input-description<?php echo $language['language_id']; ?>";
-          $('#myGrid<?php echo $language['language_id']; ?>').gridEditor({
-              source_textarea: '#input-description<?php echo $language['language_id']; ?>',
-              option_tinymce: option_tinymce,
-          });
-
-          $('#input-description<?php echo $language['language_id']; ?>').addClass('editor_chili');
-          $('input[name="information_description[<?php echo $language["language_id"]; ?>][title]"]').keyup(function () {
-              $('input[name="information_description[<?php echo $language["language_id"]; ?>][meta_title]"]').val($(this).val());
-          });
-<?php } ?>
+<script type="text/javascript">
+      var option_tinymce = {
+          selector: '#highlight-rooms',
+          language:'<?php global $registry;  echo $registry->get("language")->get('code');  ?>',
+          /*skin: 'light',*/
+          height:500,
+          app_default: 'cdv',
+          relative_urls: false,
+          remove_script_host: false,
+          document_base_url : "<?php echo HTTP_CATALOG; ?>",
+          plugin_url : "<?php echo HTTP_SERVER; ?>view/javascript/tinymce/plugins/",
+          plugins: [
+              "imagetools linktarget advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+              "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+              "save table contextmenu directionality emoticons template textcolor paste codesample example header"
+          ],
+          setup: function(ed) {
+              ed.addContextToolbar('a', 'link unlink');
+          },
+          toolbar1: "undo redo imagetools newdocument cut copy paste pastetext searchreplace print ltr rtl spellchecker visualchars visualblocks nonbreaking code preview fullscreen",
+          toolbar2: "bullist numlist outdent indent blockquote link unlink imagetools example media table anchor removeformat insertdatetime hr  charmap emoticons template pagebreak restoredraft codesample",
+          toolbar3: "bold italic underline strikethrough subscript superscript forecolor backcolor alignleft aligncenter alignright alignjustify header fontselect fontsizeselect",
+          fontsize_formats: '8pt 9pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt',
+          document_app: "<?php echo DIR_APPLICATION; ?>",
+          verify_html: false,
+          forced_root_block : "p",
+      }
 </script>
 <script type="text/javascript">
     var geocoder = new google.maps.Geocoder();
@@ -313,26 +332,29 @@
         geocoder.geocode({
             latLng: pos
         }, function(responses) {
-
             if (responses && responses.length > 0) {
-                updateMarkerAddress(responses[0].formatted_address);
+                var address_lengh = responses[0].address_components.length;
+                var location = {};
+                for(var i = address_lengh-1; i>=0; i--){
+                    if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
+                        location.city= responses[0].address_components[i].long_name;
+                    }
+                    if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
+                        location.district= responses[0].address_components[i].long_name;
+                    }
+                }
             } else {
-                updateMarkerAddress('Cannot determine address at this location.');
+                alert("Không tìm thấy địa chỉ");
+                alert("NHập địa chỉ");
+                alert("Nhập Nhập thành phố và Quận/Huyện");
             }
         });
     }
-
-
     function updateMarkerPosition(latLng) {
         document.getElementById('input-lat').value = latLng.lat();
         document.getElementById('input-lng').value = latLng.lng();
 
     }
-
-    function updateMarkerAddress(str) {
-        document.getElementById('input-address').value = str;
-    }
-
     var map= new google.maps.Map(document.getElementById('map-address'), {
         center: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
         zoom: 16,
@@ -344,18 +366,120 @@
         scrollwheel: true,
         disableDoubleClickZoom: true,
     });
+    // Create the search box and link it to the UI element.
+    var input = document.getElementById('input-address');
+    var searchBox = new google.maps.places.Autocomplete(input);
+    searchBox.setTypes(['address']);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
     var marker = new google.maps.Marker({
         position: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
         map: map,
         title: '<?php echo $address;  ?>',
         draggable: true
     });
+
+    searchBox.addListener('place_changed', function() {
+        var place = searchBox.getPlace();
+        if (!place.geometry) {
+            return;
+        }
+
+        marker.setMap(null);
+        marker = new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
+            draggable: true
+        });
+
+        map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+
+        google.maps.event.addListener(marker, 'drag', function() {
+            updateMarkerPosition(marker.getPosition());
+        });
+        google.maps.event.addListener(marker, 'dragend', function() {
+            geocodePosition(marker.getPosition());
+        });
+    });
+
+
     google.maps.event.addListener(marker, 'drag', function() {
         updateMarkerPosition(marker.getPosition());
     });
     google.maps.event.addListener(marker, 'dragend', function() {
         geocodePosition(marker.getPosition());
     });
+
+    var bounds=  new google.maps.LatLngBounds();
+
+    var polygon = new google.maps.Polygon({
+        paths: [],
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.5,
+        strokeWeight: 3,
+        fillColor: '#FF0000',
+        fillOpacity: 0,
+        draggable: false,
+        clickable:false
+    });
+    
+    var drawPolygon = function (data) {
+        var data_draw = [];
+        bounds = new google.maps.LatLngBounds();
+        $.each(data, function (key,item) {
+            data_draw.push({'lat': parseFloat(item[0]), 'lng': parseFloat(item[1])});
+            bounds.extend(new google.maps.LatLng(item[0], item[1]));
+        });
+        polygon.setMap(null);
+        polygon = new google.maps.Polygon({
+            paths: data_draw,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.5,
+            strokeWeight: 3,
+            fillColor: '#FF0000',
+            fillOpacity: 0,
+            draggable: false,
+            clickable:false
+        });
+        polygon.setMap(map);
+        map.fitBounds(bounds);
+        map.setCenter(bounds.getCenter());
+        map.getBoundsZoomLevel(bounds.getBounds());
+        map.setZoom();
+    }
+    
+    $('.datetime').datetimepicker({
+        pickDate: true,
+        pickTime: true
+    });
+    $("#tab-general select").change(function () {
+        if($(this).attr('name') == 'city'){
+            $.ajax({
+                url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
+                dataType: 'json',
+                success: function(json) {
+                    $('select[name=\'district\']').html('');
+                    $.map(json, function(item) {
+                        $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                    });
+                }
+            });
+        }
+        if($(this).attr('name') == 'district'){
+            var district_select = $(this).val();
+            console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
+            $.ajax({
+                url: 'index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select,
+                dataType: 'json',
+                success: function(json) {
+                    console.log(JSON.parse(json['location']));
+                    drawPolygon(JSON.parse(json['location']));
+                }
+            });
+        }
+    });
+
     var image_row = <?php echo $image_row; ?>;
     function addImage() {
       html  = '<div class="item-image col-md-3" id="item-' + image_row + '">';
@@ -368,14 +492,8 @@
       $('#img-list .img .row').append(html);
       image_row++;
     }
-    $('.datetime').datetimepicker({
-        pickDate: true,
-        pickTime: true
-    });
   </script>
-  <script type="text/javascript"><!--
-$('#language a:first').tab('show');
-//--></script></div>
+</div>
 <style type="text/css">
   .img-thumbnail{width: 100%;}
   #img-list .img .row{
@@ -468,6 +586,10 @@ $('#language a:first').tab('show');
       background-color: #E91E63;
       color: #fff;
   }
-
+  .feature .show{
+    opacity: 0.6;
+    border: 0px;
+    margin-top: 7px;
+  }
 </style>
 <?php echo $footer; ?>

@@ -1,19 +1,30 @@
 <?php
 class ControllerCatalogRooms extends Controller {
 	private $error = array();
-	public function index() {
+
+	public function __construct($registry)
+    {
+        parent::__construct($registry);
+        if(isset($registry->get('request')->get['city']) && isset($registry->get('request')->get['district'])) {
+            $registry->set('prefix_rooms', $registry->get('request')->get['city'].'_'.$registry->get('request')->get['district'].'_');
+        }else{ // Get by user;
+            $registry->set('prefix_rooms', '1_1_');
+        }
+    }
+
+    public function index() {
 		$this->document->setTitle("Quản lý phòng");
 		$this->load->public_model('catalog/rooms');
 		$this->getList();
 	}
-
 	public function add() {
+
 		$this->document->setTitle("Thêm phòng trọ");
 
 		$this->load->public_model('catalog/rooms');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-
+            var_dump($this->prefix_rooms); die();
             $this->request->post['images'] = serialize($this->request->post['images']);
             if(empty($this->request->post['images']))
                 $this->request->post['images']=array();
@@ -107,8 +118,8 @@ class ControllerCatalogRooms extends Controller {
         $data_filter = array (
             'city'  => isset($this->request->get['city']) ? $this->request->get['city']: 1,
             'district' => isset($this->request->get['district']) ? $this->request->get['district']: 1,
-            'stress' => isset($this->request->get['stress']) ? $this->request->get['stress']: -1,
-            'special' => isset($this->request->get['special']) ? $this->request->get['special']: -1,
+            'type' => isset($this->request->get['type']) ? $this->request->get['type']: null,
+            'special' => isset($this->request->get['special']) ? $this->request->get['special']: null,
             'ads' => isset($this->request->get['ads']) ? $this->request->get['ads']: -1,
             'ads_position' =>isset($this->request->get['ads_position']) ? $this->request->get['ads_position']: -1,
             'status' =>isset($this->request->get['status']) ? $this->request->get['status']: 1,
@@ -117,6 +128,7 @@ class ControllerCatalogRooms extends Controller {
             'acreage' =>isset($this->request->get['acreage']) ? $this->request->get['acreage']: -1,
             'name' =>isset($this->request->get['name']) ? $this->request->get['name']: -1,
         );
+
 
         $data_query = array(
             'sort'  => 'name',
@@ -139,22 +151,29 @@ class ControllerCatalogRooms extends Controller {
         $data['sort_title'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, 'SSL');
         $data['sort_sort_order'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, 'SSL');
 
+        if(!empty($data_filter['special']) && !empty($data_filter['type'])){
+            $this->load->public_model('location/location_admin');
+            if($data_filter['type'] == 'street')
+                $special = $this->model_location_location_admin->getStreetById($data_filter['special']);
+            else
+                $special = $this->model_location_location_admin->getSpecialById($data_filter['special']);
+            $data_query['special'] = $special['location'];
+            $data['text_special'] = $special['name'];
+        }
+
+
 		$data['rooms'] = array();
 		$rooms_total = $this->model_catalog_rooms->getTotalRooms($data_query);
 		$results = $this->model_catalog_rooms->find($data_query);
-
-        $this->load->model('tool/image');
-        $image_default=$this->model_tool_image->resize('no_image.png', 70, 60);
 		foreach ($results as $result) {
-            if(is_file(DIR_IMAGE . $result['image'])) {
-                $data['image'] = $this->model_tool_image->resize($result['image'], 70, 60);
-            } else {
-                $data['image'] = $image_default;
-            }
 			$data['rooms'][] = array(
 					'room_id' => $result['room_id'],
-					'image'          => $data['image'],
 					'name'          => $result['name'],
+					'ads'          => $result['ads'],
+					'from_date'          => $result['from_date'],
+					'to_date'          => $result['to_date'],
+					'text_price'          => format_currency($result['price']),
+					'text_acreage'          => format_currency($result['acreage']),
 					'edit'           => $this->url->link('catalog/rooms/edit','&room_id=' . $result['room_id']."&" . $url, 'SSL')
 			);
 		}
@@ -175,14 +194,7 @@ class ControllerCatalogRooms extends Controller {
         if(!empty($data_filter['district']))
         $data['streets'] =$this->model_location_location_admin->getDistrictByCity($data_filter['district']);
 
-        $data['specials'] = array();
-        if(!empty($data_filter['district']))
-            $data['specials'] =$this->model_location_location_admin->getDistrictByCity($data_filter['special']);
-
-
-        $data['data_fitler'] = json_encode($data_filter);
-
-
+        $data['data_filter'] = $data_filter;
 
 		$pagination = new Pagination();
 		$pagination->total = $rooms_total;
@@ -252,6 +264,14 @@ class ControllerCatalogRooms extends Controller {
                 'thumb'      => $this->model_tool_image->resize($image, 100, 100),
             );
         }
+
+        $data['city'] = !empty($this->request->get['city'])? $this->request->get['city'] : 1;
+        $data['district'] = !empty($this->request->get['district'])? $this->request->get['district'] : 1;
+
+        $this->load->public_model('location/location_admin');
+        $data['citys'] = $this->model_location_location_admin->getAllCity();
+        $data['districts'] =$this->model_location_location_admin->getDistrictByCity($data['city']);
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
@@ -307,26 +327,30 @@ class ControllerCatalogRooms extends Controller {
 
     public function autocomplete() {
         $json = array();
-
         if (isset($this->request->get['filter_name'])) {
-            $type_information = $this->objects->object_type;
-            if (isset($this->request->get['object_type']))
-                $type_information = $this->request->get['object_type'];
-            $this->load->model('catalog/information');
             $filter_data = array(
-                'filter_name' => $this->request->get['filter_name'],
-                'filter_information_type' => $type_information,
-                'sort'        => 'name',
-                'order'       => 'ASC',
+                'district' => $this->request->get['district_id'],
+                'name' => $this->request->get['filter_name'],
                 'start'       => 0,
-                'limit'       => 10
+                'limit'       => 20
             );
-            $results = $this->model_catalog_information->getInformations($filter_data);
+            $this->load->public_model('location/location_admin');
+            $street = $this->model_location_location_admin->getStreetByDistrict($filter_data);
+            $special = $this->model_location_location_admin->getSpecialByDistrict($filter_data);
+            $results = array_merge($street,$special);
             foreach ($results as $result) {
-                $json[] = array(
-                    'id' => $result['information_id'],
-                    'name'        => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8'))
-                );
+                if($result['street_id'])
+                    $json[] = array(
+                        'id' => $result['street_id'],
+                        'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+                        'type' => 'street'
+                    );
+                else
+                    $json[] = array(
+                        'id' => $result['special_id'],
+                        'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+                        'type' => 'special'
+                    );
             }
         }
 
@@ -341,4 +365,35 @@ class ControllerCatalogRooms extends Controller {
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
     }
+
+    public function getDistricts(){
+        $json = array();
+        if (isset($this->request->get['city_id'])) {
+            $this->load->public_model('location/location_admin');
+            $results = $this->model_location_location_admin->getDistrictByCity($this->request->get['city_id']);
+            foreach ($results as $result) {
+                $json[] = array(
+                    'id' => $result['district_id'],
+                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+                );
+            }
+        }
+        $sort_order = array();
+        foreach ($json as $key => $value) {
+            $sort_order[$key] = $value['name'];
+        }
+        array_multisort($sort_order, SORT_ASC, $json);
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    public function getLocation(){
+            $json = array();
+            if (isset($this->request->get['district_id'])) {
+                $this->load->public_model('location/location_admin');
+                $json = $this->model_location_location_admin->getLocationDistrict($this->request->get['district_id']);
+            }
+            $this->response->addHeader('Content-Type: application/json');
+            $this->response->setOutput(json_encode($json));
+        }
 }

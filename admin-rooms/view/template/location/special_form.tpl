@@ -47,7 +47,6 @@
                                     <p>Kéo chấm đỏ trên bản đồ để cập nhật lại vị trí cho phòng trọ...</p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -134,7 +133,8 @@
             });
 
             map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
-            geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+            console.log(place);
+            //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
             google.maps.event.addListener(marker, 'dragend', function() {
                 geocodePosition(marker.getPosition());
             });

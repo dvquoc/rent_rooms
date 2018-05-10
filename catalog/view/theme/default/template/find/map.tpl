@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places" type="text/javascript"></script>
 <script src="/public/assets/js/map/gmap3.js" type="text/javascript"></script>
 <script src="/public/assets/plugins/tippyjs/tippy.all.min.js" type="text/javascript"></script>
 <script src="/public/assets/plugins/slide_reveal/slidereveal.js" type="text/javascript"></script>
@@ -184,9 +184,9 @@
             scrollwheel: true,
             disableDoubleClickZoom: true,
             center: bounds.getCenter(),
-            markers: markers_data,
             draws: polygon,
-            overlay: {
+            controlCustom:['draw-line','draw-popygon'],
+            overlays: {
                 values: markers_data,
                 events: {
                     click: function (overplay, event, context) {
@@ -196,13 +196,11 @@
                         $("#detail-title").text(context.data.title);
                         var imgs = JSON.parse(context.data.photo);
                         var img = imgs[0];
-                        console.log(context);
                         $("#detail-img").attr('src',img.link);
                         $("#detail-address span").text(context.data.address);
                         slider.slideReveal("show");
                         $(event[0].target).popover('hide');
                         var imgs = JSON.parse(context.data.photo);
-                        console.log(imgs);
                         var img = imgs[0];
                         var option = {
                             title: context.data.address,
@@ -217,13 +215,11 @@
                     },
                     mouseout: function (overlay, event, context) {
                         $(event[0].target).popover('hide');
-                    },
+                    }
                 }
             }
         };
         var map = $("#test1").mapRooms(optionsMap);
         map.mapRooms('test');
-        // var mapAction = MapLocal.initMap('test1',optionsMap);
-        // mapAction.marker_draw(markers_data);
     });
 </script>
