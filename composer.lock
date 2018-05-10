@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "79c1d5e75d26f51c68d62c7ab97f3aa9",
+    "content-hash": "fda9855ee4c0837d7090dae80312893b",
     "packages": [
         {
             "name": "mongodb/mongodb",
@@ -65,6 +65,108 @@
                 "persistence"
             ],
             "time": "2017-10-27T19:42:57+00:00"
+        },
+        {
+            "name": "naucon/file",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naucon/File.git",
+                "reference": "447d4e9d3e645192e996bde8f3d91669a6b4f996"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naucon/File/zipball/447d4e9d3e645192e996bde8f3d91669a6b4f996",
+                "reference": "447d4e9d3e645192e996bde8f3d91669a6b4f996",
+                "shasum": ""
+            },
+            "require": {
+                "naucon/utility": "~1.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Naucon\\File\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sven Sanzenbacher"
+                }
+            ],
+            "description": "This package contains php classes to access, change, copy, delete, move, rename files and directories.",
+            "homepage": "https://github.com/naucon/File",
+            "keywords": [
+                "copy",
+                "delete",
+                "dir",
+                "file",
+                "filesystem",
+                "io",
+                "move",
+                "rename"
+            ],
+            "time": "2018-03-09T14:09:29+00:00"
+        },
+        {
+            "name": "naucon/utility",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naucon/Utility.git",
+                "reference": "d225bb5d09d82400917f710c9d502949a66442c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naucon/Utility/zipball/d225bb5d09d82400917f710c9d502949a66442c4",
+                "reference": "d225bb5d09d82400917f710c9d502949a66442c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Naucon\\Utility\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sven Sanzenbacher"
+                }
+            ],
+            "description": "This package provides miscellaneous php interfaces and classes to structure and organize data as well as groups of objects",
+            "homepage": "https://github.com/naucon/Utility",
+            "keywords": [
+                "collection",
+                "composite",
+                "delegate",
+                "iterable",
+                "iterator",
+                "list",
+                "map",
+                "observer",
+                "paginator",
+                "set",
+                "utility"
+            ],
+            "time": "2017-05-25T16:43:53+00:00"
         }
     ],
     "packages-dev": [],

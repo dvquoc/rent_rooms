@@ -6,6 +6,9 @@ define('VERSION', '2.0.3.1');
 if (is_file('config.php')) {
 	require_once('config.php');
 }
+
+require '../vendor/autoload.php';
+
 // Install
 if (!defined('DIR_APPLICATION')) {
 	header('Location: ../install/index.php');
@@ -164,6 +167,5 @@ if (isset($request->get['route'])) {
 }
 // Dispatch
 $controller->dispatch($action, new Action('error/not_found'));
-
 // Output
 $response->output();

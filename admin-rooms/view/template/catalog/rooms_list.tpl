@@ -26,63 +26,68 @@
                 </div>
                 <div id="filter-rooms" class="filter col-md-10" style="position: relative; padding-right: 0px;">
                     <div id="filter-rooms-contain" style="cursor: pointer; background-color: #fff; outline: 1px solid #e2e2e2;  line-height: 25px; padding:5px 10px" class="dropdown-toggle" type="button" data-toggle="dropdown"><b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class="fa fa-search"></span> Tìm kiếm:</b></div>
-                    <div class="dropdown-menu row" style="padding: 10px 6px 1px 6px;width: calc(100% - 28px); margin-right: 14px; left: 14px;top: 95%;display: none; border-radius: 0px; -webkit-box-shadow:rgba(0, 0, 0, 0.78) 10px 10px 43px -30px;box-shadow: rgba(0, 0, 0, 0.78) 10px 10px 43px -30px; border:1px solid #e2e2e2;">
-                        <div class="col-md-2 item">
+                    <div class="dropdown-menu row" style="padding: 10px 6px 1px 6px;width: calc(100% - 13px); margin-right: 14px; left: 14px;top: 95%;display: none; border-radius: 0px; -webkit-box-shadow:rgba(0, 0, 0, 0.78) 10px 10px 43px -30px;box-shadow: rgba(0, 0, 0, 0.78) 10px 10px 43px -30px; border:1px solid #e2e2e2;">
+                        <div id="item_search_city" class="col-md-2 item">
+                            <label class="text hidden">Thành Phố</label>
                             <select name="city" class="form-control">
-                                <option value="ho-chi-minh">Hồ Chí Minh</option>
-                                <option value="da-nang">Đà Nẵng</option>
-                                <option value="ha-noi">Hà Nội</option>
-                                <option value="binh-duong">Bình Dương</option>
-                                <option value="Đồng Nai">Đồng Nai</option>
+                                <?php foreach($citys as $item){  ?>
+                                        <option value="<?php echo $item['city_id']; ?>"><?php echo $item['name']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_district" class="col-md-2 item">
+                            <label class="text hidden">Quận/Huyện</label>
                             <select name="district" class="form-control">
-                                <option value="thu-duc">Quận Thủ Đức</option>
-                                <option value="binh-thanh">Quận Bình Thạnh</option>
+                                <?php foreach($districts as $item){  ?>
+                                <option value="<?php echo $item['district_id']; ?>"><?php echo $item['name']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_special" class="col-md-2 item">
+                            <label class="text hidden">Đường/Khu vực</label>
                             <select name="special" class="form-control">
-                                <option value="-1">-- Khu vực đặt biệt --</option>
                                 <option value="Gầm-sư-phạm-kỷ-thuật">Gầm sư phạm kỷ thuật</option>
                                 <option value="cong-nghe-cao">Khu công nghệ cao</option>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_ads" class="col-md-2 item">
+                            <label class="text hidden">Loại tin</label>
                             <select name="ads" class="form-control">
                                 <option value="1">Tin quảng cáo</option>
                                 <option value="0">Tin bình thường</option>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_ads_position" class="col-md-2 item">
+                            <label class="text hidden">Vị trí quảng cáo</label>
                             <select name="ads_position" class="form-control">
-                                <option value="1">-- Vị trí quảng cáo --</option>
                                 <option value="1">Home</option>
                                 <option value="0">search</option>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_status" class="col-md-2 item">
+                            <label class="text hidden">Trạng thái</label>
                             <select name="status" class="form-control">
-                                <option value="-1">-- Tình trạng --</option>
                                 <option value="1">Đang chạy</option>
                                 <option value="0">Đang tắt</option>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_close_door" class="col-md-2 item">
+                            <label class="text hidden">Giờ Giấc</label>
                             <select name="close_door" class="form-control">
-                                <option value="-1">-- Giờ Giấc --</option>
                                 <option value="0">Tự do</option>
                                 <option value="1">Ràng buột</option>
                             </select>
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_price" class="col-md-2 item" type="input">
+                            <label class="text hidden">Giá thuê</label>
                             <input type="text" name="price" value="" placeholder="Lọc theo giá" id="input-price" class="form-control" />
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_acreage" class="col-md-2 item" type="input">
+                            <label class="text hidden">Diện tích</label>
                             <input type="text" name="acreage" value="" placeholder="Diện tích" id="input-acreage" class="form-control" />
                         </div>
-                        <div class="col-md-2 item">
+                        <div id="item_search_name" class="col-md-2 item" type="input">
+                            <label class="text hidden">Tên</label>
                             <input type="text" name="name" value="" placeholder="Tên..." id="input-name" class="form-control" />
                         </div>
                         <div class="col-md-2 item text-right pull-right">
@@ -91,30 +96,8 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                        var params_old = {
-                            city: ['230','Thành phố','Hồ Chí Minh'],
-                            district: ['1242','Quận/Huyện','Thủ đức'],
-                            special: ['123','Khu vực','Gần sư phạm kỷ thuật'],
-                            ads: ['1','Loại tin','Tin quảng cáo'],
-                            ads_position: ['','Vị trí ads','Trang search'],
-                            status: ['','Tình trạng','Đang chạy'],
-                            close_door: ['','Giờ giấc','20h'],
-                            price: ['','Giá thuê','1.5'],
-                            acreage: ['','Diện tích','20'],
-                            name: ['','Tên','Tên tin đăng']
-                        };
-                        var params = {
-                            city: params_old.city,
-                            district: params_old.district,
-                            special: params_old.special,
-                            ads: params_old.ads,
-                            ads_position: ['','Vị trí ads','Trang search'],
-                            status: ['','Tình trạng','Đang chạy'],
-                            close_door: ['','Giờ giấc','20h'],
-                            price: ['','Giá thuê','1.5'],
-                            acreage: ['','Diện tích','20'],
-                            name: ['','Tên','Tên tin đăng']
-                        };
+                        var params_old = <?php echo $data_fitler ?>;
+                        var params = params_old;
 
                         var updateFilter = function (data) {
                             if(!$.isEmptyObject(data))
@@ -122,14 +105,25 @@
                             else
                                 $('#filter-rooms-contain').html("<b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class=\"fa fa-search\"></span> Tìm kiếm:</b><i>Nhập chuột vào để tìm kiếm....</i><i class=\"icon-dropdown fa fa-angle-down pull-right\"></i>");
                             $.each(data,function (key,item) {
-                                if(item[0].trim().length!=0)
-                                    $('#filter-rooms-contain').append('<div style=" display: inline-block;margin: 0px 1px; padding: 0px 7px;background-color: #1e91cf; color: #fff; border-radius: 30px; "><b>'+item[1]+' : </b>'+item[2]+'</div>');
+                                if(item.length!=0 && item!=-1) {
+                                    var textValue = item;
+                                    if($("#item_search_"+key).attr("type")!='input')
+                                        textValue= $("#item_search_"+key+" select  option[value='"+item+"']").text();
+
+                                    $('#filter-rooms-contain').append('<div style=" display: inline-block;margin: 0px 1px; padding: 0px 7px;background-color: #1e91cf; color: #fff; border-radius: 30px; "><b>' + $("#item_search_" + key + " .text").text() + ' : </b>' + textValue + '</div>');
+                                }
                             });
                             params = data;
                         }
                         updateFilter(params_old);
                         $("#filter-rooms-contain").click(function () {
                             $(this).next('.dropdown-menu').toggle();
+                        });
+                        $(window).click(function () {
+                            $("#filter-rooms-contain").next('.dropdown-menu').hide();
+                        });
+                        $(".dropdown-menu").click(function (event) {
+                            event.stopPropagation();
                         });
                         $("#cancel-filter").click(function () {
                             updateFilter(params_old);
@@ -139,13 +133,11 @@
                             $("#filter-rooms-contain").next('.dropdown-menu').hide();
                         });
                         $(".dropdown-menu select").change(function () {
-                            eval('params.'+ $(this).attr('name') + "[0] = '"+ $(this).val()+"'");
-                            eval('params.'+ $(this).attr('name') + "[2] = '"+ $(this).find('option:selected').text()+"'");
+                            eval('params.'+ $(this).attr("name") + "= '" + $(this).find('option:selected').val() +"'");
                             updateFilter(params);
                         });
                         $(".dropdown-menu input").keyup(function () {
-                            eval('params.'+ $(this).attr('name') + "[0] = '"+ $(this).val()+"'");
-                            eval('params.'+ $(this).attr('name') + "[2] = '"+ $(this).val()+"'");
+                            eval('params.'+ $(this).attr("name") + "= '"+ $(this).val()+ "'");
                             updateFilter(params);
                         });
                     </script>
@@ -221,15 +213,15 @@
         var parts = [];
         var flag = false;
         $.each(params,function (key , item) {
-            if(item[0].trim().length!=0) {
-                parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(item[0]));
+            if(item.length!=0 && item!=-1) {
+                parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(item));
                 flag = true;
             }
         });
         if(flag)
             url += parts.join('&');
-
-        //location = url;
+        console.log(url);
+        location = url;
     });
     //--></script>
 <?php echo $footer; ?>

@@ -18,6 +18,9 @@ class ControllerCatalogRooms extends Controller {
             if(empty($this->request->post['images']))
                 $this->request->post['images']=array();
 
+            if(empty($this->request->post['date_create']))
+                $this->request->post['date_create']='NOW()';
+
 			$this->model_catalog_rooms->addRooms($this->request->post);
 
 			$this->session->data['success'] = "Thêm thành công";
@@ -86,34 +89,63 @@ class ControllerCatalogRooms extends Controller {
 	}
 
 	protected function getList() {
+        $data['error_warning'] = '';
+        if (isset($this->error['warning']))
+            $data['error_warning'] = $this->error['warning'];
+
+        $data['success'] = '';
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
+            unset($this->session->data['success']);
+        }
+
         if (isset($this->request->get['page']))
             $page = $this->request->get['page'];
         else
             $page = $this->request->get['page'] = 1;
-        $filter_data = array(
+
+        $data_filter = array (
+            'city'  => isset($this->request->get['city']) ? $this->request->get['city']: 1,
+            'district' => isset($this->request->get['district']) ? $this->request->get['district']: 1,
+            'stress' => isset($this->request->get['stress']) ? $this->request->get['stress']: -1,
+            'special' => isset($this->request->get['special']) ? $this->request->get['special']: -1,
+            'ads' => isset($this->request->get['ads']) ? $this->request->get['ads']: -1,
+            'ads_position' =>isset($this->request->get['ads_position']) ? $this->request->get['ads_position']: -1,
+            'status' =>isset($this->request->get['status']) ? $this->request->get['status']: 1,
+            'close_door' =>isset($this->request->get['close_door']) ? $this->request->get['close_door']: -1,
+            'price' =>isset($this->request->get['price']) ? $this->request->get['price']: -1,
+            'acreage' =>isset($this->request->get['acreage']) ? $this->request->get['acreage']: -1,
+            'name' =>isset($this->request->get['name']) ? $this->request->get['name']: -1,
+        );
+
+        $data_query = array(
             'sort'  => 'name',
             'order' => 'ASC',
-            'status' => 1,
             'start' => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         );
 
-        $filter_data = array_merge($filter_data, $this->request->get);
+        $data_query = array_merge($data_query, $data_filter);
 
-		$url = http_build_query(array_diff_key($filter_data, ['route'=>'','room_id'=>'']));
+        $data_url = array_merge($data_query, $this->request->get);
+
+		$url = http_build_query(array_diff_key($data_url, ['route'=>'','room_id'=>'']));
+
 
 		$data['add'] = $this->url->link('catalog/rooms/add', $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/rooms/delete', $url, 'SSL');
 		$data['action_fitler'] = str_replace('&amp;','&',$this->url->link('catalog/rooms', 'token=' . $this->session->data['token'], 'SSL'));
 
+        $data['sort_title'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, 'SSL');
+        $data['sort_sort_order'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, 'SSL');
+
 		$data['rooms'] = array();
-		$rooms_total = $this->model_catalog_rooms->getTotalRooms($filter_data);
-		$results = $this->model_catalog_rooms->find($filter_data);
+		$rooms_total = $this->model_catalog_rooms->getTotalRooms($data_query);
+		$results = $this->model_catalog_rooms->find($data_query);
 
         $this->load->model('tool/image');
         $image_default=$this->model_tool_image->resize('no_image.png', 70, 60);
 		foreach ($results as $result) {
-            // Main image
             if(is_file(DIR_IMAGE . $result['image'])) {
                 $data['image'] = $this->model_tool_image->resize($result['image'], 70, 60);
             } else {
@@ -127,21 +159,30 @@ class ControllerCatalogRooms extends Controller {
 			);
 		}
 
-        $data['error_warning'] = '';
-		if (isset($this->error['warning']))
-			$data['error_warning'] = $this->error['warning'];
-
-        $data['success'] = '';
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-			unset($this->session->data['success']);
-		}
         $data['selected'] = array();
 		if (isset($this->request->post['selected']))
 			$data['selected'] = (array)$this->request->post['selected'];
 
-		$data['sort_title'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, 'SSL');
-		$data['sort_sort_order'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, 'SSL');
+
+        $this->load->public_model('location/location_admin');
+
+        $data['citys'] = $this->model_location_location_admin->getAllCity();
+        $data['districts'] = array();
+        if(!empty($data_filter['city']))
+            $data['districts'] =$this->model_location_location_admin->getDistrictByCity($data_filter['city']);
+
+        $data['streets'] = array();
+        if(!empty($data_filter['district']))
+        $data['streets'] =$this->model_location_location_admin->getDistrictByCity($data_filter['district']);
+
+        $data['specials'] = array();
+        if(!empty($data_filter['district']))
+            $data['specials'] =$this->model_location_location_admin->getDistrictByCity($data_filter['special']);
+
+
+        $data['data_fitler'] = json_encode($data_filter);
+
+
 
 		$pagination = new Pagination();
 		$pagination->total = $rooms_total;
@@ -151,7 +192,7 @@ class ControllerCatalogRooms extends Controller {
 		$data['pagination'] = $pagination->render();
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($rooms_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($rooms_total - $this->config->get('config_limit_admin'))) ? $rooms_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $rooms_total, ceil($rooms_total / $this->config->get('config_limit_admin')));
 
-		$data['filter_data'] = $filter_data;
+
 		$data['token'] = $this->session->data['token'];
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -180,7 +221,6 @@ class ControllerCatalogRooms extends Controller {
 
         $url = http_build_query(array_diff_key($this->request->get, ['route'=>'','room_id'=>'']));
         $data['cancel'] = $this->url->link('catalog/rooms', $url, 'SSL');
-
         if (isset($this->request->get['room_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
             $array_fomat_txt = ['price', 'price_electricity','price_water', 'price_deposit'];
             $room_info = $this->model_catalog_rooms->getRoom($this->request->get['room_id']);

@@ -93,49 +93,51 @@
                                                   <div><input name="address" id="input-address" class="form-control" value="<?php echo $address; ?>"></div>
                                               </div>
 
+                                              <?php $class = 'show'; if(isset($room_id)) $class = 'hidden';  ?>
+
                                               <div class="col-md-4 item">
                                                   <div class="feature price">
                                                       <b>Tiền thuê: </b> <?php echo $txt_price; ?>
-                                                      <input name="price" class="hidden" value="<?php echo $price; ?>">
+                                                      <input name="price" class="<?php echo $class; ?> form-control" value="<?php echo $price; ?>">
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature acreage">
                                                       <b>Diện tích: </b> <?php echo $acreage; ?> m2
-                                                      <input name="acreage" class="hidden" value="<?php echo $acreage; ?>">
+                                                      <input name="acreage" class="<?php echo $class; ?> form-control" value="<?php echo $acreage; ?>">
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature price_deposit">
                                                       <b>Tiền cọc: </b> <?php echo $txt_price_deposit; ?>
-                                                      <input name="price_deposit" class="hidden" value="<?php echo $price_deposit; ?>">
+                                                      <input name="price_deposit" class="<?php echo $class; ?> form-control" value="<?php echo $price_deposit; ?>">
                                                   </div>
                                               </div>
 
                                               <div class="col-md-4 item">
                                                   <div class="feature">
                                                       <b>Tiền nước: </b> <?php echo $txt_price_water; ?>
-                                                      <input name="price_water" class="hidden" value="<?php echo $price_water; ?>">
+                                                      <input name="price_water" class="<?php echo $class; ?> form-control" value="<?php echo $price_water; ?>">
                                                   </div>
                                               </div>
 
                                               <div class="col-md-4 item">
                                                   <div class="feature">
                                                       <b>Tiền điện: </b> <?php echo $txt_price_electricity; ?>
-                                                      <input name="price_electricity" class="hidden" value="<?php echo $price_electricity; ?>">
+                                                      <input name="price_electricity" class="<?php echo $class; ?> form-control" value="<?php echo $price_electricity; ?>">
                                                   </div>
                                               </div>
 
                                               <div class="col-md-4 item">
                                                   <div class="feature">
                                                       <b>Lượt xem: </b> <?php echo $view; ?> Lượt
-                                                      <input name="view" class="hidden" value="<?php echo $view; ?>">
+                                                      <input name="view" class="<?php echo $class; ?> form-control" value="<?php echo $view; ?>">
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature">
                                                       <b>Gọi liên hệ: </b> <?php echo $call; ?> lần
-                                                      <input name="call" class="hidden" value="<?php echo $call; ?>">
+                                                      <input name="call" class="<?php echo $class; ?> form-control" value="<?php echo $call; ?>">
                                                   </div>
                                               </div>
                                           </div>
@@ -174,12 +176,14 @@
                                                   </select>
                                               </div>
                                         </div>
-                                        <div class="form-group">
-                                              <label class="col-sm-12">Mã tin đăng</label>
-                                              <div class="col-md-12">
-                                                  <input type="text" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
-                                              </div>
-                                        </div>
+                                        <?php if(isset($room_id)) { ?>
+                                            <div class="form-group">
+                                                  <label class="col-sm-12">Mã tin đăng</label>
+                                                  <div class="col-md-12">
+                                                      <input type="text" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
+                                                  </div>
+                                            </div>
+                                        <?php } ?>
                                       </div>
                                       <div class="col-md-4">
                                           <div class="form-group">
@@ -304,16 +308,54 @@
 <?php } ?>
 </script>
 <script type="text/javascript">
+    var geocoder = new google.maps.Geocoder();
+    function geocodePosition(pos) {
+        geocoder.geocode({
+            latLng: pos
+        }, function(responses) {
+
+            if (responses && responses.length > 0) {
+                updateMarkerAddress(responses[0].formatted_address);
+            } else {
+                updateMarkerAddress('Cannot determine address at this location.');
+            }
+        });
+    }
+
+
+    function updateMarkerPosition(latLng) {
+        document.getElementById('input-lat').value = latLng.lat();
+        document.getElementById('input-lng').value = latLng.lng();
+
+    }
+
+    function updateMarkerAddress(str) {
+        document.getElementById('input-address').value = str;
+    }
+
     var map= new google.maps.Map(document.getElementById('map-address'), {
         center: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
-        zoom: 16
+        zoom: 16,
+        scaleControl: false,
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        overviewMapControl: true,
+        scrollwheel: true,
+        disableDoubleClickZoom: true,
     });
     var marker = new google.maps.Marker({
         position: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
         map: map,
-        title: '<?php echo $address;  ?>'
+        title: '<?php echo $address;  ?>',
+        draggable: true
     });
-
+    google.maps.event.addListener(marker, 'drag', function() {
+        updateMarkerPosition(marker.getPosition());
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+        geocodePosition(marker.getPosition());
+    });
     var image_row = <?php echo $image_row; ?>;
     function addImage() {
       html  = '<div class="item-image col-md-3" id="item-' + image_row + '">';

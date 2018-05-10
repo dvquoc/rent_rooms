@@ -11,6 +11,11 @@ class ComposerStaticInitc03a015b260f4bbbaaed4cb6483aa5b9
     );
 
     public static $prefixLengthsPsr4 = array (
+        'N' => 
+        array (
+            'Naucon\\Utility\\' => 15,
+            'Naucon\\File\\' => 12,
+        ),
         'M' => 
         array (
             'MongoDB\\' => 8,
@@ -18,6 +23,14 @@ class ComposerStaticInitc03a015b260f4bbbaaed4cb6483aa5b9
     );
 
     public static $prefixDirsPsr4 = array (
+        'Naucon\\Utility\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/naucon/utility/src',
+        ),
+        'Naucon\\File\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/naucon/file/src',
+        ),
         'MongoDB\\' => 
         array (
             0 => __DIR__ . '/..' . '/mongodb/mongodb/src',

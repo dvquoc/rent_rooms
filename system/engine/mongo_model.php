@@ -42,4 +42,28 @@ abstract class Model {
         }
         return  trim($set_tring,",");
 	}
+
+    public function __setWhereString($data, $table = false){
+        $set_tring = '';
+        $col = !$table ? $this->__getColTable() :  $this->__getColTable($table);
+
+        foreach ($col as $key => $item){
+            if(isset($data[$item['Field']])){
+                $type_compare =  preg_replace('/\(\d{1,}\)$/','',$item['Type']);
+                $type  =  preg_grep("/^".$type_compare."$/"  , ['integer'=>'int', 'int'=>'tinyint', 'float'=>'float','double'=>'double']);
+                $value_special = array('sql'=>'NOW()');
+                $type = array_flip($type);
+                if(!empty($type)){
+                    settype($data[$item['Field']], $type[$type_compare]);
+                    $value = $data[$item['Field']];
+                }else{
+                    $value = '\''.$data[$item['Field']] . '\'';
+                    if(in_array($data[$item['Field']],$value_special))
+                        $value = $data[$item['Field']];
+                }
+                $set_tring .= "`".$item['Field']."`=". $value .',';
+            }
+        }
+        return  trim($set_tring,",");
+    }
 }

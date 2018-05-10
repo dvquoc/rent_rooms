@@ -6,5 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Naucon\\Utility\\' => array($vendorDir . '/naucon/utility/src'),
+    'Naucon\\File\\' => array($vendorDir . '/naucon/file/src'),
     'MongoDB\\' => array($vendorDir . '/mongodb/mongodb/src'),
 );

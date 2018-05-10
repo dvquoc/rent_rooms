@@ -6,8 +6,6 @@ class ModelCatalogRooms extends Model {
     public function __construct($registry)
     {
         parent::__construct($registry);
-        $abc = preg_grep("/^int$/"  , ['integer'=>'int', 'int'=>'tinyint', 'float'=>'float','double'=>'double','datetime'=>'datetime']);
-        //var_dump($abc); die();
     }
 
     public function find($data_search){
@@ -17,8 +15,7 @@ class ModelCatalogRooms extends Model {
 
     public function addRooms($data){
         $set_tring = $this->__setStringUpdate($data);
-        $sql="INSERT `" . $this->_table . "` SET " . trim($set_tring,",");
-        //var_dump($sql); die();
+        $sql="INSERT `" . $this->_table . "` SET " . $set_tring;
         $this->db->query($sql);
         $this->cache->delete('rooms');
         $this->cache->delete('alias-cache-'.$this->config->get('config_language_id'));
