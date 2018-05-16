@@ -17,6 +17,7 @@ class ControllerCatalogRooms extends Controller {
 		$this->load->public_model('catalog/rooms');
 		$this->getList();
 	}
+
 	public function add() {
 
 		$this->document->setTitle("Thêm phòng trọ");

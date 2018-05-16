@@ -23,9 +23,8 @@
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <link href="/public/assets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <link href="/public/assets/js/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css"/>
-    <link href="/public/assets/css/amination.css" rel="stylesheet">
+    <!--link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css"/-->
+    <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet">
     <div class="menu-main">
             <nav id="menu-main" class="navbar navbar-inverse">
@@ -61,7 +60,7 @@
                                 <option>Quận Tân Bình</option>
                             </select>
                         </li>
-                        <li><input type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="border-radius: 3px; padding: 10px; border: 1px solid #e0e0e0; width: 414px; margin: 8px 0;"></li>
+                        <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="border-radius: 3px; padding: 10px; border: 1px solid #e0e0e0; width: 414px; margin: 8px 0;"></li>
                         <li><input type="text" class="form-control" placeholder="Giá" style="border-radius: 3px; padding: 10px; border: 1px solid #e0e0e0; width: 90px; margin: 8px 0;"></li>
                         <li><input type="text" class="form-control" placeholder="Diện tích" style="border-radius: 3px; padding: 10px; border: 1px solid #e0e0e0; width: 90px; margin: 8px 0;"></li>
                         <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Tìm</button></li>

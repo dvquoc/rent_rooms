@@ -224,9 +224,7 @@
         padding: 5px;
         margin-bottom: 5px;
     }
-    .pac-logo:after{
-        display: none!important;
-    }
+
     #input-address{
         box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
         position: relative;
@@ -238,6 +236,9 @@
         transition-property: background,box-shadow;
         transition-duration: 0.3s;
         font-size: 14px;
+    }
+    .pac-logo:after{
+        display: none!important;
     }
     .pac-item {
         cursor: default;

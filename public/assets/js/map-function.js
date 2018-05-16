@@ -80,7 +80,6 @@ function controlAttachEvents(events, object, handler){
 function OverlayView (map, opts, latLng, $div) {
     var self = this,
     listeners = [];
-    google.maps.OverlayView.call(self);
     self.setMap(map);
     self.onAdd = function () {
         var panes = self.getPanes();
@@ -92,17 +91,10 @@ function OverlayView (map, opts, latLng, $div) {
                 google.maps.event.addDomListener($div[0], name, function (e) {
                     $.Event(e).stopPropagation();
                     google.maps.event.trigger(self, name, [e]);
-                    self.draw();
                 })
             );
         });
-        listeners.push(
-            google.maps.event.addDomListener($div[0], "contextmenu", function (e) {
-                $.Event(e).stopPropagation();
-                google.maps.event.trigger(self, "rightclick", [e]);
-                self.draw();
-            })
-        );
+
     };
     self.getPosition = function () {
         return latLng;
@@ -115,7 +107,7 @@ function OverlayView (map, opts, latLng, $div) {
         var ps = self.getProjection().fromLatLngToDivPixel(latLng);
         $div
             .css("left", (ps.x + opts.offset.x) + "px")
-            .css("top", (ps.y + opts.offset.y) + "px");
+            .css("top", (ps.y + opts.offset.y) + "px").fadeIn( 200 );
     };
     self.onRemove = function () {
         var i;
@@ -148,6 +140,7 @@ function OverlayView (map, opts, latLng, $div) {
     };
 }
 var _m , _mr , polygon_history = [], overlays = [],_bounds=null;
+var class_ov = new google.maps.OverlayView();
 var polygonOptions = {
     strokeColor: '#FF0000',
     strokeOpacity: 0.8,
@@ -205,15 +198,13 @@ $.extend(mapRooms.prototype, {
         if(!$.isEmptyObject(setting.draws))
             this.drawPolygon(setting.draws,false);
 
-        if(!$.isEmptyObject(setting.overlays))
-            this.overlay(setting.overlays);
 
         this.controlCustomMap();
 
-        _m.addListener('idle', function() {
-                if (_m.getZoom() < 15 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
+        _m.addListener('zoom_changed', function() {
+                if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
                     $('.pin-overlay').parent('div').addClass('ping-small');
-                if(_m.getZoom() > 15 && $('.pin-overlay').parent('div').hasClass("ping-small"))
+                if(_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
                     $('.pin-overlay').parent('div').removeClass('ping-small');
         });
 
@@ -249,7 +240,7 @@ $.extend(mapRooms.prototype, {
                             });
                             _mr.removeOjectMap(_p);
                             _mr.removeOjectMap(_pl);
-                            _mr.overlayAction('toogle');
+                            _mr.overlayAction('delete');
                         } else {
                             $(this).removeClass('active');
                             if (!$.isEmptyObject(polygon_history[0].getPath().getArray())) {
@@ -257,7 +248,7 @@ $.extend(mapRooms.prototype, {
                             }
                             enable_draw = false;
                             _mr.setOptionForMap(true);
-                            _mr.overlayAction('toogle');
+                            _mr.overlayAction('delete');
                         }
                     }
                 },
@@ -278,13 +269,12 @@ $.extend(mapRooms.prototype, {
                     },
                     mouseup: function (e) {
                         if (enable_draw) {
-                            var current_path = _pl.getPath().b;
+                            var current_path = _pl.getPath().getArray();
                             if (current_path.length != 0) {
                                 $('#draw-listing').trigger('click');
                                 _pl.setMap(null);
                                 _pl.setPath([]);
                                 _mr.drawPolygon(current_path, true);
-                                //loadPinMap(current_path);
                             } else {
                                 alert("Nhấn chuột và kéo để vẽ. Thả chuột khi vẽ xong bản đồ");
                             }
@@ -390,7 +380,7 @@ $.extend(mapRooms.prototype, {
                 }
             });
         }
-        if(false) {
+        if(true) {
             _mr.controlCreate.inputControl({
                 gmap: _m,
                 name: 'input-search',
@@ -429,22 +419,24 @@ $.extend(mapRooms.prototype, {
         _mr.bounds = new google.maps.LatLngBounds();
         var data_draw = [];
         if(type){
+            data_input.push(data_input[0]);
             data_draw = data_input;
             $.each(data_input, function(k,v){
                 _mr.bounds.extend(v);
             });
-        }
-        else{
+        }else{
             data_input.push(data_input[0]);
             $.each(data_input, function(k,v){
                 data_draw.push(new google.maps.LatLng(v[0], v[1]));
                 _mr.bounds.extend(new google.maps.LatLng(v[0], v[1]));
             });
         }
+
         _bounds = _mr.bounds;
         _p.setPaths(data_draw);
         _p.setMap(_m);
         polygon_history.push(_p);
+        _mr.loadPinMap(data_draw);
         _m.fitBounds(_mr.bounds);
     },
     overlay : function (data_overlay) {
@@ -452,15 +444,17 @@ $.extend(mapRooms.prototype, {
         if (!data_overlay.values.length) {
             return;
         }
+        console.log(data_overlay);
         overlays = [];
         if (!OverlayView.__initialised) {
-            OverlayView.prototype = new google.maps.OverlayView();
+            OverlayView.prototype = class_ov;
             OverlayView.__initialised = true;
         }
         $.each(data_overlay.values, function (i, item) {
             var  obj;
                 $div = $(document.createElement("div")).css({
                     border: "none",
+                    display:'none',
                     borderWidth: 0,
                     position: "absolute"
                 });
@@ -476,6 +470,8 @@ $.extend(mapRooms.prototype, {
         $.each(overlays, function (i, item) {
             if(action == 'toogle')
                 item.toggle();
+            if(action == 'delete')
+                item.toggleDOM();
         });
     },
     getPath: function (ob) {
@@ -664,39 +660,31 @@ $.extend(mapRooms.prototype, {
                 bounds: _bounds,
                 strictBounds: true
             };
+            control = document.getElementById('search-map-input');
             var searchBox = new google.maps.places.Autocomplete(control,options_auto);
             google.maps.event.addListener(searchBox, 'place_changed', function () {
                 var place = searchBox.getPlace();
                 console.log(place);
             });
-
+            var marker = new google.maps.Marker({
+                    map: _m,
+                    draggable: false
+            });
             searchBox.addListener('place_changed', function() {
                 var place = searchBox.getPlace();
                 if (!place.geometry) {
                     return;
                 }
-                var marker = new google.maps.Marker({
+                marker.setMap(null);
+                marker = new google.maps.Marker({
                     map: _m,
                     title: place.name,
                     position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
-                    draggable: true
                 });
                 _m.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
-
                 var myLatlng = new google.maps.LatLng(place.geometry.location.lat(),place.geometry.location.lng());
-                var circle = new google.maps.Polygon({
-                    map: _m,
-                    paths: [_mr.drawCircle(myLatlng, 0.8, 1)],
-                    strokeColor: "#0000FF",
-                    strokeOpacity: 0.5,
-                    strokeWeight: 1,
-                    fillColor: "#0000FF",
-                    fillOpacity: 0.08
-                });
-                console.log(_mr.drawCircle(myLatlng, 0.8, 1).toString());
-                console.log(place);
+                _mr.drawPolygon(_mr.drawCircle(myLatlng, 1, 1), true);
             });
-            options.gmap.controls[options.position].push(control);
             $.each(options, function (name, val) {
                 if(name=='events')
                     controlAttachEvents(options.events, control, google.maps.event.addDomListener);
@@ -737,6 +725,76 @@ $.extend(mapRooms.prototype, {
             extp.push(new google.maps.LatLng(ex, ey));
         }
         return extp;
+    },
+    loadPinMap: function (data) {
+        var region = [];
+        $.each(data, function (key,item) {
+            region.push([item.lng(),item.lat()])
+        });
+        var dataSend = {
+            region:JSON.stringify(region),
+            other: null
+        };
+        $.ajax({
+            url: "/common/home/find-map",
+            data: dataSend,
+            type: "post",
+            dataType: "json",
+            beforeSend: function( xhr ) {
+                //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+            }
+        }).done(function(response) {
+            var data = response.data.listing;
+            var markers_data = [];
+            var prices = ['0.7','1.0','1.2','1.6','2.0','2.2'];
+
+            $.each(data,function(key,item){
+                var price = prices[Math.floor(Math.random() * prices.length)];
+                markers_data.push({
+                    latitude: item.location.coordinates[1],
+                    longitude: item.location.coordinates[0],
+                    latLng: [item.location.coordinates[1], item.location.coordinates[0]],
+                    data:item,
+                    options:{
+                        pane: "floatPane",
+                        content : '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_'+item._id.$oid+'" data-tippy-html="#item_'+item._id.$oid+'" title="'+item.title+'"><span>'+price+'</span></div>',
+                        offset : {x: 0 , y:0},
+                        draggable:true,
+                    }
+                });
+            });
+            _mr.overlayAction('delete');
+            _mr.overlay({
+                values: markers_data,
+                events: {
+                    click: function (overlay, event, context) {
+                    $(event.target).css({'background-color':'#00a1ff'});
+                    var ov = new google.maps.OverlayView();
+                    ov.onAdd = function() {
+                        var proj = this.getProjection();
+                        var aPoint = proj.fromLatLngToContainerPixel(overlay.getPosition());
+                        aPoint.x = aPoint.x + $("#show-list").width()/2;
+                        _m.panTo(proj.fromContainerPixelToLatLng(aPoint));
+                    }
+                    ov.draw = function() {};
+                    ov.setMap(_m);
+                    console.log(context);
+                    $("#detail-title").text(context.data.title);
+                    $("#show-detail").show();
+                    var imgs = JSON.parse(context.data.photo);
+                    var img = imgs[0];
+                    $("#detail-img").attr('src',img.link);
+                    $("#detail-address span").text(context.data.address);
+                    var imgs = JSON.parse(context.data.photo);
+
+                },
+                }
+            });
+        }).fail(function (jqXHR, textStatus, errorThrown){
+            console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);
+        }).always(function () {
+
+        });
     }
 });
 $.fn.mapRooms = function (options) {

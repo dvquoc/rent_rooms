@@ -11,7 +11,6 @@ Options -Indexes
 
 # SEO URL Settings
 RewriteEngine On
-
 RewriteBase /
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]

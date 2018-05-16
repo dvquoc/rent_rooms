@@ -6,35 +6,38 @@ class ControllerCommonSeoUrl extends Controller {
             // Check lại dấu / ở phần đầu và phần cuối của _route_
             $router_define = $this->pareUrl('/'.$this->request->get['_route_']);
             $args =array();
-
             if($router_define && $this->config->get(config_seo_url)) {
                 $this->request->get['route'] = $router_define['action'];
                 $args = $router_define['params'];
+            } elseif(!$router_define){
+                $arrayPare = explode('/',$this->request->get['_route_']);
+                $controler = $arrayPare[0].'/'.$arrayPare[1];
+                $action = isset($arrayPare[2]) ? '/'.preg_replace("/[^a-zA-Z0-9]/",'',$arrayPare[2]):'';
+                $this->request->get['route'] =  $controler.$action;
+                // Get query form url
+                parse_str($_SERVER['QUERY_STRING'], $queries);
+                // Exclude route form $queries
+                $args = array_diff_key($queries, ['route'=>'']);
             } else {
                 $this->request->get['route'] = 'error/not_found';
             }
-            return new Action($this->request->get['route'],$args);
-
-        }elseif (!empty($this->request->get['route'])){
-            // Not seo URL
+        }elseif (!empty($this->request->get['route'])){ // Not seo URL
             if(!isset($this->request->get['route'])){ // Set route cho trang lỗi khi không tìm thấy trang.
                 $this->request->get['route'] = 'error/not_found';
             }
-            // Chạy action với route đã lấy ở phía trên
-            if (isset($this->request->get['route'])) {
-                return new Action($this->request->get['route'],$args =array());
-            }
+            // Get query form url
+            parse_str($_SERVER['QUERY_STRING'], $queries);
+            // Exclude route form $queries
+            $args = array_diff_key($queries, ['route'=>'']);
         }else {
             $this->request->get['route'] = 'common/home';
-            return new Action($this->request->get['route'],$args =array());
         }
-
+        return new Action($this->request->get['route'],$args);
     }
     public function pareUrl($url){
         foreach ($this->routes->get() as $item) {
             // Make regexp from route
             $patternAsRegex = $this->getRegex($item['0']);
-
             $array_router = array();
             if ($ok = !!$patternAsRegex) {
                 // We've got a regex, let's parse a URL
@@ -55,13 +58,15 @@ class ControllerCommonSeoUrl extends Controller {
         // Turn "(/)" into "/?"
         $pattern = preg_replace('#\(/\)#', '/?', $pattern);
         $allowedParamChars = '[a-zA-Z0-9\_\-]+';
-        //Create capture group for ":parameter"
+
+        //Khai báo theo ":parameter"
         $pattern = preg_replace(
             '/:(' . $allowedParamChars . ')/',   # Replace ":parameter"
             '(?<$1>' . $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
             $pattern
         );
-        // Create capture group for '{parameter}'
+
+        // Khai báo theo '{parameter}'
         $pattern = preg_replace(
             '/{('. $allowedParamChars .')}/',    # Replace "{parameter}"
             '(?<$1>' . $allowedParamChars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"

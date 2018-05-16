@@ -72,4 +72,10 @@ class Response {
 			echo $output;
 		}
 	}
+
+	public function encodeJson($data=array()){
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        die();
+    }
 }

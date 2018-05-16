@@ -67,6 +67,7 @@ if(DB_DRIVER == 'mongodb') {
 // Cache
 $cache = new Cache('file');
 $registry->set('cache', $cache);
+
 // Settings
 $setting = $cache->get('setting-cache');
 if(!$setting) {

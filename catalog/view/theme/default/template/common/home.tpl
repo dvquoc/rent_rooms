@@ -1,38 +1,66 @@
 <?php echo $header; ?>
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places" type="text/javascript"></script>
-<script src="/public/assets/js/map/gmap3.js" type="text/javascript"></script>
-<script src="/public/assets/plugins/tippyjs/tippy.all.min.js" type="text/javascript"></script>
-<script src="/public/assets/plugins/slide_reveal/slidereveal.js" type="text/javascript"></script>
-<link href="/public/assets/plugins/tippyjs/tippy.css" rel="stylesheet">
-<link href="/public/assets/plugins/tippyjs/themes/light.css" rel="stylesheet">
 <style type="text/css">
-    .house-overlay-item{
-        background-color: #0a7aad;
-        width: 40px;
+    .pac-logo:after{
+        display: none!important;
+    }
+    .pac-item {
+        cursor: default;
+        padding: 0 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 37px;
+        text-align: left;
+        border-top: 1px solid #e6e6e6;
+        font-size: 13px;
+        color: #999;
+    }
+    .pagination{
+        top: 20px;
+        right: 10px;
+        position: absolute;
+    }
+    .pagination span{
+        display: inline-block;
+        padding: 2px;
+        background-color: #019c44;
+        border-radius: 3px;
+        margin-right: 3px;
+        width: 27px;
+        text-align: center;
+        font-size: 14px;
+    }
+    .house-overlay-item {
+        background-color: #019c44;
+        border: 1px solid #0b8841;
+        width: 30px;
         height: 20px;
         position: relative;
-        color: #fff;
+        color: #adf3cb;
+        font-weight: 600;
         text-align: center;
         line-height: 20px;
-        border-radius: 2px;
+        border-radius: 3px;
         box-shadow: 0 2px 3px 0 rgba(0,0,0,.35);
         margin-left: -20px;
         margin-top: -20px;
         cursor: pointer;
     }
+
     .house-overlay-item:after{
         content: "";
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 8px 5px 0 5px;
-        border-color: #0a7aad transparent transparent transparent;
+        border-width: 8px 6px 0 6px;
+        border-color: #0b8841 transparent transparent transparent;
         bottom: -8px;
-        left: 15px;
+        left: 8px;
         position: absolute;
     }
     .ping-small .house-overlay-item{
-        background-color: #0a7aad;
+        background-color: #00BA51;
         width: 10px;
         height: 10px;
         position: relative;
@@ -42,7 +70,7 @@
         border-radius: 100px;
         box-shadow: none;
         border: 1px solid #eaeaea;
-        margin: 0px;
+        margin: -5px;
     }
     .ping-small .house-overlay-item:after{
         display: none;
@@ -116,7 +144,7 @@
         margin-right: 3px;
         color: #fff;
         font-size: 13px;
-        background-color: #03a9f4;
+        background-color: #00BA51;
         border-radius: 3px;
         line-height: 22px;
         float: left;
@@ -202,8 +230,9 @@
     </div>
     <div id="show-list" class="col-md-3" style="overflow: hidden; border-radius: 3px; position: absolute; right:10px; top:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
-            <div class="results-heading" style="padding: 10px; background-color:#03a9f4; color: #fff; font-size: 18px; padding: 20px 10px;">
+            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 18px; padding: 20px 10px;">
                 <span class="results-heading-title">(<b><?php echo count($listing); ?></b>) Kết quả tìm kiếm</span>
+                <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>
             <div id="content-list">
                 <?php foreach($listing as $item) { ?>
@@ -263,77 +292,75 @@
             $("#show-detail").toggle();
         });
     });
-    $(function(){
-        $(eleMap).css({'height': ($(window).height() - $("#menu-main").outerHeight(true))});
-        $("#show-detail").css({'height': ($(window).height() - $("#menu-main").outerHeight(true)) - 20});
-        $("#show-list").css({'height': ($(window).height() - $("#menu-main").outerHeight(true)) - 20});
-        $("#content-list").css({'height': $("#show-list").outerHeight(true) - ($("#results-heading").outerHeight(true) + 60)});
-        var markers_data = [];
-        var bounds = new google.maps.LatLngBounds();
-        $.each(listing,function(key,item){
-            bounds.extend(new google.maps.LatLng(item.location.coordinates[1],item.location.coordinates[0]));
-            markers_data.push({
-                latitude: item.location.coordinates[1],
-                longitude: item.location.coordinates[0],
-                latLng: [item.location.coordinates[1], item.location.coordinates[0]],
-                data:item,
-                options:{
-                    pane: "floatPane",
-                    content : '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_'+item._id.$oid+'" data-tippy-html="#item_'+item._id.$oid+'" title="'+item.title+'"><span>1,2 tr</span></div>',
-                    offset : {x: 0 , y:0},
-                    draggable:true,
-                }
-            });
+    $(eleMap).css({'height': ($(window).height() - $("#menu-main").outerHeight(true))});
+    $("#show-detail").css({'height': ($(window).height() - $("#menu-main").outerHeight(true)) - 20});
+    $("#show-list").css({'height': ($(window).height() - $("#menu-main").outerHeight(true)) - 20});
+    $("#content-list").css({'height': $("#show-list").outerHeight(true) - ($("#results-heading").outerHeight(true) + 60)});
+    var markers_data = [];
+    var bounds = new google.maps.LatLngBounds();
+    $.each(listing,function(key,item){
+        bounds.extend(new google.maps.LatLng(item.location.coordinates[1],item.location.coordinates[0]));
+        markers_data.push({
+            latitude: item.location.coordinates[1],
+            longitude: item.location.coordinates[0],
+            latLng: [item.location.coordinates[1], item.location.coordinates[0]],
+            data:item,
+            options:{
+                pane: "floatPane",
+                content : '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_'+item._id.$oid+'" data-tippy-html="#item_'+item._id.$oid+'" title="'+item.title+'"><span> 1.2 </span></div>',
+                offset : {x: 0 , y:0},
+                draggable:true,
+            }
         });
-        var optionsMap = {
-            zoomControl: true,
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.LEFT_TOP
-            },
-            scaleControl: false,
-            fullscreenControl: false,
-            mapTypeControl: false,
-            zoom:zoom,
-            streetViewControl: false,
-            overviewMapControl: true,
-            scrollwheel: true,
-            disableDoubleClickZoom: true,
-            center: bounds.getCenter(),
-            draws: polygon,
-            controlCustom:['draw-line','draw-popygon'],
-            overlays: {
-                values: markers_data,
-                events: {
-                    click: function (overlay, event, context) {
-                        $(event.target).css({'background-color':'#00a1ff'});
-                        var ov = new google.maps.OverlayView();
-                        ov.onAdd = function() {
-                            var proj = this.getProjection();
-                            var aPoint = proj.fromLatLngToContainerPixel(overlay.getPosition());
-                            aPoint.x = aPoint.x + $("#show-list").width()/2;
-                            _m.panTo(proj.fromContainerPixelToLatLng(aPoint));
-                        }
-                        ov.draw = function() {};
-                        ov.setMap(_m);
-
-                        $("#detail-title").text(context.data.title);
-                        $("#show-detail").show();
-                        var imgs = JSON.parse(context.data.photo);
-                        var img = imgs[0];
-                        $("#detail-img").attr('src',img.link);
-                        $("#detail-address span").text(context.data.address);
-                        var imgs = JSON.parse(context.data.photo);
-
-                    },
-                    mouseover: function (overlay, event, context) {
-
-                    },
-                    mouseout: function (overlay, event, context) {
+    });
+    var optionsMap = {
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+        },
+        scaleControl: false,
+        fullscreenControl: false,
+        mapTypeControl: false,
+        zoom:zoom,
+        streetViewControl: false,
+        overviewMapControl: true,
+        scrollwheel: true,
+        disableDoubleClickZoom: true,
+        center: bounds.getCenter(),
+        draws: polygon,
+        controlCustom:['draw-line','draw-popygon'],
+        overlays: {
+            values: markers_data,
+            events: {
+                click: function (overlay, event, context) {
+                    $(event.target).css({'background-color':'#00a1ff'});
+                    var ov = new google.maps.OverlayView();
+                    ov.onAdd = function() {
+                        var proj = this.getProjection();
+                        var aPoint = proj.fromLatLngToContainerPixel(overlay.getPosition());
+                        aPoint.x = aPoint.x + $("#show-list").width()/2;
+                        _m.panTo(proj.fromContainerPixelToLatLng(aPoint));
                     }
+                    ov.draw = function() {};
+                    ov.setMap(_m);
+
+                    $("#detail-title").text(context.data.title);
+                    $("#show-detail").show();
+                    var imgs = JSON.parse(context.data.photo);
+                    var img = imgs[0];
+                    $("#detail-img").attr('src',img.link);
+                    $("#detail-address span").text(context.data.address);
+                    var imgs = JSON.parse(context.data.photo);
+
+                },
+                mouseover: function (overlay, event, context) {
+
+                },
+                mouseout: function (overlay, event, context) {
                 }
             }
-        };
-        var map = $("#test1").mapRooms(optionsMap);
-        map.mapRooms('test');
-    });
+        }
+    };
+    var map = $("#test1").mapRooms(optionsMap);
+    //map.mapRooms('test');
 </script>

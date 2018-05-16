@@ -1,6 +1,5 @@
 {
     "require": {
         "mongodb/mongodb": "^1.2",
-        "naucon/file": "^1.0"
     }
 }
