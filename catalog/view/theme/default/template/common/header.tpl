@@ -23,7 +23,7 @@
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <link href="/public/assets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!--link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css"/-->
+    <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
     <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet">
     <div class="menu-main">

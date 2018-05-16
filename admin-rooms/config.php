@@ -28,7 +28,7 @@ define('DIR_MODIFICATION', DIR_HOME.'/system/modification/');
 define('DIR_CATALOG', DIR_HOME.'/catalog/');
 
 // DB
-define('DB_DRIVER', 'mysqli');
+define('DB_DRIVER', 'mongodb');
 if(DB_DRIVER == 'mongodb') {
     define('DB_HOSTNAME', 'localhost');
     define('DB_USERNAME', 'root');

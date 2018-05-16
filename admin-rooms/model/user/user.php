@@ -25,21 +25,15 @@ class ModelUserUser extends Model {
 	}
 
 	public function getUser($user_id) {
-		$query = $this->db->query("SELECT *, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group FROM `" . DB_PREFIX . "user` u WHERE u.user_id = '" . (int)$user_id . "'");
-
-		return $query->row;
+        return $this->db->user->findOne([
+            '_id' => $user_id,
+        ]);
 	}
 
 	public function getUserByUsername($username) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE username = '" . $this->db->escape($username) . "'");
-
-		return $query->row;
-	}
-
-	public function getUserByCode($code) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . $this->db->escape($code) . "' AND code != ''");
-
-		return $query->row;
+        return $this->db->user->findOne([
+            'username' => $username,
+        ]);
 	}
 
 	public function getUsers($data = array()) {
