@@ -7,5 +7,4 @@ class ControllerDataInsert extends Controller{
         $this->load->public_model('create/table');
         $this->model_create_table->insertData();
     }
-
 }

@@ -131,7 +131,9 @@
         text-overflow: ellipsis;
         overflow: hidden;
         width: 100%;
-        height: 1.2em;
+        height: 2.2em;
+        color: #424242;
+        font-size: 14px;
         white-space: nowrap;
     }
     .more-info-list,.main-info-list{
@@ -243,11 +245,11 @@
                             <img src="<?php echo  $img[0]['link'] ?>" width="100px" height="70px">
                         </div>
                         <div class="info" style="margin-left: 115px;">
-                            <h4 class="title"><?php echo $item["title"]; ?></h4>
-                            <div class="address"><?php echo $item["address"]; ?></div>
+                            <h3 class="title"><?php echo $item["title"]; ?></h3>
+                            <div class="address" style="font-size: 13px"><?php echo $item["address"]; ?></div>
                             <div class="more-info-list">
-                                <span class="item-main">1.5 tr</span>
-                                <span class="item-main">12 m2</span>
+                                <span class="item-main"><?php echo $item["price"]/1000000; ?> tr</span>
+                                <span class="item-main"><?php echo $item["acreage"]; ?> m2</span>
                                 <span class="item-more">Cách 30m</span>
                                 <span class="item-more">Tự do giờ giấc</span>
                             </div>

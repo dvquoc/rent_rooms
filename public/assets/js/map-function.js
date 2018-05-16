@@ -757,7 +757,7 @@ $.extend(mapRooms.prototype, {
                     data:item,
                     options:{
                         pane: "floatPane",
-                        content : '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_'+item._id.$oid+'" data-tippy-html="#item_'+item._id.$oid+'" title="'+item.title+'"><span>'+price+'</span></div>',
+                        content : '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_'+item._id.$oid+'" data-tippy-html="#item_'+item._id.$oid+'" title="'+item.title+'"><span>'+item.price/1000000+'</span></div>',
                         offset : {x: 0 , y:0},
                         draggable:true,
                     }
