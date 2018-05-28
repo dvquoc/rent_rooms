@@ -200,13 +200,40 @@ $.extend(mapRooms.prototype, {
 
 
         this.controlCustomMap();
-
+        var rectangle = new google.maps.Rectangle();
         _m.addListener('zoom_changed', function() {
                 if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
                     $('.pin-overlay').parent('div').addClass('ping-small');
                 if(_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
                     $('.pin-overlay').parent('div').removeClass('ping-small');
         });
+
+        _m.addListener('rightclick', function() {
+
+            // rectangle.setOptions({
+            //     strokeColor: '#FF0000',
+            //     strokeOpacity: 0.8,
+            //     strokeWeight: 2,
+            //     fillColor: '#FF0000',
+            //     fillOpacity: 0.35,
+            //     map: _m,
+            //     bounds: _m.getBounds()
+            // });
+            var paths =new google.maps.MVCArray();
+            var path = new google.maps.MVCArray();
+            var ne = _m.getBounds().getNorthEast();
+            var sw = _m.getBounds().getSouthWest();
+            path.push(ne);
+            path.push(new google.maps.LatLng(sw.lat(), ne.lng()));
+            path.push(sw);
+            path.push(new google.maps.LatLng(ne.lat(), sw.lng()));
+            paths.push(path);
+            _mr.drawPolygon(paths);
+            return paths;
+        });
+
+
+
 
         _m.addListener('mouseover', function() {
             $('[data-toggle="tooltip"]').tooltip();
@@ -217,6 +244,24 @@ $.extend(mapRooms.prototype, {
       console.log("This is Function test");
     },
     controlCustomMap: function () {
+        if(true) {
+            _mr.controlCreate.buttonControl({
+                gmap: _m,
+                name: '',
+                tooltip:'Xem sau và so sánh',
+                class: 'glyphicon glyphicon-heart',
+                id: 'save-map',
+                position: google.maps.ControlPosition.LEFT_TOP,
+                events: {
+                    click: function (event) {
+                        $("#addRoom").modal('show');
+                        $("#addRoom").on('shown.bs.modal', function (e) {
+                            // do something...
+                        })
+                    }
+                }
+            });
+        }
         if(true) {
             var drawing_poply = false;
             var enable_draw = false;
@@ -683,7 +728,7 @@ $.extend(mapRooms.prototype, {
                 });
                 _m.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
                 var myLatlng = new google.maps.LatLng(place.geometry.location.lat(),place.geometry.location.lng());
-                _mr.drawPolygon(_mr.drawCircle(myLatlng, 1, 1), true);
+                _mr.drawPolygon(_mr.drawCircle(myLatlng, 3, 1), true);
             });
             $.each(options, function (name, val) {
                 if(name=='events')

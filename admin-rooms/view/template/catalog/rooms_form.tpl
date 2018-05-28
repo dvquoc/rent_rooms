@@ -34,7 +34,27 @@
                                   <div class="text-center title-info"><h3>Hình ảnh</h3></div>
                                   <div class="form-group">
                                       <div class="slider-images col-md-12">
-                                          <img src="http://www.venturinistore.it/images/joomlart/demo/default.jpg" class="img-responsive">
+                                          <?php if(!empty($room_images_lagre)) { ?>
+                                              <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                                  <div class="carousel-inner">
+                                                        <?php foreach($room_images_lagre as $k=>$item){ ?>
+                                                              <div class="item <?php echo $k==0 ? 'active':'' ?>" style="height:430px; overflow: hidden;">
+                                                                  <img onerror="this.src='http://www.venturinistore.it/images/joomlart/demo/default.jpg'" src="<?php echo $item->link; ?>" class="img-responsive">
+                                                              </div>
+                                                        <?php } ?>
+                                                  </div>
+                                                  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                                      <span class="glyphicon glyphicon-chevron-left"></span>
+                                                      <span class="sr-only">Previous</span>
+                                                  </a>
+                                                  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                                      <span class="glyphicon glyphicon-chevron-right"></span>
+                                                      <span class="sr-only">Next</span>
+                                                  </a>
+                                              </div>
+                                          <?php } else{ ?>
+                                                <img src="http://www.venturinistore.it/images/joomlart/demo/default.jpg" class="img-responsive">
+                                          <?php } ?>
                                           <button type="button" onclick="addImage();" title="" class="add-image pull-right">Thêm ảnh [+]</button>
                                       </div>
                                       <div id="img-list" class="col-md-12">
@@ -62,10 +82,10 @@
                                           <div class="row">
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Tỉnh/Thành phố</label>
-                                                  <select class="form-control" name="city">
+                                                  <select class="form-control" name="city_id">
                                                       <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
                                                       <?php foreach($citys as $item) { ?>
-                                                          <?php if($item["city_id"] == $city) { ?>
+                                                          <?php if($item["city_id"] == $city_id) { ?>
                                                                 <option selected="selected" value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
                                                           <?php } else{  ?>
                                                                 <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
@@ -75,10 +95,10 @@
                                               </div>
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Quận/Huyện</label>
-                                                  <select class="form-control" name="district">
+                                                  <select class="form-control" name="district_id">
                                                       <option value="null">--- Chọn Quận/Huyện ---</option>
                                                       <?php foreach($districts as $item) { ?>
-                                                          <?php if($item["district_id"] == $district) { ?>
+                                                          <?php if($item["district_id"] == $district_id) { ?>
                                                                 <option selected="selected" value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
                                                           <?php } else { ?>
                                                                 <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
@@ -102,11 +122,11 @@
                                           <div class="row">
                                               <div class="col-sm-6">
                                                   <label class="">Kinh độ: </label>
-                                                  <div><input name="lat" id="input-lat" class="form-control" value="<?php echo $lat; ?>"></div>
+                                                  <div><input name="lat" id="input-lat" class="form-control" value="<?php echo $location['coordinates'][1]; ?>"></div>
                                               </div>
                                               <div class="col-sm-6">
                                                   <label class="">Vĩ độ: </label>
-                                                  <div><input name="lng" id="input-lng" class="form-control" value="<?php echo $lng; ?>"></div>
+                                                  <div><input name="lng" id="input-lng" class="form-control" value="<?php echo $location['coordinates'][0]; ?>"></div>
                                               </div>
                                               <div class="col-md-12">
                                                   <h3 style="font-size: 18px; margin-top: 15px;">Hướng dẫn: </h3>
@@ -214,6 +234,7 @@
                                                   <label class="col-sm-12">Mã tin đăng</label>
                                                   <div class="col-md-12">
                                                       <input type="text" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
+                                                      <input type="text" class="form-control" name="_id" value="<?php echo $_id; ?>" >
                                                   </div>
                                             </div>
                                         <?php } ?>
@@ -356,7 +377,7 @@
 
     }
     var map= new google.maps.Map(document.getElementById('map-address'), {
-        center: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
+        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         zoom: 16,
         scaleControl: false,
         fullscreenControl: false,
@@ -373,7 +394,7 @@
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     var marker = new google.maps.Marker({
-        position: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
+        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         map: map,
         title: '<?php echo $address;  ?>',
         draggable: true

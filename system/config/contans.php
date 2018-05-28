@@ -5,6 +5,6 @@
  * Time: 4:45 PM
  */
 $configs =array(
-    'config_limit_admin'=>12,
+    'config_limit_admin'=>20,
 );
 

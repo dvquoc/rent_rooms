@@ -1,14 +1,44 @@
 <?php
 class ModelUserUser extends Model {
+    public function __construct($registry){
+        parent::__construct($registry);
+        $this->table = $this->db->user;
+    }
+
 	public function addUser($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET username = '" . $this->db->escape($data['username']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', image = '" . $this->db->escape($data['image']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+        return $this->table->insertOne([
+            'username' => $data['username'],
+            'image' => $data['image'],
+            'user_group_id' => new MongoDB\BSON\ObjectId($data['user_group_id']),
+            'password' => md5($data['password']),
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' =>$data['email'],
+            'status' => (int) $data['status'],
+            'date_added' => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp())
+        ]);
 	}
 
 	public function editUser($user_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET username = '" . $this->db->escape($data['username']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', image = '" . $this->db->escape($data['image']) . "', status = '" . (int)$data['status'] . "' WHERE user_id = '" . (int)$user_id . "'");
-
+        $data_set = [
+            'username' => $data['username'],
+            'image' => $data['image'],
+            'user_group_id' => new MongoDB\BSON\ObjectId($data['user_group_id']),
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' =>$data['email'],
+            'status' => (int) $data['status'],
+        ];
+        //var_dump($data_set); die();
+        return $this->table->updateOne(
+            ['user_id' => new MongoDB\BSON\ObjectId($user_id)],
+            ['$set' => $data_set]
+        );
 		if ($data['password']) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "user` SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "' WHERE user_id = '" . (int)$user_id . "'");
+            return $this->table->updateOne(
+                ['user_id' => new MongoDB\BSON\ObjectId($user_id)],
+                ['$set' => ['password' => md5($data['password'])]]
+            );
 		}
 	}
 
@@ -25,8 +55,8 @@ class ModelUserUser extends Model {
 	}
 
 	public function getUser($user_id) {
-        return $this->db->user->findOne([
-            '_id' => $user_id,
+        return $this->table->findOne([
+            '_id' => new MongoDB\BSON\ObjectId($user_id),
         ]);
 	}
 
@@ -37,47 +67,19 @@ class ModelUserUser extends Model {
 	}
 
 	public function getUsers($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "user`";
-
-		$sort_data = array(
-			'username',
-			'status',
-			'date_added'
-		);
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY username";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
+        $filter = [];
+        $options =[
+            'skip'       => isset($data['start']) ? $data['start']:0,
+            'limit'      => isset($data['limit']) ? $data['limit']:20,
+            'sort'       => ['user_id'=>-1],
+        ];
+        return $this->table->find($filter, $options)->toArray();
 	}
 
 	public function getTotalUsers() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`");
-
-		return $query->row['total'];
+        $filter =[];
+        $options =[];
+        return $this->table->count($filter, $options);
 	}
 
 	public function getTotalUsersByGroupId($user_group_id) {

@@ -6,6 +6,10 @@
  * Time: 9:51 AM
  */
 class ModelFindMap extends Model {
+    public function __construct($registry){
+        parent::__construct($registry);
+        $this->table = $this->db->rooms;
+    }
     public function common(){
         $result = $this->db->ladingpage->find();
         if(count($result) > 0)
@@ -17,15 +21,11 @@ class ModelFindMap extends Model {
                     'type' =>'Polygon',
                     'coordinates'=>array($data_region)
                 );
-        $result = $this->db->listing->find(array(
-            'location'=>['$geoWithin'=>['$geometry'=>$data]],
-        ),
-        array(
-            'limit'=>1000
-        )
-        );
-        if(count($result) > 0)
-            return $result->toArray();
-        return false;
+        $result = $this->table->find(
+            ['location'=>['$geoWithin'=>['$geometry'=>$data]]],
+            ['sort'       => ['room_id'=>-1]],
+            ['limit'=>500]
+        )->toArray();
+        return $result;
     }
 }

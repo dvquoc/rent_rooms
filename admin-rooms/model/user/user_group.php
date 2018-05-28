@@ -1,5 +1,9 @@
 <?php
 class ModelUserUserGroup extends Model {
+    public function __construct($registry){
+        parent::__construct($registry);
+        $this->table = $this->db->user_group;
+    }
 	public function addUserGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(serialize($data['permission'])) : '') . "'");
 	}
@@ -23,32 +27,8 @@ class ModelUserUserGroup extends Model {
 		return $user_group;
 	}
 
-	public function getUserGroups($data = array()) {
-		$sql = "SELECT * FROM " . DB_PREFIX . "user_group";
-
-		$sql .= " ORDER BY name";
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
+	public function getUserGroups() {
+        return $this->table->find()->toArray();
 	}
 
 	public function getTotalUserGroups() {

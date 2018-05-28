@@ -39,29 +39,9 @@ if(DB_DRIVER == 'mongodb') {
     //$dbName = rawurlencode("protal-cms-dev");
     //$connect = new \MongoDB\Client("mongodb://".$user.":".$pass."@124.158.14.30:27017/".$dbName);
     //$connect = $connect->selectDatabase("protal-cms-dev");
-
-    $connect = new \MongoDB\Client();
+    $connect = new \MongoDB\Client('mongodb://localhost:27017/cms-portal');
     $connect = $connect->selectDatabase("rents_room");
     $registry->set('db', $connect);
-
-    /*
-    foreach ($query->rows as $item){
-        $insert_data = array(
-            'title'=>$item['Title'],
-            'photo'=>$item['Photo'],
-            'address'=>$item['Address'],
-            'cityID'=>(int) $item['CityID'],
-            'districtID'=>(int) $item['DistrictID'],
-            'location'=>array(
-                'type'=>'Point',
-                'coordinates'=>array((float) $item['Longitude'],(float) $item['Latitude'])
-            ),
-            'cityID'=>$item['CityID'],
-        );
-        if(false)
-            $connect->listing->insertOne($insert_data);
-    }
-    */
 }
 
 // Cache

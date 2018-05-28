@@ -39,10 +39,12 @@ if(DB_DRIVER == 'mongodb') {
     $registry->set('db', $connect);
 }
 
+
 // Settings
 foreach ($configs as $key => $setting) {
-    $config->set($key, $setting['value']);
+    $config->set($key, $setting);
 }
+
 // Loader
 $loader = new Loader($registry);
 $registry->set('load', $loader);

@@ -1,7 +1,7 @@
 <?php
 abstract class Model {
 	protected $registry;
-
+    protected $table = null;
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}

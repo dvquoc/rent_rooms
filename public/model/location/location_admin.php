@@ -20,13 +20,11 @@ class ModelLocationLocationAdmin extends Model {
     }
 
     function getAllCity(){
-        $query = $this->db->query("SELECT * FROM ".$this->_table);
-        return $query->rows;
+        return $this->db->city->find()->toArray();
     }
 
     function getDistrictByCity($city_id){
-        $query = $this->db->query("SELECT * FROM ".$this->_table_relative['district']." WHERE city_id = '" . (int)$city_id . "'");
-        return $query->rows;
+        return $this->db->district->find(['city_id'=> $city_id])->toArray();
     }
 
     function getStreetByDistrict($data){

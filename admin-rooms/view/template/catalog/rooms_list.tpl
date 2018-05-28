@@ -29,11 +29,11 @@
                         <b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class="fa fa-search"></span> Tìm kiếm:</b>
                     </div>
                     <div class="dropdown-menu row" style="background-color: #fbfbfb; padding: 10px 6px 1px 6px;width: calc(100% - 13px); margin-right: 14px; left: 14px;top: 95%;display: none; border-radius: 0px; -webkit-box-shadow:rgba(0, 0, 0, 0.78) 10px 10px 43px -30px;box-shadow: rgba(0, 0, 0, 0.78) 10px 10px 43px -30px; border:1px solid #e2e2e2;">
-                        <div id="item_search_city" class="col-md-2 item">
+                        <div id="item_search_city_id" class="col-md-2 item">
                             <label class="text hidden">Thành Phố</label>
-                            <select name="city" class="form-control">
+                            <select name="city_id" class="form-control">
                                 <?php foreach($citys as $item){  ?>
-                                    <?php if($data_filter['city'] == $item['city_id']) { ?>
+                                    <?php if($data_filter['city_id'] == $item['city_id']) { ?>
                                             <option selected="selected" value="<?php echo $item['city_id']; ?>"><?php echo $item['name']; ?></option>
                                     <?php } else { ?>
                                             <option value="<?php echo $item['city_id']; ?>"><?php echo $item['name']; ?></option>
@@ -41,11 +41,11 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div id="item_search_district" class="col-md-2 item">
+                        <div id="item_search_district_id" class="col-md-2 item">
                             <label class="text hidden">Quận/Huyện</label>
-                            <select name="district" class="form-control">
+                            <select name="district_id" class="form-control">
                                 <?php foreach($districts as $item){  ?>
-                                    <?php if($data_filter['district'] == $item['district_id']) { ?>
+                                    <?php if($data_filter['district_id'] == $item['district_id']) { ?>
                                         <option selected value="<?php echo $item['district_id']; ?>"><?php echo $item['name']; ?></option>
                                     <?php } else { ?>
                                         <option value="<?php echo $item['district_id']; ?>"><?php echo $item['name']; ?></option>
@@ -57,26 +57,28 @@
                             <label class="text hidden">Đường/Khu vực</label>
                             <input name="special_face" value="<?php echo $text_special; ?>" placeholder="Nhập đường/khu vực đặc biệt" id="input-special-face" class="form-control"/>
                         </div>
-                        <div id="item_search_special" class="col-md-2 item" type="input">
-                            <label class="text hidden">Đường/Khu vực</label>
-                            <input name="special" placeholder="Giá trị khu vực" id="input-special" value="<?php echo $data_filter['special']; ?>"  class="form-control"/>
-                        </div>
-                        <div id="item_search_type" class="col-md-2 item" type="input">
-                            <label class="text hidden">Loai khu vực</label>
-                            <input name="type" id="input-type" placeholder="Loai khu vực" value="<?php echo $data_filter['type']; ?>"  class="form-control"/>
-                        </div>
                         <div id="item_search_ads" class="col-md-2 item">
                             <label class="text hidden">Loại tin</label>
                             <select name="ads" class="form-control">
-                                <option value="1">Tin quảng cáo</option>
-                                <option value="0">Tin bình thường</option>
+                                <?php if($data_filter['ads'] == 0) { ?>
+                                    <option value="0" selected="selected">Tin bình thường</option>
+                                    <option value="1">Tin quảng cáo</option>
+                                <?php } else { ?>
+                                    <option value="0">Tin bình thường</option>
+                                    <option value="1" selected="selected">Tin quảng cáo</option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div id="item_search_ads_position" class="col-md-2 item">
                             <label class="text hidden">Vị trí quảng cáo</label>
                             <select name="ads_position" class="form-control">
-                                <option value="1">Home</option>
-                                <option value="0">search</option>
+                                <?php if($data_filter['ads'] == 0) { ?>
+                                    <option value="home" selected="selected">Trang chủ</option>
+                                    <option value="search">Trang tìm kiếm</option>
+                                <?php } else { ?>
+                                    <option value="home">Trang chủ</option>
+                                    <option value="search" selected="selected">Trang tìm kiếm</option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div id="item_search_status" class="col-md-2 item">
@@ -94,17 +96,22 @@
                         <div id="item_search_close_door" class="col-md-2 item">
                             <label class="text hidden">Giờ Giấc</label>
                             <select name="close_door" class="form-control">
-                                <option value="0">Tự do</option>
-                                <option value="1">Ràng buột</option>
+                                <?php if(empty($data_filter["close_door"])) {  ?>
+                                    <option selected = "selected" value="">Tự do</option>
+                                    <option  value="require">Có giờ giấc</option>
+                                <?php }else{ ?>
+                                    <option value="">Tự do</option>
+                                    <option selected = "selected" value="require">Có giờ giấc</option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div id="item_search_price" class="col-md-2 item" type="input">
                             <label class="text hidden">Giá thuê</label>
-                            <input type="text" name="price" value="" placeholder="Lọc theo giá" id="input-price" class="form-control" />
+                            <input type="text" name="price" value="<?php echo $data_filter['price']; ?>" placeholder="Lọc theo giá" id="input-price" class="form-control" />
                         </div>
                         <div id="item_search_acreage" class="col-md-2 item" type="input">
                             <label class="text hidden">Diện tích</label>
-                            <input type="text" name="acreage" value="" placeholder="Diện tích" id="input-acreage" class="form-control" />
+                            <input type="text" name="acreage" value="<?php echo $data_filter['acreage']; ?>" placeholder="Diện tích" id="input-acreage" class="form-control" />
                         </div>
                         <div id="item_search_name" class="col-md-2 item" type="input">
                             <label class="text hidden">Tên</label>
@@ -164,27 +171,30 @@
                                     <?php } else { ?>
                                     <input type="checkbox" name="selected[]" value="<?php echo $room['room_id']; ?>" />
                                     <?php } ?></td>
-                                <td class="text-left"><?php echo $room['name']; ?></td>
+                                <td class="text-left">
+                                    <div style="color: #333; font-weight: bold"> <?php echo $room['name']; ?></div>
+                                    <div style="font-size: 12px; "><span>Địa chỉ:</span> <i><?php echo $room['address']; ?></i></div>
+                                </td>
                                 <td class="text-right"><?php echo $room['text_price']; ?></td>
                                 <td class="text-right"><?php echo $room['text_acreage']; ?></td>
                                 <td class="text-left"><span class="feature"> <?php echo $room['ads'] ? 'Tin quảng cáo': 'Tin bình thường'; ?></span></td>
-                                <td class="text-left"><?php echo $room['from_date']; ?></td>
-                                <td class="text-left"><?php echo $room['to_date']; ?></td>
+                                <td class="text-left"><?php echo date('d/m/YY',$room['from_date']); ?></td>
+                                <td class="text-left"><?php echo date('d/m/YY',$room['to_date']); ?></td>
                                 <td class="text-right"><a href="<?php echo $room['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
-                            <tr>
-                                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
-                            </tr>
+                                <tr>
+                                    <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+                                </tr>
                             <?php } ?>
                             </tbody>
                         </table>
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-                    <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                    <div class="col-sm-6 text-left"><?php echo $paginations['pagination']; ?></div>
+                    <div class="col-sm-6 text-right"><?php echo $paginations['results']; ?></div>
                 </div>
             </div>
         </div>
@@ -211,7 +221,7 @@
     <script type="text/javascript">
         var params_old = <?php echo json_encode($data_filter); ?>;
         var params = params_old;
-        var district_id = params_old.district;
+        var district_id = params_old.district_id;
         var updateFilter = function (data) {
             if(!$.isEmptyObject(data))
                 $('#filter-rooms-contain').html("<b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class=\"fa fa-search\"></span> Tìm kiếm:</b><i class=\"icon-dropdown fa fa-angle-down pull-right\"></i>");
@@ -252,19 +262,19 @@
         $(".dropdown-menu select").change(function () {
             eval('params.'+ $(this).attr("name").replace('-','_') + "= '" + $(this).find('option:selected').val() +"'");
             updateFilter(params);
-            if($(this).attr('name') == 'city'){
+            if($(this).attr('name') == 'city_id'){
                 $.ajax({
                     url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
                     dataType: 'json',
                     success: function(json) {
-                        $('select[name=\'district\']').html('');
+                        $('select[name=\'district_id\']').html('');
                         $.map(json, function(item) {
-                            $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                            $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
                         });
                     }
                 });
             }
-            if($(this).attr('name') == 'district'){
+            if($(this).attr('name') == 'district_id'){
                 district_id = $(this).val();
             }
         });

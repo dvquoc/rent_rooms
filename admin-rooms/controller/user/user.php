@@ -54,7 +54,7 @@ class ControllerUserUser extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = "Cập nhật thành công !";
 
 			$url = '';
 
@@ -111,17 +111,6 @@ class ControllerUserUser extends Controller {
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'username';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -130,15 +119,6 @@ class ControllerUserUser extends Controller {
 		}
 
 		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
@@ -161,8 +141,6 @@ class ControllerUserUser extends Controller {
 		$data['users'] = array();
 
 		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit' => $this->config->get('config_limit_admin')
 		);
@@ -176,8 +154,8 @@ class ControllerUserUser extends Controller {
 				'user_id'    => $result['user_id'],
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $result['user_id'] . $url, 'SSL')
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])/1000),
+				'edit'       => $this->url->link('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $result['_id'] . $url, 'SSL')
 			);
 		}
 
