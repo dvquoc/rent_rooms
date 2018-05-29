@@ -5,7 +5,10 @@ class ModelUserUserGroup extends Model {
         $this->table = $this->db->user_group;
     }
 	public function addUserGroup($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(serialize($data['permission'])) : '') . "'");
+        return $this->data->insertOne([
+            'name'=>$data['name'],
+            'permission'=>$data['permission']
+        ]);
 	}
 
 	public function editUserGroup($user_group_id, $data) {

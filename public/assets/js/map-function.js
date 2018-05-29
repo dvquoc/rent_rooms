@@ -201,39 +201,21 @@ $.extend(mapRooms.prototype, {
 
         this.controlCustomMap();
         var rectangle = new google.maps.Rectangle();
+        var marker = new google.maps.Marker({
+            map: _m,
+            draggable: false
+        });
         _m.addListener('zoom_changed', function() {
                 if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
                     $('.pin-overlay').parent('div').addClass('ping-small');
                 if(_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
                     $('.pin-overlay').parent('div').removeClass('ping-small');
+
+            var point =  _mr.fromPixelToLatLng({x:20,y:20});
+            var point1 = _mr.fromPixelToLatLng({x:$el.width() - $("#content-list").width(),y:20});
+            var point2 = _mr.fromPixelToLatLng({x:$el.width()- $("#content-list").width(),y:$el.height()});
+            var point3 = _mr.fromPixelToLatLng({x:0,y:$el.height()});
         });
-
-        _m.addListener('rightclick', function() {
-
-            // rectangle.setOptions({
-            //     strokeColor: '#FF0000',
-            //     strokeOpacity: 0.8,
-            //     strokeWeight: 2,
-            //     fillColor: '#FF0000',
-            //     fillOpacity: 0.35,
-            //     map: _m,
-            //     bounds: _m.getBounds()
-            // });
-            var paths =new google.maps.MVCArray();
-            var path = new google.maps.MVCArray();
-            var ne = _m.getBounds().getNorthEast();
-            var sw = _m.getBounds().getSouthWest();
-            path.push(ne);
-            path.push(new google.maps.LatLng(sw.lat(), ne.lng()));
-            path.push(sw);
-            path.push(new google.maps.LatLng(ne.lat(), sw.lng()));
-            paths.push(path);
-            _mr.drawPolygon(paths);
-            return paths;
-        });
-
-
-
 
         _m.addListener('mouseover', function() {
             $('[data-toggle="tooltip"]').tooltip();
@@ -483,6 +465,8 @@ $.extend(mapRooms.prototype, {
         polygon_history.push(_p);
         _mr.loadPinMap(data_draw);
         _m.fitBounds(_mr.bounds);
+        _m.setZoom(_m.getZoom() + 1);
+        _m.panBy($("#show-list").width()/2,0);
     },
     overlay : function (data_overlay) {
         var objs  = [];
@@ -840,6 +824,37 @@ $.extend(mapRooms.prototype, {
         }).always(function () {
 
         });
+    },
+    fromLatLngToPixel: function (position) {
+        var scale = Math.pow(2, Map.getZoom());
+        var proj = Map.getProjection();
+        var bounds = Map.getBounds();
+
+        var nw = proj.fromLatLngToPoint(
+            new google.maps.LatLng(
+                bounds.getNorthEast().lat(),
+                bounds.getSouthWest().lng()
+            ));
+        var point = proj.fromLatLngToPoint(position);
+
+        return new google.maps.Point(
+            Math.floor((point.x - nw.x) * scale),
+            Math.floor((point.y - nw.y) * scale));
+    },
+    fromPixelToLatLng: function (pixel) {
+        var scale = Math.pow(2, _m.getZoom());
+        var proj = _m.getProjection();
+        var bounds = _m.getBounds();
+
+        var nw = proj.fromLatLngToPoint(
+            new google.maps.LatLng(
+                bounds.getNorthEast().lat(),
+                bounds.getSouthWest().lng()
+            ));
+        var point = new google.maps.Point();
+        point.x = pixel.x / scale + nw.x;
+        point.y = pixel.y / scale + nw.y;
+        return proj.fromPointToLatLng(point);
     }
 });
 $.fn.mapRooms = function (options) {
