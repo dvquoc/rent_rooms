@@ -3,7 +3,8 @@
 <link href="/public/assets/css/list-map-page.css" rel="stylesheet" type="text/css">
 <!--declare-->
 <div class="contain-map contain-fluid-full" style="position: relative">
-    <div id="test1" class="gmap3" style="width: 100%; height:950px"></div>
+    <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
+    <div id="privacy-notifycation">Chúng tôi sẽ sử dụng cookied để giúp bạn trải nghiệm tốt hơn. Hãy đồng ý và trải nghiệm... <a ng-click="legal.accept()" style="margin:0 10px">Đồng ý</a> <a target="_blank">Xem thêm...</a></div>
     <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; top:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
@@ -11,7 +12,7 @@
             </div>
             <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
             <div class="col-md-12" style=" background-color: #fff;">
-                <h3 style="margin-top: -42px; background-color: #03a9f4c7; color: #fff; padding: 10px" id="detail-title">Tiêu đề</h3>
+                <h3 style="margin-top: -42px; background-color:#019c44f5;box-shadow: 2px 0px 20px -10px #000; border-radius: 3px; color: #fff; padding: 10px" id="detail-title">Tiêu đề</h3>
                 <p style="background-color: #eee; margin: 15px 0px; border: 1px solid #eee; padding: 5px 8px;" id="detail-address"><b>Địa chỉ: </b><span></span></p>
                 <div class="row">
                     <div id="detail-price" class="col-md-6">
@@ -97,7 +98,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Hướng dẫn</h4>
             </div>
             <div class="modal-body">
@@ -114,7 +115,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Nhập thông tin</h4>
             </div>
             <div class="modal-body">
@@ -127,9 +128,20 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div id="toolip-detail-on-pin" style="width: 300px; height: 150px; display: none; background-color: #fff; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; padding: 15px; position: absolute; left: 0px; top: 0px;">
+    <div class="content">
+        <div><b>Giá thuê: </b> 3.000.000 triệu</div>
+        <div><b>Diện tích: </b> 60 m2</div>
+        <div><b>Tiền điện: </b> 3.000 đ/kg</div>
+        <div><b>Tiền nước: </b> 3.000 đ/kg</div>
+        <div class="text-right"><button style="position: absolute;right:0px; top: 0px;" class="btn btn-primary">Gọi ngay</button></div>
+    </div>
+    <div class="arrow"></div>
+</div>
+
 <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn" type="text/javascript"></script>
 <script src="/public/assets/js/map-function.js" type="text/javascript"></script>
 <script src="/public/assets/js/list-map-page.js" defer type="text/javascript"></script>
 <script type="text/javascript">

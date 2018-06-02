@@ -10,7 +10,7 @@ class ControllerCommonHome extends Controller {
             $data['region'][$key]= [(float) $item[1],(float) $item[0]];
         }
         $data['zoom']=15;
-        $data['listing'] = $this->model_find_map->regionListing($data['region']);
+        $data['listing'] = $this->model_find_map->regionListing($data['region'])['data_lagre'];
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/home.tpl')) {
@@ -24,7 +24,10 @@ class ControllerCommonHome extends Controller {
         $data = array('data'=>null);
         $request = $this->request->post;
         if(!empty($request)) {
-            $data['data']['listing'] = $this->model_find_map->regionListing(json_decode($request['region'],true));
+            $result = $this->model_find_map->regionListing(json_decode($request['region'],true));
+            $data['data']['listing'] = $result['data_lagre'];
+            $data['data']['listing_small'] = $result['data_small'];
+
         }
         $this->response->encodeJson($data);
     }

@@ -46,7 +46,6 @@ class ModelCatalogRooms extends Model {
                 'price'    =>1,
                 'acreage'  =>1,
             ],
-
         ];
         return $this->table->find($filter, $options)->toArray();
     }
