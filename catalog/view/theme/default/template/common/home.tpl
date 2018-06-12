@@ -130,10 +130,11 @@
 </div><!-- /.modal -->
 <div id="toolip-detail-on-pin" style="width: 300px; height: 150px; display: none; background-color: #fff; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; padding: 15px; position: absolute; left: 0px; top: 0px;">
     <div class="content">
-        <div><b>Giá thuê: </b> 3.000.000 triệu</div>
-        <div><b>Diện tích: </b> 60 m2</div>
-        <div><b>Tiền điện: </b> 3.000 đ/kg</div>
-        <div><b>Tiền nước: </b> 3.000 đ/kg</div>
+        <div id="show-price-tooltip"><b>Giá thuê: </b> <span>loadding... </span>vnđ</div>
+        <div id="show-acreage-tooltip"><b>Diện tích: </b><span> loadding... </span> m2</div>
+        <div id="show-electricity-tooltip"><b>Tiền điện: </b> <span> loadding... </span> đ/kg</div>
+        <div id="show-water-tooltip"><b>Tiền nước: </b> <span> loadding... </span> đ/khối</div>
+        <div id="show-deposit-tooltip"><b>Đặt cọc trước: </b> <span> loadding... </span>vnđ</div>
         <div class="text-right"><button style="position: absolute;right:0px; top: 0px;" class="btn btn-primary">Gọi ngay</button></div>
     </div>
     <div class="arrow"></div>

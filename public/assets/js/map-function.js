@@ -154,9 +154,7 @@ var _Canvas = function (element) {
         this.canvas[index] = style[index];
     }
     element == undefined ? document.body.appendChild(this.canvas) : element.appendChild(this.canvas);
-
     this.canvas.addEventListener("click", this.click.bind(this), false);
-
 }
 
 _Canvas.prototype.of = function (mouse) {
@@ -168,8 +166,24 @@ _Canvas.prototype.click = function (e) {
     return this.of(this.mouse);
 }
 
+/* Add event click */
+function isIntersect(mp,p) {
+    return Math.sqrt((mp.x-p.x) ** 2 + (mp.y - p.y) ** 2) < 10;
+}
+/* Add event click */
+function isInTooltip(mp,o,p) {
+    if(
+        (mp.x < o.offset().left
+            || mp.x > o.offset().left + o.width())
+        ||(mp.y < o.offset().top
+            ||((mp.y > o.offset().top + o.height()- 26) && ((mp.x < p.x - 10) || ( mp.x > p.x + 10)) ))
+    )
+        return false;
+    return true;
+}
 
-var _m, _mr, polygon_history = [], overlays = [], _bounds = null, _canvas = null, isdrag = true;
+
+var _m, _mr, polygon_history = [], overlays = [], _bounds = null, _canvas = null, nubLayout = 10, layoutEleData=[];
 var data_maker = [];
 var class_ov = new google.maps.OverlayView();
 var polygonOptions = {
@@ -224,114 +238,115 @@ var mapRooms = function ($el, options) {
 // Add prototype for mapRooms and public function in this prototype
 $.extend(mapRooms.prototype, {
     init: function () {
-        var setting = this.setting;
-        var $el = this.element;
         _mr = this;
-
         this.controlCustomMap();
-        var rectangle = new google.maps.Rectangle();
-        var marker = new google.maps.Marker({
-            map: _m,
-            draggable: false
-        });
+        this.eventMap();
+    },
+    eventMap:function () {
+        /* Zoom change */
         _m.addListener('zoom_changed', function () {
             if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
                 $('.pin-overlay').parent('div').addClass('ping-small');
             if (_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
                 $('.pin-overlay').parent('div').removeClass('ping-small');
-                _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
+            _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
+            $("#toolip-detail-on-pin").fadeOut('fast');
+            $("#toolip-detail-on-pin").find('.arrow').fadeOut('fast');
         });
+
+        /* Click Event */
+        var show = false;
+        var t = $("#toolip-detail-on-pin");
+        var lastClick = {x:0,y:0};
+        _m.addListener('click',function (e) {
+            const p = { x: e.pixel.x, y: e.pixel.y };
+            var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
+            var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
+            if (!isInTooltip(p, t, lastClick) && lastClick.y!=0) {
+                t.fadeOut(1);
+                t.find('.arrow').fadeOut(1);
+            }
+            layoutEleData[rowKey][colKey].forEach(function (i, k) {
+                if (isIntersect(p, i)) {
+                    lastClick = i;
+                    //console.log(p);
+                    //console.log(layoutEleData[rowKey][colKey]);
+                    t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - t.outerHeight(true) - 10});
+                    t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 10 + "px"});
+
+                    t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
+                    t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
+                    t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
+                    t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
+                    t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
+                    $("#detail-title").text(i.data.name);
+                    $("#show-detail").show();
+                    $("#detail-address span").text(i.data.address);
+                    var imgs = JSON.parse(i.data.images);
+                    return false;
+                }
+            });
+
+        });
+
+        /* mouseover Event */
         _m.addListener('mouseover', function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        /* dragstart Event */
         var firstMouse = [];
         _m.addListener('dragstart', function () {
             firstMouse.push($("#root").offset().left);
             firstMouse.push($("#root").offset().top);
             _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
-            isdrag = true;
         });
-        _m.addListener('dragend', function () {
-            isdrag=false;
+        /* Idle Event */
+        var count1 = 0;
+        this.map.addListener( 'idle', function() {
+            console.log('load map finish...');
+            var border = [];
+            border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
+            border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: 20}));
+            border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: _mr.element.height()}));
+            border.push(_mr.fromPixelToLatLng({x: 0, y: _mr.element.height()}));
+            border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
+            if (count1 == 0 && _canvas == null) {
+                _mr.drawCanvas();
+            } else {
+                //$("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
+            }
+            count1++;
+            firstMouse = [];
+            border.push(border[0]);
+            _mr.drawPolygon(border, true, true);
         });
 
+        /* Center changed Event */
         _m.addListener('center_changed', function () {
-            isdrag = true;
             if (canvas != null) {
                 var moveX = firstMouse.length ? -(_mr.element.width() / 2) + (firstMouse[0] - $("#root").offset().left) : -(_mr.element.width() / 2);
                 var moveY = firstMouse.length ? -(_mr.element.height() / 2) + (firstMouse[1] - $("#root").offset().top) : -(_mr.element.height() / 2);
                 $("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + (moveX) + 'px,' + (moveY) + 'px, 0px'});
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             }
+
         });
-        var count1 = 0;
-        _m.addListener('idle', function () {
-            console.log('load map finish...');
-            var border = [];
-            border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
-            border.push(_mr.fromPixelToLatLng({x: $el.width() - $("#content-list").width(), y: 20}));
-            border.push(_mr.fromPixelToLatLng({x: $el.width() - $("#content-list").width(), y: $el.height()}));
-            border.push(_mr.fromPixelToLatLng({x: 0, y: $el.height()}));
-            border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
-            if (count1 == 0 && _canvas == null) {
-                _mr.drawCanvas();
-            } else {
-                $("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
+    },
+    resetDataPinSmall:function(){
+        layoutEleData = [];
+        for (var i=1; i<=nubLayout; i++){
+            layoutEleData.push([]);
+            for (var j=1; j<=nubLayout; j++) {
+                layoutEleData[i-1].push([]);
             }
-            count1++;
-            firstMouse = [];
-            _mr.drawPolygon(border, true, true);
-        });
+        }
     },
     drawCanvas: function () {
         if (!OverlayView.__initialised) {
             OverlayView.prototype = class_ov;
             OverlayView.__initialised = true;
         }
-
-        /* Add event click */
-        function isIntersect(mp,p) {
-            return Math.sqrt((mp.x-p.x) ** 2 + (mp.y - p.y) ** 2) < 5;
-        }
-        /* Add event click */
-        function isInTooltip(mp,o,p) {
-            if(
-                (mp.x < o.offset().left
-                    || mp.x > o.offset().left + o.width())
-                ||(mp.y < o.offset().top
-                    ||((mp.y > o.offset().top + o.height()- 26) && ((mp.x < p.x - 10) || ( mp.x > p.x + 10)) ))
-            )
-                return false;
-            return true;
-        }
-        var show = false;
-        // _mr.element.click(function (e) {
-        //     const p = { x: e.offsetX, y: e.offsetY };
-        //     var t = $("#toolip-detail-on-pin");
-        //         data_maker.forEach(function (i, k) {
-        //             if(!isdrag) {
-        //                 t.fadeOut('fast');
-        //                 t.find('.arrow').fadeOut('fast');
-        //                 console.log('drag...');
-        //                 return false;
-        //             }
-        //             if (isIntersect(p, i) && !show) {
-        //                 show = true;
-        //                 t.fadeIn().css({'left': i.x - t.width() / 2, top: i.y - t.outerHeight(true) - 10});
-        //                 t.find('.arrow').css({'left': (i.x - t.offset().left) - 10 + "px"}).fadeIn();
-        //                 return false;
-        //             } else {
-        //                 if (!isInTooltip(p, t, {x:i.x,y:i.y}) && show) {
-        //                     t.fadeOut();
-        //                     t.find('.arrow').fadeOut();
-        //                     show = false;
-        //                 }
-        //                 return false;
-        //             }
-        //         });
-        //
-        // });
-
         /* Canvas into map */
         $div = $(document.createElement("div")).css({}).addClass('canvas-marker');
         //var myCanvas = new Canvas($div);
@@ -350,14 +365,18 @@ $.extend(mapRooms.prototype, {
         new OverlayView(_m, _mr.fromPixelToLatLng({x: 0, y: 0}), $div, opts);
     },
     addItemToCanvas: function () {
-        data_maker.forEach(function (i, k) {
-            _canvas.beginPath();
-            _canvas.arc(i.x, i.y, 3, 0, 2 * Math.PI, false);
-            _canvas.lineWidth = 8;
-            _canvas.strokeStyle = '#e9244060';
-            _canvas.stroke();
-            _canvas.fill();
-            _canvas.closePath();
+        layoutEleData.forEach(function (t, k) {
+            t.forEach(function (z,key) {
+                z.forEach(function (i,key) {
+                    _canvas.beginPath();
+                    _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
+                    _canvas.lineWidth = 4;
+                    _canvas.strokeStyle = '#e9244080';
+                    _canvas.stroke();
+                    _canvas.fill();
+                    _canvas.closePath();
+                });
+            });
        });
     },
     test: function () {
@@ -579,10 +598,10 @@ $.extend(mapRooms.prototype, {
         }
 
         _bounds = _mr.bounds;
-        if (!full)
-            _p.setPaths(data_draw);
-        _p.setMap(_m);
-        polygon_history.push(_p);
+        // if (!full)
+        //     _p.setPaths(data_draw);
+        // _p.setMap(_m);
+        // polygon_history.push(_p);
         _mr.loadPinMap(data_draw);
         //_m.fitBounds(_mr.bounds);
         //_m.setZoom(_m.getZoom() + 1);
@@ -871,6 +890,7 @@ $.extend(mapRooms.prototype, {
     },
     loadPinMap: function (data) {
         console.log('load map...');
+        this.resetDataPinSmall();
         var region = [];
         $.each(data, function (key, item) {
             region.push([item.lng(), item.lat()])
@@ -885,12 +905,13 @@ $.extend(mapRooms.prototype, {
             type: "post",
             dataType: "json",
             async:true,
+            cache:false,
             beforeSend: function (xhr) {
                 _mr.element.append('<div class="loadding-map"><img src="http://www.coinnews.net/files/support/loading.gif" algin="left">Đang tải dữ liệu...</div>');
             }
         }).done(function (response) {
             var data = response.data.listing;
-            var markers_data = [];
+            markers_data = [];
             _mr.overlayAction('delete');
             $.each(data, function (key, item) {
                 markers_data.push({
@@ -918,26 +939,19 @@ $.extend(mapRooms.prototype, {
                     }
                 }
             });
-
-            var markers_data_small = [];
             response.data.listing_small.forEach(function(item,k){
                 var latLgn = _mr.fromLatLngToPixel(new google.maps.LatLng(item.location.coordinates[1], item.location.coordinates[0]));
-                markers_data_small.push({
-                    latitude: item.location.coordinates[1],
-                    longitude: item.location.coordinates[0],
+                var colKey  = Math.ceil(((latLgn.x/(_mr.element.width()-$("#content-list").width()))*100)/nubLayout)-1;
+                var rowKey = Math.ceil(((latLgn.y/_mr.element.height())*100)/nubLayout)-1;
+                layoutEleData[rowKey][colKey].push({
                     latLng: [item.location.coordinates[1], item.location.coordinates[0]],
-                    data: item,
-                    options: {
-                        pane: "floatPane",
-                        content: '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
-                        offset: {x: 0, y: 0},
-                        draggable: true,
-                    },
-                    x: latLgn.x,
-                    y: latLgn.y,
+                    x:latLgn.x,
+                    y:latLgn.y,
+                    data: item
                 });
             });
-            data_maker = markers_data_small;
+            if(_canvas!=null)
+                _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             _mr.addItemToCanvas();
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);

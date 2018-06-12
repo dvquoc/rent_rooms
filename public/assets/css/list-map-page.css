@@ -54,6 +54,18 @@
     cursor: pointer;
 }
 
+.house-overlay-item span {
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    background-color: #ffffff;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100px;
+    text-indent: -9999px;
+}
+
 .house-overlay-item:after{
     content: "";
     width: 0;
@@ -179,6 +191,7 @@
 #toolip-detail-on-pin .content{
     position: relative;
     height: 100%;
+    font-size: 13px;
 }
 #toolip-detail-on-pin .arrow{
     width: 0;
@@ -214,17 +227,21 @@
     bottom: 10px;
     z-index: 39;
     padding: 0 10px;
-    border: 1px solid #ded588;
-    background: #ffffbbe8;
+    border: 1px solid #157bcc;
+    background: #157bcc;
     left: 19%;
-    width: 700px;
-    font-size: 13px;
+    width: 750px;
+    font-size: 14px;
     margin: auto;
     text-align: center;
     border-radius: 5px;
     line-height: 40px;
+    color: #fff;
 }
 #privacy-notifycation a{
-    color: #0d5a84;
+    color: #157bcc;
     font-size: 13px;
+    background-color: #fff;
+    padding: 6px 6px;
+    border-radius: 3px;
 }

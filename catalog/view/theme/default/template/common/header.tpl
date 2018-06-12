@@ -34,7 +34,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand logo" style="margin-right: 20px; margin-left:5px; margin-top: 3px;" href="/"><img width="250px" src="https://cdn1.homeadvisor.com/images/consumer/home/ha-logo-title-sm.png" alt="ssss" title="Biệt thự vihomes"></a>
+                    <a class="navbar-brand logo" style="text-decoration: none; margin-right: 20px; margin-left:5px; margin-top: 3px;" href="/">
+                        <span style="font-weight: bold; font-size: 32px; color: #00BA51; display:block;">MAP</span>
+                        <i style="display:block; font-size: 14px; color: #7b7b7b; font-weight: bold;">conphong.com</i>
+                    </a>
                 </div>
                 <style type="text/css">
                     #menu-search .form-control{
