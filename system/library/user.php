@@ -8,7 +8,6 @@ class User {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
-
 		if (isset($this->session->data['user_id'])) {
 			$user_query = $this->db->user->findOne([
 			    '_id' => $this->session->data['user_id'],
@@ -50,7 +49,7 @@ class User {
 			$this->user_group_id = $user_query['user_group_id'];
 
             $user_query = $this->db->user_group->findOne([
-                'user_group_id' => $user_query['user_group_id'],
+                '_id' => $user_query['user_group_id'],
             ]);
 			$permissions = unserialize($user_query->permission);
 			if (is_array($permissions)) {

@@ -62,7 +62,7 @@
                             <option>Quận Tân Bình</option>
                         </select>
                     </li>
-                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 414px; margin: 8px 0;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
+                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 300px; margin: 8px 0;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
                     <li><input type="text" class="form-control" placeholder="Giá" style="width: 90px; margin: 8px 0;"></li>
                     <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 90px; margin: 8px 0;"></li>
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Tìm</button></li>
@@ -83,17 +83,18 @@
             Copyright @ conphong.com, Data from google
         </div>
     </div>
-    <div id="inner-body" style="margin-top: 70px; position: relative">
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("mySidenav").style.left = "0";
-            document.getElementById("inner-body").style.marginLeft = "250px";
-        }
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("mySidenav").style.left = "-250px";
-            document.getElementById("inner-body").style.marginLeft = "0";
-        }
-        console.log(document.body);
-    </script>
+    <div id="inner-body" style=" position: relative">
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("mySidenav").style.left = "0";
+                document.getElementById("inner-body").style.marginLeft = "250px";
+            }
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("mySidenav").style.left = "-250px";
+                document.getElementById("inner-body").style.marginLeft = "0";
+            }
+            console.log(document.body);
+        </script>
+    </div>

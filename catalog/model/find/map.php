@@ -12,19 +12,19 @@ class ModelFindMap extends Model {
     }
     public function regionListing($data_region){
         $data = array(
-                    'type' =>'Polygon',
+                    'type'       =>'Polygon',
                     'coordinates'=>array($data_region)
                 );
         $filter['location']= ['$geoWithin'=>['$geometry'=>$data]];
         $options =[
-            'sort'       => ['room_id'=>-1],
+            'sort' => ['room_id'=>-1],
             'limit'=>150,
-            'skip'=>0
+            'skip' =>0
         ];
         $options1 =[
-            'sort'       => ['room_id'=>-1],
+            'sort' => ['room_id'=>-1],
             'limit'=>1000,
-            'skip'=>150
+            'skip' =>150
         ];
         $result['data_lagre'] = $this->table->find($filter,$options)->toArray();
         $result['data_small'] = $this->table->find($filter,$options1)->toArray();

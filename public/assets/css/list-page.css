@@ -34,3 +34,54 @@
     background-color:#31b0d5;
     color:#fff;
 }
+.col-btn{
+    float: right;
+    
+}
+
+.tag-list-white ,.tag-list-white:hover {
+    color: #000!important;
+    background-color: #fff!important;
+}
+
+
+.tag-list-btn{
+    border: none;
+    display: inline-block;
+    padding: 5px 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    margin: 5px 5px;
+}
+.tag-list-btn:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.tag-list-border{
+    border: 1px solid #ccc!important;
+    border-radius: 10px
+}
+.link-tag{
+    background-color: ##ffffff;
+    padding: 15px 16px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+}
+.link{
+     text-decoration: none !important;
+}
+.link-tag ul{
+  list-style-type: none;
+  padding: 0!important;
+}
+.btnn{
+    background-color: white;
+    border-color: black;
+    width: 140px;
+}
+

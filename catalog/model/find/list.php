@@ -6,8 +6,17 @@
  * Time: 9:51 AM
  */
 class ModelFindList extends Model {
-    public function find($data_search){
-        $query = $this->db->query('SELECT * FROM `1_1_rooms` WHERE `status` ='.$data_search['status']);
-        return $query->rows;
+	public function __construct($registry){
+        parent::__construct($registry);
+        $this->table = $this->db->rooms;
+    }
+    public function get_list(){
+    	 $options =[
+            'sort' => ['room_id'=>-1],
+            'limit'=>4,
+            'skip' =>0
+        ];
+    	$result = $this->table->find(array(),$options)->toArray();
+        return $result;
     }
 }
