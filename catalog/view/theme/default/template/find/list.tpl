@@ -1,24 +1,38 @@
 <?php echo $header ?>
-<link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
-<link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
-<link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
-<link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
-<link href="/public/assets/css/stylesheet.css" rel="stylesheet">
 <script src="/public/assets/plugins/slide_reveal/slidereveal.js" type="text/javascript"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<div style="clear:both"></div>
 <div class="container">
-  	<div class="row">
-		<div class="col-md-2">dsa</div>
+  	<div class="row" style="margin-top: 70px">
+		<div class="col-md-2">
+			<div class="list_col_left">
+				<div class="left_col_like">
+					<img src="http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg" width="165px" height="120px">
+					<p>Nhấn vào nút yêu thích để làm gì đó</p>
+				</div>
+				<div class="left_col_info">
+					<button class="col_left_button btn btn-primary">Đăng ký phòng trọ</button>
+					<button class="col_left_button btn btn-primary">Góp ý thắc mắc</button>
+					<img src="http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg" width="165px" height="120px">
+					<button class="col_left_button btn btn-primary">Thông tin thêm</button>
+				</div>
+				<div class="left_col_footer">
+					<p>Nhanh nhất - tiết kiệm nhất - cẩn thận nhất</p>
+				</div>
+			</div>
+		</div>
 		<div class="col-md-10">
 			<div class="row">
 				<div class="col-md-12">
-					<div>
-						<h5>Mô tả HCM</h5>
+					<div class="page_description">
+						<h2>Mô tả HCM</h2>
 						<p>mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tả mô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tảmô tả mô tả</p>
 					</div>
+					<div style="text-align: center;">
+						<button class="btn">Xem bằng bản đồ</button>
+					</div>
 				</div>
-				
+				<div class="col-md-12" style="margin-top: 20px">
+					<h2>Top nhà trọ HCM</h2>
+				</div>
 				<?php foreach($rooms as $item) { ?>
 					<div class="col-md-3">
 						<div>
@@ -46,7 +60,7 @@
 					<?php }?>
 			</div>
 			<div class="row">
-				<div class="col-md-9">
+				<div class="col-md-8">
 					<?php foreach($rooms as $item) { ?>
 					<div class="col-md-3" style="margin-bottom: 20px">
 						<?php  $img = json_decode($item["images"],true); ?>
@@ -74,7 +88,7 @@
 					<div class="clearfix"></div>
 					<?php } ?>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div>
 						<p>Khu vực lân cận</p>
 					</div>

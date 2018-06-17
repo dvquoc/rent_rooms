@@ -38,7 +38,30 @@
     float: right;
     
 }
-
+.left_col_footer{
+    padding: 10px;
+    font-size: 10px;
+    color: #9a9a9a;
+    position: absolute;
+    bottom: 50px;
+    line-height: 20px;
+    border-top: 1px solid #eee;
+    background-color: #eee;
+}
+.col_left_button{
+    width: 90%;
+    margin: 5px 0;
+}
+.list_col_left{
+    height: 100%;
+    width: 165px;
+    position: fixed;
+    z-index: 1;
+    top: 70px;
+    background-color: #fff;
+    box-shadow: 2px 0 20px -10px #000;
+    text-align: center;
+}
 .tag-list-white ,.tag-list-white:hover {
     color: #000!important;
     background-color: #fff!important;
@@ -79,6 +102,7 @@
   list-style-type: none;
   padding: 0!important;
 }
+
 .btnn{
     background-color: white;
     border-color: black;
