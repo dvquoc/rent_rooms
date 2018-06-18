@@ -5,7 +5,9 @@ class ControllerCommonHeader extends Controller {
 
 		$data['menu_map']= $this->url->link_seo('tim-kiem-theo-ban-do','SSL');
 		$data['list']= $this->url->link_seo('tim-kiem-theo-list','SSL');
-
+        $data['classPage'] = '';
+		if(isset($this->request->get['route']))
+            $data['classPage'] = str_replace('/','-', $this->request->get['route']);
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
 		} else {

@@ -11,11 +11,11 @@ $(document).ready(function () {
         $("#show-detail").toggle();
     });
 });
-var heightShow = window.innerHeight - getId('menu-main').offsetHeight;
+var heightShow = window.innerHeight;
 
 eMap.style.height =  heightShow + 'px';
-eShowDetail.style.height = (heightShow - 20) + 'px';
-eShowList.style.height =  (heightShow - 20) + 'px';
+eShowDetail.style.height = ((heightShow - getId('menu-main').offsetHeight) - 20) + 'px';
+eShowList.style.height =  ((heightShow - getId('menu-main').offsetHeight) - 20) + 'px';
 eContentList.style.height =  (eShowList - getClass('results-heading')[0].offsetHeight + 60) + 'px';
 
 var markers_data = [];

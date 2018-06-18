@@ -76,12 +76,12 @@
 
 						<div class="col-md-1" style="padding-left: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
 						<div class="col-md-4" style="padding-left: 0"><?php echo $item['price'];?> Triệu/tháng</div>
-						<div class="col-md-4 col-btn"><button class="btnn"><i class="fa fa-phone" aria-hidden="true"></i> Liên hệ</button></div>
+						<div class="col-md-4 col-btn"><button class="btn"><i class="fa fa-phone" aria-hidden="true"></i> Liên hệ</button></div>
 						<div class="clearfix"></div>
 
 						<div class="col-md-1" style="padding-left: 0"><i class="fa fa-area-chart" aria-hidden="true"></i></div>
 						<div class="col-md-4" style="padding-left: 0"><?php echo $item['price_electricity'];?> Mét vuông</div>
-						<div class="col-md-4 col-btn"><button class="btnn"><i class="fa fa-heart" aria-hidden="true"></i> Yêu thích</button></div>
+						<div class="col-md-4 col-btn"><button class="btn"><i class="fa fa-heart" aria-hidden="true"></i> Yêu thích</button></div>
 						<div class="clearfix"></div>
 
 					</div>

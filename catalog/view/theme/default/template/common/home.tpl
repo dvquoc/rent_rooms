@@ -5,7 +5,7 @@
 <div class="contain-map contain-fluid-full" style="position: relative">
     <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
     <div id="privacy-notifycation">Chúng tôi sẽ sử dụng cookied để giúp bạn trải nghiệm tốt hơn. Hãy đồng ý và trải nghiệm... <a ng-click="legal.accept()" style="margin:0 10px">Đồng ý</a> <a target="_blank">Xem thêm...</a></div>
-    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; top:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
+    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
                 <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
@@ -57,12 +57,12 @@
             </div>
         </div>
     </div>
-    <div id="show-list" class="col-md-3" style="border-radius: 3px; position: absolute; right:10px; top:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+    <div id="show-list" class="col-md-3" style="border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
         <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
-            <button class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
+            <a href="/tim-kiem-phong-tro" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
                 <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>
                 Xem dạng danh sách
-            </button>
+            </a>
         </div>
         <div class="inner" style="position: relative; overflow: hidden; height: 100%">
             <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 18px; padding: 20px 10px;">

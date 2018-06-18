@@ -5,9 +5,9 @@ body{
     font-size: 16px;
     line-height: 25px;
     width: 100%;
-    background-color:#fff;
     margin: auto;
     transition: background-color .2s;
+    background-color: #f3f3f3;
 }
 #inner-body{
     transition: margin-left .2s;
