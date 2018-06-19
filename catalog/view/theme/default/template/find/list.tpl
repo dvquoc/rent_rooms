@@ -2,8 +2,8 @@
 <script src="/public/assets/plugins/slide_reveal/slidereveal.js" type="text/javascript"></script>
 <div class="container">
   	<div class="row" style="margin-top: 70px">
-		<div class="col-md-2">
-			<div class="list_col_left">
+		<div class="col-md-2 list_col_left">
+			<div style="height:100%">
 				<div class="left_col_like">
 					<img src="http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg" width="165px" height="120px">
 					<p>Nhấn vào nút yêu thích để làm gì đó</p>
@@ -37,7 +37,7 @@
 					<div class="col-md-3">
 						<div>
 							<?php  $img = json_decode($item["images"],true); ?>
-							<img src="<?php echo $img[0]['link'];?>" width="230px" height="120px">
+							<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
 						</div>
 						<div class="clearfix"></div>
 						<div>
@@ -57,20 +57,20 @@
 							</table>
 						</div>
 					</div>
-					<?php }?>
+				<?php }?>
 			</div>
 			<div class="row">
 				<div class="col-md-8">
 					<?php foreach($rooms as $item) { ?>
 					<div class="col-md-3" style="margin-bottom: 20px">
 						<?php  $img = json_decode($item["images"],true); ?>
-						<img src="<?php echo $img[0]['link'];?>" width="150px" height="120px" >
+						<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" width="150px" height="120px" >
 					</div> 
 					<div class="col-md-9">
-						<div><?php echo $item['name'];?></div>
+						<div><b><?php echo $item['name'];?></b></div>
 						<div class="clearfix"></div>
 
-						<div class="col-md-9" style="padding-left: 0"><?php echo $item['address'];?></div>
+						<div class="col-md-9" style="padding-left: 0; font-size: 13px; color: #999;"><?php echo $item['address'];?></div>
 						<div class="col-md-3" style="padding-left: 0"><?php echo $item['date_crate'];?></div>
 						<div class="clearfix"></div>
 

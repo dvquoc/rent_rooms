@@ -35,7 +35,7 @@
     margin-right: 3px;
     width: 27px;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
 }
 .house-overlay-item {
     background-color: #019c44;
@@ -142,6 +142,9 @@
 #content-list::-webkit-scrollbar-track {
     background-color: #f0f0f0;
 }
+.title{
+    font-size: 14px;
+}
 .address{
     text-overflow: ellipsis;
     overflow: hidden;
@@ -150,6 +153,34 @@
     color: #424242;
     font-size: 14px;
     white-space: nowrap;
+}
+#show-detail .inner{
+    font-size: 13px;
+}
+#show-detail .inner .img{
+    height: 250px;
+}
+.item-info-main p{
+margin: 5px 0;
+}
+.more-info{
+    font-size: 9px;
+}
+#detail-title{
+    margin-top: -42px;
+    background-color: #019c44f5;
+    box-shadow: 2px 0px 20px -10px #000;
+    border-radius: 3px;
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+}
+#detail-address{
+    background-color: #eee; 
+    margin: 15px 0px;
+    border: 1px solid #eee;
+    padding: 5px 8px;
+    font-size: 13px;
 }
 .more-info-list,.main-info-list{
     margin-top: 10px;
@@ -227,11 +258,11 @@
     bottom: 10px;
     z-index: 39;
     padding: 0 10px;
-    border: 1px solid #157bcc;
-    background: #157bcc;
+    border: 1px solid #00ba51;
+    background: #00ba51;
     left: 19%;
     width: 750px;
-    font-size: 14px;
+    font-size: 13px;
     margin: auto;
     text-align: center;
     border-radius: 5px;
@@ -239,7 +270,7 @@
     color: #fff;
 }
 #privacy-notifycation a{
-    color: #157bcc;
+    color: #00ba51;
     font-size: 13px;
     background-color: #fff;
     padding: 6px 6px;

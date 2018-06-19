@@ -486,7 +486,6 @@ h6 {
     padding: 10;
     font-size: 18px;
     line-height: 20px;
-    height: 50px;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -1872,6 +1871,7 @@ input, button, select, textarea {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    text-decoration: none;
 }
 .btn-primary {
     color: #ffffff;

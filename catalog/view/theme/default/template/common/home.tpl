@@ -12,25 +12,25 @@
             </div>
             <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
             <div class="col-md-12" style=" background-color: #fff;">
-                <h3 style="margin-top: -42px; background-color:#019c44f5;box-shadow: 2px 0px 20px -10px #000; border-radius: 3px; color: #fff; padding: 10px" id="detail-title">Tiêu đề</h3>
-                <p style="background-color: #eee; margin: 15px 0px; border: 1px solid #eee; padding: 5px 8px;" id="detail-address"><b>Địa chỉ: </b><span></span></p>
-                <div class="row">
+                <h3 id="detail-title">Tiêu đề</h3>
+                <p id="detail-address"><b>Địa chỉ: </b><span></span></p>
+                <div class="row item-info-main">
                     <div id="detail-price" class="col-md-6">
-                        <p><b>Giá cho thuê: </b><span>1.2 triệu/tháng</span></p>
+                        <p><b>Giá cho thuê: </b><span class='more-info'>1.2 triệu/tháng</span></p>
                     </div>
                     <div id="detail-area" class="col-md-6">
                         <p><b>Diện tích: </b><span>15 m2</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main ">
                     <div id="detail-water" class="col-md-6">
-                        <p><b>Tiền cọc: </b><span>1 trệu <i style="font-size: 11px; color: red"> (hoàn tháng cuối)</i></span></p>
+                        <p><b>Tiền cọc: </b><span>1 trệu <i class='more-info' style="font-size: 9px; color: red"> (hoàn lại)</i></span></p>
                     </div>
                     <div id="detail-price" class="col-md-6">
                         <p><b>Toilet: </b><span>Trong nhà</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main ">
                     <div id="detail-water" class="col-md-6">
                         <p><b>Tiền nước: </b><span>15.000/khối</span></p>
                     </div>
@@ -38,7 +38,7 @@
                         <p><b>Tiền điện: </b><span>3000/kg</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main">
                     <div id="detail-water" class="col-md-6">
                         <p><b>Số lượng người ở: </b><span>3/người</span></p>
                     </div>
@@ -65,7 +65,7 @@
             </a>
         </div>
         <div class="inner" style="position: relative; overflow: hidden; height: 100%">
-            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 18px; padding: 20px 10px;">
+            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 16px; padding: 20px 10px;">
                 <span class="results-heading-title">(<b><?php echo count($listing); ?></b>) Kết quả tìm kiếm</span>
                 <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>
