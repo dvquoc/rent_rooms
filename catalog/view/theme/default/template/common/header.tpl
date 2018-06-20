@@ -19,7 +19,7 @@
     <meta property="og:site_name" content="<?php echo $title; ?>">
     <meta property="og:image" content="<?php echo 'http://yhay.info/aliweb/image/catalog/logo.png'; ?>">
 </head>
-<body>
+<body class="<?php echo $classPage ?>">
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
@@ -28,9 +28,9 @@
     <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <div class="menu-main" style="position: fixed; top: :0px; left: 0px; width: 100%">
-        <nav id="menu-main" class="navbar" style="padding: 10px 0px;">
-            <div class="container-fluid">
+    <div class="menu-main">
+        <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
+            <div class="<?php echo $classPage !='common-home' ? 'container' : 'container-fluid' ?>">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" id="menu-toggle" onclick="openNav()" data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
                         <span class="icon-bar"></span>
@@ -38,13 +38,13 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand logo" style="text-decoration: none; margin-right: 20px; margin-left:5px; margin-top: 3px;" href="/">
-                        <span style="font-weight: bold; font-size: 32px; color: #00BA51; display:block;">MAP</span>
-                        <i style="display:block; font-size: 14px; color: #7b7b7b; font-weight: bold;">conphong.com</i>
+                        <span style="font-weight: bold; font-size: 32px; color: #00BA51; display:block;">Piapy</span>
+                        <span style="display:block; font-size: 12px; color: #7b7b7b;">conphong.com</span>
                     </a>
                 </div>
                 <style type="text/css">
-                    #menu-search .form-control{
-                        margin: 8px 0;
+                    #menu-search .form-control, #menu-right .item{
+                        margin: 5px 0!important;
                     }
                     #menu-search.menu-nav li{
                         margin-left:5px;
@@ -65,14 +65,14 @@
                             <option>Quận Tân Bình</option>
                         </select>
                     </li>
-                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 300px; margin: 8px 0;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
-                    <li><input type="text" class="form-control" placeholder="Giá" style="width: 90px; margin: 8px 0;"></li>
-                    <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 90px; margin: 8px 0;"></li>
+                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 250px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
+                    <li><input type="text" class="form-control" placeholder="Giá" style="width: 90px;"></li>
+                    <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 90px;"></li>
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Tìm</button></li>
                 </ul>
-                <ul class="nav navbar-nav menu-nav pull-right" style="margin-top: 7px; margin-bottom: 7px;">
-                    <li><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i> Thêm phòng trọ</button></li>
-                    <li><button href="<?php echo $list; ?>" class="btn btn-primary" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i> Đăng nhập / Đăng ký</button></li>
+                <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
+                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i> Thêm</button></li>
+                    <li class="item"><button href="<?php echo $list; ?>" class="btn btn-primary" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i> Đăng nhập / Đăng ký</button></li>
                 </ul>
             </div>
         </nav>

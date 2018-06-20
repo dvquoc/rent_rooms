@@ -5,32 +5,32 @@
 <div class="contain-map contain-fluid-full" style="position: relative">
     <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
     <div id="privacy-notifycation">Chúng tôi sẽ sử dụng cookied để giúp bạn trải nghiệm tốt hơn. Hãy đồng ý và trải nghiệm... <a ng-click="legal.accept()" style="margin:0 10px">Đồng ý</a> <a target="_blank">Xem thêm...</a></div>
-    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; top:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
+    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
                 <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
             </div>
             <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
             <div class="col-md-12" style=" background-color: #fff;">
-                <h3 style="margin-top: -42px; background-color:#019c44f5;box-shadow: 2px 0px 20px -10px #000; border-radius: 3px; color: #fff; padding: 10px" id="detail-title">Tiêu đề</h3>
-                <p style="background-color: #eee; margin: 15px 0px; border: 1px solid #eee; padding: 5px 8px;" id="detail-address"><b>Địa chỉ: </b><span></span></p>
-                <div class="row">
+                <h3 id="detail-title">Tiêu đề</h3>
+                <p id="detail-address"><b>Địa chỉ: </b><span></span></p>
+                <div class="row item-info-main">
                     <div id="detail-price" class="col-md-6">
-                        <p><b>Giá cho thuê: </b><span>1.2 triệu/tháng</span></p>
+                        <p><b>Giá cho thuê: </b><span class='more-info'>1.2 triệu/tháng</span></p>
                     </div>
                     <div id="detail-area" class="col-md-6">
                         <p><b>Diện tích: </b><span>15 m2</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main ">
                     <div id="detail-water" class="col-md-6">
-                        <p><b>Tiền cọc: </b><span>1 trệu <i style="font-size: 11px; color: red"> (hoàn tháng cuối)</i></span></p>
+                        <p><b>Tiền cọc: </b><span>1 trệu <i class='more-info' style="font-size: 9px; color: red"> (hoàn lại)</i></span></p>
                     </div>
                     <div id="detail-price" class="col-md-6">
                         <p><b>Toilet: </b><span>Trong nhà</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main ">
                     <div id="detail-water" class="col-md-6">
                         <p><b>Tiền nước: </b><span>15.000/khối</span></p>
                     </div>
@@ -38,7 +38,7 @@
                         <p><b>Tiền điện: </b><span>3000/kg</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main">
                     <div id="detail-water" class="col-md-6">
                         <p><b>Số lượng người ở: </b><span>3/người</span></p>
                     </div>
@@ -57,15 +57,15 @@
             </div>
         </div>
     </div>
-    <div id="show-list" class="col-md-3" style="border-radius: 3px; position: absolute; right:10px; top:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+    <div id="show-list" class="col-md-3" style="border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
         <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
-            <button class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
+            <a href="/tim-kiem-phong-tro" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
                 <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>
                 Xem dạng danh sách
-            </button>
+            </a>
         </div>
         <div class="inner" style="position: relative; overflow: hidden; height: 100%">
-            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 18px; padding: 20px 10px;">
+            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 16px; padding: 20px 10px;">
                 <span class="results-heading-title">(<b><?php echo count($listing); ?></b>) Kết quả tìm kiếm</span>
                 <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>
