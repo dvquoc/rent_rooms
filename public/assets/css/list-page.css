@@ -34,6 +34,50 @@
     background-color:#31b0d5;
     color:#fff;
 }
+.inner-item {
+    border: 1px solid #eee;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    position: relative;
+}
+.icon{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    -moz-context-properties: fill;
+    display: inline-block;
+    fill: rgba(12, 12, 13, 0.8);
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+}
+.context-menu-button {
+    background-clip: padding-box;
+    background-color: #FFF;
+    background-image: url("https://image.flaticon.com/icons/svg/149/149946.svg");
+    background-position: 55%;
+    border: 1px solid #B1B1B3;
+    border-radius: 100%;
+    box-shadow: 0 2px rgba(12, 12, 13, 0.1);
+    cursor: pointer;
+    fill: rgba(12, 12, 13, 0.8);
+    height: 27px;
+    offset-inline-end: -13.5px;
+    opacity: 0;
+    position: absolute;
+    top: -13.5px;
+    transform: scale(0.25);
+    transition-duration: 200ms;
+    transition-property: transform, opacity;
+    width: 27px;
+    right: -13px;
+    text-indent: -9999px;
+}
+
+.inner-item:hover .context-menu-button {
+    opacity: 1;
+    transform: scale(1);
+}
 .col-btn{
     float: right;
     

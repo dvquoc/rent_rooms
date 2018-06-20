@@ -33,7 +33,7 @@
 				<div class="col-md-12" style="margin-top: 20px">
 					<h2>Top nhà trọ HCM</h2>
 				</div>
-				<?php foreach($rooms as $item) { ?>
+				<?php foreach($rooms as $key => $item) { ?>
 					<div class="col-md-3">
 						<div>
 							<?php  $img = json_decode($item["images"],true); ?>
@@ -41,51 +41,45 @@
 						</div>
 						<div class="clearfix"></div>
 						<div>
-							<table>
-								<tr>
-									<td>$<?php echo $item['price'];?></td>
-								</tr>
-								<tr>
-									<td><?php echo $item['price_electricity'];?></td>
-								</tr>
-								<tr>
-									<td><?php echo $item['name'];?></td>
-								</tr>
-								<tr>
-									<td><?php echo $item['address'];?></td>
-								</tr>
-							</table>
+							<div class="address"><?php echo $item['name'];?></div>
+							<div class="address" style="font-size: 13px; color:#999;"><?php echo $item['address'];?></div>
+							<div class="address"><?php echo $item['price'];?></div>
+							<div class="address"><?php echo $item['price_electricity'];?></div>
 						</div>
 					</div>
-				<?php }?>
+				<?php if($key==3) break;  }?>
 			</div>
 			<div class="row">
 				<div class="col-md-8">
 					<?php foreach($rooms as $item) { ?>
-					<div class="col-md-3" style="margin-bottom: 20px">
-						<?php  $img = json_decode($item["images"],true); ?>
-						<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" width="150px" height="120px" >
-					</div> 
-					<div class="col-md-9">
-						<div><b><?php echo $item['name'];?></b></div>
-						<div class="clearfix"></div>
+					<div class="row">
+						<div class="inner-item">
+							<button class="context-menu-button icon">test</button>
+							<div class="col-md-3" style="padding: 0px;">
+								<?php  $img = json_decode($item["images"],true); ?>
+								<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" style="height: 121px; margin: -1px; border-radius: 3px 0px 0px 3px;" class="img-responsive" >
+							</div> 
+							<div class="col-md-9">
+								<div><b><?php echo $item['name'];?></b></div>
+								<div class="clearfix"></div>
 
-						<div class="col-md-9" style="padding-left: 0; font-size: 13px; color: #999;"><?php echo $item['address'];?></div>
-						<div class="col-md-3" style="padding-left: 0"><?php echo $item['date_crate'];?></div>
-						<div class="clearfix"></div>
+								<div class="col-md-9" style="padding-left: 0; font-size: 13px; color: #999;"><?php echo $item['address'];?></div>
+								<div class="col-md-3" style="padding-left: 0"><?php echo $item['date_crate'];?></div>
+								<div class="clearfix"></div>
 
-						<div class="col-md-1" style="padding-left: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
-						<div class="col-md-4" style="padding-left: 0"><?php echo $item['price'];?> Triệu/tháng</div>
-						<div class="col-md-4 col-btn"><button class="btn"><i class="fa fa-phone" aria-hidden="true"></i> Liên hệ</button></div>
-						<div class="clearfix"></div>
+								<div class="col-md-1" style="padding-left: 0"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+								<div class="col-md-4" style="padding-left: 0"><?php echo $item['price'];?> Triệu/tháng</div>
+								<div class="col-md-4 col-btn">
+									<button class="btn btn-primary"><i class="fa fa-phone" aria-hidden="true"></i> Liên hệ </button></div>
+								<div class="clearfix"></div>
 
-						<div class="col-md-1" style="padding-left: 0"><i class="fa fa-area-chart" aria-hidden="true"></i></div>
-						<div class="col-md-4" style="padding-left: 0"><?php echo $item['price_electricity'];?> Mét vuông</div>
-						<div class="col-md-4 col-btn"><button class="btn"><i class="fa fa-heart" aria-hidden="true"></i> Yêu thích</button></div>
-						<div class="clearfix"></div>
-
+								<div class="col-md-1" style="padding-left: 0"><i class="fa fa-area-chart" aria-hidden="true"></i></div>
+								<div class="col-md-4" style="padding-left: 0"><?php echo $item['price_electricity'];?> Mét vuông</div>
+								<div class="col-md-4 col-btn"><button class="btn btn-primary"><i class="fa fa-heart" aria-hidden="true"></i> Yêu thích</button></div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
 					</div>
-					<div class="clearfix"></div>
 					<?php } ?>
 				</div>
 				<div class="col-md-4">
