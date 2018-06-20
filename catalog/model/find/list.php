@@ -19,9 +19,14 @@ class ModelFindList extends Model {
     	$result = $this->table->find(array(),$options)->toArray();
         return $result;
     }
-
-    public function count_list(){
+    public function get_list_featured(){
+         $options =[
+            'limit'=>4,
+            'skip' =>0
+        ];
         $result = $this->table->find(array(),$options)->toArray();
-        return count($result);
+        return $result;
     }
+
+  
 }
