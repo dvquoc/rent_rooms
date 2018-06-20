@@ -6,7 +6,6 @@ class ControllerFindList extends Controller {
         // $data_search = array(
         //     'status'=>1
         // );
-
         $data['rooms'] = $this->model_find_list->get_list();
         
         $data['footer'] = $this->load->controller('common/footer');

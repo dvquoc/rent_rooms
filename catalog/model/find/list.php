@@ -19,4 +19,9 @@ class ModelFindList extends Model {
     	$result = $this->table->find(array(),$options)->toArray();
         return $result;
     }
+
+    public function count_list(){
+        $result = $this->table->find(array(),$options)->toArray();
+        return count($result);
+    }
 }

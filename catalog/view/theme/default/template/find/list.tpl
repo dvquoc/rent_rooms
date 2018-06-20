@@ -83,10 +83,10 @@
 						<div class="col-md-4" style="padding-left: 0"><?php echo $item['price_electricity'];?> Mét vuông</div>
 						<div class="col-md-4 col-btn"><button class="btnn"><i class="fa fa-heart" aria-hidden="true"></i> Yêu thích</button></div>
 						<div class="clearfix"></div>
-
 					</div>
 					<div class="clearfix"></div>
 					<?php } ?>
+					
 				</div>
 				<div class="col-md-4">
 					<div>
@@ -105,7 +105,7 @@
 					<div class="link-tag">
 						<ul>
 							<li><a href="" class="link">Quân 1</a></li>
-							<li>				<a href="" class="link">Quân 2</a></li>
+							<li><a href="" class="link">Quân 2</a></li>
 							<li><a href="" class="link">Quân 3</a></li>
 							<li><a href="" class="link">Quân 4</a></li>
 							<li><a href="" class="link">Quân 5</a></li>
