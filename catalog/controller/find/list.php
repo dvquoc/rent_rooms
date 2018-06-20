@@ -6,9 +6,9 @@ class ControllerFindList extends Controller {
         // $data_search = array(
         //     'status'=>1
         // );
-
         $data['rooms'] = $this->model_find_list->get_list();
-        
+        $data['featured'] = $this->model_find_list->get_list_featured();
+       
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/find/list.tpl')) {

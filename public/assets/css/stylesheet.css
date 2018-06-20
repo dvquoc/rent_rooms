@@ -1,3 +1,4 @@
+
 #menu-main{
     background-color: #fff;
     box-shadow: 2px 0px 20px -10px #000;
@@ -9,6 +10,12 @@
 }
 body>.container{
     background-color: #fff;
+}
+.cut-text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  width: 100%; 
+  white-space: nowrap;
 }
 .sidenav {
     height: 100%;

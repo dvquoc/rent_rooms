@@ -1,44 +1,40 @@
-/* Pagination */
-.pagination-info{
-    margin-top:20px;
+
+.list-left,#column-right{
+    position: sticky;
+    top: 68px;
 }
-.pagination{
-    margin: 0!important;
+.list-left .footer{
+    font-size: 13px;color: #999;
 }
-.pagination li{
-    font-weight: 600;
+.list-left .btn{
+    width: 100%;
+    margin-bottom: 3px;
 }
-.pagination li span{
-    padding: 10px 15px;
-    border-radius: 2px;
-    border: 1px solid #31b0d5;
-    transition: all 400ms;
-    background-color:#31b0d5 !important;
-    border-color:#31b0d5 !important;
-    margin-right: 5px;
+.list-right{
+    border-left: 1px solid #eee; 
 }
-.pagination li a{
-    padding: 10px 15px;
-    border-radius: 3px;
-    border: 1px solid #31b0d5;
-    transition: all 400ms;
-    color:#000;
-    margin-right: 5px;
+#featured{
+    margin-bottom: 20px;
 }
 
-.pagination li:hover a,.pagination li:active a{
-    padding: 10px 15px;
-    border-radius: 2px;
-    border: 1px solid #31b0d5;
-    transition: all 400ms;
-    background-color:#31b0d5;
-    color:#fff;
+.list-result>.row{
+    margin-left: 0;
 }
 .inner-item {
     border: 1px solid #eee;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border-radius: 3px;
     position: relative;
+    background-color: #fff;
+}
+.list-img{
+    padding: 0;
+    margin: -1px;
+}
+.list-info{
+    position: relative;
+    padding: 10px 10px 0 10px;
+    overflow: hidden;
 }
 .icon{
     background-position: center center;
@@ -66,6 +62,7 @@
     opacity: 0;
     position: absolute;
     top: -13.5px;
+    z-index: 1;
     transform: scale(0.25);
     transition-duration: 200ms;
     transition-property: transform, opacity;
@@ -74,83 +71,80 @@
     text-indent: -9999px;
 }
 
-.inner-item:hover .context-menu-button {
+.inner-item:hover .context-menu-button, .grid .i-column:hover .context-menu-button{
     opacity: 1;
     transform: scale(1);
 }
-.col-btn{
-    float: right;
-    
+.list-info .title{
+    color: #5d5d5d;
 }
-.left_col_footer{
-    padding: 10px;
-    font-size: 10px;
-    color: #9a9a9a;
+.mf{
+    font-size: 12px;
+}
+.mf .i b{
+    font-size: 18px; color:#000;
+
+}
+.mf i{
+margin-right: 5px; font-size: 14px;
+}
+.d,.adress{
+    font-size: 13px;
+}
+.d span,.adress{
+    color: #999;
+}
+.f-i .i, .mf .i{
+    display: inline-block; margin-right: 7px;
+}
+.call-button{
     position: absolute;
-    bottom: 0;
-    line-height: 20px;
-    border-top: 1px solid #eee;
-    background-color: #eee;
+    bottom: -5px;
+    right: -5px;
+    border-radius: 10%!important;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
 }
-.col_left_button{
-    width: 100%;
-    margin: 5px 0;
-}
-.list_col_left{
-    height: 100%;
-    position: -webkit-sticky;
-    position: sticky;
-    z-index: 1;
-    top: 70px;
-    bottom: 0px;
-    background-color: #fff;
-    padding:10px;
-    text-align: center;
-}
-.tag-list-white ,.tag-list-white:hover {
-    color: #000!important;
-    background-color: #fff!important;
-}
+/* Layout grid */
+.grid{
 
-
-.tag-list-btn{
-    border: none;
-    display: inline-block;
-    padding: 5px 5px;
-    vertical-align: middle;
+}
+.grid .i-column:not(:last-child){
+    padding-right: 0px;
+}
+.grid .read{
+    padding: 5px;
+}
+.grid .img{
+    height: 120px;
     overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    background-color: inherit;
-    text-align: center;
-    cursor: pointer;
-    white-space: nowrap;
-    margin: 5px 5px;
+    position: relative;
 }
-.tag-list-btn:hover{
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+.img .i{
+    position: absolute; bottom: 5px; font-size: 12px;color: #fff;
 }
-.tag-list-border{
-    border: 1px solid #ccc!important;
-    border-radius: 10px
+.img .i b{
+    font-size: 16px;
+    background-color: #FF9800;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
 }
-.link-tag{
-    background-color: ##ffffff;
-    padding: 15px 16px;
-    margin: 20px 0;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+.img .i.price{
+    left: 5px;
 }
-.link{
-     text-decoration: none !important;
+.img .i.area{
+    right: 5px;
 }
-.link-tag ul{
-  list-style-type: none;
-  padding: 0!important;
+.grid .name{
+font-weight: bold;
+font-size: 16px;
+margin:3px 0;
+}
+.grid .address{
+    color: #999;
+    font-size: 13px;
+}
+.tag .arena{
+    padding: 3px 5px;margin: 5px 3px; border:1px solid #ccc;border-radius: 3px; display: inline-block;
 }
 
-.btnn{
-    background-color: white;
-    border-color: black;
-    width: 140px;
-}
 
