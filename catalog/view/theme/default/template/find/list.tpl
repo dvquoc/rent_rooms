@@ -1,11 +1,10 @@
 <?php echo $header ?>
-<script src="/public/assets/plugins/slide_reveal/slidereveal.js" type="text/javascript"></script>
 <div class="container">
   	<div class="row" style="margin-top: 70px">
-		<div class="col-md-2 list-left">
+		<div class="col-md-2" id="col-l">
 			<div style="height:100%">
-				<div class="list_like">
-					<img src="https://propzy.vn/assets/modules/yeu-thich/images/ximg-yeu-thich.png.pagespeed.ic.rpz0I8PqTL.webp" class="img-responsive">
+				<div class="list_like text-center">
+					<img width="100px" src="https://propzy.vn/assets/modules/yeu-thich/images/ximg-yeu-thich.png.pagespeed.ic.rpz0I8PqTL.webp">
 					<p class="text-center">Nhấn vào nút yêu thích để làm gì đó</p>
 				</div>
 				<div class="info">
@@ -93,14 +92,14 @@
 									</div>
 								</div>
 								
-								<button class="btn btn-primary call-button"><i class="fa fa-phone" aria-hidden="true"></i></button>
+								<button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i> gọi điện</button>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 					</div>
 					<?php } ?>
 				</div>
-				<div class="col-md-4 near" id="column-right">
+				<div class="col-md-4 near" id="col-r">
 					<div>
 						<h3>Khu vực lân cận</h3>
 					</div>
