@@ -44,7 +44,7 @@
                 </div>
                 <style type="text/css">
                     #menu-search .form-control, #menu-right .item{
-                        margin: 5px 0!important;
+                        margin: 5px 0!important; font-size: 13px;
                     }
                     #menu-search.menu-nav li{
                         margin-left:5px;

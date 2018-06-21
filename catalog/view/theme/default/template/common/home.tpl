@@ -4,7 +4,6 @@
 <!--declare-->
 <div class="contain-map contain-fluid-full" style="position: relative">
     <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
-    <div id="privacy-notifycation">Chúng tôi sẽ sử dụng cookied để giúp bạn trải nghiệm tốt hơn. Hãy đồng ý và trải nghiệm... <a ng-click="legal.accept()" style="margin:0 10px">Đồng ý</a> <a target="_blank">Xem thêm...</a></div>
     <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
