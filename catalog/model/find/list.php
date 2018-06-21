@@ -12,8 +12,8 @@ class ModelFindList extends Model {
     }
     public function get_list(){
     	 $options =[
-            'sort' => ['room_id'=>-1],
-            'limit'=>10,
+            'sort' => ['room_id'=>1],
+            'limit'=>20,
             'skip' =>0
         ];
     	$result = $this->table->find(array(),$options)->toArray();

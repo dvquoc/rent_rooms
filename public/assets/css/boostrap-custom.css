@@ -1860,7 +1860,7 @@ input, button, select, textarea {
     cursor: pointer;
     background-image: none;
     white-space: nowrap;
-    padding: 6px 13px;
+    padding: 7px 13px;
     font-size: 12px;
     line-height: 1.42857143;
     border-radius: 2px;
