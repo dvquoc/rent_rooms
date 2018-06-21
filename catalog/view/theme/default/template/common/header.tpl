@@ -28,6 +28,8 @@
     <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
     <div class="menu-main">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
             <div class="<?php echo $classPage !='common-home' ? 'container' : 'container-fluid' ?>">

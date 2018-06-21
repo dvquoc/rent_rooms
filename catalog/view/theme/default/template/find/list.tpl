@@ -24,6 +24,7 @@
 			console.log(document.getElementById("menu-main").offsetHeight);
 			document.getElementById("col-l").style.height = height;
 		</script>
+		
 		<div class="col-md-10 list-right" >
 			<div class="row ">
 				<div class="col-md-12 seo_description">
@@ -39,34 +40,36 @@
 			<div class="row grid" id="featured">
 			<div class="col-md-12 top-title">
 					<h3>Top nhà trọ HCM</h3>
-			</div>	
-			<?php foreach($featured as $item) { ?>
-				<div class="col-md-3 i-column">
-					<div class="inner-item">
-						<button class="context-menu-button icon">test</button>
-						<ul class="dropdown" style="display: none;">
-							<li class="item">Lưu xem sau</li>
-							<li class="item">Chia sẽ</li>
-						</ul>
-						<div class="img">
-							<?php  $img = json_decode($item["images"],true); ?>
-							<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
-							<div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu/tháng</div>
-							<div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
-						</div>
-						<div class="read">
-							<div class="name cut-text"><?php echo $item['name'];?></div>
-							<div class="address cut-text"><?php echo $item['address'];?></div>
-						</div>
+			</div>
+			  <div class="owl-carousel col-md-12">
+			    <?php foreach($featured as $item) { ?>
+					<div class=" i-column">
+						<a href="javascript:;" class="inner-item">
+							<button class="context-menu-button icon">test</button>
+							<ul class="dropdown" style="display: none;">
+								<li class="item">Lưu xem sau</li>
+								<li class="item">Chia sẽ</li>
+							</ul>
+							<div class="img">
+								<?php  $img = json_decode($item["images"],true); ?>
+								<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
+								<div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu/tháng</div>
+								<div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
+							</div>
+							<div class="read">
+								<div class="name cut-text"><?php echo $item['name'];?></div>
+								<div class="address cut-text"><?php echo $item['address'];?></div>
+							</div>
+						</a>
 					</div>
-				</div>
 				<?php }?>
+			  </div>
 			</div>
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
 					<?php foreach($rooms as $item) { ?>
 					<div class="row">
-						<div class="inner-item">
+						<a href="javascript:;" class="inner-item">
 							<button class="context-menu-button icon">test</button>
 							<ul class="dropdown" style="display: none;">
 								<li class="item">Lưu xem sau</li>
@@ -109,7 +112,7 @@
 								<button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i> gọi điện</button>
 							</div>
 							<div class="clearfix"></div>
-						</div>
+						</a>
 					</div>
 					<?php } ?>
 				</div>
@@ -144,4 +147,26 @@
 			</div>
 	</div>
 </div>
+<script src="/public/assets/js/jquery/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.owl-carousel').owlCarousel({
+		    stagePadding: 50,
+		    loop:true,
+		    margin:10,
+		    nav:false,
+		    responsive:{
+		        0:{
+		            items:1
+		        },
+		        600:{
+		            items:2
+		        },
+		        1000:{
+		            items:3
+		        }
+		    }
+		})
+	});
+</script>
 
