@@ -21,7 +21,7 @@ class ModelFindList extends Model {
     }
     public function get_list_featured(){
          $options =[
-            'limit'=>4,
+            'limit'=>6,
             'skip' =>0
         ];
         $result = $this->table->find(array(),$options)->toArray();

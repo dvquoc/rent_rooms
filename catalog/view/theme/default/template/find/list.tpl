@@ -39,7 +39,7 @@
 			</div>
 			<div class="row grid" id="featured">
 			<div class="col-md-12 top-title">
-					<h3>Top nhà trọ HCM</h3>
+					<h3 style="margin-bottom: 0">Top nhà trọ HCM</h3>
 			</div>
 			  <div class="owl-carousel col-md-12">
 			    <?php foreach($featured as $item) { ?>
@@ -67,7 +67,7 @@
 			</div>
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
-					<?php foreach($rooms as $item) { ?>
+					<?php foreach($rooms as $item) { var_dump($item); die(); ?>
 					<div class="row">
 						<a href="javascript:;" class="inner-item">
 							<button class="context-menu-button icon">test</button>
