@@ -1859,12 +1859,12 @@ input, button, select, textarea {
     touch-action: manipulation;
     cursor: pointer;
     background-image: none;
-    border: 1px solid transparent;
     white-space: nowrap;
-    padding: 8px 13px;
+    padding: 6px 13px;
     font-size: 12px;
     line-height: 1.42857143;
     border-radius: 2px;
+    border:2px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -1874,7 +1874,13 @@ input, button, select, textarea {
 .btn-primary {
     color: #ffffff;
     background-color: #00ba51;
-    border:0;
+    border:2px solid #00ba51;
+}
+
+.btn-line {
+    color: #00ba51;
+    background-color: #fff;
+    border:2px #00ba51 solid;
 }
 
 .text-center{

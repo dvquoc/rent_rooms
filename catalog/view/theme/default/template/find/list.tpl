@@ -1,24 +1,29 @@
 <?php echo $header ?>
 <div class="container">
   	<div class="row" style="margin-top: 70px">
-		<div class="col-md-2" id="col-l">
+		<div class="col-md-2" id="col-l" style="padding:10px;" onload="function(){return this.style.height=700}">
 			<div style="height:100%">
 				<div class="list_like text-center">
-					<img width="100px" src="https://propzy.vn/assets/modules/yeu-thich/images/ximg-yeu-thich.png.pagespeed.ic.rpz0I8PqTL.webp">
-					<p class="text-center">Nhấn vào nút yêu thích để làm gì đó</p>
+					<img width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSw7XPOS7H3vgSemMw7rKkOrHgR_0JmS8MlJP77w91csmK053e">
+					<p class="text-center" style="margin-top:-5px;font-size: 12px; color: #999; line-height: 16px;">Hiện chưa có phòng nào lưu để xem sau</p>
+					<hr style="border:1px solid #ccc;">
 				</div>
-				<div class="info">
-					<button class="col_left_button btn btn-primary">Đăng ký phòng trọ</button>
-					<button class="col_left_button btn btn-primary">Góp ý thắc mắc</button>
 
+				<div class="info">
 					<img style="margin: 10px 0px" src="https://is4-ssl.mzstatic.com/image/thumb/Purple128/v4/ed/31/62/ed3162cd-2471-16a8-2376-4e8ee6835e02/source/512x512bb.jpg" class="img-responsive">
-					<button class="col_left_button btn btn-primary">Thông tin thêm</button>
+					<img style="margin: 10px 0px" src="http://resources2.cungmua.com/Product/161000/cm_161556.jpg" class="img-responsive">
 				</div>
 				<div class="footer text-center">
+					<button style="margin-bottom: 10px;" class="col_left_button btn btn-primary">Góp ý thắc mắc</button>
 					<p>Nhanh nhất - tiết kiệm nhất - cẩn thận nhất</p>
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			var height = window.innerHeight - document.getElementById("menu-main").offsetHeight -15 +"px";
+			console.log(document.getElementById("menu-main").offsetHeight);
+			document.getElementById("col-l").style.height = height;
+		</script>
 		<div class="col-md-10 list-right" >
 			<div class="row ">
 				<div class="col-md-12 seo_description">
@@ -32,7 +37,7 @@
 				</div>
 			</div>
 			<div class="row grid" id="featured">
-			<div class="col-md-12 top-title" style="margin-top: 20px">
+			<div class="col-md-12 top-title">
 					<h3>Top nhà trọ HCM</h3>
 			</div>	
 			<?php foreach($featured as $item) { ?>
@@ -73,6 +78,14 @@
 							</div> 
 							<div class="col-md-9 list-info pull-right">
 								<div class="title"><b><?php echo $item['name'];?></b></div>
+								<div class="f-i">
+									<div class="i d">
+										Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
+									</div>
+									<div class="i d">
+											Cách khoản: <span>5 Km</span>
+									</div>
+								</div>
 								<div class="adress" ><?php echo $item['address'];?></div>
 								<div class="mf">
 									<div class="i price" >
@@ -80,15 +93,16 @@
 									</div>
 									<div class="i are">
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['price_electricity'];?></b> m2
+										<b><?php echo $item['acreage'];?></b> m2
 									</div>
-								</div>
-								<div class="f-i">
-									<div class="i d">
-										Ngày đăng: <span><?php echo  date('d-m-Y',trim($item['date_crate']));?></span>
+									<div class="i are"> - </div>
+									<div class="i are">
+										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
+										<b><?php echo $item['acreage'];?></b> / Khối
 									</div>
-									<div class="i d">
-											Cách khoản: <span>5 Km</span>
+									<div class="i are">
+										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
+										<b><?php echo $item['acreage'];?></b> / Kg
 									</div>
 								</div>
 								

@@ -3,13 +3,14 @@
     position: sticky;top: 68px;
 }
 #col-l .footer{
-    font-size: 13px;color: #999;
+    font-size: 11px;color:#383838;background-color: #ccc; bottom: 0px; left:0px;position:absolute; padding:10px;
 }
+#col-l .footer p{margin:0; line-height: 15px;}
 #col-l .btn{
     width: 100%;margin-bottom: 3px;
 }
 .list-right{
-    border-left: 1px solid #eee; 
+    border-left: 1px solid #e7e7e7; 
 }
 #featured{
     margin-bottom: 20px;
@@ -19,16 +20,15 @@
     margin-left: 0;
 }
 .inner-item {
-    border: 1px solid #f3f3f3;
+    border:1px solid #e7e7e7;
     margin-bottom: 15px;
     border-radius: 3px;
     position: relative;
     background-color: #fff;
-    box-shadow: 1px 1px 10px -8px #000;
+    box-shadow: 1px 1px 8px -9px #000;
 }
 .list-img{
-    padding: 0;
-    margin: -1px;
+    padding: 0;margin: 0px;
 }
 .list-img img{
     border-radius: 3px 0 0 3px;
@@ -78,30 +78,32 @@
     transform: scale(1);
 }
 .list-info .title{
-    color: #5d5d5d;
+    color: #202124;line-height: 14px;
 }
 .mf{
     font-size: 12px;
 }
 .mf .i b{
-    font-size: 18px; color:#000;
-
+   font-size: 15px;color: #4e4e4e;
 }
 .mf i{
 margin-right: 5px; font-size: 14px;
 }
-.d,.adress{
+.adress{
     font-size: 13px;
 }
+.d{
+    font-size: 11px;
+}
 .d span,.adress{
-    color: #999;
+    color: #696969;
 }
 .f-i .i, .mf .i{
     display: inline-block; margin-right: 7px;
 }
 .call-button{
     position: absolute;
-    bottom: -6px;
+    top: 6px;
     right: 8px;
     border-radius: 5%!important;
     padding: 5px;
@@ -133,8 +135,7 @@ margin-right: 5px; font-size: 14px;
     line-height: 20px;
 }
 .img .i b{
-    font-size: 16px;
-    background-color: #FF9800;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
+    font-size: 14px;background-color: #94CB02;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
 }
 .img .i.price{
     left: 5px;
@@ -148,7 +149,7 @@ font-size: 16px;
 margin:3px 0;
 }
 .grid .address{
-    color: #999;
+    color: #696969;
     font-size: 13px;
 }
 .tag .arena{

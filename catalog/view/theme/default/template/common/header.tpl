@@ -66,13 +66,13 @@
                         </select>
                     </li>
                     <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 250px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
-                    <li><input type="text" class="form-control" placeholder="Giá" style="width: 90px;"></li>
-                    <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 90px;"></li>
+                    <li><input type="text" class="form-control" placeholder="Giá" style="width: 80px;"></li>
+                    <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"></li>
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i> Thêm</button></li>
-                    <li class="item"><button href="<?php echo $list; ?>" class="btn btn-primary" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i> Đăng nhập / Đăng ký</button></li>
+                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i> Thêm phòng trọ</button></li>
+                    <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i> Đăng nhập / Đăng ký</button></li>
                 </ul>
             </div>
         </nav>
