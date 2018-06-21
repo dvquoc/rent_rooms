@@ -1,6 +1,6 @@
 <?php echo $header ?>
 <div class="container">
-  	<div class="row" style="margin-top: 70px">
+  	<div class="row">
 		<div class="col-md-2" id="col-l" style="padding:10px;" onload="function(){return this.style.height=700}">
 			<div style="height:100%">
 				<div class="list_like text-center">
@@ -25,7 +25,7 @@
 			document.getElementById("col-l").style.height = height;
 		</script>
 		
-		<div class="col-md-10 list-right" >
+		<div class="col-md-10 list-right" style="margin-top: 15px">
 			<div class="row ">
 				<div class="col-md-12 seo_description">
 					<div>
@@ -33,7 +33,7 @@
 						<p class="text" style="color:#999;">Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit...</p>
 					</div>
 					<div class="text-center">
-						<button class="btn btn-primary"><i class="fa fa-map-marker" style="margin-right: 5px; font-size: 20px;"></i>Xem bằng bản đồ</button>
+						<button class="btn btn-primary">Xem bằng bản đồ</button>
 					</div>
 				</div>
 			</div>
@@ -44,7 +44,12 @@
 			  <div class="owl-carousel col-md-12">
 			    <?php foreach($featured as $item) { ?>
 					<div class=" i-column">
-						<a href="javascript:;" class="inner-item">
+						<?php 
+							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
+							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
+							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
+						?>
+						<a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
 							<button class="context-menu-button icon">test</button>
 							<ul class="dropdown" style="display: none;">
 								<li class="item">Lưu xem sau</li>
@@ -67,9 +72,14 @@
 			</div>
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
-					<?php foreach($rooms as $item) { var_dump($item); die(); ?>
+					<?php foreach($rooms as $item) { ?>
 					<div class="row">
-						<a href="javascript:;" class="inner-item">
+						<?php 
+							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
+							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
+							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
+						?>
+						<a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
 							<button class="context-menu-button icon">test</button>
 							<ul class="dropdown" style="display: none;">
 								<li class="item">Lưu xem sau</li>

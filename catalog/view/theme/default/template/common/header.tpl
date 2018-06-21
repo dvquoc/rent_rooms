@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
-    <div class="menu-main">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
             <div class="<?php echo $classPage !='common-home' ? 'container' : 'container-fluid' ?>">
                 <div class="navbar-header">
@@ -78,7 +77,6 @@
                 </ul>
             </div>
         </nav>
-    </div>
     <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
         <a href="#">Thuê nhà nguyên căn</a>
         <a href="#">Vận chuyển</a>
