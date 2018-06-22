@@ -1,7 +1,7 @@
 <?php
 class ControllerPageDetail extends Controller {
+
     public function index() {
-        
          $this->load->model('page/detail');
          $this->load->model('find/list');
 

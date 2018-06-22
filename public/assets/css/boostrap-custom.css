@@ -1876,7 +1876,13 @@ input, button, select, textarea {
     background-color: #00ba51;
     border:2px solid #00ba51;
 }
-
+.btn-block-inline{
+    color: #ffffff;
+    padding: 7px;
+    background-color: #f74a27;
+    border:2px solid #f74a27;
+    width: 100%;
+}
 .btn-line {
     color: #00ba51;
     background-color: #fff;
