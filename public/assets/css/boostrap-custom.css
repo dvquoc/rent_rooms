@@ -9,6 +9,26 @@ body{
     transition: background-color .2s;
     background-color: #f3f3f3;
 }
+/* width */
+body div ::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+body div ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+body div ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+body div ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 #inner-body{
     transition: margin-left .2s;
 }
