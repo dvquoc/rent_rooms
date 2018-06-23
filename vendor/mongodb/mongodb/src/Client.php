@@ -79,6 +79,7 @@ class Client
         $this->typeMap = isset($driverOptions['typeMap']) ? $driverOptions['typeMap'] : null;
 
         unset($driverOptions['typeMap']);
+
         $this->manager = new Manager($uri, $uriOptions, $driverOptions);
         $this->writeConcern = $this->manager->getWriteConcern();
     }
@@ -254,5 +255,17 @@ class Client
         $options += ['typeMap' => $this->typeMap];
 
         return new Database($this->manager, $databaseName, $options);
+    }
+
+    /**
+     * Start a new client session.
+     *
+     * @see http://php.net/manual/en/mongodb-driver-manager.startsession.php
+     * @param array  $options      Session options
+     * @return MongoDB\Driver\Session
+     */
+    public function startSession(array $options = [])
+    {
+        return $this->manager->startSession($options);
     }
 }
