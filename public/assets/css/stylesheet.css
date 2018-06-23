@@ -9,9 +9,6 @@
     z-index: 10;
     border-bottom: 1px solid #ececec;
 }
-.container-fluid{
-    max-width: 1440px;
-}
 body>.container{
     background-color: #fff;
 }
