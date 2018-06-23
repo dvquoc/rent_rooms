@@ -39,7 +39,7 @@
                                 </a>
                                 <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/oauth/google" data-track_event-category="Button" data-track_event-action="Login Google" data-track_event-label="Login page">
                                     <div class="auth-google-icon">
-                                        <img src="/themes/qc3/img/icons/google_icon.svg">
+                                         <i class="fa fa-google fa-fw"></i>
                                     </div>
                                     <span>Google</span>
                                 </a>
