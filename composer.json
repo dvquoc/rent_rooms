@@ -1,5 +1,6 @@
 {
     "require": {
         "mongodb/mongodb": "^1.2",
+        "hybridauth/hybridauth" : "v2.11.0"
     }
 }
