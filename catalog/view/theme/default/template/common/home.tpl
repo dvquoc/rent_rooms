@@ -39,13 +39,21 @@
                 </div>
                 <div class="row item-info-main">
                     <div id="detail-water" class="col-md-6">
+                        <p><b>Mạng wifi: </b><span>Tự túc</span></p>
+                    </div>
+                    <div id="detail-price" class="col-md-6">
+                        <p><b>Cáp TV: </b><span>Không cố</span></p>
+                    </div>
+                </div>
+                <div class="row item-info-main">
+                    <div id="detail-water" class="col-md-6">
                         <p><b>Số lượng người ở: </b><span>3/người</span></p>
                     </div>
                     <div id="detail-price" class="col-md-6">
                         <p><b>Toilet: </b><span>Trong nhà</span></p>
                     </div>
                 </div>
-                <div class="text-center"><div style="padding: 10px; background-color: #0199de; color: #fff; margin: 10px 0px;">Liên hệ chủ nhà - Gặp: Chị Hương</div></div>
+                <div class="text-center"><div class="btn btn-block-inline"><i class="fa fa-phone"></i> Liên hệ chủ nhà - Gặp: Chị Hương</div></div>
                 <p class="alert text-center alert-danger"> Giờ giấc tự do</p>
                 <p id="detail-des">
                     <b>Nội quy: </b>
@@ -64,7 +72,7 @@
             </a>
         </div>
         <div class="inner" style="overflow-y: scroll; position: relative; overflow: hidden; height: 100%">
-            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 16px; padding: 20px 10px;">
+            <div class="results-heading" style="position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
                 <span class="results-heading-title">(<b><?php echo count($listing); ?></b>) Kết quả tìm kiếm</span>
                 <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>
