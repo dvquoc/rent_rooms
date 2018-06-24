@@ -20,9 +20,7 @@
     margin-left: 0;
 }
 .inner-item {
-
     margin-bottom: 15px;
-    border-radius: 3px;
     position: relative;
     background-color: #fff;
     box-shadow: 0px 0px 2px -1px #000;
@@ -30,9 +28,6 @@
 }
 .list-img{
     padding: 0;margin: 0px;
-}
-.list-img img{
-    border-radius: 3px 0 0 3px;
 }
 .list-info{
     position: relative;

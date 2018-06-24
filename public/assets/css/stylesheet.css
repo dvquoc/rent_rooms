@@ -9,9 +9,6 @@
     z-index: 10;
     border-bottom: 1px solid #ececec;
 }
-.container-fluid{
-    max-width: 1440px;
-}
 body>.container{
     background-color: #fff;
 }
@@ -51,11 +48,10 @@ body>.container{
 .sidenav a {
     padding: 8px 8px 8px 16px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     color: #818181;
     display: block;
     transition: 0.3s;
-    font-family: 'Tiempos',Verdana,Geneva,sans-serif;
 }
 
 .sidenav a:hover {

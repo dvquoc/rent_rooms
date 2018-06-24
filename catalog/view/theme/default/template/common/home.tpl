@@ -4,7 +4,7 @@
 <!--declare-->
 <div class="contain-map contain-fluid-full" style="position: relative">
     <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
-    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
+    <div id="show-detail" class="col-md-3" style="overflow-y: scroll; display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
                 <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
@@ -39,13 +39,21 @@
                 </div>
                 <div class="row item-info-main">
                     <div id="detail-water" class="col-md-6">
+                        <p><b>Mạng wifi: </b><span>Tự túc</span></p>
+                    </div>
+                    <div id="detail-price" class="col-md-6">
+                        <p><b>Cáp TV: </b><span>Không cố</span></p>
+                    </div>
+                </div>
+                <div class="row item-info-main">
+                    <div id="detail-water" class="col-md-6">
                         <p><b>Số lượng người ở: </b><span>3/người</span></p>
                     </div>
                     <div id="detail-price" class="col-md-6">
                         <p><b>Toilet: </b><span>Trong nhà</span></p>
                     </div>
                 </div>
-                <div class="text-center"><div style="padding: 10px; background-color: #0199de; color: #fff; margin: 10px 0px;">Liên hệ chủ nhà - Gặp: Chị Hương</div></div>
+                <div class="text-center"><div class="btn btn-block-inline"><i class="fa fa-phone"></i> Liên hệ chủ nhà - Gặp: Chị Hương</div></div>
                 <p class="alert text-center alert-danger"> Giờ giấc tự do</p>
                 <p id="detail-des">
                     <b>Nội quy: </b>
@@ -56,15 +64,15 @@
             </div>
         </div>
     </div>
-    <div id="show-list" class="col-md-3" style="border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+    <div id="show-list" class="col-md-3" style=" border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
         <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
             <a href="/tim-kiem-phong-tro" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
                 <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>
                 Xem dạng danh sách
             </a>
         </div>
-        <div class="inner" style="position: relative; overflow: hidden; height: 100%">
-            <div class="results-heading" style="position: relative; padding: 10px; background-color:#00BA51; color: #fff; font-size: 16px; padding: 20px 10px;">
+        <div class="inner" style="overflow-y: scroll; position: relative; overflow: hidden; height: 100%">
+            <div class="results-heading" style="position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
                 <span class="results-heading-title">(<b><?php echo count($listing); ?></b>) Kết quả tìm kiếm</span>
                 <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>

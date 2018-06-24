@@ -13,7 +13,7 @@ $(document).ready(function () {
 });
 var heightShow = window.innerHeight;
 
-eMap.style.height =  heightShow + 'px';
+eMap.style.height =  heightShow - getId('menu-main').offsetHeight  + 'px';
 eShowDetail.style.height = ((heightShow - getId('menu-main').offsetHeight) - 20) + 'px';
 eShowList.style.height =  ((heightShow - getId('menu-main').offsetHeight) - 20) + 'px';
 eContentList.style.height =  (eShowList - getClass('results-heading')[0].offsetHeight + 60) + 'px';
