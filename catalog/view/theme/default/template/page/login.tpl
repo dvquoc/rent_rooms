@@ -1,4 +1,7 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
+<button >FB</button>
+  </form>  
 <div id="wrapper" class="simple-page_wrapper">
     <div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
 
@@ -31,13 +34,13 @@
                                 <div class="login-line"></div>
                             </div>
                             <div class="login-social-buttons">
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/oauth/facebook" data-track_event-category="Button" data-track_event-action="Login FB" data-track_event-label="Login page" >
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-ky-fb" data-track_event-category="Button" data-track_event-action="Login FB" data-track_event-label="Login page" >
                                     <div class="auth-facebook-icon">
-                                        <img src="/themes/qc3/img/icons/facebook_icon.svg">
+                                        <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/oauth/google" data-track_event-category="Button" data-track_event-action="Login Google" data-track_event-label="Login page">
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-ky-google" data-track_event-category="Button" data-track_event-action="Login Google" data-track_event-label="Login page">
                                     <div class="auth-google-icon">
                                          <i class="fa fa-google fa-fw"></i>
                                     </div>
@@ -128,3 +131,14 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    function fb_login(){
+        $.ajax({
+            url: '/dang-ky-fb',
+            type:'POST',
+            success: function(data){
+                alert(123);
+            }
+        })
+    }
+</script>

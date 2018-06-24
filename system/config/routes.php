@@ -9,4 +9,10 @@ $router =  $registry->get('routes');
 $router->add(['/tim-kiem-theo-ban-do/:id','find/map']);
 $router->add(['/tim-kiem-phong-tro','find/list']);
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
+$router->add(['/dang-ky','page/login']);
+$router->add(['/dang-ky-fb','page/login/fb_login']);
+$router->add(['/dang-ky-google','page/login/google_login']);
+
+
+
 

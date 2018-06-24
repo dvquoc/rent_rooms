@@ -73,7 +73,7 @@
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
                     <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i> Thêm phòng trọ</button></li>
-                    <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i> Đăng nhập / Đăng ký</button></li>
+                    <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i> Đăng nhập / <a href="/dang-ky">Đăng ký</a></button></li>
                 </ul>
             </div>
         </nav>
