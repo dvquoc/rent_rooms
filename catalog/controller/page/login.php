@@ -20,13 +20,17 @@ class ControllerPageLogin extends Controller {
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('facebook');
         $user_profile = $adapter->getUserProfile();
-        if(!$hybridauth->isConnectedWith()){
-            var_dump('da login');
+       
+        if(!$hybridauth->isConnectedWith('facebook')){
+
+            var_dump($hybridauth->getSessionData());
+            $hybridauth->logoutAllProviders();
+            var_dump()
 
         }else{
-            var_dump('chua login');
 
         }
+
         exit();
     }
 

@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
-<button >FB</button>
-  </form>  
 <div id="wrapper" class="simple-page_wrapper">
     <div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
 
