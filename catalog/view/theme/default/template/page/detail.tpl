@@ -67,7 +67,7 @@
 			</div>
 	</div>
 </div>
-<div class="header" style="margin:10px 0; background-color:#f3f3f3; position: sticky; top: 55.8px; color: #545454; font-size: 15px; padding: 10px 0 10px 0px; z-index: 10">
+<div class="header" style="margin:10px 0; background-color:#f3f3f3; position: sticky; top: 55.8px; color: #545454; font-size: 15px; padding: 10px 0 10px 0px; z-index:5">
     <div class="container">
         <div class="row">
             <div class="col-md-5">
