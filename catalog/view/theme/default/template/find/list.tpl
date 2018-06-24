@@ -1,4 +1,8 @@
-<?php echo $header ?>
+<?php echo $header;
+if(!isset($_COOKIE['origin_ref']))
+{
+    setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
+} ?>
 <div class="container">
   	<div class="row">
 		<div class="col-md-2" id="col-l" style="padding:10px;" onload="function(){return this.style.height=700}">

@@ -19,17 +19,8 @@ class ControllerPageLogin extends Controller {
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('facebook');
-        $user_profile = $adapter->getUserProfile();
-       $adapter->logout();
-        if(!$hybridauth->isConnectedWith('facebook')){
-
-            var_dump($hybridauth->getSessionData());
-            $hybridauth->logoutAllProviders();
-
-        }else{
-
-        }
-
+        $user_profile = $adapter->getUserProfile('facebook');
+        $hybridauth->redirect($_COOKIE['origin_ref']);
         exit();
     }
 
@@ -39,7 +30,7 @@ class ControllerPageLogin extends Controller {
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('google');
-        $user_profile = $adapter->getUserProfile();
+        $user_profile = $adapter->getUserProfile('google');
         if(!$hybridauth->isConnectedWith()){
             var_dump('da login');
 

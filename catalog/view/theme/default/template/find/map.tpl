@@ -1,4 +1,8 @@
-<?php echo $header; ?>
+<?php echo $header;
+if(!isset($_COOKIE['origin_ref']))
+{
+    setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
+} ?>
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places" type="text/javascript"></script>
 <script src="/public/assets/js/map/gmap3.js" type="text/javascript"></script>
 <script src="/public/assets/plugins/tippyjs/tippy.all.min.js" type="text/javascript"></script>
