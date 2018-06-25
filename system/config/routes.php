@@ -15,6 +15,12 @@ $router->add(['/dang-nhap-google','page/login/google_login']);
 $router->add(['/dang-ky','page/register']);
 $router->add(['/dang-ky-fb','page/register/fb_register']);
 $router->add(['/dang-ky-google','page/register/google_register']);
+$router->add(['/dang-ky-form','page/register/form_register']);
+
+$router->add(['/cap-nhap-thong-tin','page/register/update_info']);
+$router->add(['/test','page/register/submit_register']);
+
+
 
 
 

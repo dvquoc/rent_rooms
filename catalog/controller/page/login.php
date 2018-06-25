@@ -14,29 +14,33 @@ class ControllerPageLogin extends Controller {
         }
     }
     public function fb_login(){
-
+        $this->load->model('page/register');
         $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('facebook');
         $user_profile = $adapter->getUserProfile('facebook');
-        $hybridauth->redirect($_COOKIE['origin_ref']);
+        $user = $this->model_page_register->get_user_by_social($user_profile->identifier);
+        if($user != 0 ){
+            $_SESSION['id_source'] = $user_profile->identifier;
+            $_SESSION['id_user'] = $user['_id'];
+            $hybridauth->redirect('/tim-kiem-phong-t');
+        }
         exit();
     }
 
     public function google_login(){
-
+         $this->load->model('page/register');
         $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('google');
         $user_profile = $adapter->getUserProfile('google');
-        if(!$hybridauth->isConnectedWith()){
-            var_dump('da login');
-
-        }else{
-            var_dump('chua login');
-
+        $user = $this->model_page_register->get_user_by_social($user_profile->identifier);
+        if($user != 0 ){
+            $_SESSION['id_source'] = $user_profile->identifier;
+            $_SESSION['id_user'] = $user['_id'];
+            $hybridauth->redirect($_COOKIE['origin_ref']);
         }
         exit();
     }

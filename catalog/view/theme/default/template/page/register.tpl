@@ -40,7 +40,7 @@
                                 <p class="sign-up-middle-text">hoặc</p>
                                 <div class="sign-up-vertical-bottom-line"></div>
                             </div>
-                            <form class="" style="width: 304px;" autocomplete="off">
+                            <form action="/dang-ky-form" method="post" accept-charset="utf-8" style="width: 304px;" autocomplete="off">
                                 <div class="form-row">
                                      <input type="text" placeholder="Số điện thoại" class="auth-input" name="phone" id="phone" value="">
                                     <div class="form-hint"><p class="form-hint-hint">Bộ phận chăm sóc khách hàng của chúng tôi sẵn sàng trợ giúp bạn theo số điện thoại này</p>
@@ -80,7 +80,7 @@
                                     <input type="text" id="captcha" name="captcha" class="hide">
                                     <div class="g-recaptcha" data-sitekey="6Lf3aD8UAAAAAO8wyZH1XbRiEOrTQayoW00PjHj7"><div style="width: 304px; height: 78px;"><div><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6Lf3aD8UAAAAAO8wyZH1XbRiEOrTQayoW00PjHj7&amp;co=aHR0cHM6Ly9jcC5xYy5jb2Njb2MuY29tOjQ0Mw..&amp;hl=vi&amp;v=v1528855115741&amp;size=normal&amp;cb=bc8tiolbesrh" width="304" height="78" role="presentation" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea></div></div>
                                 </div>
-                                    <button class="auth-btn js-action-track_event" data-track_event-category="Button" data-track_event-action="Register" data-track_event-label="Registration page" type="submit">Đăng ký</button>
+                                    <button class="auth-btn js-action-track_event" type="submit">Đăng ký</button>
                             </form>
                         </div>
                         <div class="sign-up-success" style="display: none;">
