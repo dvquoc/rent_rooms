@@ -12,13 +12,21 @@ $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
 $router->add(['/dang-nhap','page/login']);
 $router->add(['/dang-nhap-fb','page/login/fb_login']);
 $router->add(['/dang-nhap-google','page/login/google_login']);
+$router->add(['/dang-nhap-form','page/login/form_login']);
+
 $router->add(['/dang-ky','page/register']);
 $router->add(['/dang-ky-fb','page/register/fb_register']);
 $router->add(['/dang-ky-google','page/register/google_register']);
 $router->add(['/dang-ky-form','page/register/form_register']);
+$router->add(['/check-phone','page/register/check_phone']);
+$router->add(['/test','page/register/submit_register']);
 
 $router->add(['/cap-nhap-thong-tin','page/register/update_info']);
-$router->add(['/test','page/register/submit_register']);
+$router->add(['/dang-xuat','page/logout']);
+$router->add(['/thong-tin-tai-khoan','page/info_account']);
+
+
+
 
 
 

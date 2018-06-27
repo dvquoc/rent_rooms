@@ -6,7 +6,7 @@ class ControllerPageLogin extends Controller {
         // $data_search = array(
         //     'status'=>1
         // );
-         $data['header'] = $this->load->controller('common/header');
+        $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/login.tpl')) {
             $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/login.tpl', $data));
         } else {
@@ -22,15 +22,15 @@ class ControllerPageLogin extends Controller {
         $user_profile = $adapter->getUserProfile('facebook');
         $user = $this->model_page_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
-            $_SESSION['id_source'] = $user_profile->identifier;
+            $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $user['_id'];
-            $hybridauth->redirect('/tim-kiem-phong-t');
+             $this->response->redirect('/tim-kiem-phong-tro');
         }
         exit();
     }
 
     public function google_login(){
-         $this->load->model('page/register');
+        $this->load->model('page/register');
         $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
@@ -38,10 +38,28 @@ class ControllerPageLogin extends Controller {
         $user_profile = $adapter->getUserProfile('google');
         $user = $this->model_page_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
-            $_SESSION['id_source'] = $user_profile->identifier;
+            $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $user['_id'];
-            $hybridauth->redirect($_COOKIE['origin_ref']);
+            $hybridauth->redirect('/tim-kiem-phong-tro');
         }
         exit();
     }
+    public function form_login(){
+        $this->load->model('page/login');
+        $data = [
+            'phone' =>$_POST['sdt'],
+            'password'=>md5($_POST['password']),
+        ];
+        $result = $this->model_page_login->login_form($data);
+        if($result){
+            $_SESSION['id_user'] = $result['_id'];
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+        exit();
+
+    }
+    
 }

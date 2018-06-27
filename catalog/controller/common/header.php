@@ -2,7 +2,7 @@
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		$this->load->model('page/register');
-		if(isset($_SESSION['id_source']) || isset($_SESSION['id_user']))
+		if(isset($_SESSION['source_id']) || isset($_SESSION['id_user']))
 		{
 	        $data['user'] = $this->model_page_register->get_user_by_id($_SESSION['id_user']);
 		}

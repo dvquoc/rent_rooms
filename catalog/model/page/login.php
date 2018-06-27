@@ -7,18 +7,26 @@ class ModelPageLogin extends Model {
     }
     
     public function get_user_by_social($source_id){
-    	$OneResult = $this->table->findOne(['source_id'=>$id]);
-    	if($OneResult){
-    		return $OneResult;
+    	$oneResult = $this->table->findOne(['source_id'=>$id]);
+    	if($oneResult){
+    		return $oneResult;
     	}else
     		return 0;
     }
 
     public function get_user_by_id($id){
-    	$OneResult = $this->table->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
-    	if($OneResult){
-    		return $OneResult;
+    	$oneResult = $this->table->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+    	if($oneResult){
+    		return $oneResult;
     	}else
     		return 0;
+    }
+
+    public function login_form($data){
+        $oneResult = $this->table->findOne([
+            'phone' => $data['phone'],
+            'password' =>$data['password']
+        ]);
+        return $oneResult;
     }
 }

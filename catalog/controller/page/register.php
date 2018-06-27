@@ -33,7 +33,7 @@ class ControllerPageRegister extends Controller {
                 'birthMonth' =>$user_profile->birthMonth,
                 'birthYear'  =>$user_profile->birthYear,
                 'email'      =>$user_profile->email,
-                'image'      =>$user_profile->profileURL,
+                'image'      =>$user_profile->photoURL,
                 'country'    =>$user_profile->country,
                 'address'    =>$user_profile->address,
                 'phone'      =>$user_profile->phone,
@@ -46,7 +46,7 @@ class ControllerPageRegister extends Controller {
             ];
             $id_user = $this->model_page_register->add_user($data);
             // $hybridauth->redirect($_COOKIE['origin_ref']);
-            $_SESSION['id_source'] = $user_profile->identifier;
+            $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $id_user;
             $_SESSION['phone'] = $user_profile->phone;
             $_SESSION['email'] = $user_profile->email;
@@ -75,7 +75,7 @@ class ControllerPageRegister extends Controller {
             'birthMonth'=>$user_profile->birthMonth,
             'birthYear'=>$user_profile->birthYear,
             'email'=>$user_profile->email,
-            'image'=>$user_profile->profileURL,
+            'image'=>$user_profile->photoURL,
             'country'=>$user_profile->country,
             'address'=>$user_profile->address,
             'phone'=>$user_profile->phone,
@@ -88,7 +88,7 @@ class ControllerPageRegister extends Controller {
             ];
             $this->model_page_register->add_user($data);
             //$hybridauth->redirect($_COOKIE['origin_ref']);
-            $_SESSION['id_source'] = $user_profile->identifier;
+            $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $id_user;
             $_SESSION['phone'] = $user_profile->phone;
             $_SESSION['email'] = $user_profile->email;
@@ -116,15 +116,15 @@ class ControllerPageRegister extends Controller {
                 'groupUser'  =>1,
                 'source'     =>'',
                 'source_id'  =>'',
-                'password'   =>$_POST['password'],
+                'password'   =>md5($_POST['password']),
                 'date_add'   =>time(),
                 'status'     =>1,
             ];
             $id_user = $this->model_page_register->add_user($data);
-            
             $_SESSION['id_user'] = $id_user;
-            // $hybridauth->redirect($_COOKIE['origin_ref']);
-            $this->response->redirect($_COOKIE['origin_ref']);
+            //$this->response->redirect($_COOKIE['origin_ref']);
+            $this->response->redirect('/tim-kiem-phong-tro');
+
 
     }
     
@@ -146,7 +146,7 @@ class ControllerPageRegister extends Controller {
         $data = [
             'phone'    => isset($_POST['phone'])?$_POST['phone']:'',
             'email'    => isset($_POST['email'])?$_POST['email']:'',
-            'password' => isset($_POST['password'])?$_POST['password']:'',
+            'password' => isset($_POST['password'])?md5($_POST['password']):'',
         ];
 
         $result = $this->model_page_register->update_info($id_source,$data);
@@ -155,5 +155,14 @@ class ControllerPageRegister extends Controller {
         else
             var_dump('xảy ra lỗi thử lại');
         die();
+    }
+    public function check_phone(){
+        $this->load->model('page/register');
+        $phone = $_POST['phone'];
+        $result = $this->model_page_register->get_phone($phone);
+        if($result != 0){
+            echo 'exist';
+        }
+        exit();
     }
 }

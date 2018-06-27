@@ -9,15 +9,10 @@
     		<div class="container">
     			<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
                  <div class="container">
-        
                     <div class="sign-up auth-container " id="client-sign-up">
                         <div class="sign-up-header-container pdR20">
                             <p class="sign-up-header auth-header text-center">Đăng ký </p>
-                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/sign-in" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng nhập tại đây</a></p>
-                        </div>
-                        <div class="not-verified-email" style="display: none;">
-                            <p class="not-verified-email-message"></p>
-                            <a href="https://cp.qc.coccoc.com/dang-ky-tai-khoan" class="auth-btn auth-clear-visited">QUAY LẠI TRANG ĐĂNG KÍ</a>
+                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/dang-nhap" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng nhập tại đây</a></p>
                         </div>
                         <div class="sign-up-container">
                             <div class="sign-up-social">
@@ -40,40 +35,36 @@
                                 <p class="sign-up-middle-text">hoặc</p>
                                 <div class="sign-up-vertical-bottom-line"></div>
                             </div>
-                            <form action="/dang-ky-form" method="post" accept-charset="utf-8" style="width: 304px;" autocomplete="off">
+                            <form id="form_register" action="/dang-ky-form" method="post" accept-charset="utf-8" style="width: 304px;" autocomplete="off">
                                 <div class="form-row">
-                                     <input type="text" placeholder="Số điện thoại" class="auth-input" name="phone" id="phone" value="">
+                                     <input type="text" placeholder="Số điện thoại" class="auth-input mgT0" name="phone" id="phone" value="" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                                    <div id="check_phone" style="color: red"></div>
                                     <div class="form-hint"><p class="form-hint-hint">Bộ phận chăm sóc khách hàng của chúng tôi sẵn sàng trợ giúp bạn theo số điện thoại này</p>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                     <input type="text" placeholder="Email" class="auth-input mgT0" name="email" id="email" value="">
+                                     <input type="text" placeholder="Email" class="auth-input " name="email" id="email" value="" required>
                                     <div class="form-hint">
                                         <p class="form-hint-hint">
-                                            Nhập địa chỉ email hợp lệ. Chúng tôi sẽ gửi thư kích hoạt vào địa chỉ email này sau khi bạn hoàn thành đăng ký                    </p>
+                                            Nhập địa chỉ email hợp lệ. Chúng tôi sẽ gửi thư kích hoạt vào địa chỉ email này sau khi bạn hoàn thành đăng ký</p>
                                     </div>
                                 </div>
                                 <div class="auth-password form-row">
-                                    <input type="password" placeholder="Mật khẩu" class="auth-input auth-password-input" name="password" id="password">
+                                    <input type="password" placeholder="Mật khẩu" class="auth-input auth-password-input" name="password" id="password" required>
                                     <div class="form-hint"><p class="form-hint-hint">Mật khẩu phải có ít nhất 6 ký tự, bao gồm cả số và chữ</p></div>
                                 </div>
                                 <div class="form-row">
-                                    <input type="text" placeholder="Tên" class="auth-input" name="firstname" id="firstname" value="">
-                                    <div class="form-hint">
-                                        <p class="form-hint-hint">
-                                            Vui lòng điền đầy đủ họ tên theo CMT/Hộ chiếu                        . Những thông tin này sẽ được sử dụng để nhận diện khách hàng (khi cần thiết)                        .
-                                        </p>
-                                    </div>
+                                    <input type="text" placeholder="Tên" class="auth-input" name="firstname" id="firstname" value="" required>
                                 </div>
                                 
-                                <div class="sign-up-terms inline-block auth-none-user-select form-row">
+                               <!--  <div class="sign-up-terms inline-block auth-none-user-select form-row">
                                     <input checked="" name="agreement" class="styled-checkbox" id="agreement" type="checkbox">
                                     <label for="agreement">
                                         <img class="styled-checked-icon" src="/themes/qc3/img/icons/checked_icon.svg">
                                         <span class="styled-checkbox-label">
                                             Tôi đồng ý với <a class="auth-link" href="/pages/terms-of-use" target="_blank">điều kiện và điều khoản</a><br> của Cốc Cốc Quảng Cáo</span>
                                     </label>
-                                </div>
+                                </div> -->
 
                                 <input type="hidden" id="i_key" name="i_key">
                                 <div class="form-row">
@@ -83,13 +74,64 @@
                                     <button class="auth-btn js-action-track_event" type="submit">Đăng ký</button>
                             </form>
                         </div>
-                        <div class="sign-up-success" style="display: none;">
-                            <p class="sign-up-success-message"></p>
-                            <a href="https://cp.qc.coccoc.com/dang-ky-tai-khoan" class="auth-btn auth-clear-visited js-action-track_event" data-track_event-category="Link" data-track_event-action="BACK TO SIGN UP PAGE" data-track_event-label="Registration page">QUAY LẠI TRANG ĐĂNG KÍ</a>
-                        </div>
                     </div>
                 </div>
     		</div>
     	</div>
 	</div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#phone").focusout(function(){
+            var phone_number = $(this).val();
+            $.ajax({
+                url:"/check-phone",
+                type:"POST",
+                data:{
+                    phone : phone_number,
+                },
+                success: function(data){
+                    if(data == 'exist'){
+                        $('#check_phone').empty();
+                        $('#check_phone').append( "Số điện thoại đã tồn tại" );
+                        $('#check_phone').delay(3000).fadeOut();
+                    }
+                }
+            })
+        });
+        $("#form_register").validate({
+            rules: {
+                firstname: "required",
+                phone: {
+                    required: true,
+                    minlength: 9,
+                    maxlength:11,
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+            },
+            messages: {
+                firstname: "Vui lòng nhập tên",
+                phone: {
+                    required: "Vui lòng nhập số điện thoại",
+                    minlength: "số điện thoại không xác thực",
+                    maxlength: "số điện thoại không xác thực",
+                },
+                email:{
+                    required:"Vui lòng nhập emai",
+                    email:"Email không chính xac"
+                },
+                password:{
+                    required:"Vui lòng nhập mật khẩu",
+                    minlength:"Mật khẩu it nhất 5 ký tự",
+                },
+            },
+        });
+    });
+</script>

@@ -10,7 +10,7 @@ class ModelPageRegister extends Model {
     	return $insertOneResult->getInsertedId();
     }
     public function get_user_by_social($source_id){
-    	$OneResult = $this->table->findOne(['source_id'=>$id]);
+    	$OneResult = $this->table->findOne(['source_id' => $source_id]);
     	if($OneResult){
     		return $OneResult;
     	}else
@@ -30,5 +30,12 @@ class ModelPageRegister extends Model {
     	 	['$set' => $data]
     	 );
     	return $updateResult;
+    }
+    public function get_phone($phone){
+        $OneResult = $this->table->findOne(['phone' => $phone]);
+        if($OneResult){
+            return $OneResult;
+        }else
+            return 0;
     }
 }
