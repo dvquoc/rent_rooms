@@ -26,10 +26,13 @@
     <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
 
     <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
+    
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+   
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
             <div class="<?php echo $classPage !='common-home' ? 'container' : 'container-fluid' ?>">
@@ -73,7 +76,7 @@
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i> Thêm phòng trọ</button></li>
+                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i><a href="/dang-ky">Thêm phòng trọ</a></button></li>
                     <?php if(isset($user)){?>
                          <li class="item"><img src="<?php echo $user['image']?>"><?php echo $user['name']?></li><a href="/dang-xuat">Đăng xuất</a>
                     <?php }else{?>

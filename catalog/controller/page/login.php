@@ -1,5 +1,5 @@
 <?php
-
+require_once( "vendor/recaptchalib.php" );
 class ControllerPageLogin extends Controller {
     public function index() {
         // $this->load->model('page/detail');
@@ -24,7 +24,7 @@ class ControllerPageLogin extends Controller {
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $user['_id'];
-             $this->response->redirect('/tim-kiem-phong-tro');
+            $this->response->redirect('/tim-kiem-phong-tro');
         }
         exit();
     }
@@ -46,18 +46,37 @@ class ControllerPageLogin extends Controller {
     }
     public function form_login(){
         $this->load->model('page/login');
-        $data = [
-            'phone' =>$_POST['sdt'],
-            'password'=>md5($_POST['password']),
-        ];
-        $result = $this->model_page_login->login_form($data);
-        if($result){
-            $_SESSION['id_user'] = $result['_id'];
-            echo 1;
+        $this->load->model('page/register');
+
+        $secret = "6LfgN2EUAAAAAHIlpYTJjHz7zIvFMtR7WaAB_c_m";
+        $response = null;
+
+        $reCaptcha = new ReCaptcha($secret);
+        // if submitted check response
+
+        if ($_POST["g-recaptcha-response"]) {
+            $response = $reCaptcha->verifyResponse(
+                $_SERVER["REMOTE_ADDR"],
+                $_POST["g-recaptcha-response"]
+            );
         }
-        else{
-            echo 0;
+        if($response != null && $response->success) {
+            $data = [
+                'phone' =>$_POST['sdt'],
+                'password'=>md5($_POST['password']),
+            ];
+            $result = $this->model_page_login->login_form($data);
+            if($result){
+                $_SESSION['id_user'] = $result['_id'];
+                echo 1; //account math
+            }
+            else{
+                echo 0; // account not exist
+            }
+        }else{
+            echo 2; // capcha not check
         }
+       
         exit();
 
     }

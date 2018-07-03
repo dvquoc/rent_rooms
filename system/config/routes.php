@@ -20,10 +20,16 @@ $router->add(['/dang-ky-google','page/register/google_register']);
 $router->add(['/dang-ky-form','page/register/form_register']);
 $router->add(['/check-phone','page/register/check_phone']);
 $router->add(['/test','page/register/submit_register']);
+$router->add(['/dang-ky-2','page/register/register_customer']);
+$router->add(['/dang-ky-form-2','page/register/form_register_2']);
+
+
 
 $router->add(['/cap-nhap-thong-tin','page/register/update_info']);
 $router->add(['/dang-xuat','page/logout']);
-$router->add(['/thong-tin-tai-khoan','page/info_account']);
+$router->add(['/thong-tin-tai-khoan','page/infoAccount']);
+$router->add(['/cap-nhat','page/infoAccount/update_account']);
+
 
 
 

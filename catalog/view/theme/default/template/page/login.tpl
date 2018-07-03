@@ -27,6 +27,12 @@ if(!isset($_COOKIE['origin_ref']))
                                 </label>
                             </div> -->
                         </div>
+                         <div class="form-row">
+                            <div class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
+                            <div class="error-capcha" style="display: none">
+                                <p style="color: red">vui lòng check capcha </p>
+                            </div>
+                        </div>
                         <button class="auth-btn" onclick="login()">Đăng nhập</button>
                         <div class="login-social">
                             <div class="login-separate-line">
@@ -62,22 +68,34 @@ if(!isset($_COOKIE['origin_ref']))
 <script type="text/javascript">
    
     function login(){
-        var form_data =  $("#form_login").serialize();
-        $.ajax({
-            url: '/dang-nhap-form',
-            type:'POST',
-            data:form_data,
-            success: function(data){
-                if(data == 0){
-                    $('#form_error').empty();
-                    $('#form_error').css('display','block');
-                    $('#form_error').append( "Tài khoản mật khẩu không chính xác" );
-                    $('#form_error').delay(1000).fadeOut();
-                }else{
-                     window.location.href = "/tim-kiem-phong-tro";
+        var phone = $('#sdt').val();
+        var password = $('password').val();
+        if(phone.lenght() != 0 && password.lenght() != 0){
+             var form_data =  $("#form_login").serialize();
+            $.ajax({
+                url: '/dang-nhap-form',
+                type:'POST',
+                data:form_data,
+                success: function(data){
+                    if(data == 2){
+                        $('.error-capcha').css('display','block');
+                    }else{
+                        if(data == 0){
+                            $('#form_error').empty();
+                            $('#form_error').css('display','block');
+                            $('#form_error').append( "Tài khoản mật khẩu không chính xác" );
+                            $('#form_error').delay(1000).fadeOut();
+                        }else
+                            window.location.href = "/tim-kiem-phong-tro";
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            $('#form_error').empty();
+            $('#form_error').css('display','block');
+            $('#form_error').append( "Tài khoản mật khẩu không chính xác" );
+            $('#form_error').delay(1000).fadeOut(); 
+        }
         event.preventDefault(); 
     }
 </script>

@@ -7,11 +7,12 @@
 	<div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
     	<div id="qc3-body">
     		<div class="container">
-    			 <p class="text-center">Trang đăng ký cho <b>chủ phòng</b>, Nếu bạn là người tìm phòng <a class="auth-linkjs-action-track_event" href="/dang-ky-2" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng ký tại đây</a></p>
+    			 <p class="text-center">Trang đăng ký cho <b>người tìm phòng</b>, Nếu bạn là chủ phòng <a class="auth-linkjs-action-track_event" href="/dang-ky" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng ký tại đây</a></p>
                  <div class="container">
                     <div class="sign-up auth-container " id="client-sign-up">
+
                         <div class="sign-up-header-container pdR20">
-                            <p class="sign-up-header auth-header text-center">Đăng ký </p>
+                            <p class="sign-up-header auth-header text-center">Đăng ký</p>
                               <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/dang-nhap" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng nhập tại đây</a></p>
                         </div>
                         <div class="sign-up-container">
@@ -35,36 +36,29 @@
                                 <p class="sign-up-middle-text">hoặc</p>
                                 <div class="sign-up-vertical-bottom-line"></div>
                             </div>
-                            <form id="form_register" accept-charset="utf-8" style="width: 304px;" autocomplete="off">
+                            <form id="form_register_cus" accept-charset="utf-8" style="width: 304px;" autocomplete="off">
                                 <div class="form-row">
                                      <input type="text" placeholder="Số điện thoại" class="auth-input mgT0" name="phone" id="phone" value="" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     <div id="check_phone" style="color: red"></div>
-                                    <div class="form-hint"><p class="form-hint-hint">Bộ phận chăm sóc khách hàng của chúng tôi sẵn sàng trợ giúp bạn theo số điện thoại này</p>
-                                    </div>
                                 </div>
                                 <div class="form-row">
                                      <input type="text" placeholder="Email" class="auth-input " name="email" id="email" value="" required>
-                                    <div class="form-hint">
-                                        <p class="form-hint-hint">
-                                            Nhập địa chỉ email hợp lệ. Chúng tôi sẽ gửi thư kích hoạt vào địa chỉ email này sau khi bạn hoàn thành đăng ký</p>
-                                    </div>
                                 </div>
                                 <div class="auth-password form-row">
                                     <input type="password" placeholder="Mật khẩu" class="auth-input auth-password-input" name="password" id="password" required>
-                                    <div class="form-hint"><p class="form-hint-hint">Mật khẩu phải có ít nhất 6 ký tự, bao gồm cả số và chữ</p></div>
                                 </div>
                                 <div class="form-row">
                                     <input type="text" placeholder="Tên" class="auth-input" name="firstname" id="firstname" value="" required>
                                 </div>
                                 
-                               <!--  <div class="sign-up-terms inline-block auth-none-user-select form-row">
-                                    <input checked="" name="agreement" class="styled-checkbox" id="agreement" type="checkbox">
+                                <div class="sign-up-terms inline-block auth-none-user-select form-row">
+                                    <input checked="" name="support" class="support-checkbox" id="support" type="checkbox">
                                     <label for="agreement">
-                                        <img class="styled-checked-icon" src="/themes/qc3/img/icons/checked_icon.svg">
                                         <span class="styled-checkbox-label">
-                                            Tôi đồng ý với <a class="auth-link" href="/pages/terms-of-use" target="_blank">điều kiện và điều khoản</a><br> của Cốc Cốc Quảng Cáo</span>
+                                            Đống ý nhận trợ giúp từ bộ phận chăm sóc khách hàng của chúng tôi theo số điện thoại này
+                                            </span>
                                     </label>
-                                </div> -->
+                                </div>
 
                                 <input type="hidden" id="i_key" name="i_key">
                                 <div class="form-row">
@@ -84,58 +78,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-          $("#form_register").validate({
-            rules: {
-                firstname: "required",
-                phone: {
-                    required: true,
-                    minlength: 9,
-                    maxlength:11,
-                },
-                email: {
-                    email: true
-                },
-                password: {
-                    required: true,
-                    minlength: 5
-                },
-            },
-            messages: {
-                firstname: "Vui lòng nhập tên",
-                phone: {
-                    required: "Vui lòng nhập số điện thoại",
-                    minlength: "số điện thoại không xác thực",
-                    maxlength: "số điện thoại không xác thực",
-                },
-                email:{
-                    required:"Vui lòng nhập emai",
-                    email:"Email không chính xac"
-                },
-                password:{
-                    required:"Vui lòng nhập mật khẩu",
-                    minlength:"Mật khẩu it nhất 5 ký tự",
-                },
-            },
-            submitHandler: function(form) {
-                $('#form_register').submit(function(event){
-                    event.preventDefault();
-                    var data_form = $('#form_register').serialize();
-                    $.ajax({
-                        url:"/dang-ky-form",
-                        type:"POST",
-                        data: data_form,
-                        success: function(re){
-                            if(re == 'capcha'){
-                                $('.error-capcha').css('display','block')
-                            }else{
-                                window.location.href = "/tim-kiem-phong-tro";
-                            }
-                        }
-                    }); 
-                });
-            }
-        });
-        
+       
         $("#phone").focusout(function(){
             var phone_number = $(this).val();
             $.ajax({
@@ -153,6 +96,57 @@
                 }
             })
         });
-      
+        $("#form_register_cus").validate({
+            rules: {
+                firstname: "required",
+                phone: {
+                    required: true,
+                    minlength: 9,
+                    maxlength:11,
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+            },
+            messages: {
+                firstname: "Vui lòng nhập tên",
+                phone: {
+                    required: "Vui lòng nhập số điện thoại",
+                    minlength: "số điện thoại không xác thực it nhất 9 số",
+                    maxlength: "số điện thoại không xác thực nhiều nhất 11 số",
+                },
+                email:{
+                    required:"Vui lòng nhập emai",
+                    email:"Email không chính xac"
+                },
+                password:{
+                    required:"Vui lòng nhập mật khẩu",
+                    minlength:"Mật khẩu it nhất 5 ký tự",
+                },
+            },
+            submitHandler: function(form) {
+                $('#form_register_cus').submit(function(event){
+                    event.preventDefault();
+                    var data_form = $('#form_register_cus').serialize();
+                    $.ajax({
+                        url:"/dang-ky-form-2",
+                        type:"POST",
+                        data: data_form,
+                        success: function(re){
+                            if(re == 'capcha'){
+                                $('.error-capcha').css('display','block')
+                            }else{
+                                window.location.href = "/tim-kiem-phong-tro";
+                            }
+                        }
+                    });
+                });
+            }
+        });
     });
 </script>

@@ -9,6 +9,7 @@ class ModelPageRegister extends Model {
     	$insertOneResult = $this->table->insertOne($data);
     	return $insertOneResult->getInsertedId();
     }
+
     public function get_user_by_social($source_id){
     	$OneResult = $this->table->findOne(['source_id' => $source_id]);
     	if($OneResult){
@@ -37,5 +38,12 @@ class ModelPageRegister extends Model {
             return $OneResult;
         }else
             return 0;
+    }
+     public function update_account($id,$data){
+        $updateResult =  $this->table->updateOne(
+            ['_id' => new MongoDB\BSON\ObjectId($id)],
+            ['$set' => $data]
+         );
+        return $updateResult;
     }
 }
