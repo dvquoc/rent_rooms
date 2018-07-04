@@ -1,32 +1,29 @@
 <?php
 require_once( "vendor/recaptchalib.php" );
 
-class ControllerPageRegister extends Controller {
+class ControllerPageCustomerRegister extends Controller {
     public function index() {
-        // $this->load->model('page/detail');
-        // $data_search = array(
-        //     'status'=>1
-        // );
-
         $data['header'] = $this->load->controller('common/header');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/register.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/register.tpl', $data));
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/customer/register.tpl')) {
+            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/customer/register.tpl', $data));
         } else {
-            $this->response->setOutput($this->load->view('default/template/page/register.tpl', $data));
+            $this->response->setOutput($this->load->view('default/template/page/customer/register.tpl', $data));
         }
     }
     public function fb_register(){
-        $this->load->model('page/register');
+        $this->load->model('page/customer/register');
         $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('facebook');
         $user_profile = $adapter->getUserProfile('facebook');
-        $user = $this->model_page_register->get_user_by_social($user_profile->identifier);
+        $user = $this->model_page_customer_register->get_user_by_social($user_profile->identifier);
         
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['img'] = $user['image'];
             $this->response->redirect('/tim-kiem-phong-tro');
         }else{
              $data = [
@@ -50,13 +47,15 @@ class ControllerPageRegister extends Controller {
             ];
             // $hybridauth->redirect($_COOKIE['origin_ref']);
             if(!empty($user_profile->phone)){
-                $id_user = $this->model_page_register->add_user($data);
+                $id_user = $this->model_page_customer_register->add_user($data);
                 $_SESSION['source_id'] = $id_source;
                 $_SESSION['id_user'] = $id_user;
+                $_SESSION['name'] = $user['name'];
+                $_SESSION['img'] = $user['image'];
                 $this->response->redirect('/tim-kiem-phong-tro');
             }else{
                 $_SESSION['user_profile'] = $data;
-                $this->response->redirect('/cap-nhap-thong-tin');
+                $this->response->redirect('/cus-cap-nhap-thong-tin');
             }
 
         }
@@ -64,16 +63,18 @@ class ControllerPageRegister extends Controller {
     }
 
     public function google_register(){
-        $this->load->model('page/register');
+        $this->load->model('page/customer/register');
         $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
         require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
         $hybridauth = new Hybrid_Auth( $config_file_path );
         $adapter  = $hybridauth->authenticate('google');
         $user_profile = $adapter->getUserProfile('google');
-        $user = $this->model_page_register->get_user_by_social($user_profile->identifier);
+        $user = $this->model_page_customer_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
             $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['name'] = $user['name'];
+            $_SESSION['img'] = $user['image'];
             $this->response->redirect('/tim-kiem-phong-tro');
         }else{
              $data = [
@@ -96,13 +97,15 @@ class ControllerPageRegister extends Controller {
             'status'=>1,
             ];
             if(!empty($user_profile->phone)){
-                $id_user = $this->model_page_register->add_user($data);
+                $id_user = $this->model_page_customer_register->add_user($data);
                 $_SESSION['source_id'] = $id_source;
                 $_SESSION['id_user'] = $id_user;
+                $_SESSION['name'] = $user['name'];
+                $_SESSION['img'] = $user['image'];
                 $this->response->redirect('/tim-kiem-phong-tro');
             }else{
                 $_SESSION['user_profile'] = $data;
-                $this->response->redirect('/cap-nhap-thong-tin');
+                $this->response->redirect('/cus-cap-nhap-thong-tin');
             }
 
         }
@@ -111,7 +114,7 @@ class ControllerPageRegister extends Controller {
     }
 
     public function form_register(){
-        $this->load->model('page/register');
+        $this->load->model('page/customer/register');
 
         // your secret key
         $secret = "6LfgN2EUAAAAAHIlpYTJjHz7zIvFMtR7WaAB_c_m";
@@ -128,100 +131,8 @@ class ControllerPageRegister extends Controller {
                 $_POST["g-recaptcha-response"]
             );
         }
-        if ($response != null && $response->success) {
-             $data = [
-                'name'       =>$_POST['firstname'],
-                'gender'     =>'',
-                'age'        =>'',
-                'birthDay'   =>'',
-                'birthMonth' =>'',
-                'birthYear'  =>'',
-                'email'      =>$_POST['email'],
-                'image'      =>'',
-                'country'    =>'',
-                'address'    =>'',
-                'phone'      =>$_POST['phone'],
-                'groupUser'  =>1,
-                'source'     =>'',
-                'source_id'  =>'',
-                'password'   =>md5($_POST['password']),
-                'date_add'   =>time(),
-                'status'     =>1,
-            ];
-            $id_user = $this->model_page_register->add_user($data);
-            $_SESSION['id_user'] = $id_user;
-            //$this->response->redirect($_COOKIE['origin_ref']);
-        }else{
-            echo 'capcha';
-        }
-        exit();
-    }
-    
-    public function update_info(){
-        $data['header'] = $this->load->controller('common/header');
       
-        $data['phone'] = $_SESSION['user_profile']['phone'];
-
-
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/update_info.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/update_info.tpl', $data));
-        } else {
-            $this->response->setOutput($this->load->view('default/template/page/update_info.tpl', $data));
-        }
-    }
-    public function submit_register(){
-        $this->load->model('page/register');
-        $id_source = $_SESSION['user_profile']['id_source'];
-      
-        $_SESSION['user_profile']['phone'] = $_POST['phone'];
-        $_SESSION['user_profile']['password'] = md5($_POST['password']);
-
-        $id_user = $this->model_page_register->add_user($_SESSION['user_profile']);
-        $_SESSION['source_id'] = $id_source;
-        $_SESSION['id_user'] = $id_user;
-        $this->response->redirect('/tim-kiem-phong-tro');
-     
-    }
-
-    public function check_phone(){
-        $this->load->model('page/register');
-        $phone = $_POST['phone'];
-        $result = $this->model_page_register->get_phone($phone);
-        if($result != 0){
-            echo 'exist';
-        }
-        exit();
-    }
-
-    public function register_customer(){
-
-        $data['header'] = $this->load->controller('common/header');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/register_customer.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/register_customer.tpl', $data));
-        } else {
-            $this->response->setOutput($this->load->view('default/template/page/register_customer.tpl', $data));
-        }
-    }
-
-    public function form_register_2(){
-        $this->load->model('page/register');
-
-        // your secret key
-        $secret = "6LfgN2EUAAAAAHIlpYTJjHz7zIvFMtR7WaAB_c_m";
-         
-        // empty response
-        $response = null;
-         
-        // check secret key
-        $reCaptcha = new ReCaptcha($secret);
-        // if submitted check response
-        if ($_POST["g-recaptcha-response"]) {
-            $response = $reCaptcha->verifyResponse(
-                $_SERVER["REMOTE_ADDR"],
-                $_POST["g-recaptcha-response"]
-            );
-        }
-        if ($response != null && $response->success) {
+         if ($response != null && $response->success) {
              $data = [
                 'name'       =>$_POST['firstname'],
                 'gender'     =>'',
@@ -243,11 +154,55 @@ class ControllerPageRegister extends Controller {
                 'is_support' =>isset($_POST['support'])?1:0,
                 'job'       =>'',
             ];
-            $id_user = $this->model_page_register->add_user($data);
+            $id_user = $this->model_page_customer_register->add_user($data);
             $_SESSION['id_user'] = $id_user;
+            $_SESSION['name'] = $data['name'];
+            $_SESSION['img'] = '';
             //$this->response->redirect($_COOKIE['origin_ref']);
         }else{
             echo 'capcha';
+        }
+        
+       
+        exit();
+    }
+    
+    public function update_info(){
+        $data['header'] = $this->load->controller('common/header');
+      
+        $data['phone'] = $_SESSION['user_profile']['phone'];
+
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/customer/update_info.tpl')) {
+            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/customer/update_info.tpl', $data));
+        } else {
+            $this->response->setOutput($this->load->view('default/template/page/customer/update_info.tpl', $data));
+        }
+    }
+    public function submit_register(){
+        $this->load->model('page/customer/register');
+        $id_source = $_SESSION['user_profile']['id_source'];
+      
+        $_SESSION['user_profile']['phone'] = $_POST['phone'];
+        $_SESSION['user_profile']['support'] = $_POST['support'];
+
+        $id_user = $this->model_page_customer_register->add_user($_SESSION['user_profile']);
+        if($id_user){
+            $_SESSION['source_id'] = $id_source;
+            $_SESSION['id_user'] = $id_user;
+            $_SESSION['name'] = $_SESSION['user_profile']['name'];
+            $_SESSION['img'] = $_SESSION['user_profile']['image'];
+            unset($_SESSION['user_profile']);
+            $this->response->redirect('/tim-kiem-phong-tro');
+        }
+    }
+
+    public function check_phone(){
+        $this->load->model('page/customer/register');
+        $phone = $_POST['phone'];
+        $result = $this->model_page_customer_register->get_phone($phone);
+        if($result != 0){
+            echo 'exist';
         }
         exit();
     }

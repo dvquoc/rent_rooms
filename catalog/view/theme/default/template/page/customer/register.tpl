@@ -7,23 +7,23 @@
 	<div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
     	<div id="qc3-body">
     		<div class="container">
-    			 <p class="text-center">Trang đăng ký cho <b>người tìm phòng</b>, Nếu bạn là chủ phòng <a class="auth-linkjs-action-track_event" href="/dang-ky" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng ký tại đây</a></p>
+    			 <p class="text-center">Trang đăng ký cho <b>người tìm phòng</b>, Nếu bạn là chủ phòng <a class="auth-linkjs-action-track_event" href="/ow-dang-ky">vui lòng đăng ký tại đây</a></p>
                  <div class="container">
                     <div class="sign-up auth-container " id="client-sign-up">
 
                         <div class="sign-up-header-container pdR20">
                             <p class="sign-up-header auth-header text-center">Đăng ký</p>
-                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/dang-nhap" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng nhập tại đây</a></p>
+                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/cus-dang-nhap">vui lòng đăng nhập tại đây</a></p>
                         </div>
                         <div class="sign-up-container">
                             <div class="sign-up-social">
                                 <p class="mgB20">Đăng kí với tài khoản mạng xã hội:</p>
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-fb" data-track_event-category="Button" data-track_event-action="Register FB" data-track_event-label="Registration page"><div class="auth-facebook-icon">
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/cus-dang-ky-fb"><div class="auth-facebook-icon">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-google" data-track_event-category="Button" data-track_event-action="Register Google" data-track_event-label="Registration page">
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/cus-dang-ky-google">
                                     <div class="auth-google-icon">
                                           <i class="fa fa-google fa-fw"></i>
                                     </div>
@@ -67,7 +67,7 @@
                                         <p style="color: red">vui lòng check capcha </p>
                                     </div>
                                 </div>
-                                    <button class="auth-btn" type="submit">Đăng ký</button>
+                                    <button class="auth-btn" id="btn-login-cus" type="submit">Đăng ký</button>
                             </form>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
         $("#phone").focusout(function(){
             var phone_number = $(this).val();
             $.ajax({
-                url:"/check-phone",
+                url:"/cus-check-phone",
                 type:"POST",
                 data:{
                     phone : phone_number,
@@ -92,6 +92,11 @@
                         $('#check_phone').empty();
                         $('#check_phone').append( "Số điện thoại đã tồn tại" );
                         $('#check_phone').delay(3000).fadeOut();
+                        $('#btn-login-cus').prop('disabled', true);
+                        $('#btn-login-cus').css('background', 'grey');
+                    }else{
+                        $('#btn-login-cus').prop('disabled', false);
+                        $('#btn-login-cus').css('background', '');
                     }
                 }
             })
@@ -134,7 +139,7 @@
                     event.preventDefault();
                     var data_form = $('#form_register_cus').serialize();
                     $.ajax({
-                        url:"/dang-ky-form-2",
+                        url:"/cus-dang-ky-form",
                         type:"POST",
                         data: data_form,
                         success: function(re){

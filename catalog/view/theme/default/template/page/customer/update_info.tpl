@@ -13,13 +13,20 @@
                 <div class="login auth-container" id="client-login" style="">
                     <div class="modal-message" style="display: none;"></div>
                     <p class="auth-header">Cập nhật thông tin</p>
-                    <form id="form_update" action="/test" method="post" accept-charset="utf-8">
+                    <form id="form_update" action="/cus-update-phone" method="post" accept-charset="utf-8">
                         <div class="form-errors clearfix" style="display: none;"></div>
                         <div><input type="text" maxlength="11" placeholder="Nhập Số điện thoại" class="auth-input" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" required></div>
                         <div id="check_phone" style="color: red"></div>
-                   
+                         <div class="sign-up-terms inline-block auth-none-user-select form-row">
+                            <input checked="" name="support" class="support-checkbox" id="support" type="checkbox">
+                            <label for="agreement">
+                                <span class="styled-checkbox-label">
+                                    Đống ý nhận trợ giúp từ bộ phận chăm sóc khách hàng của chúng tôi theo số điện thoại này
+                                    </span>
+                            </label>
+                        </div>
                       <!--   <div><input type="password" placeholder="Nhập mật khẩu" class="auth-input" name="password" required></div> -->
-                        <button class="auth-btn js-action-track_event" type="submit" data-track_event-category="Button" data-track_event-action="Login" data-track_event-label="Login page"> Đồng ý</button>
+                        <button class="auth-btn js-action-track_event" type="submit"> Đồng ý</button>
                     </form>
                 </div>
             </div>
@@ -43,7 +50,7 @@
          $("#phone").focusout(function(){
             var phone_number = $(this).val();
             $.ajax({
-                url:"/check-phone",
+                url:"/cus-check-phone",
                 type:"POST",
                 data:{
                     phone : phone_number,

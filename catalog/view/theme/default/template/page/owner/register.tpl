@@ -7,22 +7,22 @@
 	<div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
     	<div id="qc3-body">
     		<div class="container">
-    			 <p class="text-center">Trang đăng ký cho <b>chủ phòng</b>, Nếu bạn là người tìm phòng <a class="auth-linkjs-action-track_event" href="/dang-ky-2" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng ký tại đây</a></p>
+    			 <p class="text-center">Trang đăng ký cho <b>chủ phòng</b>, Nếu bạn là người tìm phòng <a class="auth-linkjs-action-track_event" href="/cus-dang-ky">vui lòng đăng ký tại đây</a></p>
                  <div class="container">
                     <div class="sign-up auth-container " id="client-sign-up">
                         <div class="sign-up-header-container pdR20">
                             <p class="sign-up-header auth-header text-center">Đăng ký </p>
-                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/dang-nhap" data-track_event-category="Link" data-track_event-action="Sign in here" data-track_event-label="Registration page">vui lòng đăng nhập tại đây</a></p>
+                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/ow-dang-nhap">vui lòng đăng nhập tại đây</a></p>
                         </div>
                         <div class="sign-up-container">
                             <div class="sign-up-social">
                                 <p class="mgB20">Đăng kí với tài khoản mạng xã hội:</p>
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-fb" data-track_event-category="Button" data-track_event-action="Register FB" data-track_event-label="Registration page"><div class="auth-facebook-icon">
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/ow-dang-ky-fb"><div class="auth-facebook-icon">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-google" data-track_event-category="Button" data-track_event-action="Register Google" data-track_event-label="Registration page">
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/ow-dang-ky-google" >
                                     <div class="auth-google-icon">
                                           <i class="fa fa-google fa-fw"></i>
                                     </div>
@@ -39,19 +39,12 @@
                                 <div class="form-row">
                                      <input type="text" placeholder="Số điện thoại" class="auth-input mgT0" name="phone" id="phone" value="" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                                     <div id="check_phone" style="color: red"></div>
-                                    <div class="form-hint"><p class="form-hint-hint">Bộ phận chăm sóc khách hàng của chúng tôi sẵn sàng trợ giúp bạn theo số điện thoại này</p>
-                                    </div>
                                 </div>
                                 <div class="form-row">
                                      <input type="text" placeholder="Email" class="auth-input " name="email" id="email" value="" required>
-                                    <div class="form-hint">
-                                        <p class="form-hint-hint">
-                                            Nhập địa chỉ email hợp lệ. Chúng tôi sẽ gửi thư kích hoạt vào địa chỉ email này sau khi bạn hoàn thành đăng ký</p>
-                                    </div>
                                 </div>
                                 <div class="auth-password form-row">
                                     <input type="password" placeholder="Mật khẩu" class="auth-input auth-password-input" name="password" id="password" required>
-                                    <div class="form-hint"><p class="form-hint-hint">Mật khẩu phải có ít nhất 6 ký tự, bao gồm cả số và chữ</p></div>
                                 </div>
                                 <div class="form-row">
                                     <input type="text" placeholder="Tên" class="auth-input" name="firstname" id="firstname" value="" required>
@@ -73,7 +66,7 @@
                                         <p style="color: red">vui lòng check capcha </p>
                                     </div>
                                 </div>
-                                    <button class="auth-btn" type="submit">Đăng ký</button>
+                                    <button class="auth-btn" disabled id="btn-login-ow" type="submit">Đăng ký</button>
                             </form>
                         </div>
                     </div>
@@ -121,10 +114,15 @@
                     event.preventDefault();
                     var data_form = $('#form_register').serialize();
                     $.ajax({
-                        url:"/dang-ky-form",
+                        url:"/ow-dang-ky-form",
                         type:"POST",
                         data: data_form,
                         success: function(re){
+                            if(re == 'exist'){
+                                $('#check_phone').empty();
+                                $('#check_phone').append( "Số điện thoại đã tồn tại" );
+                                $('#check_phone').delay(3000).fadeOut();
+                            }
                             if(re == 'capcha'){
                                 $('.error-capcha').css('display','block')
                             }else{
@@ -139,7 +137,7 @@
         $("#phone").focusout(function(){
             var phone_number = $(this).val();
             $.ajax({
-                url:"/check-phone",
+                url:"/ow-check-phone",
                 type:"POST",
                 data:{
                     phone : phone_number,
@@ -149,6 +147,11 @@
                         $('#check_phone').empty();
                         $('#check_phone').append( "Số điện thoại đã tồn tại" );
                         $('#check_phone').delay(3000).fadeOut();
+                        $('#btn-login-ow').prop('disabled', true);
+                        $('#btn-login-ow').css('background', 'grey');
+                    }else{
+                        $('#btn-login-ow').prop('disabled', false);
+                        $('#btn-login-ow').css('background', '');
                     }
                 }
             })

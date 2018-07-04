@@ -1,6 +1,6 @@
  <?php
 
-class ModelPageLogin extends Model {
+class ModelPageOwnerLogin extends Model {
     public function __construct($registry){
         parent::__construct($registry);
         $this->table = $this->db->owner;
