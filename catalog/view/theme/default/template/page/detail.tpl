@@ -15,7 +15,7 @@
                     <div class="inner" style="background-color: #fff; padding:10px; border: 1px solid #eaeaea; margin-top: 10px; height: 420px;box-shadow: 0px 0px 4px -3px #000;">
                         <div class="row" style="margin: -10px; margin-top: -11px; padding: 5px 5px 2px 5px; background-color: #eee;">
                             <div class="col-md-2 avata">
-                                <img src="https://static.trulia-cdn.com/userimg/user_m_00_m.gif" width="40px">
+                                <img style="border-radius: 100%" src="https://static.trulia-cdn.com/userimg/user_m_00_m.gif" width="40px">
                             </div>
                             <div class="col-md-10 info-master">
                                 <b class="name-master">Người quản lý</b><br>

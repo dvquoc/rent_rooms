@@ -4,13 +4,13 @@
 <!--declare-->
 <div class="contain-map contain-fluid-full" style="position: relative">
     <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
-    <div id="show-detail" class="col-md-3" style="overflow-y: scroll; display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
+    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
                 <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
             </div>
             <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
-            <div class="col-md-12" style=" background-color: #fff;">
+            <div class="col-md-12" id="content-detail" style=" background-color: #fff; height: calc(100%-250px); overflow-y:scroll">
                 <h3 id="detail-title">Tiêu đề</h3>
                 <p id="detail-address"><b>Địa chỉ: </b><span></span></p>
                 <div class="row item-info-main">
@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    <div id="show-list" class="col-md-3" style=" border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+    <div id="show-list" class="col-md-3 noselect" style=" border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
         <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
             <a href="/tim-kiem-phong-tro" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
                 <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>

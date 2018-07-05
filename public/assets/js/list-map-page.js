@@ -18,6 +18,8 @@ eShowDetail.style.height = ((heightShow - getId('menu-main').offsetHeight) - 20)
 eShowList.style.height =  ((heightShow - getId('menu-main').offsetHeight) - 20) + 'px';
 eContentList.style.height =  (eShowList - getClass('results-heading')[0].offsetHeight + 60) + 'px';
 
+$("#content-detail").css({'height': $(eShowDetail).outerHeight() - 250});
+
 var markers_data = [];
 var bounds = new google.maps.LatLngBounds();
 listing.forEach(function(item,key){
