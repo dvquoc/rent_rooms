@@ -101,7 +101,6 @@
                     maxlength: "số điện thoại không xác thực",
                 },
                 email:{
-                    required:"Vui lòng nhập emai",
                     email:"Email không chính xac"
                 },
                 password:{

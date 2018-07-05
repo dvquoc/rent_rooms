@@ -110,7 +110,6 @@
                     maxlength:11,
                 },
                 email: {
-                    required: true,
                     email: true
                 },
                 password: {
@@ -126,7 +125,6 @@
                     maxlength: "số điện thoại không xác thực nhiều nhất 11 số",
                 },
                 email:{
-                    required:"Vui lòng nhập emai",
                     email:"Email không chính xac"
                 },
                 password:{

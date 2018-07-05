@@ -3,7 +3,7 @@
 class ModelPageCustomerRegister extends Model {
 	public function __construct($registry){
         parent::__construct($registry);
-        $this->table = $this->db->customer;
+        $this->table = $this->db->customer_user;
     }
     public function add_user($data){
     	$insertOneResult = $this->table->insertOne($data);

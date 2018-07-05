@@ -10,6 +10,7 @@ $router =  $registry->get('routes');
 $router->add(['/tim-kiem-theo-ban-do/:id','find/map']);
 $router->add(['/tim-kiem-phong-tro','find/list']);
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
+//*******************************Owner******************************//
 //Owner login
 $router->add(['/ow-dang-nhap','page/owner/login']);
 $router->add(['/ow-dang-nhap-fb','page/owner/login/fb_login']);
@@ -23,6 +24,13 @@ $router->add(['/ow-dang-ky-form','page/owner/register/form_register']);
 $router->add(['/ow-check-phone','page/owner/register/check_phone']);
 $router->add(['/ow-update-phone','page/owner/register/submit_register']);
 $router->add(['/ow-cap-nhap-thong-tin','page/owner/register/update_info']);
+
+$router->add(['/thong-tin-chu-tro','page/owner/infoAccount']);
+$router->add(['/cap-nhat-chu-tro','page/owner/infoAccount/update_account']);
+
+//*********************************************************************//
+
+//*******************************Customer******************************//
 //Customer register
 $router->add(['/cus-dang-ky','page/customer/register']);
 $router->add(['/cus-dang-ky-fb','page/customer/register/fb_register']);
@@ -36,13 +44,18 @@ $router->add(['/cus-dang-nhap','page/customer/login']);
 $router->add(['/cus-dang-nhap-fb','page/customer/login/fb_login']);
 $router->add(['/cus-dang-nhap-google','page/customer/login/google_login']);
 $router->add(['/cus-dang-nhap-form','page/customer/login/form_login']);
+
+$router->add(['/thong-tin-tai-khoan','page/customer/infoAccount']);
+$router->add(['/cap-nhat-tai-khoan','page/customer/infoAccount/update_account']);
+
+//*********************************************************************//
+
 //bassic login 
 $router->add(['/dang-nhap','page/login']);
 
 
 $router->add(['/dang-xuat','page/logout']);
 $router->add(['/thong-tin-tai-khoan','page/infoAccount']);
-$router->add(['/cap-nhat','page/infoAccount/update_account']);
 
 
 

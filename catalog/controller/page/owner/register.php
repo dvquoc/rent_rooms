@@ -7,7 +7,9 @@ class ControllerPageOwnerRegister extends Controller {
         // $data_search = array(
         //     'status'=>1
         // );
-
+        if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){
+            $this->response->redirect('/thong-tin-chu-tro');
+        }
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/register.tpl')) {
             $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/owner/register.tpl', $data));

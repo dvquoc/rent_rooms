@@ -3,7 +3,7 @@
 class ModelPageOwnerLogin extends Model {
     public function __construct($registry){
         parent::__construct($registry);
-        $this->table = $this->db->owner;
+        $this->table = $this->db->owner_user;
     }
     
     public function get_user_by_social($source_id){
