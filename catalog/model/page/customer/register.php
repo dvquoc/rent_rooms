@@ -1,9 +1,9 @@
 <?php
 
-class ModelPageRegister extends Model {
+class ModelPageCustomerRegister extends Model {
 	public function __construct($registry){
         parent::__construct($registry);
-        $this->table = $this->db->owner;
+        $this->table = $this->db->customer;
     }
     public function add_user($data){
     	$insertOneResult = $this->table->insertOne($data);

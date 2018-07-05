@@ -1,11 +1,7 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
-		$this->load->model('page/register');
-		if(isset($_SESSION['id_source']))
-		{
-	        $data['user'] = $this->model_page_register->get_user($_SESSION['id_source']);
-		}
+		
 		$data['title']= "Trang header";
 		$data['menu_map']= $this->url->link_seo('tim-kiem-theo-ban-do','SSL');
 		$data['list']= $this->url->link_seo('tim-kiem-theo-list','SSL');
