@@ -43,7 +43,7 @@
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/cus-dang-nhap-google" data-track_event-category="Button" data-track_event-action="Login Google" data-track_event-label="Login page">
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/cus-dang-nhap-google">
                                     <div class="auth-google-icon">
                                          <i class="fa fa-google fa-fw"></i>
                                     </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div>
                             <span>Chưa có tài khoản? </span>
-                            <a id="#link-register" class="auth-link js-action-track_event" href="/dang-ky" data-track_event-category="Link" data-track_event-action="Sign up now" data-track_event-label="Login page">Đăng ký ngay </a>
+                            <a id="#link-register" class="auth-link js-action-track_event" href="/cus-dang-ky" >Đăng ký ngay </a>
                         </div>
                     </form>
                 </div>

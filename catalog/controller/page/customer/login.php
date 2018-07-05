@@ -6,6 +6,7 @@ class ControllerPageCustomerLogin extends Controller {
         // $data_search = array(
         //     'status'=>1
         // );
+
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/customer/login.tpl')) {
             $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/customer/login.tpl', $data));
@@ -50,6 +51,7 @@ class ControllerPageCustomerLogin extends Controller {
         exit();
     }
     public function form_login(){
+
         $this->load->model('page/customer/login');
         $this->load->model('page/customer/register');
 
@@ -71,11 +73,12 @@ class ControllerPageCustomerLogin extends Controller {
                 'password'=>md5($_POST['password']),
             ];
             $result = $this->model_page_customer_login->login_form($data);
+
             if($result){
-                $user = $this->model_page_owner_register->get_user_by_id($result['_id']);
+                $user = $this->model_page_customer_register->get_user_by_id($result['_id']);
                 $_SESSION['id_user'] = $result['_id'];
                 $_SESSION['name'] = $user['name'];
-                $_SESSION['img'] = $user['image'];
+                $_SESSION['img'] = $user['image']; 
                 echo 1; //account math
             }
             else{
