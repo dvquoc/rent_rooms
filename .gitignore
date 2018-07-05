@@ -1,0 +1,8 @@
+/system/cache
+.idea/
+/image/cache/
+/phpmyadmin/
+/database/
+database.zip
+convert-mysql-to-mongo.php
+
