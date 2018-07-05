@@ -5,5 +5,5 @@
 /database/
 database.zip
 convert-mysql-to-mongo.php
-/vendor/hybridauth/hybridauth/hybridauth/config.php
+vendor/hybridauth/hybridauth/hybridauth/config.php
 
