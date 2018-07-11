@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
 <?php echo $column_left; ?>
 <div id="content">
     <div class="page-header">
@@ -16,7 +16,7 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
+        <form action="<?php echo $save; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
@@ -24,7 +24,7 @@
                             <h3 class="panel-title"><i class="fa fa-inbox"></i>Khu vực đặc biệt</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="row">
+                      <!--       <div class="row">
                                 <div class="col-md-4">
                                     <label class="">Tên khu vực</label>
                                     <div class="dropdown">
@@ -32,17 +32,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            <div class="col-sm-12 hidden">
-                                <div class="dropdown">
-                                    <input name="address" width="90%" id="input-address" class="form-control " value="<?php echo $address; ?>">
+                            <br> -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dropdown">
+                                        <input name="address" width="90%" id="input-address" class="form-control " value="<?php echo $address; ?>">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div id="map-address" style="width: 100%; height: 700px;"></div>
+                                <div class="col-md-4">
+                                    <label class="">Tên </label>
+                                   <input class="form-control" type="text" name="name"></br>
+                                   <label class="">Quận </label>
+                                   <input class="form-control" type="text" name="district"></br>
+                                   <label class="">Thành phố </label>
+                                   <input class="form-control" type="text" name="city"></br>
+                                   <label class="">Lượt tìm kiếm </label>
+                                   <input class="form-control" type="text" name="view"></br>
+                                   <label class="">Bán kình khu vực </label>
+                                   <input class="form-control" type="text" name="circle">
+                                   <label class="">Lat</label>
+                                   <input class="form-control" type="text" name="lat">
+                                   <label class="">Lng</label>
+                                   <input class="form-control" type="text" name="lng">
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-8">
+                                    <div id="map-address" style="width: 100%; height: 500px;"></div>
                                     <h3 style="font-size: 18px; margin-top: 15px;">Hướng dẫn: </h3>
                                     <p>Kéo chấm đỏ trên bản đồ để cập nhật lại vị trí cho phòng trọ...</p>
                                 </div>
@@ -59,6 +75,7 @@
             geocoder.geocode({
                 latLng: pos
             }, function(responses) {
+                console.log(responses);
                 if (responses && responses.length > 0) {
                     var address_lengh = responses[0].address_components.length;
                     var location = {};
@@ -133,15 +150,33 @@
             });
 
             map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
-            console.log(place);
+            var address_lengh = place.address_components.length;
+            var location = {};
+            for(var i = address_lengh-1; i>=0; i--){
+                if(place.address_components[i].types[0]=='administrative_area_level_1'){
+                    location.city= place.address_components[i].long_name;
+                }
+                if(place.address_components[i].types[0]=='administrative_area_level_2'){
+                    location.district= place.address_components[i].long_name;
+                }
+            }
+            $('input[name=name]').val(place.name);
+            $('input[name=district]').val(location.district);
+            $('input[name=city]').val(location.city);
+            $('input[name=lng]').val(place.geometry.location.lng());
+            $('input[name=lat]').val(place.geometry.location.lat());
+
             //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
             google.maps.event.addListener(marker, 'dragend', function() {
                 geocodePosition(marker.getPosition());
             });
+
         });
 
         google.maps.event.addListener(marker, 'dragend', function() {
             geocodePosition(marker.getPosition());
+             
+
         });
 
         var bounds=  new google.maps.LatLngBounds();
@@ -182,6 +217,38 @@
             map.setZoom();
         }
 
+        var drawCircle = function(){
+            var lat = $('input[name=lat]').val();
+            var lng = $('input[name=lng]').val();
+            var circle = $('input[name=circle]').val();
+            var drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                        position: google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: [
+                          'polygon'
+                        ]
+                    },
+                    circleOptions: {
+                        strokeColor: '#0099FF',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#0099FF',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: {lat:parseInt(lat),lng:parseInt(lng)},
+                        radius: parseInt(circle),
+                        editable: true
+                    }
+                });
+            drawingManager.setMap(map);
+            google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+                //popUpPinInfo(marker, circle.radius, map);
+                var coordinates = (polygon.getPath().getArray());
+                $('input[name=circle]').val(coordinates);
+            });
+        }
         $('.datetime').datetimepicker({
             pickDate: true,
             pickTime: true
@@ -211,6 +278,10 @@
                     }
                 });
             }
+        });
+
+        $('input[name=circle]').keypress(function(e){
+           drawCircle();
         });
     </script>
 </div>

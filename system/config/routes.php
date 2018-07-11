@@ -53,9 +53,10 @@ $router->add(['/cap-nhat-tai-khoan','page/customer/infoAccount/update_account'])
 //bassic login 
 $router->add(['/dang-nhap','page/login']);
 
-
 $router->add(['/dang-xuat','page/logout']);
 $router->add(['/thong-tin-tai-khoan','page/infoAccount']);
+
+$router->add(['/trang-chu','page/home']);
 
 
 
