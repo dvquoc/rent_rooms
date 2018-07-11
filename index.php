@@ -1,7 +1,8 @@
 <?php
-//phpinfo(); die();
-// Version
-define('VERSION', '2.0.3.1');
+// Environment
+if (is_file('environment.php'))
+    require_once('environment.php');
+
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
@@ -40,7 +41,7 @@ if(DB_DRIVER == 'mongodb') {
     //$dbName = rawurlencode("protal-cms-dev");
     //$connect = new \MongoDB\Client("mongodb://".$user.":".$pass."@124.158.14.30:27017/".$dbName);
     //$connect = $connect->selectDatabase("protal-cms-dev");
-    $connect = new \MongoDB\Client('mongodb://localhost:27017/cms-portal');
+    $connect = new \MongoDB\Client('mongodb://localhost:27017');
     $connect = $connect->selectDatabase("rents_room");
     $registry->set('db', $connect);
 }
