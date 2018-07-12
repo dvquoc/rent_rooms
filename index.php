@@ -43,7 +43,7 @@ if(DB_DRIVER == 'mongodb') {
     //$connect = $connect->selectDatabase("protal-cms-dev");
     $connect = new \MongoDB\Client(URL_DB);
     $connect = $connect->selectDatabase(DB_DATABASE);
-    var_dump($connect); die();
+    var_dump($connect->user->findOne()); die();
     $registry->set('db', $connect);
 }
 

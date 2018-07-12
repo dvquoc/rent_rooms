@@ -23,10 +23,11 @@ else {
 
 switch (ENV) {
     case "PRODUCTION":
-            define('URL_DB','conphong.com' );
+            define('URL_DB','mongodb://127.0.0.1:27017' );
         break;
     case "GOOGLE":
-            define('URL_DB','mongodb://35.224.9.146:27017' );
+            define('URL_DB','mongodb://127.0.0.1:27017' );
+            //define('URL_DB','mongodb://35.224.9.146:27017' );
         break;
     default:
             define('URL_DB','mongodb://localhost:27017' );
