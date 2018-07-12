@@ -90,7 +90,7 @@
                             <div class="more-info-list">
                                 <span class="item-main"><?php echo $item["price"]/1000000; ?> tr</span>
                                 <span class="item-main"><?php echo $item["acreage"]; ?> m2</span>
-                                <span class="item-more">Cách 30m</span>
+                                <span class="item-more">30m</span>
                                 <span class="item-more">Tự do giờ giấc</span>
                             </div>
                         </div>

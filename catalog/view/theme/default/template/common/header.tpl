@@ -76,7 +76,7 @@
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i><a href="/ow-dang-ky">Thêm phòng trọ</a></button></li>
+                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i><a href="/ow-dang-ky">Chủ phòng</a></button></li>
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                          <li class="item"><img src="<?php echo $_SESSION['img']?>"><?php echo $_SESSION['name']?></li><a href="/dang-xuat">Đăng xuất</a>
                     <?php }else{?>
