@@ -16,6 +16,15 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
+        <?php 
+            $arr_coords =[];
+            $arr2=[];
+            foreach($special['area'] as $value){ 
+                $arr_coords[] = $value;
+            }  
+            $json = json_encode($arr_coords); 
+        ?>
+        <input type="hidden" name="polygon" value="<?php echo $json?>">
         <form action="<?php echo $save; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
             <div class="row">
                 <div class="col-md-12">
@@ -43,19 +52,41 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label class="">Tên </label>
-                                   <input class="form-control" type="text" name="name"></br>
+                                   <input class="form-control" type="text" name="name" value="<?php echo isset($special['name'])?$special['name']:'';?>"></br>
+                                   <input type="hidden" name="id" value="<?php echo isset($special)?(string)$special['_id']:'' ?>">
+                                    <label class="">Thành phố </label>
+                                        <select class="form-control" name="city">
+                                            <!-- <option value="null">--- Chọn Tỉnh/Thành phố ---</option> -->
+                                              <?php foreach($citys as $item) { ?>
+                                                  <?php if($item["city_id"] == $city[0]["city_id"]) { ?>
+                                                        <option selected="selected" value="<?php echo $city[0]['city_id'] ?>"><?php echo $city[0]['name'] ?></option>
+                                                  <?php } else{  ?>
+                                                        <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
+                                                  <?php } ?>
+                                              <?php } ?>
+                                        </select></br>
+                                    <!--      <input class="form-control" type="text" name="city" value="<?php echo isset($special['name'])?$special['city']:'';?>"></br> -->
                                    <label class="">Quận </label>
-                                   <input class="form-control" type="text" name="district"></br>
-                                   <label class="">Thành phố </label>
-                                   <input class="form-control" type="text" name="city"></br>
+                                       <select class="form-control" name="district">
+                                        <!-- <option value="null">--- Chọn Quận/Huyện ---</option> -->
+                                          <?php foreach($districts as $item) { ?>
+                                              <?php if($item["district_id"] == $district[0]['district_id']) { ?>
+                                                    <option selected="selected" value="<?php echo $district[0]['district_id'] ?>"><?php echo $district[0]['name'] ?></option>
+                                              <?php } else { ?>
+                                                    <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
+                                              <?php } ?>
+                                          <?php } ?>
+                                      </select></br>
+                                  <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
+                                  
                                    <label class="">Lượt tìm kiếm </label>
-                                   <input class="form-control" type="text" name="view"></br>
+                                   <input class="form-control" type="text" name="view" value="<?php echo isset($special['name'])?$special['view']:'';?>"></br>
                                    <label class="">Bán kình khu vực </label>
                                    <input class="form-control" type="text" name="circle">
                                    <label class="">Lat</label>
-                                   <input class="form-control" type="text" name="lat">
+                                   <input class="form-control" type="text" name="lat" value="<?php echo isset($special['name'])?$special['lat']:'';?>">
                                    <label class="">Lng</label>
-                                   <input class="form-control" type="text" name="lng">
+                                   <input class="form-control" type="text" name="lng" value="<?php echo isset($special['name'])?$special['lng']:'';?>">
                                 </div>
                                 <div class="col-md-8">
                                     <div id="map-address" style="width: 100%; height: 500px;"></div>
@@ -69,7 +100,9 @@
         </form>
     </div>
     <script type="text/javascript">
-
+        $( document ).ready(function(){
+            drawPolygonTest();
+        }); 
         var geocoder = new google.maps.Geocoder();
         function geocodePosition(pos) {
             geocoder.geocode({
@@ -110,7 +143,7 @@
         }
 
         var map= new google.maps.Map(document.getElementById('map-address'), {
-            center: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
+            center: {lat: <?php echo isset($special) ? $special['lat'] : '10.7654001'; ?>, lng: <?php echo  isset($special) ? $special['lng'] : '106.6813622'; ?>},
             zoom: 16,
             scaleControl: false,
             fullscreenControl: false,
@@ -129,7 +162,7 @@
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         var marker = new google.maps.Marker({
-            position: {lat: <?php echo $lat ? $lat : '10.7654001'; ?>, lng: <?php echo $lng ? $lng : '106.6813622'; ?>},
+            position: {lat: <?php echo isset($special) ? $special['lat'] : '10.7654001'; ?>, lng: <?php echo  isset($special) ? $special['lng'] : '106.6813622'; ?>},
             map: map,
             title: '<?php echo $address;  ?>',
             draggable: true
@@ -161,10 +194,33 @@
                 }
             }
             $('input[name=name]').val(place.name);
-            $('input[name=district]').val(location.district);
-            $('input[name=city]').val(location.city);
             $('input[name=lng]').val(place.geometry.location.lng());
             $('input[name=lat]').val(place.geometry.location.lat());
+            $.ajax({
+                url:'index.php?route=location/special/get_location&token=<?php echo $token;?>',
+                type:'POST',
+                data:{
+                    district:location.district,
+                    city:location.city
+                },success:function(data){
+                    if(typeof(data) != "undefined" && data !== null){
+                        var obj = $.parseJSON(data);
+                        $('select[name=city] option').removeAttr('selected').filter('[value="'+obj.city_id+'"]').attr('selected', 'selected');
+                        $.ajax({
+                            url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+obj.city_id,
+                            dataType: 'json',
+                            success: function(json) {
+                                $('select[name=\'district\']').html('');
+                                $.map(json, function(item) {
+                                    $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                                });
+                            
+                                $('select[name=district] option').removeAttr('selected').filter('[value="'+obj.district_id+'"]').attr('selected', 'selected')
+                            }
+                        });
+                    }
+                }
+            })
 
             //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
             google.maps.event.addListener(marker, 'dragend', function() {
@@ -178,11 +234,20 @@
              
 
         });
-
+        ///test
+        var coord_polygon = [];
+        var arr = $('input[name=polygon]').val();
+        var str = arr.substring(2,arr.length-2);
+        var arr_coords = str.split('],[');
+        $.each(arr_coords, function (key,item) {
+            var item_coords = item.split(',');
+            coord_polygon.push({'lat': parseFloat(item_coords[0]), 'lng': parseFloat(item_coords[1])});
+          
+        });
         var bounds=  new google.maps.LatLngBounds();
 
         var polygon = new google.maps.Polygon({
-            paths: [],
+            paths: coord_polygon,
             strokeColor: '#FF0000',
             strokeOpacity: 0.5,
             strokeWeight: 3,
@@ -191,6 +256,8 @@
             draggable: false,
             clickable:false
         });
+        polygon.setMap(map);
+        ///test
 
         var drawPolygon = function (data) {
             var data_draw = [];
@@ -217,7 +284,7 @@
             map.setZoom();
         }
 
-        var drawCircle = function(){
+        var drawPolygonTest = function(){
             var lat = $('input[name=lat]').val();
             var lng = $('input[name=lng]').val();
             var circle = $('input[name=circle]').val();
@@ -230,16 +297,14 @@
                           'polygon'
                         ]
                     },
-                    circleOptions: {
-                        strokeColor: '#0099FF',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 2,
-                        fillColor: '#0099FF',
-                        fillOpacity: 0.35,
-                        map: map,
-                        center: {lat:parseInt(lat),lng:parseInt(lng)},
-                        radius: parseInt(circle),
-                        editable: true
+                    polygonOptions: {
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 3,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0,
+                        draggable: false,
+                        clickable:false,
                     }
                 });
             drawingManager.setMap(map);
@@ -253,7 +318,8 @@
             pickDate: true,
             pickTime: true
         });
-        $("#tab-general select").change(function () {
+
+        $("select").change(function () {
             if($(this).attr('name') == 'city'){
                 $.ajax({
                     url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
@@ -274,14 +340,15 @@
                     dataType: 'json',
                     success: function(json) {
                         console.log(JSON.parse(json['location']));
-                        drawPolygon(JSON.parse(json['location']));
+                       // drawPolygon(JSON.parse(json['location']));
                     }
                 });
             }
         });
-
+     
+       
         $('input[name=circle]').keypress(function(e){
-           drawCircle();
+           
         });
     </script>
 </div>

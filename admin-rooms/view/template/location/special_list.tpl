@@ -9,18 +9,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 pull-right text-right"><a href="<?php echo $add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Tạo mới</a>
-                    <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-room').submit() : false;"><i class="fa fa-trash-o"></i> Xóa</button>
+                    <button type="button" class="btn btn-danger" onclick="delete_item()"> <i class="fa fa-trash-o"></i> Xóa</button>
                 </div>
                 <div id="filter-rooms" class="filter col-md-10" style="position: relative; padding-right: 0px;">
                     <div id="filter-rooms-contain" style="cursor: pointer; background-color: #fff; outline: 1px solid #e2e2e2;  line-height: 25px; padding:5px 10px" class="dropdown-toggle view-filter-search" type="button" data-toggle="dropdown">
                         <b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class="fa fa-search"></span> Tìm kiếm:</b>
                     </div>
                     <div class="dropdown-menu row" style="background-color: #fbfbfb; padding: 10px 6px 1px 6px;width: calc(100% - 13px); margin-right: 14px; left: 14px;top: 95%;display: none; border-radius: 0px; -webkit-box-shadow:rgba(0, 0, 0, 0.78) 10px 10px 43px -30px;box-shadow: rgba(0, 0, 0, 0.78) 10px 10px 43px -30px; border:1px solid #e2e2e2;">
-                        <div id="item_search_city" class="col-md-2 item">
+                        <div id="item_search_city_id" class="col-md-2 item">
                             <label class="text hidden">Thành Phố</label>
-                            <select name="city" class="form-control">
+                            <select name="city_id" class="form-control">
                                 <?php foreach($citys as $item){  ?>
-                                    <?php if($data_filter['city'] == $item['city_id']) { ?>
+                                    <?php if($data_filter['city_id'] == $item['city_id']) { ?>
                                             <option selected="selected" value="<?php echo $item['city_id']; ?>"><?php echo $item['name']; ?></option>
                                     <?php } else { ?>
                                             <option value="<?php echo $item['city_id']; ?>"><?php echo $item['name']; ?></option>
@@ -28,11 +28,11 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div id="item_search_district" class="col-md-2 item">
+                        <div id="item_search_district_id" class="col-md-2 item">
                             <label class="text hidden">Quận/Huyện</label>
-                            <select name="district" class="form-control">
+                            <select name="district_id" class="form-control">
                                 <?php foreach($districts as $item){  ?>
-                                    <?php if($data_filter['district'] == $item['district_id']) { ?>
+                                    <?php if($data_filter['district_id'] == $item['district_id']) { ?>
                                         <option selected value="<?php echo $item['district_id']; ?>"><?php echo $item['name']; ?></option>
                                     <?php } else { ?>
                                         <option value="<?php echo $item['district_id']; ?>"><?php echo $item['name']; ?></option>
@@ -82,35 +82,39 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                                <td class="text-left"><?php if ($filter_data['sort'] == 'name') { ?>
-                                    <a href="<?php echo $filter_data['sort']; ?>" class="<?php echo strtolower($filter_data['sort']); ?>">Tên</a>
-                                    <?php } else { ?>
-                                    <a href="<?php echo $sort_title; ?>">Tên khu vực đặt biệt</a>
-                                    <?php } ?>
+                                <td style="width: 1px;" class="text-center"><input id="slall" type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                                <td class="text-center">
+                                    Tên khu vực đặt biệt
                                 </td>
-                                <td class="text-right" width="150px">Tình trang dữ liệu</td>
-                                <td class="text-right">Hành động</td>
+                                <td class="text-center" >Thông tin khu vực</td>
+                                <td class="text-center" width="150px">Thông tin dữ liệu</td>
+                                <td class="text-right" width="150px">Hành động</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php if ($list) { ?>
-                            <?php foreach ($list as $item) { ?>
-                            <tr>
-                                <td class="text-center"><?php if (in_array($list['street_id'], $selected)) { ?>
-                                    <input type="checkbox" name="selected[]" value="<?php echo $room['street_id']; ?>" checked="checked" />
-                                    <?php } else { ?>
-                                    <input type="checkbox" name="selected[]" value="<?php echo $room['street_id']; ?>" />
-                                    <?php } ?></td>
-                                <td class="text-left">Đường: <?php echo $item['name']; ?></td>
-                                <td class="text-left"><span class="feature"> <?php echo !empty($item['location']) ? 'Đã có dữ liệu': 'Chưa có dữ liệu'; ?></span></td>
-                                <td class="text-right"><a href="<?php echo $item['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-                            </tr>
-                            <?php } ?>
-                            <?php } else { ?>
-                            <tr>
-                                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
-                            </tr>
+                            <?php if ($list_area) { ?>
+                                <?php foreach ($list_area as $item) { ?>
+                                    <tr>
+                                        <td>
+                                             <input class="check_box" type="checkbox" name="selected" value="<?php echo $item['id_area']; ?>" />
+                                        </td>
+                                        <td class="text-center">
+                                            <?php echo $item['name'] ?>
+                                           <!--  <?php if (in_array($list['street_id'], $selected)) { ?>
+                                            <input type="checkbox" name="selected[]" value="<?php echo $room['street_id']; ?>" checked="checked" />
+                                            <?php } else { ?>
+                                            <input type="checkbox" name="selected[]" value="<?php echo $room['street_id']; ?>" />
+                                            <?php } ?> -->
+                                        </td>
+                                        <td class="text-left"><?php echo $item['district']?> <?php echo $item['city']?></td>
+                                        <td class="text-left"><span class="feature"> <?php echo !empty($item['area']) ? 'Đã có dữ liệu': 'Chưa có dữ liệu'; ?></span></td>
+                                        <td class="text-right"><a href="<?php echo $item['edit']?>" data-toggle="tooltip" title="Chỉnh sửa" class="btn btn-primary" onclick="edit('<?php echo $item['_id']?>')"><i class="fa fa-pencil"></i></a></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else {?>
+                                <tr>
+                                    <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+                                </tr>
                             <?php } ?>
                             </tbody>
                         </table>
@@ -125,6 +129,55 @@
     </div>
 </div>
 <script type="text/javascript">
+    var selected = [];
+    var nonselected = [];
+    $( document ).ready(function(){
+        $('.check_box').change(function() {
+            if($('#slall').is(':checked')){
+                $('input[name=selected]').map(function() {
+                    if($(this).is(':checked')){
+                        var index = $.inArray($(this).val(),nonselected);
+                        if(index != -1){
+                            nonselected.splice(index,1);
+                        }
+                    }else{
+                        var index = $.inArray($(this).val(),nonselected);
+                        if(index === -1){
+                            nonselected.push($(this).val());
+                        }
+                    }
+                });
+            }else{
+                $('input[name=selected]').map(function() {
+                    if($(this).is(':checked')){
+                        var index = $.inArray($(this).val(),selected);
+                        if(index === -1){
+                            selected.push($(this).val());
+                        }
+                    }else{
+                        var index = $.inArray($(this).val(),selected);
+                        if(index != -1){
+                            selected.splice(index,1);
+                        }
+                    }
+                });
+            }
+        });
+
+    }); 
+    
+    function delete_item(){
+        $.ajax({
+            url: 'index.php?route=location/special/delete&token=<?php echo $token; ?>',
+            type:'POST',
+            data:{
+                selected:selected
+            },
+            success: function(success) {
+               location.reload();
+            }
+        });
+    }
     $('#button-filter').on('click', function() {
         var url = '<?php echo $action_fitler ; ?>&';
         var parts = [];
@@ -151,8 +204,8 @@
                 $('#filter-rooms-contain').html("<b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class=\"fa fa-search\"></span> Tìm kiếm:</b><i class=\"icon-dropdown fa fa-angle-down pull-right\"></i>");
             else
                 $('#filter-rooms-contain').html("<b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class=\"fa fa-search\"></span> Tìm kiếm:</b><i>Nhập chuột vào để tìm kiếm....</i><i class=\"icon-dropdown fa fa-angle-down pull-right\"></i>");
-            $.each(data,function (key,item) {
 
+            $.each(data,function (key,item) {
                 if(item !== null && item.length!=0 && item!=-1 && key != 'type') {
                     var textValue = item;
                     if($("#item_search_"+key).attr("type")!='input')
@@ -186,20 +239,17 @@
         $(".dropdown-menu select").change(function () {
             eval('params.'+ $(this).attr("name") + "= '" + $(this).find('option:selected').val() +"'");
             updateFilter(params);
-            if($(this).attr('name') == 'city'){
+            if($(this).attr('name') == 'city_id'){
                 $.ajax({
                     url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
                     dataType: 'json',
                     success: function(json) {
-                        $('select[name=\'district\']').html('');
+                        $('select[name=\'district_id\']').html('');
                         $.map(json, function(item) {
-                            $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                            $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
                         });
                     }
                 });
-            }
-            if($(this).attr('name') == 'district'){
-                district_id = $(this).val();
             }
         });
 
