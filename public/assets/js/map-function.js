@@ -241,6 +241,7 @@ $.extend(mapRooms.prototype, {
         _mr = this;
         this.controlCustomMap();
         this.eventMap();
+        _mr.setOptionForMap({draggable:true,showInforMap:'off'});
     },
     eventMap:function () {
         /* Zoom change */
@@ -640,12 +641,12 @@ $.extend(mapRooms.prototype, {
     getPath: function (ob) {
         return ob.getPath();
     },
-    setOptionForMap: function (status = true) {
+    setOptionForMap: function (style) {
         var showInforMap = 'off';
         var draggable = false;
-        if (status) {
-            draggable = true;
-            showInforMap = 'on';
+        if (style) {
+            draggable = style.draggable;
+            showInforMap = style.showInforMap;
         }
         _m.setOptions({
             styles: [

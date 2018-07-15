@@ -1,4 +1,5 @@
 <?php echo $header ?>
+<link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
 <div class="container">
 <div class="top-detail">
 	<div class="body-detail">

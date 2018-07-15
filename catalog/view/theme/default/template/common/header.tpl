@@ -23,9 +23,7 @@
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
-    <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
-
-    <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
+        <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
     
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">

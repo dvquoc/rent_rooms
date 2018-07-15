@@ -73,13 +73,13 @@
         </div>
         <div class="inner" style="overflow-y: scroll; position: relative; overflow: hidden; height: 100%">
             <div class="results-heading" style="position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
-                <span class="results-heading-title">(<b><?php echo count($listing); ?></b>) Kết quả tìm kiếm</span>
+                <span class="results-heading-title">Kết quả tìm kiếm</span>
                 <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>
             <div id="content-list">
                 <?php foreach($listing as $item) { ?>
-                <div class="item-listing" style="height: 125px; overflow: hidden; ">
-                    <div class="inner-item" style="padding: 12px; border-bottom: 1px solid #eee;" id="item_<?php echo $item['_id']; ?>">
+                <div class="item-listing" style="overflow: hidden; ">
+                    <div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_<?php echo $item['_id']; ?>">
                         <?php  $img = json_decode($item["images"],true);  ?>
                         <div class="img-item" style="float: left; ">
                             <img src="<?php echo  $img[0]['link'] ?>" width="100px" height="70px" onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'">
@@ -88,10 +88,9 @@
                             <h3 class="title" style="margin-bottom: 3px;"><?php echo $item["name"]; ?></h3>
                             <div class="address" style="font-size: 13px"><?php echo $item["address"]; ?></div>
                             <div class="more-info-list">
-                                <span class="item-main"><?php echo $item["price"]/1000000; ?> tr</span>
-                                <span class="item-main"><?php echo $item["acreage"]; ?> m2</span>
+                                <span class="item-main"><b><?php echo $item["price"]/1000000; ?></b> Triệu/tháng</span>
+                                <span class="item-main"><b><?php echo $item["acreage"]; ?></b> m2</span>
                                 <span class="item-more">30m</span>
-                                <span class="item-more">Tự do giờ giấc</span>
                             </div>
                         </div>
                     </div>
