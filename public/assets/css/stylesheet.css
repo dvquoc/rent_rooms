@@ -69,6 +69,23 @@ footer{
 	background-color: #111;
 	padding-top: 20px;
 }
+#close-location-user{
+    position: absolute;
+    right: 0px;
+    top: -24px;
+    border: 0px;
+    background-color: #b7b7b7b3;
+    color: #fff;
+}
+.header-location-user{
+    margin: -15px;
+    margin-bottom: 30px;
+    height: 131px;
+    background: url(https://propzy.vn/assets/modules/landingpages-mkt/real_estate_private/images/bg-title-popup.jpg);
+    background-size: cover;
+    color: #fff;
+    font-size: 25px;
+}
 
 
 

@@ -1,17 +1,17 @@
 [
     {
         "name": "facebook/graph-sdk",
-        "version": "5.6.2",
-        "version_normalized": "5.6.2.0",
+        "version": "5.6.3",
+        "version_normalized": "5.6.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/facebook/php-graph-sdk.git",
-            "reference": "030f8c5b9b1a6c09e71719fd638b66ea4daa2f10"
+            "reference": "90e92bd1816fe718e55184ab85910dfcf488432c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/030f8c5b9b1a6c09e71719fd638b66ea4daa2f10",
-            "reference": "030f8c5b9b1a6c09e71719fd638b66ea4daa2f10",
+            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/90e92bd1816fe718e55184ab85910dfcf488432c",
+            "reference": "90e92bd1816fe718e55184ab85910dfcf488432c",
             "shasum": ""
         },
         "require": {
@@ -26,7 +26,7 @@
             "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
             "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
         },
-        "time": "2018-02-14T23:24:51+00:00",
+        "time": "2018-07-03T02:25:00+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

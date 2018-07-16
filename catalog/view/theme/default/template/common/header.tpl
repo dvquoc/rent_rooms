@@ -30,6 +30,7 @@
    
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
@@ -56,16 +57,16 @@
                 <ul id="menu-search" class="nav navbar-nav menu-nav pull-left">
                     <li>
                         <select class="form-control" style="border-radius: 3px; padding: 5px; border: 1px solid #e0e0e0;">
-                            <option>HCM</option>
+                            <?php foreach($citys as $item){ ?>
+                                <option value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
+                            <?php } ?>
                         </select>
                     </li>
                     <li>
                         <select class="form-control" style="border-radius: 3px; padding: 5px; border: 1px solid #e0e0e0;">
-                            <option>Quận 1</option>
-                            <option>Quận 2</option>
-                            <option>Quận 3</option>
-                            <option>Quận Thủ Đức</option>
-                            <option>Quận Tân Bình</option>
+                            <?php foreach($districts as $item){ ?>
+                                <option value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
+                            <?php } ?>
                         </select>
                     </li>
                     <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 250px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
