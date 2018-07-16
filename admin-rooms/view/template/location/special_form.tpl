@@ -93,7 +93,10 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-data">
-
+                                    <label class="">Từ khóa </label>
+                                   <input class="form-control" type="text" name="seo_key" value="<?php echo $special['seo_key']?>"></br>
+                                   <label class="">link </label>
+                                   <input class="form-control" type="text" name="seo_link" value="<?php echo $special['seo_link']?>">
                                  </div>
                             </div>
                         </div>

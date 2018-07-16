@@ -119,6 +119,8 @@ class ControllerLocationSpecial extends Controller
             'lat'         =>floatval($_POST['lat']),
             'lng'         =>floatval($_POST['lng']),
             'adrress'     =>$_POST['address'],
+            'seo_key'     =>$_POST['seo_key'],
+            'seo_link'      =>$_POST['seo_link']
         ];
         if(!empty($_POST['id'])){
             $result = $this->model_location_special->update($_POST['id'],$data);
