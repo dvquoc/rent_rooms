@@ -23,13 +23,6 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-	});
     if (typeof(Storage) !== "undefined") {
         if(!localStorage.getItem("location_user")) {
             setTimeout(function () {

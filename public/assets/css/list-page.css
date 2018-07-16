@@ -3,7 +3,7 @@
     position: sticky;top: 68px;
 }
 #col-l .footer{
-    font-size: 11px;color:#383838;background-color: #ccc; bottom: 0px; left:0px;position:absolute; padding:10px;
+    font-size: 11px;color:#383838;background-color: #ccc; bottom: 0px; left:0px;position:absolute; padding:10px; margin: 10px;
 }
 #col-l .footer p{margin:0; line-height: 15px;}
 #col-l .btn{

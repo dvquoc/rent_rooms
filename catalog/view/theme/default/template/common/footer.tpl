@@ -1,6 +1,6 @@
 <footer>
+    <p class="text-center">Copyright @ Conphong.com</p>
 </footer>
-</div>
 <div class="modal fade" id="get-location-user" tabindex="-1" role="dialog" aria-labelledby="get-location-user">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -42,4 +42,5 @@
         </div>
     </div>
 </div>
-</body></html>
+</body>
+</html>

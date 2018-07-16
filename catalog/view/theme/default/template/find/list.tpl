@@ -184,4 +184,6 @@ if(!isset($_COOKIE['origin_ref']))
 		})
 	});
 </script>
+</div>
+<?php echo $footer; ?>
 
