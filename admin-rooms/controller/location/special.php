@@ -75,6 +75,7 @@ class ControllerLocationSpecial extends Controller
         $data['footer']      = $this->load->controller('common/footer');
         $data['token']       = $this->session->data['token'];
         $data["add"]         = $this->url->link('location/special/page_add_new', 'token=' . $this->session->data['token']."&".$url , 'SSL');
+
         $data['action_fitler'] = str_replace('&amp;', '&', $this->url->link('location/special', 'token=' . $this->session->data['token'], 'SSL'));
         $this->response->setOutput($this->load->view('location/special_list.tpl', $data));
     }
@@ -89,7 +90,7 @@ class ControllerLocationSpecial extends Controller
         $data['token']     = $this->session->data['token'];
         $data['citys']     = $this->model_location_location_admin->getAllCity();
         $data['districts'] = $this->model_location_location_admin->getDistrictByCity('1');
-
+        $data['cancel'] = $this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
         $this->response->setOutput($this->load->view('location/special_form.tpl', $data));  
        
     }
@@ -149,6 +150,7 @@ class ControllerLocationSpecial extends Controller
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer']      = $this->load->controller('common/footer');
+        $data['cancel'] = $this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
         $data["save"]        = $this->url->link('location/special/save_special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
         $this->response->setOutput($this->load->view('location/special_form.tpl', $data)); 
 

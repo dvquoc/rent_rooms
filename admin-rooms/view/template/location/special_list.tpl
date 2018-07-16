@@ -40,7 +40,7 @@
                                 <?php } ?>
                             </select>
                         </div>
-                        <div id="item_search_location" class="col-md-2 item">
+                       <!--  <div id="item_search_location" class="col-md-2 item">
                             <label class="text hidden">Thiết lập khu vự tìm kiếm</label>
                             <select name="location" class="form-control">
                                 <?php if($data_filter["location"] == 1) {  ?>
@@ -51,7 +51,7 @@
                                     <option selected = "selected"  value="0">Chưa có</option>
                                 <?php } ?>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="col-md-2 item text-right pull-right">
                             <button type="button" id="cancel-filter" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Hủy</button>
                             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Áp dụng</button>

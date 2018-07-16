@@ -33,66 +33,68 @@
                             <h3 class="panel-title"><i class="fa fa-inbox"></i>Khu vực đặc biệt</h3>
                         </div>
                         <div class="panel-body">
-                      <!--       <div class="row">
-                                <div class="col-md-4">
-                                    <label class="">Tên khu vực</label>
-                                    <div class="dropdown">
-                                        <input name="name" id="input-name" class="form-control " value="<?php echo $name; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                            <br> -->
-                            <div class="row">
+                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="dropdown">
                                         <input name="address" width="90%" id="input-address" class="form-control " value="<?php echo $address; ?>">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label class="">Tên </label>
-                                   <input class="form-control" type="text" name="name" value="<?php echo isset($special['name'])?$special['name']:'';?>"></br>
-                                   <input type="hidden" name="id" value="<?php echo isset($special)?(string)$special['_id']:'' ?>">
-                                    <label class="">Thành phố </label>
-                                        <select class="form-control" name="city">
-                                            <!-- <option value="null">--- Chọn Tỉnh/Thành phố ---</option> -->
-                                              <?php foreach($citys as $item) { ?>
-                                                  <?php if($item["city_id"] == $city[0]["city_id"]) { ?>
-                                                        <option selected="selected" value="<?php echo $city[0]['city_id'] ?>"><?php echo $city[0]['name'] ?></option>
-                                                  <?php } else{  ?>
-                                                        <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
+                            <ul class="nav nav-tabs">
+                              <li class="active"><a href="#tab-general" data-toggle="tab">Thông tin chính</a></li>
+                              <li><a href="#tab-data" data-toggle="tab">SEO</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active main-infor" id="tab-general">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="">Tên </label>
+                                           <input class="form-control" type="text" name="name" value="<?php echo isset($special['name'])?$special['name']:'';?>"></br>
+                                           <input type="hidden" name="id" value="<?php echo isset($special)?(string)$special['_id']:'' ?>">
+                                            <label class="">Thành phố </label>
+                                                <select class="form-control" name="city">
+                                                    <!-- <option value="null">--- Chọn Tỉnh/Thành phố ---</option> -->
+                                                      <?php foreach($citys as $item) { ?>
+                                                          <?php if($item["city_id"] == $city[0]["city_id"]) { ?>
+                                                                <option selected="selected" value="<?php echo $city[0]['city_id'] ?>"><?php echo $city[0]['name'] ?></option>
+                                                          <?php } else{  ?>
+                                                                <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
+                                                          <?php } ?>
+                                                      <?php } ?>
+                                                </select></br>
+                                            <!--      <input class="form-control" type="text" name="city" value="<?php echo isset($special['name'])?$special['city']:'';?>"></br> -->
+                                           <label class="">Quận </label>
+                                               <select class="form-control" name="district">
+                                                <!-- <option value="null">--- Chọn Quận/Huyện ---</option> -->
+                                                  <?php foreach($districts as $item) { ?>
+                                                      <?php if($item["district_id"] == $district[0]['district_id']) { ?>
+                                                            <option selected="selected" value="<?php echo $district[0]['district_id'] ?>"><?php echo $district[0]['name'] ?></option>
+                                                      <?php } else { ?>
+                                                            <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
+                                                      <?php } ?>
                                                   <?php } ?>
-                                              <?php } ?>
-                                        </select></br>
-                                    <!--      <input class="form-control" type="text" name="city" value="<?php echo isset($special['name'])?$special['city']:'';?>"></br> -->
-                                   <label class="">Quận </label>
-                                       <select class="form-control" name="district">
-                                        <!-- <option value="null">--- Chọn Quận/Huyện ---</option> -->
-                                          <?php foreach($districts as $item) { ?>
-                                              <?php if($item["district_id"] == $district[0]['district_id']) { ?>
-                                                    <option selected="selected" value="<?php echo $district[0]['district_id'] ?>"><?php echo $district[0]['name'] ?></option>
-                                              <?php } else { ?>
-                                                    <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
-                                              <?php } ?>
-                                          <?php } ?>
-                                      </select></br>
-                                  <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
-                                  
-                                   <label class="">Lượt tìm kiếm </label>
-                                   <input class="form-control" type="text" name="view" value="<?php echo isset($special['name'])?$special['view']:'';?>"></br>
-                                   <label class="">Bán kình khu vực </label>
-                                   <input class="form-control" type="text" name="circle">
-                                   <label class="">Lat</label>
-                                   <input class="form-control" type="text" name="lat" value="<?php echo isset($special['name'])?$special['lat']:'';?>">
-                                   <label class="">Lng</label>
-                                   <input class="form-control" type="text" name="lng" value="<?php echo isset($special['name'])?$special['lng']:'';?>">
+                                              </select></br>
+                                          <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
+                                          
+                                           <label class="">Lượt tìm kiếm </label>
+                                           <input class="form-control" type="text" name="view" value="<?php echo isset($special['name'])?$special['view']:'';?>"></br>
+                                           <label class="">Bán kình khu vực </label>
+                                           <input class="form-control" type="text" name="circle">
+                                           <label class="">Lat</label>
+                                           <input class="form-control" type="text" name="lat" value="<?php echo isset($special['name'])?$special['lat']:'';?>">
+                                           <label class="">Lng</label>
+                                           <input class="form-control" type="text" name="lng" value="<?php echo isset($special['name'])?$special['lng']:'';?>">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div id="map-address" style="width: 100%; height: 500px;"></div>
+                                            <h3 style="font-size: 18px; margin-top: 15px;">Hướng dẫn: </h3>
+                                            <p>Kéo chấm đỏ trên bản đồ để cập nhật lại vị trí cho phòng trọ...</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <div id="map-address" style="width: 100%; height: 500px;"></div>
-                                    <h3 style="font-size: 18px; margin-top: 15px;">Hướng dẫn: </h3>
-                                    <p>Kéo chấm đỏ trên bản đồ để cập nhật lại vị trí cho phòng trọ...</p>
-                                </div>
+                                <div class="tab-pane" id="tab-data">
+
+                                 </div>
                             </div>
                         </div>
                     </div>
