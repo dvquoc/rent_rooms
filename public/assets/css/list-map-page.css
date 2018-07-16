@@ -22,21 +22,6 @@
     font-size: 13px;
     color: #999;
 }
-.pagination{
-    top: 15px;
-    right: 10px;
-    position: absolute;
-}
-.pagination span{
-    display: inline-block;
-    padding: 2px;
-    background-color: #019c44;
-    border-radius: 3px;
-    margin-right: 3px;
-    width: 27px;
-    text-align: center;
-    font-size: 13px;
-}
 .house-overlay-item {
     background-color: #019c44;
     border: 1px solid #0b8841;

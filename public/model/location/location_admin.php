@@ -20,7 +20,14 @@ class ModelLocationLocationAdmin extends Model {
     }
 
     function getAllCity(){
-        return $this->db->city->find()->toArray();
+        $citys = $this->cache->get('city-cache');
+        if(!$citys){
+            $result = $this->db->city->find()->toArray();
+            $this->cache->set('city-cache', $result);
+            return $result;
+        }
+
+        return $citys;
     }
 
     function getDistrictByCity($city_id){
@@ -40,33 +47,6 @@ class ModelLocationLocationAdmin extends Model {
     }
     public function get_district_by_name($name,$id_city){
         return $this->db->district->find(array('name'=> $name,'city_id'=>$id_city))->toArray();
-    }
-
-    function getStreetByDistrict($data){
-        $sql = "SELECT * FROM ".$this->_table_relative['street']." WHERE (1=1)";
-        if(!empty($data['name']))
-            $sql.=' AND name LIKE "%'. $data['name'].'%"';
-
-        if(!empty($data['district']))
-            $sql.=' AND district_id ='. $data['district'];
-
-        if(!empty($data['location']))
-            $sql.=' AND location IS NOT NULL';
-        else
-            $sql.=' AND location IS NULL';
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-        }
-
-        $query = $this->db->query($sql);
-        return $query->rows;
     }
 
     function getStreetTotalByDistrict($data){

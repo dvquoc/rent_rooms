@@ -74,7 +74,6 @@
         <div class="inner" style="overflow-y: scroll; position: relative; overflow: hidden; height: 100%">
             <div class="results-heading" style="position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
                 <span class="results-heading-title">Kết quả tìm kiếm</span>
-                <div class="pagination"><span>1</span><span>2</span><span>3</span>...<span>10</span></div>
             </div>
             <div id="content-list">
                 <?php foreach($listing as $item) { ?>
@@ -215,3 +214,4 @@
     }
 </script>
 </div>
+<?php echo $footer; ?>

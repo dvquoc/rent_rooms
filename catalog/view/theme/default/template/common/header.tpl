@@ -27,9 +27,10 @@
     
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-   
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
@@ -54,21 +55,11 @@
                     }
                 </style>
                 <ul id="menu-search" class="nav navbar-nav menu-nav pull-left">
-                    <li>
-                        <select class="form-control" style="border-radius: 3px; padding: 5px; border: 1px solid #e0e0e0;">
-                            <option>HCM</option>
-                        </select>
+                    <li class="small" style="margin-right: 5px; margin-top: 8px">
+                        <span class="city" style="display:block;line-height: 14px; font-size: 13px; font-weight: bold;">Hồ Chí Minh</span>
+                        <span class="district" style="display:block; font-size: 12px;"> Thủ Đức</span>
                     </li>
-                    <li>
-                        <select class="form-control" style="border-radius: 3px; padding: 5px; border: 1px solid #e0e0e0;">
-                            <option>Quận 1</option>
-                            <option>Quận 2</option>
-                            <option>Quận 3</option>
-                            <option>Quận Thủ Đức</option>
-                            <option>Quận Tân Bình</option>
-                        </select>
-                    </li>
-                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 250px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
+                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
                     <li><input type="text" class="form-control" placeholder="Giá" style="width: 80px;"></li>
                     <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"></li>
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
