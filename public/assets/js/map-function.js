@@ -40,10 +40,9 @@ function tuple(args, value) {
     return td;
 };
 
-function attachEvents(map, $container, options, object, id) {
+function attachEvents(map, $container, options, object, div) {
     var td = options || {},
         context = {
-            id: id,
             data: options.data,
             ele: $container
         };
@@ -57,7 +56,7 @@ function attachEvents(map, $container, options, object, id) {
                     fn = f[1];
                 }
                 handler(object, name, function (event) {
-                    fn.apply(self, [object, event, context]);
+                    fn.apply(div, [object, event, context]);
                 });
             });
         }
@@ -625,9 +624,9 @@ $.extend(mapRooms.prototype, {
             $div.append(item.options.content);
             obj = new OverlayView(_m, new google.maps.LatLng(item.latLng[0], item.latLng[1]), $div, item.options);
             overlays.push(obj);
-            $div = null; // memory leak
             item.events = data_overlay.events;
-            attachEvents(_m, _mr.element, item, obj, "gmap3_" + i);
+            attachEvents(_m, _mr.element, item, obj, $div);
+            $div = null; // memory leak
         });
     },
     overlayAction: function (action) {
@@ -932,7 +931,8 @@ $.extend(mapRooms.prototype, {
                 values: markers_data,
                 events: {
                     click: function (overlay, event, context) {
-                        $(event.target).css({'background-color': '#00a1ff'});
+                        $('.house-overlay-item').removeClass('active');
+                        $(this).find('.house-overlay-item').first().addClass('active');
                         $("#detail-title").text(context.data.name);
                         $("#show-detail").show();
                         $("#detail-address span").text(context.data.address);

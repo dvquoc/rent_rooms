@@ -145,8 +145,7 @@
     <div class="arrow"></div>
 </div>
 
-<script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-<script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
+
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn" type="text/javascript"></script>
 <script src="/public/assets/js/map-function.js" type="text/javascript"></script>
 <script src="/public/assets/js/list-map-page.js" defer type="text/javascript"></script>

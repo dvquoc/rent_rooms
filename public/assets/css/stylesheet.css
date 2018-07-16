@@ -84,7 +84,17 @@ footer{
     background: url(https://propzy.vn/assets/modules/landingpages-mkt/real_estate_private/images/bg-title-popup.jpg);
     background-size: cover;
     color: #fff;
-    font-size: 25px;
+    font-size: 22px;
+}
+.city-location-show{
+    display: block;
+    line-height: 14px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.district-location-show{
+    display: block;
+    font-size: 12px;
 }
 
 

@@ -55,9 +55,9 @@
                     }
                 </style>
                 <ul id="menu-search" class="nav navbar-nav menu-nav pull-left">
-                    <li class="small" style="margin-right: 5px; margin-top: 8px">
-                        <span class="city" style="display:block;line-height: 14px; font-size: 13px; font-weight: bold;">Hồ Chí Minh</span>
-                        <span class="district" style="display:block; font-size: 12px;"> Thủ Đức</span>
+                    <li class="small" style="margin-right: 5px; margin-top: 8px" data-toggle="modal" data-target="#get-location-user">
+                        <span class="city-location-show">Hồ Chí Minh</span>
+                        <span class="district-location-show"> Thủ Đức</span>
                     </li>
                     <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
                     <li><input type="text" class="form-control" placeholder="Giá" style="width: 80px;"></li>

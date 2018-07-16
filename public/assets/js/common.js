@@ -23,14 +23,31 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
+    $("#set-location-user").click(function () {
+        var dataSave = {
+            'city_location_value': $("#city-location").val(),
+            'city_location_text': $("#city-location option:selected").text(),
+            'district_location_value': $("#district-location").val(),
+            'district_location_text': $("#district-location option:selected").text()
+        };
+        localStorage.setItem("location_user",JSON.stringify(dataSave));
+        $(".city-location-show").text(dataSave.city_location_text);
+        $(".district-location-show").text(dataSave.district_location_text);
+        $("#get-location-user").modal('hide');
+    });
     if (typeof(Storage) !== "undefined") {
         if(!localStorage.getItem("location_user")) {
             setTimeout(function () {
                 $("#get-location-user").modal('show');
             }, 3000);
+        }else{
+            var location = JSON.parse(localStorage.getItem("location_user"));
+            $(".city-location-show").text(location.city_location_text);
+            $(".district-location-show").text(location.district_location_text);
+            console.log(location);
         }
     } else {
-
+       console.log("Không hỗ trợ localstorage");
     }
 });
 

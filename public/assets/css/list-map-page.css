@@ -81,6 +81,11 @@
 .ping-small .house-overlay-item span{
     display: none;
 }
+
+.house-overlay-item:hover span, .house-overlay-item.active span{
+    background-color: #FF9800;
+}
+
 .tippy-tooltip[data-template-id="#my-template-id"] {
     padding: 2rem;
     background: #fff;
