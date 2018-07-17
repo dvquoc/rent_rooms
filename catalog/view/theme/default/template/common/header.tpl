@@ -34,7 +34,7 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
-            <div class="<?php echo $classPage !='common-home' ? 'container' : 'container-fluid' ?>">
+            <div class="<?php echo $classPage !='find-map' ? 'container' : 'container-fluid' ?>">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" id="menu-toggle" onclick="openNav()" data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
                         <span class="icon-bar"></span>
@@ -65,7 +65,9 @@
                     <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i><a href="/ow-dang-ky">Chủ phòng</a></button></li>
+                    <li class="item">
+                        <a class="btn btn-primary" href="/ow-dang-ky"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
+                    </li>
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                          <li class="item"><img src="<?php echo $_SESSION['img']?>"><?php echo $_SESSION['name']?></li><a href="/dang-xuat">Đăng xuất</a>
                     <?php }else{?>

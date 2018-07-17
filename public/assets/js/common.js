@@ -21,8 +21,10 @@ function getURLVar(key) {
 		}
 	}
 }
-
 $(document).ready(function() {
+    $("#btn-s-h").click(function () {
+        window.location.href = 'http://rents.dev.com/tim-kiem-phong-tro';
+    });
     $("#set-location-user").click(function () {
         var dataSave = {
             'city_location_value': $("#city-location").val(),
