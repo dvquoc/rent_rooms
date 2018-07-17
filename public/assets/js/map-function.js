@@ -900,7 +900,7 @@ $.extend(mapRooms.prototype, {
             other: null
         };
         $.ajax({
-            url: "/common/home/find-map",
+            url: "/find/map/find-map",
             data: dataSend,
             type: "post",
             dataType: "json",

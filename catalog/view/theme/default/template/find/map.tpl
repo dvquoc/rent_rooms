@@ -1,99 +1,34 @@
-<?php echo $header;
-if(!isset($_COOKIE['origin_ref']))
-{
-    setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
-} ?>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places" type="text/javascript"></script>
-<script src="/public/assets/js/map/gmap3.js" type="text/javascript"></script>
-<script src="/public/assets/plugins/tippyjs/tippy.all.min.js" type="text/javascript"></script>
-<script src="/public/assets/plugins/slide_reveal/slidereveal.js" type="text/javascript"></script>
-<link href="/public/assets/plugins/tippyjs/tippy.css" rel="stylesheet">
-<link href="/public/assets/plugins/tippyjs/themes/light.css" rel="stylesheet">
-<style type="text/css">
-    .house-overlay-item{
-        background-color: #0d5a84;
-        width: 40px;
-        height: 20px;
-        position: relative;
-        color: #fff;
-        text-align: center;
-        line-height: 20px;
-        border-radius: 2px;
-        box-shadow: 0 2px 3px 0 rgba(0,0,0,.35);
-    }
-    .house-overlay-item:after{
-        content: "";
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 8px 5px 0 5px;
-        border-color: #0d5a84 transparent transparent transparent;
-        bottom: -8px;
-        left: 15px;
-        position: absolute;
-    }
-    .tippy-tooltip[data-template-id="#my-template-id"] {
-        padding: 2rem;
-        background: #fff;
-    }
-    #close-detail{
-        position: absolute;
-        z-index: 0;
-        top: 8px;
-        left: 100%;
-    }
-    .widget-pane-toggle-button{
-        width: 23px;
-        height: 48px;
-        cursor: pointer;
-        border-left: 1px solid #D4D4D4;
-        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
-        margin: 0;
-        padding: 0;
-        border: 0;
-        border-radius: 0;
-        outline: 0;
-        font: inherit;
-        vertical-align: baseline;
-        background: #ffffffd6;
-        list-style: none;
-        overflow: visible;
-    }
-    .popover{
-        max-width: 300px;
-        width: 300px;
-    }
-</style>
+<?php echo $header; ?>
+<link href="/public/assets/css/list-map-page.css" rel="stylesheet" type="text/css">
 <!--declare-->
-<div class="contain-map" style="position: relative">
-    <div id="test1" class="gmap3 col-md-12" style="width: 100%; height:950px"></div>
-    <div id="show-detail" class="col-md-4" style="background-color: #fff; padding: 0px; box-shadow: 1px 0px 94px -42px #000;">
+<div class="contain-map contain-fluid-full" style="position: relative">
+    <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
+    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
-                <button class="widget-pane-toggle-button noprint"></button>
+                <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
             </div>
-            <div class="img"><img id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
-            <br>
-            <div class="col-md-12">
+            <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
+            <div class="col-md-12" id="content-detail" style=" background-color: #fff; height: calc(100%-250px); overflow-y:scroll">
                 <h3 id="detail-title">Tiêu đề</h3>
-                <p style="margin: 15px 0px; border: 1px solid #eee; padding: 5px 8px;" id="detail-address"><b>Địa chỉ: </b><span></span></p>
-                <div class="row">
+                <p id="detail-address"><b>Địa chỉ: </b><span></span></p>
+                <div class="row item-info-main">
                     <div id="detail-price" class="col-md-6">
-                        <p><b>Giá cho thuê: </b><span>1.2 triệu/tháng</span></p>
+                        <p><b>Giá cho thuê: </b><span class='more-info'>1.2 triệu/tháng</span></p>
                     </div>
                     <div id="detail-area" class="col-md-6">
                         <p><b>Diện tích: </b><span>15 m2</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main ">
                     <div id="detail-water" class="col-md-6">
-                        <p><b>Tiền cọc: </b><span>1 trệu <i style="font-size: 11px; color: red"> (hoàn tháng cuối)</i></span></p>
+                        <p><b>Tiền cọc: </b><span>1 trệu <i class='more-info' style="font-size: 9px; color: red"> (hoàn lại)</i></span></p>
                     </div>
                     <div id="detail-price" class="col-md-6">
                         <p><b>Toilet: </b><span>Trong nhà</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main ">
                     <div id="detail-water" class="col-md-6">
                         <p><b>Tiền nước: </b><span>15.000/khối</span></p>
                     </div>
@@ -101,7 +36,15 @@ if(!isset($_COOKIE['origin_ref']))
                         <p><b>Tiền điện: </b><span>3000/kg</span></p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row item-info-main">
+                    <div id="detail-water" class="col-md-6">
+                        <p><b>Mạng wifi: </b><span>Tự túc</span></p>
+                    </div>
+                    <div id="detail-price" class="col-md-6">
+                        <p><b>Cáp TV: </b><span>Không cố</span></p>
+                    </div>
+                </div>
+                <div class="row item-info-main">
                     <div id="detail-water" class="col-md-6">
                         <p><b>Số lượng người ở: </b><span>3/người</span></p>
                     </div>
@@ -109,7 +52,7 @@ if(!isset($_COOKIE['origin_ref']))
                         <p><b>Toilet: </b><span>Trong nhà</span></p>
                     </div>
                 </div>
-                <div class="text-center"><div style="padding: 10px; background-color: #f89406; color: #fff; margin: 10px 0px;">Liên hệ chủ nhà - Gặp: Chị Hương</div></div>
+                <div class="text-center"><div class="btn btn-block-inline"><i class="fa fa-phone"></i> Liên hệ chủ nhà - Gặp: Chị Hương</div></div>
                 <p class="alert text-center alert-danger"> Giờ giấc tự do</p>
                 <p id="detail-des">
                     <b>Nội quy: </b>
@@ -120,110 +63,153 @@ if(!isset($_COOKIE['origin_ref']))
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid-full hidden">
-    <div class="row">
-        <?php foreach($listing as $item) { ?>
-        <div class="item-listing col-md-4">
-            <div class="inner-item" id="item_<?php echo $item['_id']; ?>">
-                <?php  $img = json_decode($item["photo"],true);  ?>
-                <div class="img-item" >
-                    <img src="<?php echo  $img[0]['link'] ?>" width="200px" height="200px">
+    <div id="show-list" class="col-md-3 noselect" style=" border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+        <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+            <a href="/tim-kiem-phong-tro" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
+                <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>
+                Xem dạng danh sách
+            </a>
+        </div>
+        <div class="inner" style="overflow-y: scroll; position: relative; overflow: hidden; height: 100%">
+            <div class="results-heading" style="position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
+                <span class="results-heading-title">Kết quả tìm kiếm</span>
+            </div>
+            <div id="content-list">
+                <?php foreach($listing as $item) { ?>
+                <div class="item-listing" style="overflow: hidden; ">
+                    <div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_<?php echo $item['_id']; ?>">
+                        <?php  $img = json_decode($item["images"],true);  ?>
+                        <div class="img-item" style="float: left; ">
+                            <img src="<?php echo  $img[0]['link'] ?>" width="100px" height="70px" onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'">
+                        </div>
+                        <div class="info" style="margin-left: 115px;">
+                            <h3 class="title" style="margin-bottom: 3px;"><?php echo $item["name"]; ?></h3>
+                            <div class="address" style="font-size: 13px"><?php echo $item["address"]; ?></div>
+                            <div class="more-info-list">
+                                <span class="item-main"><b><?php echo $item["price"]/1000000; ?></b> Triệu/tháng</span>
+                                <span class="item-main"><b><?php echo $item["acreage"]; ?></b> m2</span>
+                                <span class="item-more">30m</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="title"><?php echo $item["title"]; ?></h3>
+                <?php } ?>
             </div>
         </div>
-        <?php } ?>
     </div>
 </div>
+<div id="guidMap" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Hướng dẫn</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="addRoom" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nhập thông tin</h4>
+            </div>
+            <div class="modal-body">
+                <p>Nhập thông tin trọ</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Thêm phòng trọ</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="toolip-detail-on-pin" style="width: 300px; height: 150px; display: none; background-color: #fff; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; padding: 15px; position: absolute; left: 0px; top: 0px;">
+    <div class="content">
+        <div id="show-price-tooltip"><b>Giá thuê: </b> <span>loadding... </span>vnđ</div>
+        <div id="show-acreage-tooltip"><b>Diện tích: </b><span> loadding... </span> m2</div>
+        <div id="show-electricity-tooltip"><b>Tiền điện: </b> <span> loadding... </span> đ/kg</div>
+        <div id="show-water-tooltip"><b>Tiền nước: </b> <span> loadding... </span> đ/khối</div>
+        <div id="show-deposit-tooltip"><b>Đặt cọc trước: </b> <span> loadding... </span>vnđ</div>
+        <div class="text-right"><button style="position: absolute;right:0px; top: 0px;" class="btn btn-primary">Gọi ngay</button></div>
+    </div>
+    <div class="arrow"></div>
+</div>
+
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn" type="text/javascript"></script>
 <script src="/public/assets/js/map-function.js" type="text/javascript"></script>
+<script src="/public/assets/js/list-map-page.js" defer type="text/javascript"></script>
 <script type="text/javascript">
-    $('#show-detail').slideReveal();
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
     var region = <?php echo json_encode($region); ?>;
     var listing = <?php echo json_encode($listing); ?>;
     var polygon = [];
     var zoom = <?php echo $zoom; ?>;
-    var eleMap = "#test1";
-    var firstWidth = $(eleMap).outerWidth(true);
-    $.each(region,function(key,item){
-        polygon.push([item[1],item[0]]);
-    });
-    $(function(){
-        var slider = $("#show-detail").slideReveal({
-            width: "33.333333333333%",
-            position:'left',
-            shown: function(sliders, trigger){
-                var currentWidth =  firstWidth - slider.data('slide-reveal-model').getWidth();
-                $(eleMap).css({'width': currentWidth+23});
+    var getId = function(id) {
+        return document.getElementById(id);
+    }
+    var getClass = function(c) {
+        return document.getElementsByClassName(c);
+    }
+    /* showHide is function from jquery */
+    var showHide = function( elements, show ) {
+        var display, elem,
+            values = [],
+            index = 0,
+            length = elements.length;
+
+        // Determine new display value for elements that need to change
+        for ( ; index < length; index++ ) {
+            elem = elements[ index ];
+            if ( !elem.style ) {
+                continue;
             }
-        });
-        $("#close-detail").click(function () {
-            slider.slideReveal("toggle");
-        });
-        $(eleMap).css({'height': $(window).height()});
-        var markers_data = [];
-        var bounds = new google.maps.LatLngBounds();
-        $.each(listing,function(key,item){
-            bounds.extend(new google.maps.LatLng(item.location.coordinates[1],item.location.coordinates[0]));
-            markers_data.push({
-                latitude: item.location.coordinates[1],
-                longitude: item.location.coordinates[0],
-                latLng: [item.location.coordinates[1], item.location.coordinates[0]],
-                data:item,
-                options:{
-                    pane: "floatPane",
-                    content : '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_'+item._id.$oid+'" data-tippy-html="#item_'+item._id.$oid+'" title="'+item.title+'"><span>1,2 tr</span></div>',
-                    offset : {x: -20 , y:-20},
-                    draggable:true,
-                }
-            });
-        });
-        var optionsMap = {
-            scaleControl: false,
-            fullscreenControl: false,
-            mapTypeControl: false,
-            zoom:zoom,
-            streetViewControl: false,
-            overviewMapControl: true,
-            scrollwheel: true,
-            disableDoubleClickZoom: true,
-            center: bounds.getCenter(),
-            draws: polygon,
-            controlCustom:['draw-line','draw-popygon'],
-            overlays: {
-                values: markers_data,
-                events: {
-                    click: function (overplay, event, context) {
-                        console.log(event[0].target);
-                        $(event.target).css({'background-color':'#00a1ff'});
-                        this.data('mapRooms').map.panTo(overplay.getPosition());
-                        $("#detail-title").text(context.data.title);
-                        var imgs = JSON.parse(context.data.photo);
-                        var img = imgs[0];
-                        $("#detail-img").attr('src',img.link);
-                        $("#detail-address span").text(context.data.address);
-                        slider.slideReveal("show");
-                        $(event[0].target).popover('hide');
-                        var imgs = JSON.parse(context.data.photo);
-                        var img = imgs[0];
-                        var option = {
-                            title: context.data.address,
-                            content: "<img class='img-responsive' src='"+img.link+"'/>",
-                            html: true,
-                            placement: "top",
-                            trigger: "click"
-                        };
-                        $(event[0].target).popover(option).popover('show');
-                    },
-                    mouseover: function (overlay, event, context) {
-                    },
-                    mouseout: function (overlay, event, context) {
-                        $(event[0].target).popover('hide');
+
+            display = elem.style.display;
+            if ( show ) {
+
+                // Since we force visibility upon cascade-hidden elements, an immediate (and slow)
+                // check is required in this first loop unless we have a nonempty display value (either
+                // inline or about-to-be-restored)
+                if ( display === "none" ) {
+                    values[ index ] = dataPriv.get( elem, "display" ) || null;
+                    if ( !values[ index ] ) {
+                        elem.style.display = "";
                     }
                 }
+                if ( elem.style.display === "" && isHiddenWithinTree( elem ) ) {
+                    values[ index ] = getDefaultDisplay( elem );
+                }
+            } else {
+                if ( display !== "none" ) {
+                    values[ index ] = "none";
+
+                    // Remember what we're overwriting
+                    dataPriv.set( elem, "display", display );
+                }
             }
-        };
-        var map = $("#test1").mapRooms(optionsMap);
-        map.mapRooms('test');
-    });
+        }
+
+        // Set the display of the elements in a second loop to avoid constant reflow
+        for ( index = 0; index < length; index++ ) {
+            if ( values[ index ] != null ) {
+                elements[ index ].style.display = values[ index ];
+            }
+        }
+
+        return elements;
+    }
 </script>
+</div>
+<?php echo $footer; ?>
