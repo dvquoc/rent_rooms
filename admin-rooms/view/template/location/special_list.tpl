@@ -16,6 +16,11 @@
                         <b style='display: inline;margin-right: 10px; color: #0e2d3e;'><span class="fa fa-search"></span> Tìm kiếm:</b>
                     </div>
                     <div class="dropdown-menu row" style="background-color: #fbfbfb; padding: 10px 6px 1px 6px;width: calc(100% - 13px); margin-right: 14px; left: 14px;top: 95%;display: none; border-radius: 0px; -webkit-box-shadow:rgba(0, 0, 0, 0.78) 10px 10px 43px -30px;box-shadow: rgba(0, 0, 0, 0.78) 10px 10px 43px -30px; border:1px solid #e2e2e2;">
+                           <div id="item_search_name" class="col-md-2 item">
+                            <label class="text hidden">Tên khu vực</label>
+                            <input type="text" name="name" class="form-control" value="<?php echo ($data_filter['name'] == -1)?'':$data_filter['name']?>">
+                            
+                        </div>
                         <div id="item_search_city_id" class="col-md-2 item">
                             <label class="text hidden">Thành Phố</label>
                             <select name="city_id" class="form-control">
@@ -207,9 +212,11 @@
 
             $.each(data,function (key,item) {
                 if(item !== null && item.length!=0 && item!=-1 && key != 'type') {
+
                     var textValue = item;
-                    if($("#item_search_"+key).attr("type")!='input')
+                    if($('select[name="'+key+'"]').is('select')){
                         textValue= $("#item_search_"+key+" select  option[value='"+item+"']").text();
+                    }
 
                     if(key =='special')
                         textValue= $("#item_search_"+key+"_face input").val();

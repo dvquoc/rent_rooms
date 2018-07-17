@@ -77,13 +77,14 @@
                                           <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
                                           
                                            <label class="">Lượt tìm kiếm </label>
-                                           <input class="form-control" type="text" name="view" value="<?php echo isset($special['name'])?$special['view']:'';?>"></br>
+                                           <input class="form-control" type="text" name="view" value="<?php echo isset($special['view'])?$special['view']:'';?>"></br>
                                            <label class="">Bán kình khu vực </label>
-                                           <input class="form-control" type="text" name="circle">
+                                            <textarea class="form-control" readonly rows="5" name="circle"><?php echo $area?>
+                                            </textarea>
                                            <label class="">Lat</label>
-                                           <input class="form-control" type="text" name="lat" value="<?php echo isset($special['name'])?$special['lat']:'';?>">
+                                           <input class="form-control" readonly type="text" name="lat" value="<?php echo isset($special['lat'])?$special['lat']:'';?>">
                                            <label class="">Lng</label>
-                                           <input class="form-control" type="text" name="lng" value="<?php echo isset($special['name'])?$special['lng']:'';?>">
+                                           <input class="form-control" readonly type="text" name="lng" value="<?php echo isset($special['lng'])?$special['lng']:'';?>">
                                         </div>
                                         <div class="col-md-8">
                                             <div id="map-address" style="width: 100%; height: 500px;"></div>
@@ -95,8 +96,8 @@
                                 <div class="tab-pane" id="tab-data">
                                     <label class="">Từ khóa </label>
                                    <input class="form-control" type="text" name="seo_key" value="<?php echo $special['seo_key']?>"></br>
-                                   <label class="">link </label>
-                                   <input class="form-control" type="text" name="seo_link" value="<?php echo $special['seo_link']?>">
+                                   <label class="">Mô tả </label>
+                                   <textarea class="form-control" rows="5" name="seo_discription"><?php echo $special['seo_discription']?></textarea>
                                  </div>
                             </div>
                         </div>
@@ -292,7 +293,7 @@
         var drawPolygonTest = function(){
             var lat = $('input[name=lat]').val();
             var lng = $('input[name=lng]').val();
-            var circle = $('input[name=circle]').val();
+            var circle = $('textarea[name=circle]').val();
             var drawingManager = new google.maps.drawing.DrawingManager({
                     drawingMode: google.maps.drawing.OverlayType.POLYGON,
                     drawingControl: true,
@@ -316,7 +317,7 @@
             google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
                 //popUpPinInfo(marker, circle.radius, map);
                 var coordinates = (polygon.getPath().getArray());
-                $('input[name=circle]').val(coordinates);
+                $('textarea[name=circle]').val(coordinates);
             });
         }
         $('.datetime').datetimepicker({

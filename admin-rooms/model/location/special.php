@@ -15,8 +15,13 @@ class ModelLocationSpecial extends Model {
     	return $insertOneResult->getInsertedId();
     }
 
-    public function get_list($data){
+    public function get_list_filter($data){
         $result = $this->table->find($data);
+        return $result->toArray();
+    }
+
+    public function get_all_item(){
+        $result = $this->table->find();
         return $result;
     }
 
