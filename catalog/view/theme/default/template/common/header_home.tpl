@@ -21,7 +21,10 @@
 </head>
 <body class="<?php echo $classPage ?>">
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
+    <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
+    <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/home.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
