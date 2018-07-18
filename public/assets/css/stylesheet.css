@@ -96,6 +96,25 @@ footer{
     display: block;
     font-size: 12px;
 }
+body.common-home .city-location-show, body.common-home .district-location-show{
+    display: inherit;
+}
+
+.pac-logo:after{
+    display: none!important;
+}
+.pac-item {
+    cursor: default;
+    padding: 0 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 37px;
+    text-align: left;
+    border-top: 1px solid #e6e6e6;
+    font-size: 13px;
+    color: #999;
+}
 
 
 

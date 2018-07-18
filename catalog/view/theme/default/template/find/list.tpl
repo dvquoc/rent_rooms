@@ -38,7 +38,7 @@ if(!isset($_COOKIE['origin_ref']))
 						<p class="text" style="color:#999;">Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit...</p>
 					</div>
 					<div class="text-center">
-						<button class="btn btn-primary">Xem bằng bản đồ</button>
+						<a href="/tim-kiem-theo-ban-do" class="btn btn-primary">Xem bằng bản đồ</a>
 					</div>
 				</div>
 			</div>

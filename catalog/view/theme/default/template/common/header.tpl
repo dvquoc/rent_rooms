@@ -32,9 +32,10 @@
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn" type="text/javascript"></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
-            <div class="<?php echo $classPage !='common-home' ? 'container' : 'container-fluid' ?>">
+            <div class="<?php echo $classPage !='find-map' ? 'container' : 'container-fluid' ?>">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" id="menu-toggle" onclick="openNav()" data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
                         <span class="icon-bar"></span>
@@ -59,13 +60,23 @@
                         <span class="city-location-show">Hồ Chí Minh</span>
                         <span class="district-location-show"> Thủ Đức</span>
                     </li>
-                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
-                    <li><input type="text" class="form-control" placeholder="Giá" style="width: 80px;"></li>
-                    <li><input type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"></li>
-                    <li><button class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
+                    <li>
+                        <input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom">
+                    </li>
+                    <li>
+                        <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;">
+                    </li>
+                    <li>
+                        <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;">
+                    </li>
+                    <li>
+                        <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button>
+                    </li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item"><button href="<?php echo $menu_map; ?>" data-toggle="modal" data-target="#addRoom" class="btn btn-primary" style="margin-right:5px; border-radius: 3px;"><i class="glyphicon glyphicon-plus"></i><a href="/ow-dang-ky">Chủ phòng</a></button></li>
+                    <li class="item">
+                        <a class="btn btn-primary" href="/ow-dang-ky"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
+                    </li>
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                          <li class="item"><img src="<?php echo $_SESSION['img']?>"><?php echo $_SESSION['name']?></li><a href="/dang-xuat">Đăng xuất</a>
                     <?php }else{?>

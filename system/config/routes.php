@@ -7,8 +7,9 @@
  */
 $router =  $registry->get('routes');
 //detail rooms
-$router->add(['/tim-kiem-theo-ban-do/:id','find/map']);
-$router->add(['/tim-kiem-phong-tro','find/list']);
+$router->add(['/tim-kiem-theo-ban-do','find/map']);
+$router->add(['/tim-kiem-phong-tro/{city}/{district}','find/list']);
+$router->add(['/tim-kiem-phong-tro/{city}','find/list']);
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
 //*******************************Owner******************************//
 //Owner login
@@ -56,6 +57,7 @@ $router->add(['/dang-nhap','page/login']);
 $router->add(['/dang-xuat','page/logout']);
 $router->add(['/thong-tin-tai-khoan','page/infoAccount']);
 
+<<<<<<< HEAD
 $router->add(['/trang-chu','page/home']);
 
 $router->add(['/them-phong-tro','page/rooms']);
@@ -71,6 +73,8 @@ $router->add(['/danh-sach-quan-huyen/{id}','page/rooms/getDistricts']);
 
 
 
+=======
+>>>>>>> 553762f38819040c7d887dc4ff8389f26f83be76
 
 
 
