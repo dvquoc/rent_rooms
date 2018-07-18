@@ -60,10 +60,18 @@
                         <span class="city-location-show">Hồ Chí Minh</span>
                         <span class="district-location-show"> Thủ Đức</span>
                     </li>
-                    <li><input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom" title="Nhập tên trường, công ty, khu công nghiệp hay một địa điểm bạn cần tiềm kiếm."></li>
-                    <li><input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;"></li>
-                    <li><input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"></li>
-                    <li><button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button></li>
+                    <li>
+                        <input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom">
+                    </li>
+                    <li>
+                        <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;">
+                    </li>
+                    <li>
+                        <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;">
+                    </li>
+                    <li>
+                        <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button>
+                    </li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
                     <li class="item">
