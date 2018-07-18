@@ -15,15 +15,15 @@
             <ul id="search-home">
                 <li>
                     <i class="fa fa-map-marker"></i>
-                    <input id="search-map-input" type="text" class="item-search form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 400px;" >
+                    <input id="search-map-input" type="text" class="item-search form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 440px;" >
                 </li>
                 <li>
                     <i class="fa fa-dollar"></i>
-                    <input id="price-input" type="text" class="item-search form-control" placeholder="Giá" style="width:100px;" >
+                    <input id="price-input" type="text" class="item-search form-control" placeholder="Giá" style="width:80px;" >
                 </li>
                 <li>
                     <i class="fa fa-building"></i>
-                    <input id="price-input" type="text" class="item-search form-control" placeholder="Diện tích" style="width:100px;" >
+                    <input id="area-input" type="text" class="item-search form-control" placeholder="Diện tích" style="width:80px;" >
                 </li>
                 <li>
                     <button id="btn-s-h" style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>
@@ -61,6 +61,7 @@
             <p class="text-center">copyright @ conphong.com</p>
         </div>
 </div>
+
 <div class="modal fade" id="get-location-user">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -73,14 +74,14 @@
                     <div class="col-md-6">
                         <select name="city-location" id="city-location" class="form-control" style="border-radius: 3px; padding: 5px; border: 0px solid #e0e0e0; background-color:#f1f1f1; margin-bottom: 20px">
                             <?php foreach($citys as $item){ ?>
-                            <option value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
+                                <option data-slug="<?php echo $item['slug_city'] ?>" value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <select name="district-location" id="district-location" class="form-control" style="border-radius: 3px; padding: 5px; border: 0px solid #e0e0e0; background-color:#f1f1f1; margin-bottom: 20px">
                             <?php foreach($districts as $item){ ?>
-                            <option value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
+                                <option data-slug="<?php echo $item['slug_district'] ?>" value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
                             <?php } ?>
                         </select>
                     </div>

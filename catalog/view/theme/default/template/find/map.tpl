@@ -143,9 +143,6 @@
     </div>
     <div class="arrow"></div>
 </div>
-
-
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn" type="text/javascript"></script>
 <script src="/public/assets/js/map-function.js" type="text/javascript"></script>
 <script src="/public/assets/js/list-map-page.js" defer type="text/javascript"></script>
 <script type="text/javascript">
