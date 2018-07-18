@@ -6,7 +6,8 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
+                <button  class="btn btn-primary" id="save"><i class="fa fa-save"></i> Lưu</button>
+                <button type="submit" form="form-information" hidden id="post_save">save</button>
                 <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
         </div>
     </div>
@@ -49,7 +50,9 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="">Tên </label>
-                                           <input class="form-control" type="text" name="name" value="<?php echo isset($special['name'])?$special['name']:'';?>"></br>
+                                           <input class="form-control" type="text" name="name" value="<?php echo isset($special['name'])?$special['name']:'';?>">
+                                           <div id="validate_name" hidden><span style="color: red">Trường này không được trống</span></div>
+                                            </br>
                                            <input type="hidden" name="id" value="<?php echo isset($special)?(string)$special['_id']:'' ?>">
                                             <label class="">Thành phố </label>
                                                 <select class="form-control" name="city">
@@ -83,8 +86,10 @@
                                             </textarea>
                                            <label class="">Lat</label>
                                            <input class="form-control" readonly type="text" name="lat" value="<?php echo isset($special['lat'])?$special['lat']:'';?>">
+                                            <div id="validate_lat" hidden><span style="color: red">Trường này không được trống</span></div>
                                            <label class="">Lng</label>
                                            <input class="form-control" readonly type="text" name="lng" value="<?php echo isset($special['lng'])?$special['lng']:'';?>">
+                                            <div id="validate_lng" hidden><span style="color: red">Trường này không được trống</span></div>
                                         </div>
                                         <div class="col-md-8">
                                             <div id="map-address" style="width: 100%; height: 500px;"></div>
@@ -353,8 +358,32 @@
         });
      
        
-        $('input[name=circle]').keypress(function(e){
-           
+        $('#save').on('click',function(){
+            var name = $('input[name=name]').val();
+            var lat = $('input[name=lat]').val();
+            var lng = $('input[name=lng]').val();
+            if(name.length != 0 && lat.length != 0 && lng.length != 0){
+                $('#post_save').trigger('click');
+            }else{
+                if(name.length == 0 ){
+                    $('#validate_name').show(); 
+                    setTimeout(function() {
+                        $("#validate_name").hide('blind', {}, 500)
+                    }, 3000);
+                };
+                if(lat.length == 0 ){
+                   $('#validate_lat').show(); 
+                    setTimeout(function() {
+                        $("#validate_lat").hide('blind', {}, 500)
+                    }, 3000);
+                };
+                if(lng.length == 0 ){
+                   $('#validate_lng').show(); 
+                    setTimeout(function() {
+                        $("#validate_lng").hide('blind', {}, 500)
+                    }, 3000);
+                }
+            }
         });
     </script>
 </div>

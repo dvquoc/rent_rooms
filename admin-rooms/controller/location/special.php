@@ -40,11 +40,16 @@ class ControllerLocationSpecial extends Controller
             'start' => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         ];
-
+        $arry_filter = [
+            '$or' => array(
+                array('name' => new MongoDB\BSON\Regex("^".$data_filter['name']."","i")),
+                array('city_id' =>$data_filter['city_id'],'district_id' =>$data_filter['district_id'])
+            )
+        ];
         $data_query = array_merge($data_query, $data_filter);
         $url = http_build_query(array_diff_key($this->request->get, ['route' => '', 'id_area' => '']));
    
-        $result = $this->model_location_special->get_list_filter($data_filter);
+        $result = $this->model_location_special->get_list_filter($arry_filter);
         foreach ($result as $value) {
         
             $city = $this->model_location_location_admin->getCityById($value['city_id']);
