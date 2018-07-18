@@ -20,6 +20,7 @@
     <meta property="og:image" content="<?php echo 'http://yhay.info/aliweb/image/catalog/logo.png'; ?>">
 </head>
 <body class="<?php echo $classPage ?>">
+    <link href="/public/assets/css/stylesheet.css" rel="stylesheet" type="text/css">
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>

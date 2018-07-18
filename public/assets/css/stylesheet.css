@@ -96,6 +96,9 @@ footer{
     display: block;
     font-size: 12px;
 }
+body.common-home .city-location-show, body.common-home .district-location-show{
+    display: inherit;
+}
 
 
 
