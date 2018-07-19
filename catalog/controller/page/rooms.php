@@ -18,9 +18,8 @@ class ControllerPageRooms extends Controller
     }
 
     public function add()
-    {
-        $this->document->setTitle("Thêm phòng trọ");
-
+    {  
+        $this->request->post['ower_id'] = $_SESSION['id_user'];
         $this->load->model('page/rooms');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
@@ -184,75 +183,80 @@ class ControllerPageRooms extends Controller
 
     protected function getForm()
     {
-        $this->load->model('page/rooms');
-        $data['text_form'] = !isset($this->request->get['room_id']) ? "Thêm phòng trọ" : "Chỉnh sửa phòng trọ";
+        if($_SESSION['id_user']){
+            $this->load->model('page/rooms');
+            $data['text_form'] = !isset($this->request->get['room_id']) ? "Thêm phòng trọ" : "Chỉnh sửa phòng trọ";
 
-        $data['error_warning'] = '';
-        if (isset($this->error['warning']))
-            $data['error_warning'] = $this->error['warning'];
+            $data['error_warning'] = '';
+            if (isset($this->error['warning']))
+                $data['error_warning'] = $this->error['warning'];
 
-        $data['error_name'] = array();
-        if (isset($this->error['error_name']))
-            $data['error_name'] = $this->error['error_name'];
+            $data['error_name'] = array();
+            if (isset($this->error['error_name']))
+                $data['error_name'] = $this->error['error_name'];
 
-        if (!isset($this->request->get['room_id'])) {
-            $data['action'] = '/luu-phong-tro';
-        } else {
-            $data['action'] = '/cap-nhat-phong-tro';
-        }
-
-        //$data['cancel'] = $this->url->link('catalog/rooms', $url, 'SSL');
-        if (isset($this->request->get['room_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-            $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
-            $room_info = $this->model_page_rooms->getRoom($this->request->get['room_id']);
-            foreach ($room_info as $col => $vaule) {
-                $data[$col] = $vaule;
-                if (in_array($col, $array_fomat_txt))
-                    $data['txt_' . $col] = format_currency($vaule);
+            if (!isset($this->request->get['room_id'])) {
+                $data['action'] = '/luu-phong-tro';
+            } else {
+                $data['action'] = '/cap-nhat-phong-tro';
             }
-        }
 
-        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-            $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
-            foreach ($this->request->post as $col => $vaule) {
-                $data[$col] = $vaule;
-                if (in_array($col, $array_fomat_txt))
-                    $data['txt_' . $col] = format_currency($vaule);
+            //$data['cancel'] = $this->url->link('catalog/rooms', $url, 'SSL');
+            if (isset($this->request->get['room_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+                $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
+                $room_info = $this->model_page_rooms->getRoom($this->request->get['room_id']);
+                foreach ($room_info as $col => $vaule) {
+                    $data[$col] = $vaule;
+                    if (in_array($col, $array_fomat_txt))
+                        $data['txt_' . $col] = format_currency($vaule);
+                }
             }
-        }
 
-        // $data['token'] = $this->session->data['token'];
+            if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+                $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
+                foreach ($this->request->post as $col => $vaule) {
+                    $data[$col] = $vaule;
+                    if (in_array($col, $array_fomat_txt))
+                        $data['txt_' . $col] = format_currency($vaule);
+                }
+            }
 
-        $this->load->model('tool/image');
-        $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+            // $data['token'] = $this->session->data['token'];
 
-         // Images list thumb
-        $room_images = json_decode($room_info['images']);
-        if (isset($this->request->post['images']))
-        $room_images = $this->request->post['images'];
+            $this->load->model('tool/image');
+            $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
+             // Images list thumb
+            $room_images = json_decode($room_info['images']);
+            if (isset($this->request->post['images']))
+            $room_images = $this->request->post['images'];
 
 
-        $data['room_images'] = array();
-        foreach ($room_images as $room_image) {
-             $image = 'no_image.png';
-             if (is_file(DIR_IMAGE . $room_image))
-                 $image = $room_image;
-             $data['room_images'][] = array(
-                 'image' => $image,
-                 'thumb' => $this->model_tool_image->resize($image, 100, 100),
-             );
-        }
+            $data['room_images'] = array();
+            foreach ($room_images as $room_image) {
+                 $image = 'no_image.png';
+                 if (is_file(DIR_IMAGE . $room_image))
+                     $image = $room_image;
+                 $data['room_images'][] = array(
+                     'image' => $image,
+                     'thumb' => $this->model_tool_image->resize($image, 100, 100),
+                 );
+            }
 
-         $data['room_images_lagre'] = $room_images;
+             $data['room_images_lagre'] = $room_images;
 
-         $data['city_id'] = !empty($this->request->get['city_id']) ? $this->request->get['city_id'] : 1;
-         $data['district_id'] = !empty($this->request->get['district_id']) ? $this->request->get['district_id'] : 1;
+             $data['city_id'] = !empty($this->request->get['city_id']) ? $this->request->get['city_id'] : 1;
+             $data['district_id'] = !empty($this->request->get['district_id']) ? $this->request->get['district_id'] : 1;
 
-         $this->load->model('page/location');
-         $data['citys'] = $this->model_page_location->getAllCity();
-         $data['districts'] = $this->model_page_location->getDistrictByCity($data['city_id']);
-        $data['header'] = $this->load->controller('common/header');
-        $this->response->setOutput($this->load->view('default/template/page/rooms_form.tpl', $data));
+             $this->load->model('page/location');
+             $data['citys'] = $this->model_page_location->getAllCity();
+             $data['districts'] = $this->model_page_location->getDistrictByCity($data['city_id']);
+            $data['header'] = $this->load->controller('common/header');
+            $this->response->setOutput($this->load->view('default/template/page/rooms_form.tpl', $data));
+        }else{
+             $this->response->redirect('/ow-dang-nhap');
+        }   
+        
     }
 
     protected function validateForm()
@@ -345,10 +349,12 @@ class ControllerPageRooms extends Controller
 
     public function getDistricts()
     {
+
+        $city_id = ltrim(strstr($_GET['_route_'],'/'),'/');
         $json = array();
-        if (isset($this->request->get['city_id'])) {
-            $this->load->public_model('location/location_admin');
-            $results = $this->model_location_location_admin->getDistrictByCity($this->request->get['city_id']);
+        if (isset($city_id)) {
+            $this->load->model('page/location');
+            $results = $this->model_page_location->getDistrictByCity($city_id);
             foreach ($results as $result) {
                 $json[] = array(
                     'id' => $result['district_id'],
@@ -361,7 +367,6 @@ class ControllerPageRooms extends Controller
             $sort_order[$key] = $value['name'];
         }
         array_multisort($sort_order, SORT_ASC, $json);
-        $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
     }
 

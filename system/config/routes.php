@@ -58,7 +58,7 @@ $router->add(['/dang-xuat','page/logout']);
 $router->add(['/thong-tin-tai-khoan','page/infoAccount']);
 
 $router->add(['/trang-chu','page/home']);
-
+//*********************************************************************//
 $router->add(['/them-phong-tro','page/rooms']);
 $router->add(['/luu-phong-tro','page/rooms/add']);
 $router->add(['/cap-nhat-phong-tro','page/rooms/edit']);

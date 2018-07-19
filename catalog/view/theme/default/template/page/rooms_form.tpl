@@ -1,5 +1,18 @@
-<?php echo $header; ?>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=vi" type="text/javascript"></script>
+<?php echo $header?>
+
+<!-- <script type="text/javascript" src="admin-rooms/view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script type="text/javascript" src="admin-rooms/view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="admin-rooms/view/javascript/bootstrap/js/bootstrap-notify.js"></script>
+<link href="admin-rooms/view/javascript/bootstrap/opencart/opencart.css" type="text/css" rel="stylesheet" />
+<link href="admin-rooms/view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link href="admin-rooms/view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script type="text/javascript" src="admin-rooms/view/javascript/summernote/summernote.js"></script>
+<script src="admin-rooms/view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
+<script src="admin-rooms/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<link href="admin-rooms/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
+<link type="text/css" href="admin-rooms/view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
+<script src="admin-rooms/view/javascript/common.js" type="text/javascript"></script> -->
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
@@ -260,17 +273,17 @@
           </div>
       </form>
   </div>
-<script type="text/javascript">
-      var option_tinymce = {
+<script language="javascript" type="text/javascript">
+       var option_tinymce = {
           selector: '#highlight-rooms',
-          language:'<?php global $registry;  echo $registry->get("language")->get('code');  ?>',
+         
           /*skin: 'light',*/
           height:500,
           app_default: 'cdv',
           relative_urls: false,
           remove_script_host: false,
           document_base_url : "<?php echo HTTP_CATALOG; ?>",
-          plugin_url : "<?php echo HTTP_SERVER; ?>view/javascript/tinymce/plugins/",
+          plugin_url : "<?php echo HTTP_SERVER; ?>admin-rooms/view/javascript/tinymce/plugins/",
           plugins: [
               "imagetools linktarget advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
               "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
@@ -287,8 +300,10 @@
           verify_html: false,
           forced_root_block : "p",
       }
+
 </script>
 <script type="text/javascript">
+
     var geocoder = new google.maps.Geocoder();
     function geocodePosition(pos) {
         geocoder.geocode({
@@ -410,27 +425,20 @@
         map.getBoundsZoomLevel(bounds.getBounds());
         map.setZoom();
     }
-    
-    $('.datetime').datetimepicker({
-        pickDate: true,
-        pickTime: true
-    });
     $("#tab-general select").change(function () {
-      alert(123);
-      alert($(this).val());
-        if($(this).attr('name') == 'city'){
+        if($(this).attr('name') == 'city_id'){
             $.ajax({
                 url: '/danh-sach-quan-huyen/'+$(this).val(),
                 dataType: 'json',
                 success: function(json) {
-                    $('select[name=\'district\']').html('');
+                    $('select[name=\'district_id\']').html('');
                     $.map(json, function(item) {
-                        $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                        $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
                     });
                 }
             });
         }
-        if($(this).attr('name') == 'district'){
+        if($(this).attr('name') == 'district_id'){
             var district_select = $(this).val();
             console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
             $.ajax({
