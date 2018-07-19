@@ -164,6 +164,9 @@ $(document).ready(function() {
         ($("#search-map-input").data('lat').length !=0 &&  $("#search-map-input").data('lgn').length !=0) ? params.location= $("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn') : false;
         window.location.href = '/tim-kiem-phong-tro/'+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');
     });
+    var visitortime = new Date();
+    var visitortimezone = "GMT " + -visitortime.getTimezoneOffset()/60;
+    console.log(visitortimezone);
 });
 
 (function($) {
