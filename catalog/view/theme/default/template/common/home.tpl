@@ -64,7 +64,7 @@
 
 <div class="modal fade" id="get-location-user">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 500px">
             <button type="button" class="close" id="close-location-user" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <div class="modal-body" style="padding-bottom: 0px;">
                 <div class="header-location-user">

@@ -3,6 +3,18 @@ if(!isset($_COOKIE['origin_ref']))
 {
     setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
 } ?>
+<?php
+function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longitude2) {
+    $theta = $longitude1 - $longitude2;
+    $miles = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+    $miles = acos($miles);
+    $miles = rad2deg($miles);
+    $miles = $miles * 60 * 1.1515;
+    $kilometers = $miles * 1.609344;
+    $meters = $kilometers * 1000;
+    return round($kilometers,1);
+}
+?>
 <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
 <div class="container">
   	<div class="row">
@@ -79,7 +91,7 @@ if(!isset($_COOKIE['origin_ref']))
 				<div class="col-md-8 list-result">
 					<?php foreach($rooms as $item) { ?>
 					<div class="row">
-						<?php 
+						<?php
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
 							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
 							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
@@ -100,9 +112,12 @@ if(!isset($_COOKIE['origin_ref']))
 									<div class="i d">
 										Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
 									</div>
-									<div class="i d">
-											Cách khoản: <span>5 Km</span>
-									</div>
+                                    <?php if(isset($point)) { ?>
+                                        <div class="i d">
+                                                Cách khoản: <span><?php echo round($item['calculated']/1000,2) ?> Km</span>
+
+                                        </div>
+                                    <?php } ?>
 								</div>
 								<div class="adress" ><?php echo $item['address'];?></div>
 								<div class="mf">

@@ -11,10 +11,11 @@ class ModelFindList extends Model {
         $this->table = $this->db->rooms;
     }
     public function get_list($data = array()){
+
         $filter = [];
     	 $options =[
-            'sort' => ['room_id'=>1],
-            'limit'=>20,
+            'sort' => ['rooms_id'=>1],
+            'limit'=>10,
             'skip' =>0
         ];
         if(isset($data['price']) && !empty($data['price'])){
@@ -24,14 +25,33 @@ class ModelFindList extends Model {
         if(isset($data['acreage']) && !empty($data['acreage'])){
             $filter['acreage']= $data['acreage'];
         }
-    	if(isset($data['region']) && !empty($data['region'])){
+    	if(isset($data['point']) && !empty($data['point'])){
+             //var_dump(json_encode($data['region'])); die();
              $data = array(
-                 'type'       =>'Polygon',
-                 'coordinates'=>[$data['region']]
+                 'type'       =>'Point',
+                 'coordinates'=>$data['point']
              );
-             $filter['location']= ['$geoWithin'=>['$geometry'=>$data]];
+            $pipeline = [
+                [
+                    '$geoNear' => [
+                        'near' =>$data,
+                        'distanceField' => "calculated",
+                        'includeLocs'=> "location",
+                        'maxDistance' => 3000,
+                        'spherical'=> true
+                    ],
+
+                ],[
+                    '$limit' => 5
+                ]
+            ];
+            $result = $this->table->aggregate($pipeline,$options)->toArray();
+        }else{
+            $result = $this->table->find($filter,$options)->toArray();
         }
-    	$result = $this->table->find($filter,$options)->toArray();
+
+
+
         return $result;
     }
     public function get_list_featured(){

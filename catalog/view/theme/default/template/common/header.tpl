@@ -75,7 +75,7 @@
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
                     <li class="item">
-                        <a class="btn btn-primary" href="/ow-dang-ky"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
+                        <a class="btn btn-primary" style="padding: 5px;margin-right: 5px;" href="/ow-dang-ky"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
                     </li>
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                          <li class="item"><img src="<?php echo $_SESSION['img']?>"><?php echo $_SESSION['name']?></li><a href="/dang-xuat">Đăng xuất</a>

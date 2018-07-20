@@ -161,12 +161,27 @@ $(document).ready(function() {
         var params = {};
         $('#price-input').val().trim().length !=0 ? params.gia= parseFloat($('#price-input').val().trim()): false;
         $('#area-input').val().trim().length !=0 ? params.dien_tich= parseFloat($('#area-input').val().trim()): false;
-        ($("#search-map-input").data('lat').length !=0 &&  $("#search-map-input").data('lgn').length !=0) ? params.location= $("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn') : false;
+        ($("#search-map-input").data('lat') &&  $("#search-map-input").data('lgn')) ? params.location= $("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn') : false;
         window.location.href = '/tim-kiem-phong-tro/'+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');
     });
-    var visitortime = new Date();
-    var visitortimezone = "GMT " + -visitortime.getTimezoneOffset()/60;
-    console.log(visitortimezone);
+
+    function success(position) {
+        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        console.log(latlngs);
+    }
+
+    function error(msg) {
+        var s = document.querySelector('#status');
+        console.log(arguments);
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+        error('not supported');
+    }
+
+
 });
 
 (function($) {

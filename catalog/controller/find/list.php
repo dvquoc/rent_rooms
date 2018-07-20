@@ -11,8 +11,8 @@ class ControllerFindList extends Controller {
 
         if(isset($get_request['location'])){
             $array_location = explode(',',$get_request['location']);
-            $point = (object) ['lat'=>(double) $array_location[0], 'lng'=>(double) $array_location[1]];
-            $data_search['region'] = $this->drawCircle($point,3,1);
+            $data['point'] = $point =  ['lat'=>(double) $array_location[0], 'lgn'=>(double) $array_location[1]];
+            $data_search['point'] = [(double) $array_location[1],(double) $array_location[0]];
         }
 
         $data['rooms'] = $this->model_find_list->get_list($data_search);
@@ -59,7 +59,7 @@ class ControllerFindList extends Controller {
         }
         for ($i = $start; ($dir == 1 ? $i < $end : $i > $end); $i = $i + $dir) {
             $theta = pi() * ($i / ($points / 2));
-            $ey = $point->lng + ($rlng * cos($theta)); // center a + radius x * cos(theta)
+            $ey = $point->lgn + ($rlng * cos($theta)); // center a + radius x * cos(theta)
             $ex = $point->lat + ($rlat * sin($theta)); // center b + radius y * sin(theta)
             $extp[$i]=[$ey,$ex];
         }
