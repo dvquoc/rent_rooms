@@ -22,7 +22,7 @@ class ControllerPageOwnerLogin extends Controller {
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_owner'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
             $this->response->redirect('/tim-kiem-phong-tro');
@@ -40,7 +40,7 @@ class ControllerPageOwnerLogin extends Controller {
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_owner'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
             $hybridauth->redirect('/tim-kiem-phong-tro');
@@ -71,7 +71,7 @@ class ControllerPageOwnerLogin extends Controller {
             $result = $this->model_page_owner_login->login_form($data);
             if($result){
                 $user = $this->model_page_owner_register->get_user_by_id($result['_id']);
-                $_SESSION['id_user'] = $result['_id'];
+                $_SESSION['id_user']['id_owner'] = $result['_id'];
                 $_SESSION['name'] = $user['name'];
                 $_SESSION['img'] = $user['image'];
                 echo 1; //account math

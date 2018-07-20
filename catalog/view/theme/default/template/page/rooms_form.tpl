@@ -1,21 +1,9 @@
 <?php echo $header?>
-
-<!-- <script type="text/javascript" src="admin-rooms/view/javascript/jquery/jquery-2.1.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script type="text/javascript" src="admin-rooms/view/javascript/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="admin-rooms/view/javascript/bootstrap/js/bootstrap-notify.js"></script>
-<link href="admin-rooms/view/javascript/bootstrap/opencart/opencart.css" type="text/css" rel="stylesheet" />
-<link href="admin-rooms/view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<link href="admin-rooms/view/javascript/summernote/summernote.css" rel="stylesheet" />
-<script type="text/javascript" src="admin-rooms/view/javascript/summernote/summernote.js"></script>
-<script src="admin-rooms/view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
-<script src="admin-rooms/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<link href="admin-rooms/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
-<link type="text/css" href="admin-rooms/view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
-<script src="admin-rooms/view/javascript/common.js" type="text/javascript"></script> -->
+<script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+
       <div class="pull-right">
         <button type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
@@ -33,7 +21,12 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><i class="fa fa-inbox"></i> <?php echo $text_form; ?></h3>
-                </div>
+                    <div style="float: right;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
+                    <div class="error-capcha" style="display: none">
+                        <p style="color: red">vui lòng check capcha </p>
+                    </div>
+
+              </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
                       <li class="active"><a href="#tab-general" data-toggle="tab">Thông tin chính</a></li>
@@ -157,7 +150,7 @@
                                                   <div><input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>"></div>
                                               </div>
 
-                                              <?php $class = 'show'; if(isset($room_id)) $class = 'hidden';  ?>
+                                              <?php $class = 'show'; ?>
 
                                               <div class="col-md-4 item">
                                                   <div class="feature price">
@@ -333,7 +326,7 @@
 
     }
     var map= new google.maps.Map(document.getElementById('map-address'), {
-        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         zoom: 16,
         scaleControl: false,
         fullscreenControl: false,
@@ -371,6 +364,44 @@
         });
 
         map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+        var address_lengh = place.address_components.length;
+        var location = {};
+        for(var i = address_lengh-1; i>=0; i--){
+            if(place.address_components[i].types[0]=='administrative_area_level_1'){
+                location.city= place.address_components[i].long_name;
+            }
+            if(place.address_components[i].types[0]=='administrative_area_level_2'){
+                location.district= place.address_components[i].long_name;
+            }
+        }
+        $('input[name=lng]').val(place.geometry.location.lng());
+        $('input[name=lat]').val(place.geometry.location.lat());
+        console.log(location.district);
+        $.ajax({
+          url:'/dia-chi-phong-tro',
+          type:'POST',
+          data:{
+            district:location.district,
+            city:location.city
+          },success:function(data){
+          if(typeof(data) != "undefined" && data !== null){
+              var obj = $.parseJSON(data);
+              $('select[name=city_id] option').removeAttr('selected').filter('[value="'+obj.city_id+'"]').attr('selected', 'selected');
+              $.ajax({
+                  url: '/danh-sach-quan-huyen/'+obj.city_id,
+                  dataType: 'json',
+                  success: function(json) {
+                      $('select[name=\'district_id\']').html('');
+                      $.map(json, function(item) {
+                          $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                      });
+                  
+                      $('select[name=district_id] option').removeAttr('selected').filter('[value="'+obj.district_id+'"]').attr('selected', 'selected')
+                  }
+              });
+            }
+          }
+        })
 
         google.maps.event.addListener(marker, 'drag', function() {
             updateMarkerPosition(marker.getPosition());
@@ -440,7 +471,6 @@
         }
         if($(this).attr('name') == 'district_id'){
             var district_select = $(this).val();
-            console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
             $.ajax({
                 url: 'index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select,
                 dataType: 'json',

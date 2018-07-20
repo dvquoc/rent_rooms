@@ -1,5 +1,5 @@
 <?php
- 
+ require_once( "vendor/recaptchalib.php" );
 class ControllerPageRooms extends Controller
 {
     private $error = array();
@@ -19,200 +19,193 @@ class ControllerPageRooms extends Controller
 
     public function add()
     {  
-        $this->request->post['ower_id'] = $_SESSION['id_user'];
+        $this->request->post['id_owner'] = $_SESSION['id_user']['id_owner'];
         $this->load->model('page/rooms');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-            $this->request->post['images'] = serialize($this->request->post['images']);
-            if (empty($this->request->post['images']))
-                $this->request->post['images'] = array();
-            if (empty($this->request->post['date_create']))
-                $this->request->post['date_create'] = 'NOW()';
-            $this->model_page_rooms->addRooms($this->request->post);
+        $secret = "6LfgN2EUAAAAAHIlpYTJjHz7zIvFMtR7WaAB_c_m";
+        $response = null;
 
-            $this->session->data['success'] = "Thêm thành công";
+        $reCaptcha = new ReCaptcha($secret);
+        // if submitted check response
 
-            //$url = http_build_query(array_diff_key($this->request->get, ['route' => '']));
-
-            $this->response->redirect($this->url->link('page/list'));
+        if ($_POST["g-recaptcha-response"]) {
+            $response = $reCaptcha->verifyResponse(
+                $_SERVER["REMOTE_ADDR"],
+                $_POST["g-recaptcha-response"]
+            );
         }
+        if($response != null && $response->success) {
+            if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+                $this->request->post['images'] = serialize($this->request->post['images']);
+                if (empty($this->request->post['images']))
+                    $this->request->post['images'] = array();
+                if (empty($this->request->post['date_create']))
+                    $this->request->post['date_create'] = 'NOW()';
+                $this->model_page_rooms->addRooms($this->request->post);
+
+                $this->session->data['success'] = "Thêm thành công";
+
+                $this->response->redirect('/danh-sach-phong-tro');
+            }
+        }else{
+            $_SESSION['error_warning'] = 'check capcha';
+        }
+       
         $this->getForm();
     }
 
     public function edit()
-    {
-        $this->load->language('catalog/room');
-        $this->document->setTitle("Chỉnh sửa phòng trọ");
-
+    {  
+        $room_id = ltrim(strstr($_GET['_route_'],'/'),'/');
         $this->load->model('page/rooms');
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
             $this->request->post['images'] = serialize($this->request->post['images']);
             if (empty($this->request->post['images']))
                 $this->request->post['images'] = array();
-            $this->model_page_rooms->editRooms($this->request->get['room_id'], $this->request->post);
+            $this->model_page_rooms->editRooms($room_id, $this->request->post);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success'] = 'cập nhật thành công';
 
-           // $url = http_build_query(array_diff_key($this->request->get, ['route' => '', 'room_id' => '']));
-            $this->response->redirect($this->url->link('page/list'));
+            $this->response->redirect('/danh-sach-phong-tro');
         }
         $this->getForm();
     }
 
     public function delete()
     {
-        $this->load->language('catalog/information');
-
-        $this->document->setTitle($this->language->get('heading_title'));
-
-        $this->load->model('catalog/information');
-
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
-            $url = '';
-
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-
-            $url .= '&object_type=' . $this->objects->object_type;
-
-            foreach ($this->request->post['selected'] as $information_id) {
-                $this->model_catalog_information->deleteInformation($information_id);
-            }
-
-            $this->session->data['success'] = $this->language->get('text_success');
-
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-        }
-
-        $this->getList();
+        $this->load->model('page/rooms');
+        if(count($_POST['selected']) > 0){
+            $ids    = $_POST['selected'];
+            $result = $this->model_page_rooms->deleteList($ids);
+            if($result)
+                $_SESSION['success']= 'xóa thành công';
+        }else
+            $_SESSION['error'] = 'chọn phòng cần xóa';
+        exit();
     }
 
-    protected function getList()
-    {
-        $data['error_warning'] = '';
-        if (isset($this->error['warning']))
-            $data['error_warning'] = $this->error['warning'];
+    public function getList()
+    {   
+        if(isset($_SESSION['id_user']['id_owner'])){
+            $this->load->model('page/rooms');
+            $id_owner = $_SESSION['id_user']['id_owner'];
+            $data['error_warning'] = '';
+            if (isset($_SESSION['error'])){
+               $data['error_warning'] = $_SESSION['error'];
+               unset($_SESSION['error']);
+            }
 
-        $data['success'] = '';
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-            unset($this->session->data['success']);
+            $data['success'] = '';
+            if (isset($_SESSION['success'])) {
+                $data['success'] = $_SESSION['success'];
+                unset($_SESSION['success']);
+            }
+
+            // if (isset($this->request->get['page']))
+            //     $page = $this->request->get['page'];
+            // else
+            //     $page = 1;
+
+            // $data_filter = [
+            //     'city_id'     => isset($this->request->get['city_id']) ? $this->request->get['city_id'] : 1,
+            //     'district_id' => isset($this->request->get['district_id']) ? $this->request->get['district_id'] : 1,
+            //     'ads'         => isset($this->request->get['ads']) ? $this->request->get['ads'] : 0,
+            //     'ads_position'=> isset($this->request->get['ads_position']) ? $this->request->get['ads_position'] : -1,
+            //     'status'      => isset($this->request->get['status']) ? $this->request->get['status'] : 1,
+            //     'close_door'  => isset($this->request->get['close_door']) ? $this->request->get['close_door'] : -1,
+            //     'price'       => isset($this->request->get['price']) ? $this->request->get['price'] : '',
+            //     'acreage'     => isset($this->request->get['acreage']) ? $this->request->get['acreage'] : '',
+            //     'name'        => isset($this->request->get['name']) ? $this->request->get['name'] : -1,
+            // ];
+            // $data_query = [
+            //     'sort'  => 'name',
+            //     'order' => 'ASC',
+            //     'start' => ($page - 1) * $this->config->get('config_limit_admin'),
+            //     'limit' => $this->config->get('config_limit_admin')
+            // ];
+
+            // $data_query = array_merge($data_query, $data_filter);
+
+            // $data_url = array_merge($data_query, $this->request->get);
+
+            // $url = http_build_query(array_diff_key($data_url, ['route' => '', 'room_id' => '']));
+
+
+             $data['add'] = '/them-phong-tro';
+            // $data['delete'] = $this->url->link('catalog/rooms/delete', $url, 'SSL');
+            // $data['action_fitler'] = str_replace('&amp;', '&', $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'], 'SSL'));
+
+            // $data['sort_title'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, 'SSL');
+            // $data['sort_sort_order'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, 'SSL');
+
+            $data['rooms'] = array();
+           // $rooms_total = $this->model_catalog_rooms->getTotalRooms($data_query);
+            $results = $this->model_page_rooms->getRoomByOwner($id_owner);
+            foreach ($results as $result) {
+                $data['rooms'][] = array(
+                    'room_id' => $result['room_id'],
+                    'name' => $result['name'],
+                    'address' => $result['address'],
+                    'ads' => $result['ads'],
+                    'from_date' => $result['from_date'],
+                    'to_date' => $result['to_date'],
+                    'text_price' => format_currency($result['price']),
+                    'text_acreage' => format_acreage($result['acreage']),
+                    'edit' =>'',
+                );
+            }
+
+            // $data['selected'] = array();
+            // if (isset($this->request->post['selected']))
+            //     $data['selected'] = (array)$this->request->post['selected'];
+
+
+            // $this->load->public_model('location/location_admin');
+
+            // $data['citys'] = $this->model_location_location_admin->getAllCity();
+            // $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data_filter['city_id'].'');
+
+            // $data['data_filter'] = $data_filter;
+            // $data['paginations'] = $this->load->controller('part/pagination', array('total' => $rooms_total, 'url' => $url));
+             $data['header'] = $this->load->controller('common/header');
+            $this->response->setOutput($this->load->view('default/template/page/rooms_list.tpl', $data));
         }
-
-        if (isset($this->request->get['page']))
-            $page = $this->request->get['page'];
-        else
-            $page = 1;
-
-        $data_filter = [
-            'city_id'     => isset($this->request->get['city_id']) ? $this->request->get['city_id'] : 1,
-            'district_id' => isset($this->request->get['district_id']) ? $this->request->get['district_id'] : 1,
-            'ads'         => isset($this->request->get['ads']) ? $this->request->get['ads'] : 0,
-            'ads_position'=> isset($this->request->get['ads_position']) ? $this->request->get['ads_position'] : -1,
-            'status'      => isset($this->request->get['status']) ? $this->request->get['status'] : 1,
-            'close_door'  => isset($this->request->get['close_door']) ? $this->request->get['close_door'] : -1,
-            'price'       => isset($this->request->get['price']) ? $this->request->get['price'] : '',
-            'acreage'     => isset($this->request->get['acreage']) ? $this->request->get['acreage'] : '',
-            'name'        => isset($this->request->get['name']) ? $this->request->get['name'] : -1,
-        ];
-        $data_query = [
-            'sort'  => 'name',
-            'order' => 'ASC',
-            'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-            'limit' => $this->config->get('config_limit_admin')
-        ];
-
-        $data_query = array_merge($data_query, $data_filter);
-
-        $data_url = array_merge($data_query, $this->request->get);
-
-        $url = http_build_query(array_diff_key($data_url, ['route' => '', 'room_id' => '']));
-
-
-        $data['add'] = $this->url->link('catalog/rooms/add', $url, 'SSL');
-        $data['delete'] = $this->url->link('catalog/rooms/delete', $url, 'SSL');
-        $data['action_fitler'] = str_replace('&amp;', '&', $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'], 'SSL'));
-
-        $data['sort_title'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, 'SSL');
-        $data['sort_sort_order'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, 'SSL');
-
-        $data['rooms'] = array();
-        $rooms_total = $this->model_catalog_rooms->getTotalRooms($data_query);
-        $results = $this->model_catalog_rooms->find($data_query);
-        foreach ($results as $result) {
-            $data['rooms'][] = array(
-                'room_id' => $result['room_id'],
-                'name' => $result['name'],
-                'address' => $result['address'],
-                'ads' => $result['ads'],
-                'from_date' => $result['from_date'],
-                'to_date' => $result['to_date'],
-                'text_price' => format_currency($result['price']),
-                'text_acreage' => format_acreage($result['acreage']),
-                'edit' => $this->url->link('catalog/rooms/edit', '&room_id=' . $result['room_id'] . "&" . $url, 'SSL')
-            );
-        }
-
-        $data['selected'] = array();
-        if (isset($this->request->post['selected']))
-            $data['selected'] = (array)$this->request->post['selected'];
-
-
-        $this->load->public_model('location/location_admin');
-
-        $data['citys'] = $this->model_location_location_admin->getAllCity();
-        $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data_filter['city_id'].'');
-
-        $data['data_filter'] = $data_filter;
-        $data['paginations'] = $this->load->controller('part/pagination', array('total' => $rooms_total, 'url' => $url));
-        $data['token'] = $this->session->data['token'];
-        $data['header'] = $this->load->controller('common/header');
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['footer'] = $this->load->controller('common/footer');
-        $this->response->setOutput($this->load->view('catalog/rooms_list.tpl', $data));
+       
     }
 
     protected function getForm()
     {
-        if($_SESSION['id_user']){
+        if($_SESSION['id_user']['id_owner']){
             $this->load->model('page/rooms');
-            $data['text_form'] = !isset($this->request->get['room_id']) ? "Thêm phòng trọ" : "Chỉnh sửa phòng trọ";
+            $room_id = ltrim(strstr($_GET['_route_'],'/'),'/');
+            $data['text_form'] = empty( $room_id) ? "Thêm phòng trọ" : "Chỉnh sửa phòng trọ";
 
             $data['error_warning'] = '';
-            if (isset($this->error['warning']))
-                $data['error_warning'] = $this->error['warning'];
+            if (isset($_SESSION['error_warning'])){
+                $data['error_warning'] = $_SESSION['error_warning'];
+                unset($_SESSION['error_warning']);
+            }
 
             $data['error_name'] = array();
             if (isset($this->error['error_name']))
                 $data['error_name'] = $this->error['error_name'];
 
-            if (!isset($this->request->get['room_id'])) {
+            if (empty($room_id)) {
                 $data['action'] = '/luu-phong-tro';
             } else {
-                $data['action'] = '/cap-nhat-phong-tro';
+                $data['action'] = '/cap-nhat-phong-tro/'.$room_id;
             }
 
-            //$data['cancel'] = $this->url->link('catalog/rooms', $url, 'SSL');
-            if (isset($this->request->get['room_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+            $data['cancel'] = '/danh-sach-phong-tro';
+            if (!empty($room_id)) {
                 $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
-                $room_info = $this->model_page_rooms->getRoom($this->request->get['room_id']);
+                $room_info = $this->model_page_rooms->getRoom($room_id);
                 foreach ($room_info as $col => $vaule) {
                     $data[$col] = $vaule;
                     if (in_array($col, $array_fomat_txt))
                         $data['txt_' . $col] = format_currency($vaule);
                 }
-            }
-
-            if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+            }else{
                 $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
                 foreach ($this->request->post as $col => $vaule) {
                     $data[$col] = $vaule;
@@ -220,8 +213,6 @@ class ControllerPageRooms extends Controller
                         $data['txt_' . $col] = format_currency($vaule);
                 }
             }
-
-            // $data['token'] = $this->session->data['token'];
 
             $this->load->model('tool/image');
             $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
@@ -245,8 +236,7 @@ class ControllerPageRooms extends Controller
 
              $data['room_images_lagre'] = $room_images;
 
-             $data['city_id'] = !empty($this->request->get['city_id']) ? $this->request->get['city_id'] : 1;
-             $data['district_id'] = !empty($this->request->get['district_id']) ? $this->request->get['district_id'] : 1;
+             
 
              $this->load->model('page/location');
              $data['citys'] = $this->model_page_location->getAllCity();
@@ -258,7 +248,19 @@ class ControllerPageRooms extends Controller
         }   
         
     }
+    public function getAddress(){
+        $this->load->model('page/location');
+        $city        = $this->model_page_location->get_city_by_name($_POST['city']);
+        $id_district = '';
+        if(isset($_POST['district'])){
+            $district    = $this->model_page_location->get_district_by_name($_POST['district'],$city[0]['city_id']);
+            $id_district = $district[0]['district_id'];
+        }
 
+        $id_city = $city[0]['city_id'];
+        echo json_encode(array('district_id' => $id_district,'city_id' => $id_city));
+       exit();
+    }
     protected function validateForm()
     {
         if (!$this->user->hasPermission('modify', 'page/rooms')) {

@@ -28,7 +28,7 @@ class ControllerPageOwnerRegister extends Controller {
         
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_owner'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
             $this->response->redirect('/tim-kiem-phong-tro');
@@ -56,7 +56,7 @@ class ControllerPageOwnerRegister extends Controller {
             if(!empty($user_profile->phone)){
                 $id_user = $this->model_page_owner_register->add_user($data);
                 $_SESSION['source_id'] = $id_source;
-                $_SESSION['id_user'] = $id_user;
+                $_SESSION['id_user']['id_owner'] = $id_user;
                 $_SESSION['name'] = $data['name'];
                 $_SESSION['img'] = $data['image'];
                 $this->response->redirect('/tim-kiem-phong-tro');
@@ -79,7 +79,7 @@ class ControllerPageOwnerRegister extends Controller {
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_owner'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
             $this->response->redirect('/tim-kiem-phong-tro');
@@ -159,7 +159,7 @@ class ControllerPageOwnerRegister extends Controller {
                 'status'     =>1,
             ];
             $id_user = $this->model_page_owner_register->add_user($data);
-            $_SESSION['id_user'] = $id_user;
+            $_SESSION['id_user']['id_owner'] = $id_user;
             $_SESSION['name'] = $data['name']; 
             $_SESSION['img'] = '';
             //$this->response->redirect($_COOKIE['origin_ref']);
@@ -190,7 +190,7 @@ class ControllerPageOwnerRegister extends Controller {
         $id_user = $this->model_page_owner_register->add_user($_SESSION['user_profile']);
         if($id_user){
             $_SESSION['source_id'] = $id_source;
-            $_SESSION['id_user'] = $id_user;
+            $_SESSION['id_user']['id_owner'] = $id_user;
             $_SESSION['name'] = $_SESSION['user_profile']['name'];
             $_SESSION['img'] = $_SESSION['user_profile']['image'];
             unset($_SESSION['user_profile']);

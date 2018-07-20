@@ -52,6 +52,10 @@ class ModelPageRooms extends Model {
 
     public function addRooms($data){
         $stt = $this->table->findOne([],['sort' => ['room_id' => -1],'projection' => ['room_id' => 1]]);
+        $point = array(
+            'type' =>'Point',
+            'coordinates'=>[(double) $data['lng'],(double) $data['lat']]
+        );
         return $this->table->insertOne([
             'room_id' => $stt->room_id+1,
             'name' => $data['name'],
@@ -78,6 +82,7 @@ class ModelPageRooms extends Model {
             'status' => (int) $data['status'],
             'date_crate' => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
             'is_checked' =>false,
+            'master_id' =>$data['id_owner'],
         ]);
     }
 
@@ -87,7 +92,6 @@ class ModelPageRooms extends Model {
             'coordinates'=>[(float) $data['lng'],(float) $data['lat']]
         );
         $data_set = [
-            'master_id' => (int) $data['master_id'],
             'name' => $data['name'],
             'images' => $data['images'],
             'city_id' => (int) $data['city_id'],
@@ -151,5 +155,21 @@ class ModelPageRooms extends Model {
 
         $options =[];
         return $this->table->count($filter, $options);
+    }
+
+    public function getRoomByOwner($owner_id){
+        $result= $this->table->find(['master_id'=> new MongoDB\BSON\ObjectId($owner_id)])->toArray();
+        return $result;
+    }
+
+     public function deleteList($ids){
+        $arr_value = [];
+        foreach ($ids as $value) {
+            $arr_value[] = (int)$value;
+        }
+        $deleteResult = $this->table->deleteMany(
+            ['room_id' =>  ['$in' => $arr_value]]
+        );
+        return $deleteResult;
     }
 }

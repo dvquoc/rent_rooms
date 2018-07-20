@@ -59,10 +59,15 @@ $router->add(['/thong-tin-tai-khoan','page/infoAccount']);
 
 $router->add(['/trang-chu','page/home']);
 //*********************************************************************//
+$router->add(['/them-phong-tro/{id}','page/rooms']);
 $router->add(['/them-phong-tro','page/rooms']);
 $router->add(['/luu-phong-tro','page/rooms/add']);
-$router->add(['/cap-nhat-phong-tro','page/rooms/edit']);
+$router->add(['/cap-nhat-phong-tro/{id}','page/rooms/edit']);
+$router->add(['/xoa-phong-tro','page/rooms/delete']);
 $router->add(['/danh-sach-quan-huyen/{id}','page/rooms/getDistricts']);
+$router->add(['/danh-sach-phong-tro','page/rooms/getList']);
+$router->add(['/dia-chi-phong-tro','page/rooms/getAddress']);
+
 
 
 

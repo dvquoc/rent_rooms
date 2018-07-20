@@ -23,6 +23,8 @@
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
+    <link href="/admin-rooms/view/javascript/bootstrap/opencart/opencart.css" type="text/css" rel="stylesheet" />
+    <link type="text/css" href="/admin-rooms/view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
         <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
      
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
@@ -32,7 +34,7 @@
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn" type="text/javascript"></script>
+ 
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
             <div class="<?php echo $classPage !='find-map' ? 'container' : 'container-fluid' ?>">

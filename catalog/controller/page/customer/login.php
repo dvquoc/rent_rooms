@@ -1,11 +1,8 @@
 <?php
 require_once( "vendor/recaptchalib.php" );
-class ControllerPageCustomerLogin extends Controller {
+class ControllerPageCustomerLogin extends Controller { 
     public function index() {
-        // $this->load->model('page/detail');
-        // $data_search = array(
-        //     'status'=>1
-        // );
+   
         if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){
             $this->response->redirect('/thong-tin-tai-khoan');
         }
@@ -26,7 +23,7 @@ class ControllerPageCustomerLogin extends Controller {
         $user = $this->model_page_customer_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_customer'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
 
@@ -45,7 +42,7 @@ class ControllerPageCustomerLogin extends Controller {
         $user = $this->model_page_customer_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_customer'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
             $hybridauth->redirect('/tim-kiem-phong-tro');
@@ -78,7 +75,7 @@ class ControllerPageCustomerLogin extends Controller {
 
             if($result){
                 $user = $this->model_page_customer_register->get_user_by_id($result['_id']);
-                $_SESSION['id_user'] = $result['_id'];
+                $_SESSION['id_user']['id_customer'] = $result['_id'];
                 $_SESSION['name'] = $user['name'];
                 $_SESSION['img'] = $user['image']; 
                 echo 1; //account math
