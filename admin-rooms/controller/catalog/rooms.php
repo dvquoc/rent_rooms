@@ -1,5 +1,5 @@
 <?php
-
+ 
 class ControllerCatalogRooms extends Controller
 {
     private $error = array();

@@ -1,7 +1,7 @@
 <?php
 class ControllerLocationSpecial extends Controller
 {
-    private $error = array();
+    private $error = array(); 
  
     public function __construct($registry)
     {
@@ -108,73 +108,68 @@ class ControllerLocationSpecial extends Controller
     public function save_special(){
         $this->load->model('location/special');
 
+        /*fixed*/ 
+        $polygon = array(
+            'type' =>'Polygon',
+            'coordinates'=>[],
+        );
+
         if(!empty($_POST['circle'])){
-            $str = $_POST['circle'];
-            $replace_str = str_replace(")","]",str_replace("(","[",$str));
-            $remove_space = trim($replace_str,' ');
-            $str_area = explode('],[',trim($remove_space,'[[]]'));
-            foreach ($str_area as $value) {
-                $temp = explode(', ',$value);
-                $coordinates =[];
-                foreach ($temp as  $value1) {
-                    $coordinates[] = floatval($value1);
-                }
-               $float_area[] = $coordinates;
+            $array_coord =json_decode($_POST['circle'], true);
+            foreach ($array_coord as $value) {
+                $polygon['coordinates'][]= array((double)$value[1],(double)$value[0]);
             } 
-        }else{
-           $float_area =''; 
         }
-    
+
+        $point = array(
+            'type' =>'Point',
+            'coordinates'=>[(double) $_POST['lng'],(double) $_POST['lat']]
+        );
         $input = [
-            'name'            => $_POST['name'],
-            'district_id'     =>$_POST['district'],
-            'city_id'         =>$_POST['city'],
-            'view'            => intval($_POST['view']),
-            'area'            =>$float_area,
-            'lat'             =>floatval($_POST['lat']),
-            'lng'             =>floatval($_POST['lng']),
-            'adrress'         =>$_POST['address'],
-            'seo_key'         =>$_POST['seo_key'],
-            'seo_discription' =>$_POST['seo_discription']
+            'name'             => $_POST['name'],
+            'district_id'      =>$_POST['district'],
+            'city_id'          =>$_POST['city'],
+            'view'             => intval($_POST['view']),
+            'area'             =>$polygon,
+            'location'         =>$point,
+            'address'          =>$_POST['address'],
+            'place_id'         =>$_POST['place_id'],
+            'meta_key'         =>$_POST['seo_key'],
+            'meta_description' =>$_POST['seo_discription'] 
         ];
-        $check_exist = false;
-        $result = $this->model_location_special->get_all_item();
-        foreach ($result as  $value) {
-           if(($value['lat'] == $input['lat']) && ($value['lng'] == $input['lng'])){
+        /*fixed*/
+        $result = $this->model_location_special->get_location_by_id($_POST['place_id']);
+        
+        if($result != 0){
+            $this->load->public_model('location/location_admin');
+            $data['header']      = $this->load->controller('common/header');
+            $data['column_left'] = $this->load->controller('common/column_left');
+            $data['footer']      = $this->load->controller('common/footer');
+            $data["save"]        = $this->url->link('location/special/save_special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
+            $data['token']     = $this->session->data['token'];
 
-                $this->load->public_model('location/location_admin');
-                $check_exist = true;
-                $data['header']      = $this->load->controller('common/header');
-                $data['column_left'] = $this->load->controller('common/column_left');
-                $data['footer']      = $this->load->controller('common/footer');
-                $data["save"]        = $this->url->link('location/special/save_special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
-                $data['token']     = $this->session->data['token'];
-
-                $data['city']     = $this->model_location_location_admin->getCityById($input['city_id']);
-                 $data['district'] = $this->model_location_location_admin->getDistrictById($input['district_id']);
+            $data['city']     = $this->model_location_location_admin->getCityById($input['city_id']);
+             $data['district'] = $this->model_location_location_admin->getDistrictById($input['district_id']);
 
 
-                $data['citys']     = $this->model_location_location_admin->getAllCity();
-                $data['districts'] = $this->model_location_location_admin->getDistrictByCity($input['city_id']);
-                $data['cancel'] = $this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
-                $data['special'] = $input;
-                $data['error_warning'] = 'Tọa độ đã tồn tại';
+            $data['citys']     = $this->model_location_location_admin->getAllCity();
+            $data['districts'] = $this->model_location_location_admin->getDistrictByCity($input['city_id']);
+            $data['cancel'] = $this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
+            $data['special'] = $input;
+            $data['error_warning'] = 'Khu vực đã tồn tại';
 
-                $this->response->setOutput($this->load->view('location/special_form.tpl', $data));  
-           } 
-        }
-        if(!$check_exist){
-             if(!empty($_POST['id'])){
-            $result = $this->model_location_special->update($_POST['id'],$input);
-            $this->session->data['success'] = $this->language->get('text_success');
-            }
-            else{
+            $this->response->setOutput($this->load->view('location/special_form.tpl', $data));  
+        }else{
+            if(!empty($_POST['id'])){
+                $result = $this->model_location_special->update($_POST['id'],$input);
+                $this->session->data['success'] = $this->language->get('text_success');
+            }else{
                 $id_insert = $this->model_location_special->add($input);
                 $this->session->data['success'] = $this->language->get('text_success');
             }
 
            $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
-        }
+        } 
     }
 
     public function page_edit(){
@@ -191,7 +186,7 @@ class ControllerLocationSpecial extends Controller
         $data['citys']     = $this->model_location_location_admin->getAllCity();
         $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data['special']['city_id']);
 
-        $data['area'] = json_encode($data['special']['area']);
+        $data['area'] = json_encode($data['special']['area']['coordinates']);
       
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
