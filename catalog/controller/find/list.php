@@ -1,20 +1,74 @@
 <?php
+
+/**
+ * Class ControllerFindList
+ * type_page: ['search-city','search-district','search-special']
+ *
+ */
 class ControllerFindList extends Controller {
-    public function index($param) {
+    public function index($params) {
         $this->load->model('find/list');
         $get_request = $this->request->get;
+
+
+        if(isset($_COOKIE['user_location'])){
+            $params;
+        }else{
+            $semengts = explode('/',$get_request['_route_']);
+        }
+
+        //var_dump($params); die();
+        $data['type_page']=false;
+        $data['info_seo']=false;
+
         $data_search = ['status'=>1];
         if(isset($get_request['gia']))
             $data_search['price'] = ((float) $get_request['gia']) * 1000000;
+
         if(isset($get_request['dien_tich']))
             $data_search['acreage'] = (float) $get_request['dien_tich'];
 
-        if(isset($get_request['location'])){
-            $array_location = explode(',',$get_request['location']);
-            $data['point'] = $point =  ['lat'=>(double) $array_location[0], 'lgn'=>(double) $array_location[1]];
-            $data_search['point'] = [(double) $array_location[1],(double) $array_location[0]];
+        $data['breadcrumbs']=  array([
+            'text'=>'Tìm phòng trọ',
+            'href'=>'/'
+        ]);
+
+        if(isset($params['city'])){
+            $data_search['slug_city_name'] = $params['city'];
+            $cityInfoByCache = $this->cache->get('city-cache-'.$params['city']);
+            $data['type_page']='search-city';
+            $data['info_seo'] = $cityInfoByCache;
+            $data['breadcrumbs'][] = [
+                'text'=>$cityInfoByCache['name'],
+                'href'=>'/tim-kiem/'.$params['city']
+            ];
         }
 
+        if(isset($params['district'])){
+            if($cityInfoByCache){
+                $data['type_page']='search-district';
+                $data_search['slug_district_name'] = $params['district'];
+                $districtInfoByCache = $this->cache->get('district-of-city-'.$cityInfoByCache['city_id'].'-cache');
+                $data['info_seo'] = $districtInfoByCache;
+                $data['breadcrumbs'][] = [
+                    'text'=>$districtInfoByCache['name'],
+                    'href'=>'/tim-kiem/'.$params['city'].'/'.$params['district']
+                ];
+            }
+        }
+
+        if(isset($params['lat']) && isset($params['lgn'])){
+            $data['type_page']='search-special';
+            $data['point'] = $point =  ['lat'=>(double) $params['lat'], 'lgn'=>(double) $params['lgn']];
+            $data_search['point'] = [(double) $params['lgn'],(double) $params['lat']];
+            $data['info_seo'] = ['Get from database by location from url'];
+        }
+
+        //var_dump($data['breadcrumbs']); die();
+
+        /* Document get info page */
+
+        //var_dump($data_search) ; die();
         $data['rooms'] = $this->model_find_list->get_list($data_search);
         $data['featured'] = $this->model_find_list->get_list_featured();
 
@@ -65,4 +119,26 @@ class ControllerFindList extends Controller {
         }
         return $extp;
    }
+    public function saveSpecial(){
+        $this->load->model('location/special');
+
+        $request_post = $this->request->post;
+        $input = [
+            'name'            => $request_post['name'],
+            'district_id'     => $request_post['district_name'],
+            'city_id'         => $request_post['city_name'],
+            'view'            => 0,
+            'area'            =>null,
+            'location'        =>[
+                    'type' => 'Point',
+                    'coordinates'=>[float($request_post['lng']),float($request_post['lat'])]
+            ],
+            'adrress'         =>$request_post['address'],
+            'seo_key'         =>'phòng trọ '.$request_post['name'],
+            'seo_discription' =>"Phòng trọ gần ".$request_post['name']."sẽ giúp cho bạn thuận tiện việc đi lại"
+        ];
+        var_dump($input); die();
+        $result = $this->model_location_special->add($input);
+        $this->session->data['success'] = $this->language->get('text_success');
+    }
 }

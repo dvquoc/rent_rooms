@@ -3,18 +3,6 @@ if(!isset($_COOKIE['origin_ref']))
 {
     setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
 } ?>
-<?php
-function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longitude2) {
-    $theta = $longitude1 - $longitude2;
-    $miles = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
-    $miles = acos($miles);
-    $miles = rad2deg($miles);
-    $miles = $miles * 60 * 1.1515;
-    $kilometers = $miles * 1.609344;
-    $meters = $kilometers * 1000;
-    return round($kilometers,1);
-}
-?>
 <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
 <div class="container">
   	<div class="row">
@@ -43,24 +31,37 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
 		</script>
 		
 		<div class="col-md-10 list-right" style="margin-top: 15px">
-			<div class="row ">
-				<div class="col-md-12 seo_description">
-					<div>
-						<h3 class="title">Mô tả HCM</h3>
-						<p class="text" style="color:#999;">Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit...</p>
-					</div>
-					<div class="text-center">
-						<a href="/tim-kiem-theo-ban-do" class="btn btn-primary">Xem bằng bản đồ</a>
-					</div>
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-md-12 text-left">
+                    <ol itemscope="" itemtype="http://schema.org/BreadcrumbList" class="breadcrumb _3WIL_EScB1tm02Oqj0vbu8">
+                    <?php foreach($breadcrumbs as $index => $breadcrumb){ ?>
+                        <?php if(++$index != count($breadcrumbs)){  ?>
+                            <li class="breadcrumb-item Z9Bevb8OoGSgkMEl67zPu" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                                <a itemprop="item" href="<?php echo $breadcrumb['href']; ?>">
+                                    <span itemprop="name"><?php echo $breadcrumb['text']; ?> >> </span>
+                                    <meta itemprop="position" content="<?php echo ++ $index; ?>">
+                                </a>
+                            </li>
+                        <?php } else {  ?>
+                            <li class="breadcrumb-item Z9Bevb8OoGSgkMEl67zPu" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                                <b itemprop="item">
+                                    <span itemprop="name"><?php echo $breadcrumb['text']; ?></span>
+                                    <meta itemprop="position" content="<?php echo ++ $index; ?>">
+                                </b>
+                            </li>
+                        <?php } ?>
+                    <?php } ?>
+                    </ol>
+                    <h1 itemprop="name">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
+                </div>
+            </div>
 			<div class="row grid" id="featured">
 			<div class="col-md-12 top-title">
 					<h3 style="margin-bottom: 0">Top nhà trọ HCM</h3>
 			</div>
 			  <div class="owl-carousel col-md-12">
 			    <?php foreach($featured as $item) { ?>
-					<div class=" i-column">
+					<div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
 						<?php 
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
 							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
@@ -88,15 +89,19 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
 			  </div>
 			</div>
 			<div class="row" id="container-result">
+                <div><b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span></div>
+                <div class="text-right">
+                    <a style="border-radius: 30px;" href="/tim-kiem-theo-ban-do" class="btn btn-primary">Xem bằng bản đồ</a>
+                </div>
 				<div class="col-md-8 list-result">
 					<?php foreach($rooms as $item) { ?>
-					<div class="row">
+					<div class="row" i-column" itemscope="" itemtype="http://schema.org/Product">
 						<?php
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
 							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
 							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
 						?>
-						<a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
+						<a itemprop="url" href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
 							<button class="context-menu-button icon">test</button>
 							<ul class="dropdown" style="display: none;">
 								<li class="item">Lưu xem sau</li>
@@ -104,10 +109,10 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
 							</ul>
 							<div class="col-md-3 list-img">
 								<?php  $img = json_decode($item["images"],true); ?>
-								<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive" >
+								<img itemprop="image" alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive" >
 							</div> 
 							<div class="col-md-9 list-info pull-right">
-								<div class="title"><b><?php echo $item['name'];?></b></div>
+								<div itemprop="name" class="title"><b><?php echo $item['name'];?></b></div>
 								<div class="f-i">
 									<div class="i d">
 										Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
@@ -119,9 +124,9 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
                                         </div>
                                     <?php } ?>
 								</div>
-								<div class="adress" ><?php echo $item['address'];?></div>
-								<div class="mf">
-									<div class="i price" >
+								<div class="adress"  itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"><?php echo $item['address'];?></div>
+								<div class="mf" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+									<div class="i price" itemprop="price" content="<?php echo $item['price']/1000000;?>">
 											<i class="fa fa-shopping-cart hidden" aria-hidden="true"></i><b><?php echo $item['price']/1000000;?></b> Triệu/tháng
 									</div>
 									<div class="i are">
@@ -145,6 +150,14 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
 						</a>
 					</div>
 					<?php } ?>
+                    <div class="row ">
+                        <div class="col-md-12 seo_description">
+                            <div>
+                                <h3 class="title">Mô tả HCM</h3>
+                                <p class="text" style="color:#999;">Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit...</p>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 				<div class="col-md-4 near" id="col-r">
 					<div>
@@ -184,7 +197,7 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
 		    stagePadding: 50,
 		    loop:true,
 		    margin:10,
-		    nav:false,
+		    nav:true,
 		    responsive:{
 		        0:{
 		            items:1
@@ -193,7 +206,7 @@ function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longi
 		            items:2
 		        },
 		        1000:{
-		            items:3
+		            items:4
 		        }
 		    }
 		})

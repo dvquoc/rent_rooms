@@ -13,14 +13,14 @@
                     <div class="col-md-6">
                         <select name="city-location" id="city-location" class="form-control" style="border-radius: 3px; padding: 5px; border: 0px solid #e0e0e0; background-color:#f1f1f1; margin-bottom: 20px">
                             <?php foreach($citys as $item){ ?>
-                            <option value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
+                                <option data-slug="<?php echo $item['slug_city'] ?>" value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <select name="district-location" id="district-location" class="form-control" style="border-radius: 3px; padding: 5px; border: 0px solid #e0e0e0; background-color:#f1f1f1; margin-bottom: 20px">
                             <?php foreach($districts as $item){ ?>
-                            <option value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
+                            <option data-slug="<?php echo $item['slug_district'] ?>" value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
                             <?php } ?>
                         </select>
                     </div>

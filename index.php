@@ -72,13 +72,13 @@ if(!$citys) {
 	$q_c = $registry->get('db')->city->find()->toArray();
 	if(!empty($q_c)){
 		foreach ($q_c as $k_c => $v_c) {
+            $cache->set('city-cache-'.$v_c['slug_city'], $v_c);
 			$q_d = $registry->get('db')->district->find(['city_id'=>$v_c['city_id']])->toArray();
 			if(!empty($q_d)){
 				foreach ($q_d as $k_d => $v_d) {
 					$cache->set('district-of-city-'.$v_d['district_id'].'-cache', $v_d);
 				}
 			}
-			
 		}
 		$cache->set('city-cache', $q_c);
 	}

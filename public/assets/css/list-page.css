@@ -134,7 +134,7 @@ margin-right: 5px; font-size: 14px;
     line-height: 20px;
 }
 .img .i b{
-    font-size: 14px;background-color: #94CB02;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
+    font-size: 14px;background-color:#00ba51;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
 }
 .img .i.price{
     left: 5px;
@@ -152,12 +152,41 @@ margin:3px 0;
     font-size: 13px;
 }
 .tag .arena{
-    padding: 3px 5px;margin: 5px 3px; border:1px solid #ccc;border-radius: 3px; display: inline-block;
+    padding: 2px 5px;
+    margin: 3px 3px;
+    border: 1px solid #03A9F4;
+    background-color: #9fdaf5;
+    border-radius: 3px;
+    display: inline-block;
+    color: #000;
+    font-size: 13px;
 }
 .owl-carousel .owl-stage-outer{
     padding-top: 15px;
 }
+.owl-carousel{
+    position: relative;
+}
+.owl-carousel .owl-prev{
+    position: absolute;
+    left: 15px;
+    top:30%;
+}
 
+.owl-carousel .owl-next{
+    position: absolute;
+    right: 15px;
+    top:30%;
+}
+.owl-nav >div{
+    width: 40px;
+    height:40px;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 1px 1px 7px -2px #000;
+    text-align: center;
+    line-height: 40px;
+}
  .error{
-        color: red;
-    }
+   color: red;
+}

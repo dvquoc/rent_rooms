@@ -25,6 +25,15 @@ class ModelFindList extends Model {
         if(isset($data['acreage']) && !empty($data['acreage'])){
             $filter['acreage']= $data['acreage'];
         }
+
+        if(isset($data['slug_city_name']) && !empty($data['slug_city_name'])){
+            $filter['slug_city_name']= $data['slug_city_name'];
+        }
+
+        if(isset($data['slug_district_name']) && !empty($data['slug_district_name'])){
+            $filter['slug_district_name']= $data['slug_district_name'];
+        }
+
     	if(isset($data['point']) && !empty($data['point'])){
              //var_dump(json_encode($data['region'])); die();
              $data = array(
@@ -38,14 +47,18 @@ class ModelFindList extends Model {
                         'distanceField' => "calculated",
                         'includeLocs'=> "location",
                         'maxDistance' => 3000,
-                        'spherical'=> true
+                        'spherical'=> true,
+                        'query'=>$filter
                     ],
 
                 ],[
-                    '$limit' => 5
+                    '$limit' => 10,
+                ],[
+                    '$skip' =>0
                 ]
+
             ];
-            $result = $this->table->aggregate($pipeline,$options)->toArray();
+            $result = $this->table->aggregate($pipeline)->toArray();
         }else{
             $result = $this->table->find($filter,$options)->toArray();
         }
