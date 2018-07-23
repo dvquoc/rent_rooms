@@ -119,8 +119,7 @@ if(!isset($_COOKIE['origin_ref']))
 									</div>
                                     <?php if(isset($point)) { ?>
                                         <div class="i d">
-                                                Cách khoản: <span><?php echo round($item['calculated']/1000,2) ?> Km</span>
-
+                                                Cách khoản: <span><?php echo ($item['calculated']>1000 ? round($item['calculated']/1000,1).'Km': round($item['calculated'],0).'m') ?> </span>
                                         </div>
                                     <?php } ?>
 								</div>
@@ -136,11 +135,11 @@ if(!isset($_COOKIE['origin_ref']))
 									<div class="i are"> - </div>
 									<div class="i are">
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['acreage'];?></b> / Khối
+										<b><?php echo $item['acreage'];?></b> / Khối / Người
 									</div>
 									<div class="i are">
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['acreage'];?></b> / Kg
+										<b><?php echo $item['acreage'];?></b> / kW
 									</div>
 								</div>
 								
