@@ -1,28 +1,42 @@
 <?php echo $header ;
-
+ 
 ?>
  <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
-
+<style type="text/css">
+    .error{
+        color: red;
+    }
+</style>
 <div id="wrapper" class="simple-page_wrapper">
 	<div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
     	<div id="qc3-body">
     		<div class="container">
-    			 <p class="text-center">Trang đăng ký cho <b>chủ phòng</b>, Nếu bạn là người tìm phòng <a class="auth-linkjs-action-track_event" href="/cus-dang-ky">vui lòng đăng ký tại đây</a></p>
+                 <?php if ($error_warning) { ?>
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+                <?php } ?>
+                <?php if ($success) { ?>
+                <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+                <?php } ?>
+    			<!--  <p class="text-center">Trang đăng ký cho <b>chủ phòng</b>, Nếu bạn là người tìm phòng <a class="auth-linkjs-action-track_event" href="/cus-dang-ky">vui lòng đăng ký tại đây</a></p> -->
                  <div class="container">
                     <div class="sign-up auth-container " id="client-sign-up">
                         <div class="sign-up-header-container pdR20">
                             <p class="sign-up-header auth-header text-center">Đăng ký </p>
-                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/ow-dang-nhap">vui lòng đăng nhập tại đây</a></p>
+                              <p class="text-center">Nếu bạn đã có tài khoản, <a class="auth-linkjs-action-track_event" href="/dang-nhap-chu-phong">vui lòng đăng nhập tại đây</a></p>
                         </div>
                         <div class="sign-up-container">
                             <div class="sign-up-social">
                                 <p class="mgB20">Đăng kí với tài khoản mạng xã hội:</p>
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/ow-dang-ky-fb"><div class="auth-facebook-icon">
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-fb-chu-phong"><div class="auth-facebook-icon">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/ow-dang-ky-google" >
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-google-chu-phong" >
                                     <div class="auth-google-icon">
                                           <i class="fa fa-google fa-fw"></i>
                                     </div>
@@ -49,15 +63,7 @@
                                 <div class="form-row">
                                     <input type="text" placeholder="Tên" class="auth-input" name="firstname" id="firstname" value="" required>
                                 </div>
-                                
-                               <!--  <div class="sign-up-terms inline-block auth-none-user-select form-row">
-                                    <input checked="" name="agreement" class="styled-checkbox" id="agreement" type="checkbox">
-                                    <label for="agreement">
-                                        <img class="styled-checked-icon" src="/themes/qc3/img/icons/checked_icon.svg">
-                                        <span class="styled-checkbox-label">
-                                            Tôi đồng ý với <a class="auth-link" href="/pages/terms-of-use" target="_blank">điều kiện và điều khoản</a><br> của Cốc Cốc Quảng Cáo</span>
-                                    </label>
-                                </div> -->
+                         
 
                                 <input type="hidden" id="i_key" name="i_key">
                                 <div class="form-row">
@@ -66,7 +72,7 @@
                                         <p style="color: red">vui lòng check capcha </p>
                                     </div>
                                 </div>
-                                    <button class="auth-btn" disabled id="btn-login-ow" type="submit">Đăng ký</button>
+                                    <button class="auth-btn" id="btn-login-ow" type="submit">Đăng ký</button>
                             </form>
                         </div>
                     </div>
@@ -86,6 +92,7 @@
                     maxlength:11,
                 },
                 email: {
+                    required: true,
                     email: true
                 },
                 password: {
@@ -101,7 +108,8 @@
                     maxlength: "số điện thoại không xác thực",
                 },
                 email:{
-                    email:"Email không chính xac"
+                    required:"Vui lòng nhập email",
+                    email:"Email không chính xác",
                 },
                 password:{
                     required:"Vui lòng nhập mật khẩu",
@@ -113,7 +121,7 @@
                     event.preventDefault();
                     var data_form = $('#form_register').serialize();
                     $.ajax({
-                        url:"/ow-dang-ky-form",
+                        url:"/dang-ky-form-chu-phong",
                         type:"POST",
                         data: data_form,
                         success: function(re){
@@ -136,7 +144,7 @@
         $("#phone").focusout(function(){
             var phone_number = $(this).val();
             $.ajax({
-                url:"/ow-check-phone",
+                url:"/kiem-tra-sdt-chu-phong",
                 type:"POST",
                 data:{
                     phone : phone_number,

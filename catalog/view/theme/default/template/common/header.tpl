@@ -26,13 +26,12 @@
     <link href="/admin-rooms/view/javascript/bootstrap/opencart/opencart.css" type="text/css" rel="stylesheet" />
     <link type="text/css" href="/admin-rooms/view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
         <!--link href="/public/assets/css/amination.css" rel="stylesheet"-->
-     
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="/public/assets/js/common.js" type="text/javascript"></script>
+  <!--   <script src="/public/assets/js/common.js" type="text/javascript"></script> -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
  
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
@@ -76,13 +75,21 @@
                     </li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item">
-                        <a class="btn btn-primary" href="/ow-dang-ky"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
-                    </li>
+                   
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
-                         <li class="item"><img src="<?php echo $_SESSION['img']?>"><?php echo $_SESSION['name']?></li><a href="/dang-xuat">Đăng xuất</a>
+                        <li class="item">
+                            <a class="btn btn-primary" href="/quan-ly-phong-tro"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
+                        </li>
+                        <li class="item">
+                            <img src="<?php echo $_SESSION['img']?>"><?php echo $_SESSION['name']?>
+                        </li>
+                        <a href="/thong-tin-chu-tro">Thông tin tài khoản</a>
+                        <a href="/dang-xuat">Đăng xuất</a>
                     <?php }else{?>
-                        <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i><a href="/dang-nhap"> Đăng nhập </a>/ <a href="/cus-dang-ky">Đăng ký</a></button></li>
+                        <li class="item">
+                            <a class="btn btn-primary" href="/dang-nhap-chu-phong"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
+                        </li>
+                        <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i><a href="/dang-nhap-chu-phong"> Đăng nhập </a>/ <a href="/dang-ky-chu-phong">Đăng ký</a></button></li>
                     <?php }?>
                    
                 </ul>

@@ -74,7 +74,7 @@
                                           
                                            <label class="">Lượt tìm kiếm </label>
                                            <input class="form-control" type="text" name="view" value="<?php echo isset($special['view'])?$special['view']:'';?>"></br>
-                                           <label class="">Bán kình khu vực </label>
+                                           <label class="">Tọa độ khu vực </label>
                                             <textarea class="form-control" readonly rows="5" name="circle">
                                             </textarea>
                                            <label class="">Lat</label>
@@ -206,10 +206,9 @@
             $('input[name=place_id]').val(place.place_id);
             
             $.each($("select[name=city] option"), function(key, item){
-                if($(item).text()==location.city){
+                if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
                      $("select[name=city]").val($(item).attr('value')).change();
                 }
-              
             });
 
             //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
@@ -330,7 +329,7 @@
                         $('select[name=\'district\']').html('');
                         $.map(json, function(item) {
                             $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
-                             if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
+                            if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
                                  $("select[name=district]").val(item.id).change();
                             }
                         });

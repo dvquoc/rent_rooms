@@ -196,7 +196,7 @@ class ControllerPageRooms extends Controller
                 $data['action'] = '/cap-nhat-phong-tro/'.$room_id;
             }
 
-            $data['cancel'] = '/danh-sach-phong-tro';
+            $data['cancel'] = '/quan-ly-phong-tro';
             if (!empty($room_id)) {
                 $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
                 $room_info = $this->model_page_rooms->getRoom($room_id);

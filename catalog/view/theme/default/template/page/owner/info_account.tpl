@@ -1,7 +1,7 @@
 <?php echo $header ;
 
 ?>
-<style type="text/css">
+<style type="text/css"> 
 fieldset {
     border: thin solid #ccc; 
     border-radius: 4px;

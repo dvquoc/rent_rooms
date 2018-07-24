@@ -34,12 +34,12 @@ class ControllerPageOwnerRegister extends Controller {
             $this->response->redirect('/tim-kiem-phong-tro');
         }else{
              $data = [
-                'name'       => $user_profile->displayName,
-                'gender'     => $user_profile->gender,
-                'age'        => $user_profile->age,
-                'birthDay'   => $user_profile->birthDay,
-                'birthMonth' =>$user_profile->birthMonth,
-                'birthYear'  =>$user_profile->birthYear, 
+                'name'       =>$user_profile->displayName,
+                'gender'     =>$user_profile->gender,
+                'age'        =>(int)$user_profile->age,
+                'birthDay'   =>(int)$user_profile->birthDay,
+                'birthMonth' =>(int)$user_profile->birthMonth,
+                'birthYear'  =>(int)$user_profile->birthYear, 
                 'email'      =>$user_profile->email,
                 'image'      =>$user_profile->photoURL,
                 'country'    =>$user_profile->country,
@@ -62,7 +62,7 @@ class ControllerPageOwnerRegister extends Controller {
                 $this->response->redirect('/tim-kiem-phong-tro');
             }else{
                 $_SESSION['user_profile'] = $data;
-                $this->response->redirect('/ow-cap-nhap-thong-tin');
+                $this->response->redirect('/cap-nhap-thong-tin-chu-phong');
             }
 
         }
@@ -87,10 +87,10 @@ class ControllerPageOwnerRegister extends Controller {
              $data = [
             'name'       => $user_profile->displayName,
             'gender'     => $user_profile->gender,
-            'age'        => $user_profile->age,
-            'birthDay'   => $user_profile->birthDay,
-            'birthMonth' =>$user_profile->birthMonth,
-            'birthYear'  =>$user_profile->birthYear,
+            'age'        =>(int) $user_profile->age,
+            'birthDay'   =>(int)$user_profile->birthDay,
+            'birthMonth' =>(int)$user_profile->birthMonth,
+            'birthYear'  =>(int)$user_profile->birthYear,
             'email'      =>$user_profile->email,
             'image'      =>$user_profile->photoURL,
             'country'    =>$user_profile->country,
@@ -112,7 +112,7 @@ class ControllerPageOwnerRegister extends Controller {
                 $this->response->redirect('/tim-kiem-phong-tro');
             }else{
                 $_SESSION['user_profile'] = $data;
-                $this->response->redirect('/ow-cap-nhap-thong-tin');
+                $this->response->redirect('/cap-nhap-thong-tin-chu-phong');
             }
 
         }
