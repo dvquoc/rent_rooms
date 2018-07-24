@@ -1,4 +1,4 @@
-<?php
+<?php 
 class ControllerLocationSpecial extends Controller
 {
     private $error = array(); 
@@ -211,21 +211,7 @@ class ControllerLocationSpecial extends Controller
        exit();
     }
 
-    public function get_location(){
-        $this->load->model('location/special');
-
-        $this->load->public_model('location/location_admin');
-        $city        = $this->model_location_location_admin->get_city_by_name($_POST['city']);
-        $id_district = '';
-        if(isset($_POST['district'])){
-            $district    = $this->model_location_location_admin->get_district_by_name($_POST['district'],$city[0]['city_id']);
-            $id_district = $district[0]['district_id'];
-        }
-
-        $id_city = $city[0]['city_id'];
-        echo json_encode(array('district_id' => $id_district,'city_id' => $id_city));
-       exit();
-    }
+    
  
     // public function index()
     // {

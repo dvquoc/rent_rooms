@@ -161,6 +161,7 @@
         var input = document.getElementById('input-address');
 
         var searchBox = new google.maps.places.Autocomplete(input);
+        var address_components = {};
         input.style.margin = '20px';
         input.style.width = '50%';
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -177,7 +178,7 @@
             if (!place.geometry) {
                 return;
             }
-
+            console.log(place); 
             marker.setMap(null);
             marker = new google.maps.Marker({
                 map: map,
@@ -192,40 +193,24 @@
             for(var i = address_lengh-1; i>=0; i--){
                 if(place.address_components[i].types[0]=='administrative_area_level_1'){
                     location.city= place.address_components[i].long_name;
+                    address_components.city_name = place.address_components[i].long_name;
                 }
                 if(place.address_components[i].types[0]=='administrative_area_level_2'){
                     location.district= place.address_components[i].long_name;
+                    address_components.district_name = place.address_components[i].long_name;
                 }
             }
             $('input[name=name]').val(place.name);
             $('input[name=lng]').val(place.geometry.location.lng());
             $('input[name=lat]').val(place.geometry.location.lat());
             $('input[name=place_id]').val(place.place_id);
-            $.ajax({
-                url:'index.php?route=location/special/get_location&token=<?php echo $token;?>',
-                type:'POST',
-                data:{
-                    district:location.district,
-                    city:location.city
-                },success:function(data){
-                    if(typeof(data) != "undefined" && data !== null){
-                        var obj = $.parseJSON(data);
-                        $('select[name=city] option').removeAttr('selected').filter('[value="'+obj.city_id+'"]').attr('selected', 'selected');
-                        $.ajax({
-                            url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+obj.city_id,
-                            dataType: 'json',
-                            success: function(json) {
-                                $('select[name=\'district\']').html('');
-                                $.map(json, function(item) {
-                                    $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
-                                });
-                            
-                                $('select[name=district] option').removeAttr('selected').filter('[value="'+obj.district_id+'"]').attr('selected', 'selected');
-                            }
-                        });
-                    }
+            
+            $.each($("select[name=city] option"), function(key, item){
+                if($(item).text()==location.city){
+                     $("select[name=city]").val($(item).attr('value')).change();
                 }
-            })
+              
+            });
 
             //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
             google.maps.event.addListener(marker, 'dragend', function() {
@@ -345,22 +330,16 @@
                         $('select[name=\'district\']').html('');
                         $.map(json, function(item) {
                             $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                             if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
+                                 $("select[name=district]").val(item.id).change();
+                            }
                         });
+                       
+
                     }
                 });
             }
-            if($(this).attr('name') == 'district'){
-                var district_select = $(this).val();
-                console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
-                $.ajax({
-                    url: 'index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select,
-                    dataType: 'json',
-                    success: function(json) {
-                        console.log(JSON.parse(json['location']));
-                       // drawPolygon(JSON.parse(json['location']));
-                    }
-                });
-            }
+            
         });
      
        
