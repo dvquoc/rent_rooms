@@ -343,7 +343,7 @@
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     var address_components = {};
     var marker = new google.maps.Marker({
-        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         map: map,
         title: '<?php echo $address;  ?>',
         draggable: true

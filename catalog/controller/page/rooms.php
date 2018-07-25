@@ -45,7 +45,7 @@ class ControllerPageRooms extends Controller
 
                 $this->session->data['success'] = "Thêm thành công";
 
-                $this->response->redirect('/danh-sach-phong-tro');
+                $this->response->redirect('/quan-ly-phong-tro');
             }
         }else{
             $_SESSION['error_warning'] = 'check capcha';
@@ -66,7 +66,7 @@ class ControllerPageRooms extends Controller
 
             $this->session->data['success'] = 'cập nhật thành công';
 
-            $this->response->redirect('/danh-sach-phong-tro');
+            $this->response->redirect('/quan-ly-phong-tro');
         }
         $this->getForm();
     }
@@ -179,7 +179,7 @@ class ControllerPageRooms extends Controller
             $this->load->model('page/rooms');
             $room_id = ltrim(strstr($_GET['_route_'],'/'),'/');
             $data['text_form'] = empty( $room_id) ? "Thêm phòng trọ" : "Chỉnh sửa phòng trọ";
-
+            
             $data['error_warning'] = '';
             if (isset($_SESSION['error_warning'])){
                 $data['error_warning'] = $_SESSION['error_warning'];
@@ -244,7 +244,7 @@ class ControllerPageRooms extends Controller
             $data['header'] = $this->load->controller('common/header');
             $this->response->setOutput($this->load->view('default/template/page/rooms_form.tpl', $data));
         }else{
-             $this->response->redirect('/ow-dang-nhap');
+             $this->response->redirect('/dang-nhap-chu-phong');
         }   
         
     }
