@@ -1,4 +1,4 @@
-<?php echo $header ;
+<?php echo $header ; 
 ?>
 <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
 
@@ -7,6 +7,11 @@
 
         <div id="qc3-body">
             <div class="container">
+                <?php if ($error_warning) { ?>
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+                <?php } ?>
                 <div class="login auth-container" id="client-login" style="">
                     <div class="modal-message" style="display: none;"></div>
                     <p class="auth-header">Đăng nhập chủ phòng</p>
@@ -15,13 +20,6 @@
                         <div><input type="text" id="phone" placeholder="Nhập Số điện thoại" class="auth-input" name="sdt" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" required></div>
                         <div><input type="password" id="password" placeholder="Nhập mật khẩu" class="auth-input" name="password" required></div>
                         <div class="mgT7">
-                           <!--  <div class="inline-block auth-none-user-select">
-                                <input name="remember" checked="" class="styled-checkbox" id="styled-checkbox-sign-in" type="checkbox" value="value1">
-                                <label for="styled-checkbox-sign-in">
-                                    <img class="styled-checked-icon" src="/themes/qc3/img/icons/checked_icon.svg">
-                                    <span class="styled-checkbox-label">Ghi nhớ tài khoản của tôi</span>
-                                </label>
-                            </div> -->
                         </div>
                          <div class="form-row">
                             <div class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
@@ -37,13 +35,13 @@
                                 <div class="login-line"></div>
                             </div>
                             <div class="login-social-buttons">
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/ow-dang-nhap-fb" >
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-nhap-fb-chu-phong" >
                                     <div class="auth-facebook-icon">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/ow-dang-nhap-google">
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-nhap-google-chu-phong">
                                     <div class="auth-google-icon">
                                          <i class="fa fa-google fa-fw"></i>
                                     </div>
@@ -53,7 +51,7 @@
                         </div>
                         <div>
                             <span>Chưa có tài khoản chủ chủ phòng? </span>
-                            <a id="#link-register" class="auth-link js-action-track_event" href="/ow-dang-ky">Đăng ký ngay </a>
+                            <a id="#link-register" class="auth-link js-action-track_event" href="/dang-ky-chu-phong">Đăng ký ngay </a>
                         </div>
                     </form>
                 </div>
@@ -69,7 +67,7 @@
         if(phone.length != 0 && password.length != 0){
              var form_data =  $("#form_login").serialize();
             $.ajax({
-                url: '/ow-dang-nhap-form',
+                url: '/dang-nhap-form-chu-phong',
                 type:'POST',
                 data:form_data,
                 success: function(data){

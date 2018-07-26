@@ -2,6 +2,11 @@
 require_once( "vendor/recaptchalib.php" );
 class ControllerPageOwnerLogin extends Controller {
     public function index() {
+        $data['error_warning'] = '';
+        if(isset($_SESSION['error_warning'])){
+            $data['error_warning']=$_SESSION['error_warning'];
+            unset($_SESSION['error_warning']);
+        }
         if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){
             $this->response->redirect('/thong-tin-chu-tro');
         }
@@ -22,10 +27,13 @@ class ControllerPageOwnerLogin extends Controller {
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_owner'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
             $this->response->redirect('/tim-kiem-phong-tro');
+        }else{
+            $_SESSION['error_warning'] = 'Bạn chưa có tài khoản vui lòng đăng ký';
+            $this->response->redirect('/dang-ky-chu-phong');
         }
         exit();
     }
@@ -40,10 +48,13 @@ class ControllerPageOwnerLogin extends Controller {
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
             $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user'] = $user['_id'];
+            $_SESSION['id_user']['id_owner'] = $user['_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['img'] = $user['image'];
-            $hybridauth->redirect('/tim-kiem-phong-tro');
+            $hybridauth->redirect('/');
+        }else{
+            $_SESSION['error_warning'] = 'Bạn chưa có tài khoản vui lòng đăng ký';
+            $this->response->redirect('/dang-nhap-chu-phong');
         }
         exit();
     }
@@ -71,7 +82,7 @@ class ControllerPageOwnerLogin extends Controller {
             $result = $this->model_page_owner_login->login_form($data);
             if($result){
                 $user = $this->model_page_owner_register->get_user_by_id($result['_id']);
-                $_SESSION['id_user'] = $result['_id'];
+                $_SESSION['id_user']['id_owner'] = $result['_id'];
                 $_SESSION['name'] = $user['name'];
                 $_SESSION['img'] = $user['image'];
                 echo 1; //account math

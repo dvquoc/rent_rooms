@@ -1,4 +1,4 @@
-<?php echo $header ;
+<?php echo $header ; 
 ?>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -13,7 +13,7 @@
                 <div class="login auth-container" id="client-login" style="">
                     <div class="modal-message" style="display: none;"></div>
                     <p class="auth-header">Cập nhật thông tin</p>
-                    <form id="form_update" action="/ow-update-phone" method="post" accept-charset="utf-8">
+                    <form id="form_update" action="/cap-nhat-sdt-chu-phong" method="post" accept-charset="utf-8">
                         <div class="form-errors clearfix" style="display: none;"></div>
                         <div><input type="text" maxlength="11" placeholder="Nhập Số điện thoại" class="auth-input" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" required></div>
                         <div id="check_phone" style="color: red"></div>
@@ -43,7 +43,7 @@
          $("#phone").focusout(function(){
             var phone_number = $(this).val();
             $.ajax({
-                url:"/ow-check-phone",
+                url:"/kiem-tra-sdt-chu-phong",
                 type:"POST",
                 data:{
                     phone : phone_number,

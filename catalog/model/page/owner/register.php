@@ -19,7 +19,8 @@ class ModelPageOwnerRegister extends Model {
     }
 
     public function get_user_by_id($id){
-    	$OneResult = $this->table->findOne(['_id' => new MongoDB\BSON\ObjectId($id)]);
+       
+    	$OneResult = $this->table->findOne(['_id' =>new MongoDB\BSON\ObjectId($id['id_owner'])]);
     	if($OneResult){
     		return $OneResult;
     	}else
@@ -41,7 +42,7 @@ class ModelPageOwnerRegister extends Model {
     }
      public function update_account($id,$data){
         $updateResult =  $this->table->updateOne(
-            ['_id' => new MongoDB\BSON\ObjectId($id)],
+            ['_id' => new MongoDB\BSON\ObjectId($id['id_owner'])],
             ['$set' => $data]
          );
         return $updateResult;

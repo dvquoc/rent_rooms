@@ -76,7 +76,8 @@ class ModelCatalogRooms extends Model {
             'ads' => (int) $data['ads'],
             'ads_position' => $data['ads_position'],
             'status' => (int) $data['status'],
-            'date_crate' => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp())
+            'date_crate' => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
+            'source' =>'back end',
         ]);
     }
 

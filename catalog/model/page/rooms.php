@@ -52,32 +52,38 @@ class ModelPageRooms extends Model {
 
     public function addRooms($data){
         $stt = $this->table->findOne([],['sort' => ['room_id' => -1],'projection' => ['room_id' => 1]]);
+        $point = array(
+            'type' =>'Point',
+            'coordinates'=>[(double) $data['lng'],(double) $data['lat']]
+        );
         return $this->table->insertOne([
-            'room_id' => $stt->room_id+1,
-            'name' => $data['name'],
-            'images' => $data['images'],
-            'city_id' => (int) $data['city_id'],
-            'district_id' => (int) $data['district_id'],
-            'address' => $data['address'],
-            'location' => $point,
-            'price' => (int) $data['price'],
+            'room_id'           => $stt->room_id+1,
+            'name'              => $data['name'],
+            'images'            => $data['images'],
+            'city_id'           => (int) $data['city_id'],
+            'district_id'       => (int) $data['district_id'],
+            'address'           => $data['address'],
+            'location'          => $point,
+            'price'             => (int) $data['price'],
             'price_electricity' => (int) $data['price_electricity'],
-            'price_water' => (int) $data['price_water'],
-            'price_deposit' => (int) $data['price_deposit'],
-            'acreage' => (int) $data['acreage'],
-            'amount_people' => (int) $data['amount_people'],
-            'close_door' => $data['close_door'],
-            'highlight' => $data['highlight'],
-            'regulation_room' => $data['regulation_room'],
-            'view' => (int) 0,
-            'call' => (int) 0,
-            'from_date' => new MongoDB\BSON\UTCDateTime((int) $data['from_date']),
-            'to_date' => new MongoDB\BSON\UTCDateTime((int) $data['to_date']),
-            'ads' => (int) $data['ads'],
-            'ads_position' => '',
-            'status' => (int) $data['status'],
-            'date_crate' => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
-            'is_checked' =>false,
+            'price_water'       => (int) $data['price_water'],
+            'price_deposit'     => (int) $data['price_deposit'],
+            'acreage'           => (int) $data['acreage'],
+            'amount_people'     => (int) $data['amount_people'],
+            'close_door'        => $data['close_door'],
+            'highlight'         => $data['highlight'],
+            'regulation_room'   => $data['regulation_room'],
+            'view'              => (int) 0,
+            'call'              => (int) 0,
+            'from_date'         => new MongoDB\BSON\UTCDateTime((int) $data['from_date']),
+            'to_date'           => new MongoDB\BSON\UTCDateTime((int) $data['to_date']),
+            'ads'               => (int) $data['ads'],
+            'ads_position'      => '',
+            'status'            => (int) $data['status'],
+            'date_crate'        => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
+            'is_checked'        =>false,
+            'master_id'         =>$data['id_owner'],
+            'source'            =>'front end',
         ]);
     }
 
@@ -87,7 +93,6 @@ class ModelPageRooms extends Model {
             'coordinates'=>[(float) $data['lng'],(float) $data['lat']]
         );
         $data_set = [
-            'master_id' => (int) $data['master_id'],
             'name' => $data['name'],
             'images' => $data['images'],
             'city_id' => (int) $data['city_id'],
@@ -151,5 +156,21 @@ class ModelPageRooms extends Model {
 
         $options =[];
         return $this->table->count($filter, $options);
+    }
+
+    public function getRoomByOwner($owner_id){
+        $result= $this->table->find(['master_id'=> new MongoDB\BSON\ObjectId($owner_id)])->toArray();
+        return $result;
+    }
+
+     public function deleteList($ids){
+        $arr_value = [];
+        foreach ($ids as $value) {
+            $arr_value[] = (int)$value;
+        }
+        $deleteResult = $this->table->deleteMany(
+            ['room_id' =>  ['$in' => $arr_value]]
+        );
+        return $deleteResult;
     }
 }

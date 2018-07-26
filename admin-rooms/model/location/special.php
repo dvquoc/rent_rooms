@@ -11,6 +11,11 @@ class ModelLocationSpecial extends Model {
         $this->table = $this->db->special;
     }
     public function add($data){
+        // $point = array(
+        //     'type' =>'Point',
+        //     'coordinates'=>[(double)$data['location'][0],(double)$data['location'][1]],
+        // );
+        // $data['location'] = $point;
     	$insertOneResult = $this->table->insertOne($data);
     	return $insertOneResult->getInsertedId();
     }
@@ -20,9 +25,12 @@ class ModelLocationSpecial extends Model {
         return $result->toArray();
     }
 
-    public function get_all_item(){
-        $result = $this->table->find();
-        return $result;
+    public function get_location_by_id($id){
+        $OneResult = $this->table->findOne(['place_id' => $id]);
+        if($OneResult){
+            return $OneResult;
+        }else
+            return 0;
     }
 
     public function update($id,$data){

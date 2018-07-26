@@ -7,7 +7,7 @@ class ControllerPageOwnerInfoAccount extends Controller {
         if($result){
             $data['user'] = $result;
         }else{
-           $this->response->redirect('/thong-tin-tai-khoan'); 
+           $this->response->redirect('/dang-nhap-chu-tro'); 
         }
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/info_account.tpl')) {

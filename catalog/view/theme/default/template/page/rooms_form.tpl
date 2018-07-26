@@ -1,8 +1,9 @@
-<?php echo $header; ?>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=vi" type="text/javascript"></script>
+<?php echo $header?>
+<script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+
       <div class="pull-right">
         <button type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
@@ -13,14 +14,19 @@
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <?php } ?>
+    <?php } ?> 
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
         <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><i class="fa fa-inbox"></i> <?php echo $text_form; ?></h3>
-                </div>
+                    <div style="float: right;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
+                    <div class="error-capcha" style="display: none">
+                        <p style="color: red">vui lòng check capcha </p>
+                    </div>
+
+              </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
                       <li class="active"><a href="#tab-general" data-toggle="tab">Thông tin chính</a></li>
@@ -144,7 +150,7 @@
                                                   <div><input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>"></div>
                                               </div>
 
-                                              <?php $class = 'show'; if(isset($room_id)) $class = 'hidden';  ?>
+                                              <?php $class = 'show'; ?>
 
                                               <div class="col-md-4 item">
                                                   <div class="feature price">
@@ -260,17 +266,17 @@
           </div>
       </form>
   </div>
-<script type="text/javascript">
-      var option_tinymce = {
+<script language="javascript" type="text/javascript">
+       var option_tinymce = {
           selector: '#highlight-rooms',
-          language:'<?php global $registry;  echo $registry->get("language")->get('code');  ?>',
+         
           /*skin: 'light',*/
           height:500,
           app_default: 'cdv',
           relative_urls: false,
           remove_script_host: false,
           document_base_url : "<?php echo HTTP_CATALOG; ?>",
-          plugin_url : "<?php echo HTTP_SERVER; ?>view/javascript/tinymce/plugins/",
+          plugin_url : "<?php echo HTTP_SERVER; ?>admin-rooms/view/javascript/tinymce/plugins/",
           plugins: [
               "imagetools linktarget advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
               "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
@@ -287,8 +293,10 @@
           verify_html: false,
           forced_root_block : "p",
       }
+
 </script>
 <script type="text/javascript">
+
     var geocoder = new google.maps.Geocoder();
     function geocodePosition(pos) {
         geocoder.geocode({
@@ -318,7 +326,7 @@
 
     }
     var map= new google.maps.Map(document.getElementById('map-address'), {
-        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         zoom: 16,
         scaleControl: false,
         fullscreenControl: false,
@@ -333,9 +341,9 @@
     var searchBox = new google.maps.places.Autocomplete(input);
     searchBox.setTypes(['address']);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+    var address_components = {};
     var marker = new google.maps.Marker({
-        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         map: map,
         title: '<?php echo $address;  ?>',
         draggable: true
@@ -356,7 +364,26 @@
         });
 
         map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+        var address_lengh = place.address_components.length;
+        var location = {};
+        for(var i = address_lengh-1; i>=0; i--){
+            if(place.address_components[i].types[0]=='administrative_area_level_1'){
+                location.city= place.address_components[i].long_name;
+                 address_components.city_name = place.address_components[i].long_name;
+            }
+            if(place.address_components[i].types[0]=='administrative_area_level_2'){
+                location.district= place.address_components[i].long_name;
+                address_components.district_name = place.address_components[i].long_name;
+            }
+        }
+        $('input[name=lng]').val(place.geometry.location.lng());
+        $('input[name=lat]').val(place.geometry.location.lat());
 
+        $.each($("select[name=city_id] option"), function(key, item){
+            if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
+                 $("select[name=city_id]").val($(item).attr('value')).change();
+            }
+        });
         google.maps.event.addListener(marker, 'drag', function() {
             updateMarkerPosition(marker.getPosition());
         });
@@ -410,40 +437,24 @@
         map.getBoundsZoomLevel(bounds.getBounds());
         map.setZoom();
     }
-    
-    $('.datetime').datetimepicker({
-        pickDate: true,
-        pickTime: true
-    });
     $("#tab-general select").change(function () {
-      alert(123);
-      alert($(this).val());
-        if($(this).attr('name') == 'city'){
-            $.ajax({
-                url: '/danh-sach-quan-huyen/'+$(this).val(),
-                dataType: 'json',
-                success: function(json) {
-                    $('select[name=\'district\']').html('');
-                    $.map(json, function(item) {
-                        $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
-                    });
+      if($(this).attr('name') == 'city_id'){
+        $.ajax({
+          url: '/danh-sach-quan-huyen/'+$(this).val(),
+          dataType: 'json',
+          success: function(json) {
+            console.log(json);
+            $('select[name=\'district_id\']').html('');
+            $.map(json, function(item) {
+                $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
+                     $("select[name=district_id]").val(item.id).change();
                 }
             });
-        }
-        if($(this).attr('name') == 'district'){
-            var district_select = $(this).val();
-            console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
-            $.ajax({
-                url: 'index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select,
-                dataType: 'json',
-                success: function(json) {
-                    console.log(JSON.parse(json['location']));
-                    drawPolygon(JSON.parse(json['location']));
-                }
-            });
-        }
+          }
+        });
+      }
     });
-
     var image_row = <?php echo $image_row; ?>;
     function addImage() {
       html  = '<div class="item-image col-md-3" id="item-' + image_row + '">';

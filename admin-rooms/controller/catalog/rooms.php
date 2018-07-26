@@ -1,5 +1,5 @@
 <?php
-
+ 
 class ControllerCatalogRooms extends Controller
 {
     private $error = array();
@@ -37,7 +37,7 @@ class ControllerCatalogRooms extends Controller
 
             $this->response->redirect($this->url->link('catalog/rooms', $url, 'SSL'));
         }
-        $this->getForm();
+        $this->getForm(); 
     }
 
     public function edit()
