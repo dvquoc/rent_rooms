@@ -6,39 +6,15 @@ if(!isset($_COOKIE['origin_ref']))
 <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
 <div class="container">
   	<div class="row">
-		<div class="col-md-2" id="col-l" style="padding:10px;" onload="function(){return this.style.height=700}">
-			<div style="height:100%">
-				<div class="list_like text-center">
-					<img width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSw7XPOS7H3vgSemMw7rKkOrHgR_0JmS8MlJP77w91csmK053e">
-					<p class="text-center" style="margin-top:-5px;font-size: 12px; color: #999; line-height: 16px;">Hiện chưa có phòng nào lưu để xem sau</p>
-					<hr style="border:1px solid #ccc;">
-				</div>
-
-				<div class="info">
-					<img style="margin: 10px 0px" src="https://is4-ssl.mzstatic.com/image/thumb/Purple128/v4/ed/31/62/ed3162cd-2471-16a8-2376-4e8ee6835e02/source/512x512bb.jpg" class="img-responsive">
-					<img style="margin: 10px 0px" src="http://resources2.cungmua.com/Product/161000/cm_161556.jpg" class="img-responsive">
-				</div>
-				<div class="footer text-center">
-					<button style="margin-bottom: 10px;" class="col_left_button btn btn-primary">Góp ý thắc mắc</button>
-					<p>Nhanh nhất - tiết kiệm nhất - cẩn thận nhất</p>
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript">
-			var height = window.innerHeight - document.getElementById("menu-main").offsetHeight -15 +"px";
-			console.log(document.getElementById("menu-main").offsetHeight);
-			document.getElementById("col-l").style.height = height;
-		</script>
-		
-		<div class="col-md-10 list-right" style="margin-top: 15px">
+		<div class="col-md-12 list-right" style="margin-top: 15px">
             <div class="row">
                 <div class="col-md-12 text-left">
                     <ol itemscope="" itemtype="http://schema.org/BreadcrumbList" class="breadcrumb _3WIL_EScB1tm02Oqj0vbu8">
                     <?php foreach($breadcrumbs as $index => $breadcrumb){ ?>
                         <?php if(++$index != count($breadcrumbs)){  ?>
-                            <li class="breadcrumb-item Z9Bevb8OoGSgkMEl67zPu" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                            <li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
                                 <a itemprop="item" href="<?php echo $breadcrumb['href']; ?>">
-                                    <span itemprop="name"><?php echo $breadcrumb['text']; ?> >> </span>
+                                    <span itemprop="name"><?php echo $breadcrumb['text']; ?> / </span>
                                     <meta itemprop="position" content="<?php echo ++ $index; ?>">
                                 </a>
                             </li>
@@ -164,30 +140,47 @@ if(!isset($_COOKIE['origin_ref']))
 				</div>
 				<div class="col-md-4 near" id="col-r">
 					<div>
-						<h3>Khu vực lân cận</h3>
+						<h3>Mọi người cũng tìm kiếm khu vực này</h3>
 					</div>
 					<div class="tag">
-						<a href="" class="arena">Khu công nghiệp tân bình</a>
-						<a href="" class="arena">Công viên đầm sen</a>
-						<a href="" class="arena">Chợ bến thành</a>
-						<a href="" class="arena">akhama bulabu</a>
+						<a href="" class="arena">Khu công Công nghệ cao</a>
+						<a href="" class="arena">Sư phạm kỹ thuật</a>
+						<a href="" class="arena">Coopmart Quận 9</a>
+						<a href="" class="arena">Cao đẳng Công nghệ thủ đức</a>
+						<a href="" class="arena">Suối tiên</a>
+						<a href="" class="arena">Đường Lê Văn Việt</a>
+						<a href="" class="arena">Nhà văn hóa thanh niên Thử Đức</a>
+                        <a href="" class="arena">Coopmart Quận 9</a>
+                        <a href="" class="arena">Cao đẳng Công nghệ thủ đức</a>
+                        <a href="" class="arena">Suối tiên</a>
+                        <a href="" class="arena">Đường Lê Văn Việt</a>
 					</div>
 					<div class="clearfix"></div>
 					
 					<div class="tag" style="margin-top: 15px;">
 						<h3>Khu vực khac: Hồ Chí Minh</h3>
-						<ul>
-							<li><a href="" class="county">Quân 1</a></li>
-							<li><a href="" class="county">Quân 2</a></li>
-							<li><a href="" class="county">Quân 3</a></li>
-							<li><a href="" class="county">Quân 4</a></li>
-							<li><a href="" class="county">Quân 5</a></li>
-							<li><a href="" class="county">Quân 6</a></li>
-
-						</ul>
+                        <div class="row">
+                            <ul class="col-md-6" style="list-style-type: none">
+                                <li><a href="" class="county">Quân 1</a></li>
+                                <li><a href="" class="county">Quân 2</a></li>
+                                <li><a href="" class="county">Quân 3</a></li>
+                                <li><a href="" class="county">Quân 4</a></li>
+                                <li><a href="" class="county">Quân 5</a></li>
+                                <li><a href="" class="county">Quân 6</a></li>
+                            </ul>
+                            <ul class="col-md-6" style="list-style-type: none">
+                                <li><a href="" class="county">Quân Thử Đức</a></li>
+                                <li><a href="" class="county">Quân Gò Vấp</a></li>
+                                <li><a href="" class="county">Quân Tân Bình</a></li>
+                                <li><a href="" class="county">Quân Tân Phú</a></li>
+                                <li><a href="" class="county">Huyện Hốc Môn</a></li>
+                                <li><a href="" class="county">Quân Tân phú</a></li>
+                            </ul>
+                        </div>
 					</div>
 					<div class="ad-r">
 						<img src="https://www.mainguyen.vn/img/2017/09/news/l/11231104_1563154727040692_4481018767909529242_o2373.jpg" class="img-responsive">
+                        <img style="margin: 10px 0px" src="http://resources2.cungmua.com/Product/161000/cm_161556.jpg" class="img-responsive">
 					</div>
 				</div>
 			</div>

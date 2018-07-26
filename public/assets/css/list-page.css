@@ -1,16 +1,6 @@
 
-#col-l,#col-r{
+#col-r{
     position: sticky;top: 68px;
-}
-#col-l .footer{
-    font-size: 11px;color:#383838;background-color: #ccc; bottom: 0px; left:0px;position:absolute; padding:10px; margin: 10px;
-}
-#col-l .footer p{margin:0; line-height: 15px;}
-#col-l .btn{
-    width: 100%;margin-bottom: 3px;
-}
-.list-right{
-    border-left: 1px solid #e7e7e7; 
 }
 #featured{
     margin-bottom: 20px;
@@ -159,7 +149,7 @@ margin:3px 0;
     border-radius: 3px;
     display: inline-block;
     color: #000;
-    font-size: 13px;
+    font-size: 14px;
 }
 .owl-carousel .owl-stage-outer{
     padding-top: 15px;

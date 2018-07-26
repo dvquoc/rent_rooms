@@ -79,8 +79,8 @@ h6 {
     border-bottom: 1px solid #ececec;
     list-style-type: none;
     background-color: #ffffff;
-    margin: 15px 0;
-    padding: 0px;
+    margin: 0px 0 20px 0px;
+    padding: 5px 0;
 }
 
 .breadcrumb li{

@@ -33,7 +33,7 @@
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
     <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
-  <!--   <script src="/public/assets/js/common.js" type="text/javascript"></script> -->
+    <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi" type="text/javascript"></script>
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
@@ -77,9 +77,6 @@
                     </li>
                 </ul>
                 <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
-                    <li class="item">
-                        <a class="btn btn-primary" style="padding: 5px;margin-right: 5px;" href="/ow-dang-ky"><i class="fa fa-building"></i> Chủ phòng</a>
-                    </li>
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                         <li class="item">
                             <a class="btn btn-primary" href="/quan-ly-phong-tro"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
@@ -91,7 +88,7 @@
                         <a href="/dang-xuat">Đăng xuất</a>
                     <?php }else{?>
                         <li class="item">
-                            <a class="btn btn-primary" href="/dang-nhap-chu-phong"><i class="glyphicon glyphicon-plus"></i> Chủ phòng</a>
+                            <a class="btn btn-primary" style="padding: 5px;margin-right: 5px;" href="/ow-dang-ky"><i class="fa fa-building"></i> Chủ phòng</a>
                         </li>
                         <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i><a href="/dang-nhap-chu-phong"> Đăng nhập </a>/ <a href="/dang-ky-chu-phong">Đăng ký</a></button></li>
                     <?php }?>
