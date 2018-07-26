@@ -89,9 +89,13 @@ if(!isset($_COOKIE['origin_ref']))
 			  </div>
 			</div>
 			<div class="row" id="container-result">
-                <div><b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span></div>
-                <div class="text-right">
-                    <a style="border-radius: 30px;" href="/tim-kiem-theo-ban-do" class="btn btn-primary">Xem bằng bản đồ</a>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-9"><b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span></div>
+                        <div class="col-md-3 text-right">
+                            <a style="margin-top:-10px; border-radius: 30px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;" href="/tim-kiem-theo-ban-do" class="btn btn-primary" >Xem bằng bản đồ</a>
+                        </div>
+                    </div>
                 </div>
 				<div class="col-md-8 list-result">
 					<?php foreach($rooms as $item) { ?>

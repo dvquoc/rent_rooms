@@ -133,6 +133,7 @@ class ControllerFindList extends Controller {
                     'type' => 'Point',
                     'coordinates'=>[float($request_post['lng']),float($request_post['lat'])]
             ],
+            'source' =>'font-end',
             'adrress'         =>$request_post['address'],
             'seo_key'         =>'phòng trọ '.$request_post['name'],
             'seo_discription' =>"Phòng trọ gần ".$request_post['name']."sẽ giúp cho bạn thuận tiện việc đi lại"

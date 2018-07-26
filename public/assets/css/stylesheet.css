@@ -118,6 +118,17 @@ body.common-home .city-location-show, body.common-home .district-location-show{
     color: #999;
 }
 
+@-webkit-keyframes pulse-shadow--collection{
+    0%{-webkit-box-shadow:0 0;box-shadow:0 0}
+    70%{-webkit-box-shadow:0 0 5px 10px #03a9f485;box-shadow:0 0 5px 10px #03a9f485}
+    100%{-webkit-box-shadow:0 0 0 0 #03a9f485;box-shadow:0 0 0 0 #03a9f485}
+}
+@keyframes pulse-shadow--collection{
+    0%{-webkit-box-shadow:0 0;box-shadow:0 0}
+    70%{-webkit-box-shadow:0 0 5px 10px #03a9f485;box-shadow:0 0 5px 10px #03a9f485}
+    100%{-webkit-box-shadow:0 0 0 0 #03a9f485;box-shadow:0 0 0 0 #03a9f485}
+}
+
 
 
 
