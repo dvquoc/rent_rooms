@@ -21,6 +21,35 @@ function getURLVar(key) {
 		}
 	}
 }
+function ChangeToSlug(title)
+{
+    var slug;
+    /* Đổi chữ hoa thành chữ thường */
+    slug = title.toLowerCase();
+    /* Đổi ký tự có dấu thành không dấu */
+    slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+    slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+    slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+    slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+    slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+    slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+    slug = slug.replace(/đ/gi, 'd');
+    /* Xóa các ký tự đặt biệt */
+    slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+    /* Đổi khoảng trắng thành ký tự gạch ngang */
+    slug = slug.replace(/ /gi, " - ");
+    /* Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang */
+    /* Phòng trường hợp người nhập vào quá nhiều ký tự trắng */
+    slug = slug.replace(/\-\-\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-/gi, '-');
+    /* Xóa các ký tự gạch ngang ở đầu và cuối */
+    slug = '@' + slug + '@';
+    slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+    /* In slug ra textbox có id “slug” */
+    return slug;
+}
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -135,7 +164,7 @@ $(document).ready(function() {
         var myLatlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
         $("#search-map-input").data('lat',place.geometry.location.lat());
         $("#search-map-input").data('lgn',place.geometry.location.lng());
-        $("#search-map-input").data('slug', place.name.trim().replace(/\s{1,}/g,'-'));
+        $("#search-map-input").data('slug', ChangeToSlug(place.name.trim().replace(/\s{1,}/g,'-')));
         var location ={
             'city':null,
             'district': null
@@ -150,12 +179,14 @@ $(document).ready(function() {
         });
         var dataSend = {
             'name': place.name,
+            'place_id': place.place_id,
             'district_name': location.district,
             'city_name'    : location.city,
             'lat'        : place.geometry.location.lat(),
             'lng'        : place.geometry.location.lng(),
             'adrress'    : place.formatted_address,
         };
+        setCookie('special_search', JSON.stringify(dataSend));
         console.log(dataSend);
         /* return false; */
         $.ajax({

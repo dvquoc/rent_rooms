@@ -13,12 +13,6 @@ class ModelLocationLocationAdmin extends Model {
         parent::__construct($registry);
     }
 
-    function getOneById($table, $id){
-        $sql = "SELECT * FROM ".$table." WHERE ".$table."_id= ".$id;
-        $query = $this->db->query($sql);
-        return $query->row;
-    }
-
     function getAllCity(){
         $citys = $this->cache->get('city-cache');
         if(!$citys){
@@ -26,7 +20,6 @@ class ModelLocationLocationAdmin extends Model {
             $this->cache->set('city-cache', $result);
             return $result;
         }
-
         return $citys;
     }
 

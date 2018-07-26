@@ -8,7 +8,7 @@
             <div id="close-detail">
                 <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
             </div>
-            <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://lophocthietke.com/wp-content/uploads/2016/06/hoc-thiet-ke-quang-cao-tai-ha-noi.jpg" height="300px" width="100%"> </div>
+            <div class="img"><img style="border-radius: 3px 3px 0px 0px;" id="detail-img" src="http://www.nhatuidecor.com/wp-content/uploads/2015/10/td6.jpg" height="300px" width="100%"> </div>
             <div class="col-md-12" id="content-detail" style=" background-color: #fff; height: calc(100%-250px); overflow-y:scroll">
                 <h3 id="detail-title">Tiêu đề</h3>
                 <p id="detail-address"><b>Địa chỉ: </b><span></span></p>

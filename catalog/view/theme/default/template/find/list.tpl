@@ -28,7 +28,11 @@ if(!isset($_COOKIE['origin_ref']))
                         <?php } ?>
                     <?php } ?>
                     </ol>
-                    <h1 itemprop="name">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
+                    <h1 itemprop="name" style="font-size:20px; ">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
+                    <a style="float: right; margin-top:-90px;" href="/tim-kiem-theo-ban-do" >
+                        <span style="width: 10px; height: 10px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;"></span>
+                        Xem bằng bản đồ
+                    </a>
                 </div>
             </div>
 			<div class="row grid" id="featured">
@@ -65,15 +69,12 @@ if(!isset($_COOKIE['origin_ref']))
 			  </div>
 			</div>
 			<div class="row" id="container-result">
-                <div class="col-md-12">
+				<div class="col-md-8 list-result">
                     <div class="row">
-                        <div class="col-md-9"><b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span></div>
-                        <div class="col-md-3 text-right">
-                            <a style="margin-top:-10px; border-radius: 30px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;" href="/tim-kiem-theo-ban-do" class="btn btn-primary" >Xem bằng bản đồ</a>
+                        <div class="sort-search" style="padding:10px; border:1px solid #eee; margin-bottom: 15px">
+                            <b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span>
                         </div>
                     </div>
-                </div>
-				<div class="col-md-8 list-result">
 					<?php foreach($rooms as $item) { ?>
 					<div class="row" i-column" itemscope="" itemtype="http://schema.org/Product">
 						<?php
@@ -157,7 +158,7 @@ if(!isset($_COOKIE['origin_ref']))
 					</div>
 					<div class="clearfix"></div>
 					
-					<div class="tag" style="margin-top: 15px;">
+					<div class="tag-place" style="margin-top: 15px;">
 						<h3>Khu vực khac: Hồ Chí Minh</h3>
                         <div class="row">
                             <ul class="col-md-6" style="list-style-type: none">
@@ -179,8 +180,7 @@ if(!isset($_COOKIE['origin_ref']))
                         </div>
 					</div>
 					<div class="ad-r">
-						<img src="https://www.mainguyen.vn/img/2017/09/news/l/11231104_1563154727040692_4481018767909529242_o2373.jpg" class="img-responsive">
-                        <img style="margin: 10px 0px" src="http://resources2.cungmua.com/Product/161000/cm_161556.jpg" class="img-responsive">
+						<img style="margin: 10px 0px" src="https://www.mainguyen.vn/img/2017/09/news/l/11231104_1563154727040692_4481018767909529242_o2373.jpg" class="img-responsive">
 					</div>
 				</div>
 			</div>
@@ -194,6 +194,7 @@ if(!isset($_COOKIE['origin_ref']))
 		    loop:true,
 		    margin:10,
 		    nav:true,
+            navText:['<i class="fa fa-arrow-left"></i>','<i class="fa fa-arrow-right"></i>'],
 		    responsive:{
 		        0:{
 		            items:1
@@ -202,7 +203,7 @@ if(!isset($_COOKIE['origin_ref']))
 		            items:2
 		        },
 		        1000:{
-		            items:4
+		            items:5
 		        }
 		    }
 		})

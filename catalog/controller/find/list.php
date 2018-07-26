@@ -9,15 +9,12 @@ class ControllerFindList extends Controller {
     public function index($params) {
         $this->load->model('find/list');
         $get_request = $this->request->get;
-
-
         if(isset($_COOKIE['user_location'])){
             $params;
         }else{
             $semengts = explode('/',$get_request['_route_']);
         }
 
-        //var_dump($params); die();
         $data['type_page']=false;
         $data['info_seo']=false;
 
@@ -61,6 +58,13 @@ class ControllerFindList extends Controller {
             $data['type_page']='search-special';
             $data['point'] = $point =  ['lat'=>(double) $params['lat'], 'lgn'=>(double) $params['lgn']];
             $data_search['point'] = [(double) $params['lgn'],(double) $params['lat']];
+            if(isset($_COOKIE['special_search'])){
+                $info_special = json_decode($_COOKIE['special_search'],true);
+                $data['breadcrumbs'][] = [
+                    'text'=>'Gần '.$info_special['name'],
+                    'href'=>''
+                ];
+            }
             $data['info_seo'] = ['Get from database by location from url'];
         }
 
@@ -121,25 +125,49 @@ class ControllerFindList extends Controller {
    }
     public function saveSpecial(){
         $this->load->model('location/special');
-
         $request_post = $this->request->post;
-        $input = [
-            'name'            => $request_post['name'],
-            'district_id'     => $request_post['district_name'],
-            'city_id'         => $request_post['city_name'],
-            'view'            => 0,
-            'area'            =>null,
-            'location'        =>[
+
+        $citys = $this->model_location_special->getAllCity();
+        $city = $district = null;
+        foreach ($citys as $item){
+            if(preg_match("/[(.*?)\s]?".$request_post['city_name']."$/mi",$item['name'],$matches)){
+                $city = $item;
+            }
+        }
+        if(!$city)
+            exit();
+
+        $districts = $this->model_location_special->getDistrictByCity((int) $city['city_id']);
+        foreach ($districts as $item){
+            if(preg_match("/[(.*?)\s]?".$request_post['district_name']."$/mi",$item['name'],$matches)){
+                $district = $item;
+            }
+        }
+
+        if(!$district)
+            exit();
+
+
+        $check = $this->model_location_special->getOne(['place_id'=>$request_post['place_id']]);
+        if(empty($check)){
+            $input = [
+                'name'            => $request_post['name'],
+                'district_id'     => (int) $district['district_id'],
+                'city_id'         => (int) $city['city_id'],
+                'view'            => 0,
+                'area'            =>null,
+                'place_id'        => $request_post['place_id'],
+                'location'        =>[
                     'type' => 'Point',
-                    'coordinates'=>[float($request_post['lng']),float($request_post['lat'])]
-            ],
-            'source' =>'font-end',
-            'adrress'         =>$request_post['address'],
-            'seo_key'         =>'phòng trọ '.$request_post['name'],
-            'seo_discription' =>"Phòng trọ gần ".$request_post['name']."sẽ giúp cho bạn thuận tiện việc đi lại"
-        ];
-        var_dump($input); die();
-        $result = $this->model_location_special->add($input);
-        $this->session->data['success'] = $this->language->get('text_success');
+                    'coordinates'=>[(float) $request_post['lng'], (float) $request_post['lat']]
+                ],
+                'source' =>'font-end',
+                'adrress'         =>$request_post['address'],
+                'seo_key'         =>'phòng trọ '.$request_post['name'],
+                'seo_discription' =>"Phòng trọ gần ".$request_post['name']."sẽ giúp cho bạn thuận tiện việc đi lại"
+            ];
+            $result = $this->model_location_special->add($input);
+            var_dump($result); die();
+        }
     }
 }
