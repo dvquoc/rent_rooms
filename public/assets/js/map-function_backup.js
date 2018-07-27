@@ -86,40 +86,32 @@ function controlAttachEvents(events, object, handler) {
         bind(events, handler);
 };
 
-function OverlayView(map, $div, opts=null) {
+function OverlayView(map, latLng, $div, opts=null) {
     var self = this,
         listeners = [];
     self.setMap(map);
     self.onAdd = function () {
         var panes = self.getPanes();
         if ($div.hasClass('canvas-marker')){
-            $(panes['overlayLayer']).html("");
             $(panes['overlayLayer']).append($div);
         }
         else{
-            $(panes['floatPane']).html("");
             $(panes['floatPane']).append($div);
-            $.each("dblclick click mouseover mousemove mouseout mouseup mousedown".split(" "), function (i, name) {
-                listeners.push(
-                    google.maps.event.addDomListener($div[0], name, function (e) {
-                        $.Event(e).stopPropagation();
-                        google.maps.event.trigger(self, name, [e]);
-                    })
-                );
-            });
         }
+        $.each("dblclick click mouseover mousemove mouseout mouseup mousedown".split(" "), function (i, name) {
+            listeners.push(
+                google.maps.event.addDomListener($div[0], name, function (e) {
+                    $.Event(e).stopPropagation();
+                    google.maps.event.trigger(self, name, [e]);
+                })
+            );
+        });
 
     };
     self.draw = function () {
-        if($div.attr('id') == 'pin-container'){
-            $.each($div.find('.pin-overlay'),function (key,item) {
-                var position = new google.maps.LatLng($(item).data('lat'), $(item).data('lgn'));
-                var ps = self.getProjection().fromLatLngToDivPixel(position);
-                if (!$div.hasClass('canvas-marker'))
-                    $(item).css("left", (ps.x) + "px").css("top", (ps.y) + "px").fadeIn(300);
-            });
-
-        }
+        var ps = self.getProjection().fromLatLngToDivPixel(latLng);
+        if (opts != null && !$div.hasClass('canvas-marker'))
+            $div.css("left", (ps.x + opts.offset.x) + "px").css("top", (ps.y + opts.offset.y) + "px").fadeIn(300);
     };
     self.onRemove = function () {
         var i;
@@ -189,6 +181,7 @@ function isInTooltip(mp,o,p) {
     return true;
 }
 
+
 var _m, _mr, polygon_history = [], overlays = [], _bounds = null, _canvas = null, nubLayout = 10, layoutEleData=[];
 var data_maker = [];
 var class_ov = new google.maps.OverlayView();
@@ -240,11 +233,6 @@ var mapRooms = function ($el, options) {
     this.map = _m = new google.maps.Map($el.get(0), this.setting);
     this.element = $el;
     this.init();
-
-    if (!OverlayView.__initialised) {
-        OverlayView.prototype = class_ov;
-        OverlayView.__initialised = true;
-    }
 };
 // Add prototype for mapRooms and public function in this prototype
 $.extend(mapRooms.prototype, {
@@ -309,16 +297,12 @@ $.extend(mapRooms.prototype, {
         /* dragstart Event */
         var firstMouse = [];
         _m.addListener('dragstart', function () {
-            $("#pin-container").remove();
             firstMouse.push($("#root").offset().left);
             firstMouse.push($("#root").offset().top);
             _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
         });
-
-
         /* Idle Event */
         var count1 = 0;
-
         this.map.addListener( 'idle', function() {
             console.log('load map finish...');
             var border = [];
@@ -340,7 +324,6 @@ $.extend(mapRooms.prototype, {
 
         /* Center changed Event */
         _m.addListener('center_changed', function () {
-            $("#pin-container").remove();
             if (canvas != null) {
                 var moveX = firstMouse.length ? -(_mr.element.width() / 2) + (firstMouse[0] - $("#root").offset().left) : -(_mr.element.width() / 2);
                 var moveY = firstMouse.length ? -(_mr.element.height() / 2) + (firstMouse[1] - $("#root").offset().top) : -(_mr.element.height() / 2);
@@ -360,22 +343,26 @@ $.extend(mapRooms.prototype, {
         }
     },
     drawCanvas: function () {
+        if (!OverlayView.__initialised) {
+            OverlayView.prototype = class_ov;
+            OverlayView.__initialised = true;
+        }
         /* Canvas into map */
         $div = $(document.createElement("div")).css({}).addClass('canvas-marker');
         //var myCanvas = new Canvas($div);
         $div.append('<canvas class="fastmarker-overlay-canvas" id="fastmarker-overlay-canvas" width="' + this.element.width() + '" height="' + this.element.height() + '" style="user-select: none; transform: translate3d(' + -(this.element.width() / 2) + 'px,' + -(this.element.height() / 2) + 'px, 0px);"></canvas>');
-        new OverlayView(_m, $div);
+        new OverlayView(_m, _mr.fromPixelToLatLng({x: 0, y: 0}), $div);
 
         /*  Set to context 2d to draw pin small into map */
         canvas = $div.find("#fastmarker-overlay-canvas")[0];
         _canvas = canvas.getContext("2d");
-        _canvas.fillStyle = "#007332";
+        _canvas.fillStyle = "#e92440";
 
         /* Add elment root to know move pixel */
         $div = $(document.createElement("div")).css({'color': '#fff'});
         $div.append('<div id="root" style="display: none; user-select: none;">Root</div>');
         var opts = { offset: {x: 0, y: 0}};
-        new OverlayView(_m, $div, opts);
+        new OverlayView(_m, _mr.fromPixelToLatLng({x: 0, y: 0}), $div, opts);
     },
     addItemToCanvas: function () {
         layoutEleData.forEach(function (t, k) {
@@ -383,8 +370,8 @@ $.extend(mapRooms.prototype, {
                 z.forEach(function (i,key) {
                     _canvas.beginPath();
                     _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
-                    _canvas.lineWidth = 8;
-                    _canvas.strokeStyle = '#0b8841c5';
+                    _canvas.lineWidth = 4;
+                    _canvas.strokeStyle = '#e9244080';
                     _canvas.stroke();
                     _canvas.fill();
                     _canvas.closePath();
@@ -625,22 +612,22 @@ $.extend(mapRooms.prototype, {
         if (!data_overlay.values.length) {
             return;
         }
-        $div = $(document.createElement("div")).css({
-            border: "none",
-            borderWidth: 0,
-            position: "absolute"
-        });
-        $div.attr('id','pin-container');
+        overlays = [];
         $.each(data_overlay.values, function (i, item) {
-            $(item.options.content).data('lat',item.latLng[0]);
-            $(item.options.content).data('lgn',item.latLng[1]);
-            $div.append($(item.options.content));
+            var obj;
+            $div = $(document.createElement("div")).css({
+                border: "none",
+                display: 'none',
+                borderWidth: 0,
+                position: "absolute"
+            });
+            $div.append(item.options.content);
+            obj = new OverlayView(_m, new google.maps.LatLng(item.latLng[0], item.latLng[1]), $div, item.options);
+            overlays.push(obj);
+            item.events = data_overlay.events;
+            attachEvents(_m, _mr.element, item, obj, $div);
+            $div = null; // memory leak
         });
-
-        var obj = new OverlayView(_m, $div);
-        // item.events = data_overlay.events;
-        // attachEvents(_m, _mr.element, item, obj, $div);
-        // $div = null; // memory leak
     },
     overlayAction: function (action) {
         $.each(overlays, function (i, item) {
@@ -926,7 +913,6 @@ $.extend(mapRooms.prototype, {
             var data = response.data.listing;
             markers_data = [];
             _mr.overlayAction('delete');
-
             $.each(data, function (key, item) {
                 markers_data.push({
                     latitude: item.location.coordinates[1],
@@ -935,7 +921,7 @@ $.extend(mapRooms.prototype, {
                     data: item,
                     options: {
                         pane: "floatPane",
-                        content: '<div  data-toggle="popover" data-lat="'+item.location.coordinates[1]+'" data-lgn="'+item.location.coordinates[0]+'" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
+                        content: '<div data-toggle="popover" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
                         offset: {x: 0, y: 0},
                         draggable: true,
                     }
