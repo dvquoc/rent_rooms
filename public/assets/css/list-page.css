@@ -2,6 +2,16 @@
 #col-r{
     position: sticky;top: 68px;
 }
+.view-map{
+    float: right;
+    margin-top: -90px;
+    color: #000;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.view-map span{
+    width: 10px; height: 10px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;
+}
 #featured{
     margin-bottom: 20px;
 }
@@ -150,18 +160,31 @@ margin:3px 0;
     font-size: 13px;
 }
 .tag .arena{
-    padding: 2px 5px;
-    margin: 3px 3px;
-    border: 1px solid #03A9F4;
-    background-color: #9fdaf5;
+    padding: 7px 5px 7px 35px;
+    margin: 4px 0px;
+    border: 1px solid #d6d6d6;
     border-radius: 3px;
-    display: inline-block;
+    display: inherit;
     color: #000;
     font-size: 14px;
+    background: url(https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png) no-repeat #f3f3f3 5px 5px;
+    background-size: 25px;
+}
+.tag .arena:hover{
+    padding: 7px 5px 7px 35px;
+    margin: 4px 0px;
+    border: 1px solid #03A9F4;
+    border-radius: 3px;
+    display: inherit;
+    color: #000;
+    font-size: 14px;
+    background: url("https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png") no-repeat #9fdaf5 5px 5px;
+    background-size: 25px;
 }
 .tag-place ul{
     list-style-type: none;
     margin: 0px;
+    padding: 0px;
 }
 .tag-place a{
     color: #2196F3;

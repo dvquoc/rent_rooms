@@ -66,8 +66,12 @@ body>.container{
 }
 /* Footer */
 footer{
-	background-color: #eee;
-	padding-top: 20px;
+    background-color:#f9f9f9;
+    padding-top: 20px;
+    color: #7a7a7a;
+    font-size: 14px;
+    margin-top: 20px;
+    border-top: 1px solid #dedddd;
 }
 #close-location-user{
     position: absolute;
@@ -119,15 +123,40 @@ body.common-home .city-location-show, body.common-home .district-location-show{
 }
 
 @-webkit-keyframes pulse-shadow--collection{
-    0%{-webkit-box-shadow:0 0;box-shadow:0 0}
-    70%{-webkit-box-shadow:0 0 5px 10px #03a9f485;box-shadow:0 0 5px 10px #03a9f485}
-    100%{-webkit-box-shadow:0 0 0 0 #03a9f485;box-shadow:0 0 0 0 #03a9f485}
+    0%{
+        -webkit-box-shadow:0 0;
+        box-shadow:0 0;
+        background-color: #4d86f9;
+    }
+    70%{
+        -webkit-box-shadow:0 0 5px 10px #03a9f485;
+        box-shadow:0 0 5px 10px #03a9f485;
+        background-color:#7cd2f9;
+    }
+    100%{
+        -webkit-box-shadow:0 0 0 0 #03a9f485;
+        box-shadow:0 0 0 0 #03a9f485;
+        background-color:#fff;
+    }
 }
 @keyframes pulse-shadow--collection{
-    0%{-webkit-box-shadow:0 0;box-shadow:0 0}
-    70%{-webkit-box-shadow:0 0 5px 10px #03a9f485;box-shadow:0 0 5px 10px #03a9f485}
-    100%{-webkit-box-shadow:0 0 0 0 #03a9f485;box-shadow:0 0 0 0 #03a9f485}
+    0%{
+        -webkit-box-shadow:0 0 #03a9f485;
+        box-shadow:0 0 #03a9f485;
+        background-color: #2196F3;
+    }
+    70%{
+        -webkit-box-shadow:0 0 5px 10px #03a9f485;
+        box-shadow:0 0 5px 10px #03a9f485;
+        background-color: #2d506d;
+    }
+    100%{
+        -webkit-box-shadow:0 0 0 0 #03a9f485;
+        box-shadow:0 0 0 0 #03a9f485;
+        background-color:#fff;
+    }
 }
+
 
 
 

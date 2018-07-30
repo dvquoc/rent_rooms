@@ -16,7 +16,7 @@
     <meta name="description" content="<?php echo $meta_description; ?>">
     <meta name="keywords" content="SATELLITE">
 
-    <link rel="shortcut icon" href="https://thachpham.com/wp-content/uploads/2015/01/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://www.renderitcreative.com/wp-content/uploads/2016/05/renderitcreative_new-favicon-05.2016-1.png" type="image/x-icon">
     <link rel="canonical" href="https://thachpham.com/wordpress/wordpress-development/wordpress-loop-cac-tham-quan-trong.html">
     <link rel="publisher" href="https://plus.google.com/b/113591657045991604117/+Thachpham">
     <?php foreach ($links as $link) { ?>
@@ -84,11 +84,33 @@
                     <li>
                         <input id="search-map-input" type="text" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom">
                     </li>
-                    <li>
-                        <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;">
+                    <li class="dropup">
+                        <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li><a href="javascript:;">< 1 triệu</a></li>
+                            <li><a href="javascript:;">1 triệu - 1.5 triệu</a></li>
+                            <li><a href="javascript:;">1.5 triệu - 2 triệu</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="javascript:;">2 triệu - 2.5 triệu</a></li>
+                            <li><a href="javascript:;">2.5 triệu - 3 triệu</a></li>
+                            <li><a href="javascript:;">3.5 triệu - 4 triệu</a></li>
+                            <li><a href="javascript:;">4.5 triệu - 5 triệu</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="javascript:;"> > 5 triệu</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;">
+                    <li class="dropup">
+                        <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li><a href="javascript:;">< 10 m2</a></li>
+                            <li><a href="javascript:;">10 m2 - 15 m2</a></li>
+                            <li><a href="javascript:;">15 m2 - 20 m2</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="javascript:;">20 m2 - 25 m2</a></li>
+                            <li><a href="javascript:;">25 m2 - 30 m2</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="javascript:;"> Nhà nguyên căn</a></li>
+                        </ul>
                     </li>
                     <li>
                         <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-arrow-right" aria-hidden="true"></span></button>

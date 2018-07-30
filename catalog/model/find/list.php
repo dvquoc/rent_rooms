@@ -15,7 +15,7 @@ class ModelFindList extends Model {
         $filter = [];
     	 $options =[
             'sort' => ['rooms_id'=>1],
-            'limit'=>10,
+            'limit'=>20,
             'skip' =>0
         ];
         if(isset($data['price']) && !empty($data['price'])){
@@ -34,8 +34,9 @@ class ModelFindList extends Model {
             $filter['slug_district_name']= $data['slug_district_name'];
         }
 
+        $filter['status']= 1;
+
     	if(isset($data['point']) && !empty($data['point'])){
-             //var_dump(json_encode($data['region'])); die();
              $data = array(
                  'type'       =>'Point',
                  'coordinates'=>$data['point']
@@ -56,15 +57,11 @@ class ModelFindList extends Model {
                 ],[
                     '$skip' =>0
                 ]
-
             ];
             $result = $this->table->aggregate($pipeline)->toArray();
         }else{
             $result = $this->table->find($filter,$options)->toArray();
         }
-
-
-
         return $result;
     }
     public function get_list_featured(){

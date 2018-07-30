@@ -22,15 +22,14 @@ class ModelLocationLocation extends model{
     }
 
     function getDistrictByCity($city_id){
-        return $this->db->district->find(['city_id'=> $city_id])->toArray();
+        return $this->db->district->find(['city_id'=> (int) $city_id])->toArray();
     }
     function getCityById($city_id){
-
-        return $this->db->city->find(['city_id'=> $city_id])->toArray();
+        return $this->db->city->findOne(['city_id'=> (int) $city_id]);
     }
     function getDistrictById($district_id){
 
-        return $this->db->district->find(['district_id'=> $district_id])->toArray();
+        return $this->db->district->findOne(['district_id'=> $district_id]);
     }
 
     public function get_city_by_name($name){

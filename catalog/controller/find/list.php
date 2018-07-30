@@ -32,29 +32,8 @@ class ControllerFindList extends Controller {
             'href'=>'/'
         ]);
 
-        if(isset($params['city'])){
-            $data_search['slug_city_name'] = $params['city'];
-            $cityInfoByCache = $this->cache->get('city-cache-'.$params['city']);
-            $data['type_page']='search-city';
-            $data['info_seo'] = $cityInfoByCache;
-            $data['breadcrumbs'][] = [
-                'text'=>$cityInfoByCache['name'],
-                'href'=>'/tim-kiem/'.$params['city']
-            ];
-        }
-
-        if(isset($params['district'])){
-            if($cityInfoByCache){
-                $data['type_page']='search-district';
-                $data_search['slug_district_name'] = $params['district'];
-                $districtInfoByCache = $this->cache->get('district-of-city-'.$cityInfoByCache['city_id'].'-cache');
-                $data['info_seo'] = $districtInfoByCache;
-                $data['breadcrumbs'][] = [
-                    'text'=>$districtInfoByCache['name'],
-                    'href'=>'/tim-kiem/'.$params['city'].'/'.$params['district']
-                ];
-            }
-        }
+        $data['district_in_city'] = [];
+        $data['city'] = [];
 
         if(isset($params['lat']) && isset($params['lgn'])){
             $data['type_page']='search-special';
@@ -71,6 +50,33 @@ class ControllerFindList extends Controller {
             }
 
         }
+
+        if(isset($params['city'])){
+            $data_search['slug_city_name'] = $params['city'];
+            $cityInfoByCache = $this->cache->get('city-cache-'.$params['city']);
+            $data['type_page']='search-city';
+            $data['info_seo'] = $cityInfoByCache;
+            $data['breadcrumbs'][] = [
+                'text'=>$cityInfoByCache['name'],
+                'href'=>'/tim-kiem/'.$params['city']
+            ];
+        }
+        $data['district_in_city'] = $this->model_location_location->getDistrictByCity($data['info_seo']['city_id']);
+        $data['city'] = $this->model_location_location->getCityById($data['info_seo']['city_id']);
+
+        if(isset($params['district'])){
+            if($cityInfoByCache){
+                $data['type_page']='search-district';
+                $data_search['slug_district_name'] = $params['district'];
+                $districtInfoByCache = $this->cache->get('district-of-city-'.$cityInfoByCache['city_id'].'-cache');
+                $data['info_seo'] = $districtInfoByCache;
+                $data['breadcrumbs'][] = [
+                    'text'=>$districtInfoByCache['name'],
+                    'href'=>'/tim-kiem/'.$params['city'].'/'.$params['district']
+                ];
+            }
+        }
+
 
         //var_dump($data['info_seo']); die();
         /* Document get info page */
@@ -174,8 +180,8 @@ class ControllerFindList extends Controller {
                 ],
                 'source' =>'font-end',
                 'adrress'         =>$request_post['address'],
-                'seo_key'         =>'phòng trọ '.$request_post['name'],
-                'seo_discription' =>"Phòng trọ gần ".$request_post['name']."sẽ giúp cho bạn thuận tiện việc đi lại"
+                'meta_keyword'         =>'phòng trọ '.$request_post['name'],
+                'meta_description' =>"Phòng trọ gần ".$request_post['name']." sẽ giúp cho bạn thuận tiện việc đi lại"
             ];
             $result = $this->model_location_special->add($input);
             var_dump($result); die();
