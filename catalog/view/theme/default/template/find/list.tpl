@@ -75,6 +75,7 @@ if(!isset($_COOKIE['origin_ref']))
                             <b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span>
                         </div>
                     </div>
+                    <?php if(!empty($rooms)) { ?>
 					<?php foreach($rooms as $item) { ?>
 					<div class="row" i-column" itemscope="" itemtype="http://schema.org/Product">
 						<?php
@@ -131,6 +132,9 @@ if(!isset($_COOKIE['origin_ref']))
 							<div class="clearfix"></div>
 						</a>
 					</div>
+                    <?php } ?>
+					<?php }else{ ?>
+                        <div class="text-center"><h3>Rất tiếc ! Chúng tôi đã không tìm thấy phòng trọ nào</h3></div>
 					<?php } ?>
                     <div class="row ">
                         <div class="col-md-12 seo_description">

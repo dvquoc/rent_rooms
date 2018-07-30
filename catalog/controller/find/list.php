@@ -72,6 +72,7 @@ class ControllerFindList extends Controller {
 
         }
 
+        //var_dump($data['info_seo']); die();
         /* Document get info page */
         $this->document->setTitle($data['info_seo']['name']);
         $this->document->setDescription($data['info_seo']['meta_description']);

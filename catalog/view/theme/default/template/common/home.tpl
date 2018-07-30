@@ -50,7 +50,7 @@
                     </a>
                     <a href="javascript:;" class="btn-home-sevice pull-left">
                         <i class="fa fa-truck"></i>
-                        Vận chuyển
+                        Labala
                     </a>
                     <a href="javascript:;" class="btn-home-sevice pull-left">
                         <i class="fa fa-building"></i>
