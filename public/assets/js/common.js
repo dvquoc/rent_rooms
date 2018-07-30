@@ -187,8 +187,6 @@ $(document).ready(function() {
             'adrress'    : place.formatted_address,
         };
         setCookie('special_search', JSON.stringify(dataSend));
-        console.log(dataSend);
-        /* return false; */
         $.ajax({
             url: "/find/list/save-special",
             type: "POST",

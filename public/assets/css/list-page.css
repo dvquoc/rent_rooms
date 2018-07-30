@@ -69,10 +69,15 @@
     background-color: #00ba51;color: #fff;
 }
 .list-info .title{
-    color: #202124;line-height: 14px;
+    color: #202124;
+    line-height: 22px;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 .mf{
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
 }
 .mf .i b{
    font-size: 15px;color: #4e4e4e;
@@ -94,11 +99,12 @@ margin-right: 5px; font-size: 14px;
 }
 .call-button{
     position: absolute;
-    top: 6px;
-    right: 8px;
-    border-radius: 5%!important;
+    top: calc(50% - 20px);
+    right: 15px;
+    border-radius: 100%!important;
     padding: 5px;
-    border-radius: 10;
+    width: 40px;
+    height: 40px;
 }
 /* Layout grid */
 .grid{

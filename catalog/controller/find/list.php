@@ -8,6 +8,8 @@
 class ControllerFindList extends Controller {
     public function index($params) {
         $this->load->model('find/list');
+        $this->load->model('location/location');
+
         $get_request = $this->request->get;
         if(isset($_COOKIE['user_location'])){
             $params;
@@ -60,17 +62,25 @@ class ControllerFindList extends Controller {
             $data_search['point'] = [(double) $params['lgn'],(double) $params['lat']];
             if(isset($_COOKIE['special_search'])){
                 $info_special = json_decode($_COOKIE['special_search'],true);
+                $this->load->model('location/special');
+                $data['info_seo'] = $this->model_location_special->getOne(['place_id'=>$info_special['place_id']]);
                 $data['breadcrumbs'][] = [
                     'text'=>'Gần '.$info_special['name'],
                     'href'=>''
                 ];
             }
-            $data['info_seo'] = ['Get from database by location from url'];
+
         }
 
-        //var_dump($data['breadcrumbs']); die();
-
         /* Document get info page */
+        $this->document->setTitle($data['info_seo']['name']);
+        $this->document->setDescription($data['info_seo']['meta_description']);
+        $this->document->setKeywords($data['info_seo']['meta_keyword']);
+        $this->document->addLink("/tim-kiem/phong-tro-gan-truong-cao-dang-cong-nghe-thu-duc/10.8522445,106.75858930000004", 'canonical');
+
+
+//      $this->document->addScript('catalog/view/javascript/jquery/tabs.js');
+//      $this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
         //var_dump($data_search) ; die();
         $data['rooms'] = $this->model_find_list->get_list($data_search);
@@ -125,9 +135,10 @@ class ControllerFindList extends Controller {
    }
     public function saveSpecial(){
         $this->load->model('location/special');
+        $this->load->model('location/location');
         $request_post = $this->request->post;
 
-        $citys = $this->model_location_special->getAllCity();
+        $citys = $this->model_location_location->getAllCity();
         $city = $district = null;
         foreach ($citys as $item){
             if(preg_match("/[(.*?)\s]?".$request_post['city_name']."$/mi",$item['name'],$matches)){
@@ -137,7 +148,7 @@ class ControllerFindList extends Controller {
         if(!$city)
             exit();
 
-        $districts = $this->model_location_special->getDistrictByCity((int) $city['city_id']);
+        $districts = $this->model_location_location->getDistrictByCity((int) $city['city_id']);
         foreach ($districts as $item){
             if(preg_match("/[(.*?)\s]?".$request_post['district_name']."$/mi",$item['name'],$matches)){
                 $district = $item;
@@ -146,7 +157,6 @@ class ControllerFindList extends Controller {
 
         if(!$district)
             exit();
-
 
         $check = $this->model_location_special->getOne(['place_id'=>$request_post['place_id']]);
         if(empty($check)){

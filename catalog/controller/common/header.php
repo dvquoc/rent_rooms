@@ -1,7 +1,14 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
-		$data['title']= "Trang header";
+        $this->data['title'] = $this->document->getTitle();
+        $this->data['base'] = "url page";
+        $this->data['description'] = $this->document->getDescription();
+        $this->data['keywords'] = $this->document->getKeywords();
+        $this->data['links'] = $this->document->getLinks();
+        $this->data['styles'] = $this->document->getStyles();
+        $this->data['scripts'] = $this->document->getScripts();
+
 
 		$data['menu_map']= $this->url->link_seo('tim-kiem-theo-ban-do','SSL');
 		$data['list']= $this->url->link_seo('tim-kiem-theo-list','SSL');

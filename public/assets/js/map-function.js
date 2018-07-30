@@ -93,22 +93,31 @@ function OverlayView(map, $div, opts=null) {
     self.onAdd = function () {
         var panes = self.getPanes();
         if ($div.hasClass('canvas-marker')){
-            $(panes['overlayLayer']).html("");
-            $(panes['overlayLayer']).append($div);
+            panes.overlayImage.appendChild($div.get(0));
+            console.log($div.get(0));
+            //$(panes['overlayLayer']).append($div);
+            $div.get(0).addEventListener("mousemove", function(){
+
+            });
         }
         else{
             $(panes['floatPane']).html("");
             $(panes['floatPane']).append($div);
-            $.each("dblclick click mouseover mousemove mouseout mouseup mousedown".split(" "), function (i, name) {
-                listeners.push(
-                    google.maps.event.addDomListener($div[0], name, function (e) {
-                        $.Event(e).stopPropagation();
-                        google.maps.event.trigger(self, name, [e]);
-                    })
-                );
-            });
-        }
+            if($div.attr('id') == 'pin-container'){
+                $.each($div.find('.pin-overlay'),function (key,item) {
+                    $.each("dblclick click mouseover mousemove mouseout mouseup mousedown".split(" "), function (i, name) {
+                        listeners.push(
+                            google.maps.event.addDomListener($(item)[0], name, function (e) {
+                                $.Event(e).stopPropagation();
+                                google.maps.event.trigger(self, name, [e]);
+                            })
+                        );
+                    });
+                });
 
+            }
+
+        }
     };
     self.draw = function () {
         if($div.attr('id') == 'pin-container'){
@@ -175,7 +184,7 @@ _Canvas.prototype.click = function (e) {
 
 /* Add event click */
 function isIntersect(mp,p) {
-    return Math.sqrt((mp.x-p.x) ** 2 + (mp.y - p.y) ** 2) < 10;
+    return Math.sqrt((mp.x-p.x) ** 2 + (mp.y - p.y) ** 2) < 6;
 }
 /* Add event click */
 function isInTooltip(mp,o,p) {
@@ -266,41 +275,6 @@ $.extend(mapRooms.prototype, {
             $("#toolip-detail-on-pin").find('.arrow').fadeOut('fast');
         });
 
-        /* Click Event */
-        var show = false;
-        var t = $("#toolip-detail-on-pin");
-        var lastClick = {x:0,y:0};
-        _m.addListener('click',function (e) {
-            const p = { x: e.pixel.x, y: e.pixel.y };
-            var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
-            var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
-            if (!isInTooltip(p, t, lastClick) && lastClick.y!=0) {
-                t.fadeOut(1);
-                t.find('.arrow').fadeOut(1);
-            }
-            layoutEleData[rowKey][colKey].forEach(function (i, k) {
-                if (isIntersect(p, i)) {
-                    lastClick = i;
-                    //console.log(p);
-                    //console.log(layoutEleData[rowKey][colKey]);
-                    t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - t.outerHeight(true) - 10});
-                    t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 10 + "px"});
-
-                    t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
-                    t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
-                    t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
-                    t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
-                    t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
-                    $("#detail-title").text(i.data.name);
-                    $("#show-detail").show();
-                    $("#detail-address span").text(i.data.address);
-                    var imgs = JSON.parse(i.data.images);
-                    return false;
-                }
-            });
-
-        });
-
         /* mouseover Event */
         _m.addListener('mouseover', function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -369,13 +343,82 @@ $.extend(mapRooms.prototype, {
         /*  Set to context 2d to draw pin small into map */
         canvas = $div.find("#fastmarker-overlay-canvas")[0];
         _canvas = canvas.getContext("2d");
-        _canvas.fillStyle = "#007332";
+        _canvas.fillStyle = "#0b8841";
 
         /* Add elment root to know move pixel */
         $div = $(document.createElement("div")).css({'color': '#fff'});
         $div.append('<div id="root" style="display: none; user-select: none;">Root</div>');
         var opts = { offset: {x: 0, y: 0}};
         new OverlayView(_m, $div, opts);
+
+        /* mousemover canvas Event */
+        var show = false;
+        var t = $("#toolip-detail-on-pin");
+        var lastClick = {x:0,y:0};
+        $(document).on('mousemove','.canvas-marker',function (e) {
+            console.log(e);
+            const p = { x: e.offsetX, y: e.offsetY };
+            var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
+            var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
+            if (!isInTooltip(p, t, lastClick) && lastClick.y!=0) {
+                t.fadeOut(1);
+                t.find('.arrow').fadeOut(1);
+                $(".canvas-marker").css({'cursor':''});
+            }
+            layoutEleData[rowKey][colKey].forEach(function (i, k) {
+                if (isIntersect(p, i)) {
+                    $(".canvas-marker").css({'cursor':'pointer'});
+                    lastClick = i;
+                    //console.log(p);
+                    //console.log(layoutEleData[rowKey][colKey]);
+                    // t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - t.outerHeight(true) - 10});
+                    // t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 10 + "px"});
+                    //
+                    // t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
+                    // t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
+                    // t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
+                    // t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
+                    // t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
+                    $("#detail-title").text(i.data.name);
+                    $("#show-detail").show();
+                    $("#detail-address span").text(i.data.address);
+                    var imgs = JSON.parse(i.data.images);
+                    return false;
+                }
+            });
+
+        });
+        $(document).on('click','.canvas-marker',function (e) {
+            console.log(e);
+            const p = { x: e.offsetX, y: e.offsetY };
+            var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
+            var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
+            if (!isInTooltip(p, t, lastClick) && lastClick.y!=0) {
+                t.fadeOut(1);
+                t.find('.arrow').fadeOut(1);
+            }
+            layoutEleData[rowKey][colKey].forEach(function (i, k) {
+                if (isIntersect(p, i)) {
+                    $(".canvas-marker").css({'cursor':'pointer'});
+                    lastClick = i;
+                    console.log(layoutEleData[rowKey][colKey]);
+                    t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - (t.outerHeight(true)/2) -30});
+                    t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 2 + "px"});
+
+                    t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
+                    t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
+                    t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
+                    t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
+                    t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
+                    $("#detail-title").text(i.data.name);
+                    $("#show-detail").show();
+                    $("#detail-address span").text(i.data.address);
+                    var imgs = JSON.parse(i.data.images);
+                    return false;
+                }
+            });
+
+        });
     },
     addItemToCanvas: function () {
         layoutEleData.forEach(function (t, k) {
@@ -383,8 +426,8 @@ $.extend(mapRooms.prototype, {
                 z.forEach(function (i,key) {
                     _canvas.beginPath();
                     _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
-                    _canvas.lineWidth = 8;
-                    _canvas.strokeStyle = '#0b8841c5';
+                    _canvas.lineWidth = 1;
+                    _canvas.strokeStyle = '#fff';
                     _canvas.stroke();
                     _canvas.fill();
                     _canvas.closePath();

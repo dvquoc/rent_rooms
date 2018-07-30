@@ -28,7 +28,7 @@ if(!isset($_COOKIE['origin_ref']))
                         <?php } ?>
                     <?php } ?>
                     </ol>
-                    <h1 itemprop="name" style="font-size:20px; ">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
+                    <h1 itemprop="name" class="text-center" style="font-size:20px; ">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
                     <a style="float: right; margin-top:-90px;" href="/tim-kiem-theo-ban-do" >
                         <span style="width: 10px; height: 10px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;"></span>
                         Xem bằng bản đồ
@@ -93,7 +93,7 @@ if(!isset($_COOKIE['origin_ref']))
 								<img itemprop="image" alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive" >
 							</div> 
 							<div class="col-md-9 list-info pull-right">
-								<div itemprop="name" class="title"><b><?php echo $item['name'];?></b></div>
+								<h3 itemprop="name" class="title"><?php echo $item['name'];?> <?php echo $item['name'];?></h3>
 								<div class="f-i">
 									<div class="i d">
 										Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
@@ -115,16 +115,18 @@ if(!isset($_COOKIE['origin_ref']))
 									</div>
 									<div class="i are"> - </div>
 									<div class="i are">
+                                        Tiền nước:
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['acreage'];?></b> / Khối / Người
+										<b><?php echo $item['acreage'];?></b>  Khối / Người
 									</div>
 									<div class="i are">
+                                        Tiền điện:
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['acreage'];?></b> / kW
+										<b><?php echo $item['acreage'];?></b>  kW
 									</div>
 								</div>
 								
-								<button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i> gọi điện</button>
+								<button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i></button>
 							</div>
 							<div class="clearfix"></div>
 						</a>
