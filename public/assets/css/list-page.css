@@ -160,26 +160,20 @@ margin:3px 0;
     font-size: 13px;
 }
 .tag .arena{
-    padding: 7px 5px 7px 35px;
+    padding: 5px 5px 5px 30px;
     margin: 4px 0px;
     border: 1px solid #d6d6d6;
     border-radius: 3px;
     display: inherit;
     color: #000;
     font-size: 14px;
-    background: url(https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png) no-repeat #f3f3f3 5px 5px;
-    background-size: 25px;
+    background: url(https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png) no-repeat #f3f3f3 5px 6px;
+    background-size: 20px;
 }
 .tag .arena:hover{
-    padding: 7px 5px 7px 35px;
-    margin: 4px 0px;
     border: 1px solid #03A9F4;
-    border-radius: 3px;
-    display: inherit;
-    color: #000;
-    font-size: 14px;
-    background: url("https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png") no-repeat #9fdaf5 5px 5px;
-    background-size: 25px;
+    background: url("https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png") no-repeat #9fdaf5 5px 6px;
+    background-size: 20px;
 }
 .tag-place ul{
     list-style-type: none;
