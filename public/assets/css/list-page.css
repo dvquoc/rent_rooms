@@ -1,16 +1,16 @@
 
-#col-l,#col-r{
+#col-r{
     position: sticky;top: 68px;
 }
-#col-l .footer{
-    font-size: 11px;color:#383838;background-color: #ccc; bottom: 0px; left:0px;position:absolute; padding:10px; margin: 10px;
+.view-map{
+    float: right;
+    margin-top: -90px;
+    color: #000;
+    font-weight: bold;
+    margin-right: 10px;
 }
-#col-l .footer p{margin:0; line-height: 15px;}
-#col-l .btn{
-    width: 100%;margin-bottom: 3px;
-}
-.list-right{
-    border-left: 1px solid #e7e7e7; 
+.view-map span{
+    width: 10px; height: 10px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;
 }
 #featured{
     margin-bottom: 20px;
@@ -28,6 +28,8 @@
 }
 .list-img{
     padding: 0;margin: 0px;
+    height:115px;
+    overflow: hidden;
 }
 .list-info{
     position: relative;
@@ -77,10 +79,15 @@
     background-color: #00ba51;color: #fff;
 }
 .list-info .title{
-    color: #202124;line-height: 14px;
+    color: #202124;
+    line-height: 22px;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 .mf{
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
 }
 .mf .i b{
    font-size: 15px;color: #4e4e4e;
@@ -102,11 +109,12 @@ margin-right: 5px; font-size: 14px;
 }
 .call-button{
     position: absolute;
-    top: 6px;
-    right: 8px;
-    border-radius: 5%!important;
+    top: calc(50% - 20px);
+    right: 15px;
+    border-radius: 100%!important;
     padding: 5px;
-    border-radius: 10;
+    width: 40px;
+    height: 40px;
 }
 /* Layout grid */
 .grid{
@@ -134,7 +142,7 @@ margin-right: 5px; font-size: 14px;
     line-height: 20px;
 }
 .img .i b{
-    font-size: 14px;background-color: #94CB02;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
+    font-size: 14px;background-color:#00ba51;border-radius: 3px; padding: 2px 5px; margin-right: 5px;
 }
 .img .i.price{
     left: 5px;
@@ -152,12 +160,57 @@ margin:3px 0;
     font-size: 13px;
 }
 .tag .arena{
-    padding: 3px 5px;margin: 5px 3px; border:1px solid #ccc;border-radius: 3px; display: inline-block;
+    padding: 5px 5px 5px 30px;
+    margin: 4px 0px;
+    border: 1px solid #d6d6d6;
+    border-radius: 3px;
+    display: inherit;
+    color: #000;
+    font-size: 14px;
+    background: url(https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png) no-repeat #f3f3f3 5px 6px;
+    background-size: 20px;
+}
+.tag .arena:hover{
+    border: 1px solid #03A9F4;
+    background: url("https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png") no-repeat #9fdaf5 5px 6px;
+    background-size: 20px;
+}
+.tag-place ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.tag-place a{
+    color: #2196F3;
+    font-size: 14px;
+    font-weight: bold;
 }
 .owl-carousel .owl-stage-outer{
     padding-top: 15px;
 }
+.owl-carousel{
+    position: relative;
+}
+.owl-carousel .owl-prev{
+    position: absolute;
+    left: -5px;
+    top:30%;
+}
 
+.owl-carousel .owl-next{
+    position: absolute;
+    right: -5px;
+    top:30%;
+}
+.owl-nav >div{
+    width: 40px;
+    height:40px;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 1px 1px 7px -2px #000;
+    text-align: center;
+    line-height: 40px;
+}
  .error{
-        color: red;
-    }
+   color: red;
+}

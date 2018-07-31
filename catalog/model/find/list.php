@@ -11,9 +11,10 @@ class ModelFindList extends Model {
         $this->table = $this->db->rooms;
     }
     public function get_list($data = array()){
+
         $filter = [];
     	 $options =[
-            'sort' => ['room_id'=>1],
+            'sort' => ['rooms_id'=>1],
             'limit'=>20,
             'skip' =>0
         ];
@@ -24,14 +25,43 @@ class ModelFindList extends Model {
         if(isset($data['acreage']) && !empty($data['acreage'])){
             $filter['acreage']= $data['acreage'];
         }
-    	if(isset($data['region']) && !empty($data['region'])){
-             $data = array(
-                 'type'       =>'Polygon',
-                 'coordinates'=>[$data['region']]
-             );
-             $filter['location']= ['$geoWithin'=>['$geometry'=>$data]];
+
+        if(isset($data['slug_city_name']) && !empty($data['slug_city_name'])){
+            $filter['slug_city_name']= $data['slug_city_name'];
         }
-    	$result = $this->table->find($filter,$options)->toArray();
+
+        if(isset($data['slug_district_name']) && !empty($data['slug_district_name'])){
+            $filter['slug_district_name']= $data['slug_district_name'];
+        }
+
+        $filter['status']= 1;
+
+    	if(isset($data['point']) && !empty($data['point'])){
+             $data = array(
+                 'type'       =>'Point',
+                 'coordinates'=>$data['point']
+             );
+            $pipeline = [
+                [
+                    '$geoNear' => [
+                        'near' =>$data,
+                        'distanceField' => "calculated",
+                        'includeLocs'=> "location",
+                        'maxDistance' => 3000,
+                        'spherical'=> true,
+                        'query'=>$filter
+                    ],
+
+                ],[
+                    '$limit' => 10,
+                ],[
+                    '$skip' =>0
+                ]
+            ];
+            $result = $this->table->aggregate($pipeline)->toArray();
+        }else{
+            $result = $this->table->find($filter,$options)->toArray();
+        }
         return $result;
     }
     public function get_list_featured(){

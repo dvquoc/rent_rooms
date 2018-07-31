@@ -53,11 +53,14 @@ class ControllerCommonSeoUrl extends Controller {
         return false;
     }
     public function getRegex($pattern){
-        if (preg_match('/[^-:\/_{}()a-zA-Z\d]/', $pattern))
+        if (preg_match('/[^-:\/_{}()a-zA-Z\d\,\.]/', $pattern)){ // Check $pattern không có chuổi nàys
             return false; // Invalid pattern
+        }
         // Turn "(/)" into "/?"
         $pattern = preg_replace('#\(/\)#', '/?', $pattern);
-        $allowedParamChars = '[a-zA-Z0-9\_\-]+';
+
+        // Cho phép các ký tự này trong mẫu
+        $allowedParamChars = '[a-zA-Z0-9\_\-\,\.]+';
 
         //Khai báo theo ":parameter"
         $pattern = preg_replace(

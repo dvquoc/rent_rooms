@@ -8,8 +8,11 @@
 $router =  $registry->get('routes');
 //detail rooms
 $router->add(['/tim-kiem-theo-ban-do','find/map']);
-$router->add(['/tim-kiem-phong-tro/{city}/{district}','find/list']);
-$router->add(['/tim-kiem-phong-tro/{city}','find/list']);
+
+$router->add(['/tim-kiem/phong-tro-gan-{special}/{lat},{lgn}','find/list']);
+$router->add(['/tim-kiem/{city}/{district}','find/list']);
+
+$router->add(['/tim-kiem/{city}','find/list']);
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
 //*******************************Owner******************************//
 //Owner login

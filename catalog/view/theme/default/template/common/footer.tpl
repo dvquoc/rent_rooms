@@ -1,9 +1,16 @@
 <footer>
-    <p class="text-center">Copyright @ Conphong.com</p>
+    <div class="container">
+    <div class="text-center"><img src="https://static.chotot.com.vn/storage/marketplace/shield-iconx4.png" width="60"></div>
+    <p class="text-center">Mô tả blabla về dịch vụ phòng trọ Mô tả blabla về dịch vụ phòng trọ Mô tả blabla về dịch vụ phòng trọ Mô tả blabla về dịch vụ phòng trọ Mô tả blabla về dịch vụ phòng trọ Mô tả blabla về dịch vụ phòng trọ Mô tả blabla về dịch vụ phòng trọ</p>
+        <p class="text-center"><b style="color: #000;">Copyright @ Conphong.com</b></p>
+        <p class="text-center" style="font-size: 13px;">CÔNG TY TNHH CHỢ TỐT - Địa chỉ: Phòng 1808, Tầng 18, Mê Linh Point Tower, 02 Ngô Đức Kế, Phường Bến Nghé, Quận 1, TP Hồ Chí Minh
+            Giấy chứng nhận đăng ký doanh nghiệp số 0312120782 do Sở Kế Hoạch và Đầu Tư TPHCM cấp ngày 11/01/2013
+            Email: trogiup@chotot.vn - Đường dây nóng: (028)38664041</p>
+    </div>
 </footer>
 <div class="modal fade" id="get-location-user">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 500px">
             <button type="button" class="close" id="close-location-user" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <div class="modal-body" style="padding-bottom: 0px;">
                 <div class="header-location-user">
@@ -13,14 +20,14 @@
                     <div class="col-md-6">
                         <select name="city-location" id="city-location" class="form-control" style="border-radius: 3px; padding: 5px; border: 0px solid #e0e0e0; background-color:#f1f1f1; margin-bottom: 20px">
                             <?php foreach($citys as $item){ ?>
-                            <option value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
+                                <option data-slug="<?php echo $item['slug_city'] ?>" value="<?php echo $item->city_id ?>"><?php echo $item->name ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <select name="district-location" id="district-location" class="form-control" style="border-radius: 3px; padding: 5px; border: 0px solid #e0e0e0; background-color:#f1f1f1; margin-bottom: 20px">
                             <?php foreach($districts as $item){ ?>
-                            <option value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
+                            <option data-slug="<?php echo $item['slug_district'] ?>" value="<?php echo $item->district_id ?>"><?php echo $item->name ?></option>
                             <?php } ?>
                         </select>
                     </div>

@@ -73,7 +73,10 @@
         <div class="row">
             <div class="col-md-5">
                 <h1 style="margin-bottom: 0; font-size: 22px;" class="text-info"><?php echo $detail['name']?></h1>
-                <div style="color: #333; font-size: 13px" class="text-address"><?php echo $detail['address']?></div>
+                <div style="color: #333; font-size: 13px" class="text-address">
+                    <img width="20" align="left" src="https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png">
+                    <?php echo $detail['address']?>
+                </div>
             </div>
             <div class="col-md-2">
                 <b class="text-title">Giá thuê phòng</b>
@@ -147,7 +150,7 @@
                                     </div>
                                 </div>
 
-                                <button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i> gọi điện</button>
+                                <button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i></button>
                             </div>
                             <div class="clearfix"></div>
                             </a>

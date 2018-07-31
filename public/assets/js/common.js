@@ -21,6 +21,57 @@ function getURLVar(key) {
 		}
 	}
 }
+function ChangeToSlug(title)
+{
+    var slug;
+    /* Đổi chữ hoa thành chữ thường */
+    slug = title.toLowerCase();
+    /* Đổi ký tự có dấu thành không dấu */
+    slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+    slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+    slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+    slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+    slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+    slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+    slug = slug.replace(/đ/gi, 'd');
+    /* Xóa các ký tự đặt biệt */
+    slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+    /* Đổi khoảng trắng thành ký tự gạch ngang */
+    slug = slug.replace(/ /gi, " - ");
+    /* Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang */
+    /* Phòng trường hợp người nhập vào quá nhiều ký tự trắng */
+    slug = slug.replace(/\-\-\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-\-/gi, '-');
+    slug = slug.replace(/\-\-/gi, '-');
+    /* Xóa các ký tự gạch ngang ở đầu và cuối */
+    slug = '@' + slug + '@';
+    slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+    /* In slug ra textbox có id “slug” */
+    return slug;
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 $(document).ready(function() {
     function loadPinMap(data) {
         var region = [];
@@ -104,19 +155,55 @@ $(document).ready(function() {
     };
     control = document.getElementById('search-map-input');
     var searchBox = new google.maps.places.Autocomplete(control, options_auto);
-    google.maps.event.addListener(searchBox, 'place_changed', function () {
-        var place = searchBox.getPlace();
-        console.log(place);
-    });
     searchBox.addListener('place_changed', function () {
         var place = searchBox.getPlace();
         if (!place.geometry) {
             return;
         }
+        console.log(place);
         var myLatlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
         $("#search-map-input").data('lat',place.geometry.location.lat());
         $("#search-map-input").data('lgn',place.geometry.location.lng());
-        console.log(drawCircle(myLatlng, 3, 1));
+        $("#search-map-input").data('slug', ChangeToSlug(place.name.trim().replace(/\s{1,}/g,'-')));
+        var location ={
+            'city':null,
+            'district': null
+        };
+        $.each(place.address_components,function (key,item) {
+            if(item.types.includes('administrative_area_level_2')){
+                location.district = item.long_name;
+            }
+            if(item.types.includes('administrative_area_level_1')){
+                location.city = item.long_name;
+            }
+        });
+        var dataSend = {
+            'name': place.name,
+            'place_id': place.place_id,
+            'district_name': location.district,
+            'city_name'    : location.city,
+            'lat'        : place.geometry.location.lat(),
+            'lng'        : place.geometry.location.lng(),
+            'adrress'    : place.formatted_address,
+        };
+        setCookie('special_search', JSON.stringify(dataSend));
+        $.ajax({
+            url: "/find/list/save-special",
+            type: "POST",
+            data: dataSend,
+        }).done(function (response) {
+            console.log(response);
+            if (response.code == 200) {
+
+            } else {
+
+            }
+        }).fail(function () {
+
+        }).always(function () {
+
+        });
+
     });
     var location_user = {
         'city_location_value': 1,
@@ -126,6 +213,7 @@ $(document).ready(function() {
         'district_location_text': "Huyện Bình Chánh",
         'district_slug': 'huyen-binh-chanh',
     };
+    setCookie('user_location', JSON.stringify(location_user));
     $("#set-location-user").click(function () {
         var dataSave = {
             'city_location_value': $("#city-location").val(),
@@ -140,7 +228,9 @@ $(document).ready(function() {
         $(".district-location-show").text(dataSave.district_location_text);
         $("#get-location-user").modal('hide');
         location_user =dataSave;
+        setCookie('user_location', JSON.stringify(location_user));
     });
+
     if (typeof(Storage) !== "undefined") {
         if(!localStorage.getItem("location_user")) {
             setTimeout(function () {
@@ -156,17 +246,36 @@ $(document).ready(function() {
     } else {
        console.log("Không hỗ trợ localstorage");
     }
+
     $("#btn-s-h").click(function () {
-        console.log(location_user);
         var params = {};
         $('#price-input').val().trim().length !=0 ? params.gia= parseFloat($('#price-input').val().trim()): false;
         $('#area-input').val().trim().length !=0 ? params.dien_tich= parseFloat($('#area-input').val().trim()): false;
-        ($("#search-map-input").data('lat').length !=0 &&  $("#search-map-input").data('lgn').length !=0) ? params.location= $("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn') : false;
-        window.location.href = '/tim-kiem-phong-tro/'+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');
+
+        if(!($("#search-map-input").data('lat') &&  $("#search-map-input").data('lgn'))){
+            window.location.href = '/tim-kiem/'+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');
+        }else{
+            window.location.href = '/tim-kiem/phong-tro-gan-'+$("#search-map-input").data('slug')+'/'+$("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn')+(!$.isEmptyObject(params) ? "?"+$.param( params ):'');
+        }
     });
-    var visitortime = new Date();
-    var visitortimezone = "GMT " + -visitortime.getTimezoneOffset()/60;
-    console.log(visitortimezone);
+
+    function success(position) {
+        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        console.log(latlngs);
+    }
+
+    function error(msg) {
+        var s = document.querySelector('#status');
+        console.log(arguments);
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+        error('not supported');
+    }
+
+
 });
 
 (function($) {
