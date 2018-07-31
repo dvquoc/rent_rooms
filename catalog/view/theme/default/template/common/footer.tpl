@@ -53,5 +53,6 @@
         </div>
     </div>
 </div>
+<script src="/public/assets/js/lazy-load-custom.js" type="text/javascript"></script>
 </body>
 </html>

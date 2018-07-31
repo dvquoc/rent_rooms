@@ -34,13 +34,13 @@
 
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
-    <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
+    <!--link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css" -->
     <!--
     <link href="/admin-rooms/view/javascript/bootstrap/opencart/opencart.css" type="text/css" rel="stylesheet" />
     <link type="text/css" href="/admin-rooms/view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
     <link href="/public/assets/css/amination.css" rel="stylesheet"-->
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/assets/js/font-awesome/css/font-awesome.min.css">
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
     <?php foreach ($styles as $style) { ?>
     <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
@@ -48,9 +48,9 @@
 
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
-    <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+    <!-- script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script -->
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!--script src='https://www.google.com/recaptcha/api.js'></script-->
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi" type="text/javascript"></script>
     <?php foreach ($scripts as $script) { ?>
         <script type="text/javascript" src="<?php echo $script; ?>"></script>

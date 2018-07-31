@@ -91,7 +91,7 @@ if(!isset($_COOKIE['origin_ref']))
 							</ul>
 							<div class="col-md-3 list-img">
 								<?php  $img = json_decode($item["images"],true); ?>
-								<img itemprop="image" alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive" >
+								<img itemprop="image"  alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" src="http://blog.dynamicdrive.com/wp-content/uploads/2017/01/lazyload.png" onerror="this.src='http://blog.dynamicdrive.com/wp-content/uploads/2017/01/lazyload.png" data-src="<?php echo $img[0]['link'];?>" class="lazy img-responsive" >
 							</div> 
 							<div class="col-md-9 list-info pull-right">
 								<h3 itemprop="name" class="title"><?php echo $item['name'];?> <?php echo $item['name'];?></h3>
