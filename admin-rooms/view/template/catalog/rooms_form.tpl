@@ -1,8 +1,8 @@
 <?php echo $header; ?>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=vi" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
 <?php echo $column_left; ?>
 <div id="content">
-  <div class="page-header">
+  <div class="page-header"> 
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
@@ -392,7 +392,7 @@
     var searchBox = new google.maps.places.Autocomplete(input);
     searchBox.setTypes(['address']);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+    var address_components = {};
     var marker = new google.maps.Marker({
         position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         map: map,
@@ -414,7 +414,26 @@
             draggable: true
         });
 
-        map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+        var address_lengh = place.address_components.length;
+        var location = {};
+        for(var i = address_lengh-1; i>=0; i--){
+            if(place.address_components[i].types[0]=='administrative_area_level_1'){
+                location.city= place.address_components[i].long_name;
+                 address_components.city_name = place.address_components[i].long_name;
+            }
+            if(place.address_components[i].types[0]=='administrative_area_level_2'){
+                location.district= place.address_components[i].long_name;
+                address_components.district_name = place.address_components[i].long_name;
+            }
+        }
+        $('input[name=lng]').val(place.geometry.location.lng());
+        $('input[name=lat]').val(place.geometry.location.lat());
+
+        $.each($("select[name=city_id] option"), function(key, item){
+            if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
+                 $("select[name=city_id]").val($(item).attr('value')).change();
+            }
+        });
 
         google.maps.event.addListener(marker, 'drag', function() {
             updateMarkerPosition(marker.getPosition());
@@ -475,19 +494,22 @@
         pickTime: true
     });
     $("#tab-general select").change(function () {
-        if($(this).attr('name') == 'city'){
+        if($(this).attr('name') == 'city_id'){
             $.ajax({
                 url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
                 dataType: 'json',
                 success: function(json) {
-                    $('select[name=\'district\']').html('');
-                    $.map(json, function(item) {
-                        $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
-                    });
+                  $('select[name=\'district_id\']').html('');
+                  $.map(json, function(item) {
+                      $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                      if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
+                           $("select[name=district_id]").val(item.id).change();
+                      }
+                  });
                 }
             });
         }
-        if($(this).attr('name') == 'district'){
+        if($(this).attr('name') == 'district_id'){
             var district_select = $(this).val();
             console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
             $.ajax({
