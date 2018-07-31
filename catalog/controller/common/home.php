@@ -7,6 +7,9 @@ class ControllerCommonHome extends Controller {
         $data['citys'] = $this->model_location_location_admin->getAllCity();
         $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data['citys'][0]->city_id);
 
+        $this->load->model('location/special');
+        $data['specials'] = $this->model_location_special->getSpecialByDistrict(24);
+
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/home.tpl')) {
             $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/home.tpl', $data));
         } else {

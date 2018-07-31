@@ -9,6 +9,7 @@ class ControllerCommonHeaderHome extends Controller {
         $this->load->public_model('location/location_admin');
         $data['citys'] = $this->model_location_location_admin->getAllCity();
         $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data['citys'][0]->city_id);
+
         $data['classPage'] = '';
 		if(isset($this->request->get['route']))
             $data['classPage'] = str_replace('/','-', $this->request->get['route']);

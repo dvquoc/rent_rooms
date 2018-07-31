@@ -29,17 +29,24 @@
                     <button id="btn-s-h" style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>
                 </li>
             </ul>
+
+
+            <?php if(!empty($specials)){ ?>
             <div id="sugget-special">
                 <div class="inner-sugget">
                     <ul>
-                        <li><a href="javascript;;">Trường Cao Đẳng Công Nghệ Thủ Đức</a> </li>
-                        <li><a href="javascript;;">Trường Cao Đẳng Công Thương</a> </li>
-                        <li><a href="javascript;;">Khu Công Nghệ Cao</a> </li>
-                        <li><a href="javascript;;">Khu Chế Xuất Linh Trung</a> </li>
-                        <li><a href="javascript;;">Trường Đại Học Nông Lâm</a> </li>
+                        <?php foreach($specials as $special){ ?>
+                            <li>
+                                <a href="/tim-kiem/phong-tro-gan-slug-slug/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena">
+                                    <?php echo $special['name'] ?>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
+            <?php } ?>
+
             <div id="other-service">
                 <h2 class="title-other-service">Các dịch vụ khác</h2>
                 <p>Trải nghiệm với các dịch vụ tuyệt với của chúng tôi</p>
