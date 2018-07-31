@@ -1,5 +1,8 @@
 
 <?php echo $header; ?>
+<link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
+<link href="/public/assets/css/opencart.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen" />
 <style type="text/css">
     #filter-rooms .item{
         margin-bottom: 10px;

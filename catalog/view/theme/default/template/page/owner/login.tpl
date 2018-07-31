@@ -1,7 +1,6 @@
-<?php echo $header ; 
-?>
+<?php echo $header ; ?> 
 <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <div id="wrapper" class="simple-page_wrapper">
     <div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
 
@@ -59,6 +58,7 @@
         </div>
     </div>
 </div>
+<?php echo $footer ; ?> 
 <script type="text/javascript">
    
     function login(){

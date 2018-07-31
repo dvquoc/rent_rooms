@@ -10,6 +10,7 @@ class ControllerPageOwnerRegister extends Controller {
         if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){
             $this->response->redirect('/thong-tin-chu-tro');
         }
+        $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/register.tpl')) {
             $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/owner/register.tpl', $data));

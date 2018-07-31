@@ -1,7 +1,7 @@
-<?php echo $header ;
- 
-?>
+<?php echo $header ;?>
  <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
+    <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+ <script src='https://www.google.com/recaptcha/api.js'></script>
 <style type="text/css">
     .error{
         color: red;
@@ -81,6 +81,7 @@
     	</div>
 	</div>
 </div>
+<?php echo $footer ; ?> 
 <script type="text/javascript">
     $(document).ready(function() {
           $("#form_register").validate({

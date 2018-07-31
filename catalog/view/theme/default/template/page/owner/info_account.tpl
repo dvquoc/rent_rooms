@@ -108,6 +108,9 @@ span.req {
         <div class="col-md-3"></div>
     </div>
 </div>
+<?php echo $footer ;
+
+?>
 <script type="text/javascript">
     $(document).ready(function() {
          $("#form_update").validate({
