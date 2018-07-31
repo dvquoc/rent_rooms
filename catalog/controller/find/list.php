@@ -9,6 +9,7 @@ class ControllerFindList extends Controller {
     public function index($params) {
         $this->load->model('find/list');
         $this->load->model('location/location');
+        $this->load->model('location/special');
 
         $get_request = $this->request->get;
         if(isset($_COOKIE['user_location'])){
@@ -34,11 +35,14 @@ class ControllerFindList extends Controller {
 
         $data['district_in_city'] = [];
         $data['city'] = [];
+        $data['specials'] = [];
 
         if(isset($params['lat']) && isset($params['lgn'])){
             $data['type_page']='search-special';
             $data['point'] = $point =  ['lat'=>(double) $params['lat'], 'lgn'=>(double) $params['lgn']];
             $data_search['point'] = [(double) $params['lgn'],(double) $params['lat']];
+            $data['specials'] = $this->model_location_special->get_list($data_search);
+            //@TODO: Get special from DB
             if(isset($_COOKIE['special_search'])){
                 $info_special = json_decode($_COOKIE['special_search'],true);
                 $this->load->model('location/special');
@@ -48,7 +52,6 @@ class ControllerFindList extends Controller {
                     'href'=>''
                 ];
             }
-
         }
 
         if(isset($params['city'])){
@@ -60,6 +63,7 @@ class ControllerFindList extends Controller {
                 'text'=>$cityInfoByCache['name'],
                 'href'=>'/tim-kiem/'.$params['city']
             ];
+            $data['specials'] = $this->model_location_special->getSpecialByCity($cityInfoByCache['city_id']);
         }
         $data['district_in_city'] = $this->model_location_location->getDistrictByCity($data['info_seo']['city_id']);
         $data['city'] = $this->model_location_location->getCityById($data['info_seo']['city_id']);
@@ -68,12 +72,14 @@ class ControllerFindList extends Controller {
             if($cityInfoByCache){
                 $data['type_page']='search-district';
                 $data_search['slug_district_name'] = $params['district'];
-                $districtInfoByCache = $this->cache->get('district-of-city-'.$cityInfoByCache['city_id'].'-cache');
+                $districtInfoByCache = $this->model_location_location->get_district_by_slug($params['district'],$cityInfoByCache->city_id);
                 $data['info_seo'] = $districtInfoByCache;
                 $data['breadcrumbs'][] = [
                     'text'=>$districtInfoByCache['name'],
                     'href'=>'/tim-kiem/'.$params['city'].'/'.$params['district']
                 ];
+
+                $data['specials'] = $this->model_location_special->getSpecialByDistrict($districtInfoByCache->district_id);
             }
         }
 
@@ -165,15 +171,22 @@ class ControllerFindList extends Controller {
         if(!$district)
             exit();
 
+        $types =[
+                "university",
+                "school",
+                "point_of_interest",
+                "establishment"
+        ];
         $check = $this->model_location_special->getOne(['place_id'=>$request_post['place_id']]);
         if(empty($check)){
             $input = [
                 'name'            => $request_post['name'],
                 'district_id'     => (int) $district['district_id'],
                 'city_id'         => (int) $city['city_id'],
-                'view'            => 0,
+                'view'            => 1,
                 'area'            =>null,
                 'place_id'        => $request_post['place_id'],
+                'types'           => $request_post['types'],
                 'location'        =>[
                     'type' => 'Point',
                     'coordinates'=>[(float) $request_post['lng'], (float) $request_post['lat']]
@@ -184,7 +197,9 @@ class ControllerFindList extends Controller {
                 'meta_description' =>"Phòng trọ gần ".$request_post['name']." sẽ giúp cho bạn thuận tiện việc đi lại"
             ];
             $result = $this->model_location_special->add($input);
-            var_dump($result); die();
+        }else{
+            $result = $this->model_location_special->update($check->place_id,['view'=> ++ $check->view]);
         }
+        exit();
     }
 }

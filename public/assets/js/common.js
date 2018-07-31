@@ -1,19 +1,14 @@
 function getURLVar(key) {
 	var value = [];
-
 	var query = String(document.location).split('?');
-
 	if (query[1]) {
 		var part = query[1].split('&');
-
 		for (i = 0; i < part.length; i++) {
 			var data = part[i].split('=');
-
 			if (data[0] && data[1]) {
 				value[data[0]] = data[1];
 			}
 		}
-
 		if (value[key]) {
 			return value[key];
 		} else {
@@ -73,75 +68,25 @@ function getCookie(cname) {
 }
 
 $(document).ready(function() {
-    function loadPinMap(data) {
-        var region = [];
-        $.each(data, function (key, item) {
-            region.push([item.lng(), item.lat()])
-        });
-        var dataSend = {
-            region: JSON.stringify(region),
-            other: null
-        };
-        $.ajax({
-            url: "/find/map/find-map",
-            data: dataSend,
-            type: "post",
-            dataType: "json",
-            async:false,
-            cache:false,
-            beforeSend: function (xhr) {
-                //_mr.element.append('<div class="loadding-map"><img src="http://www.coinnews.net/files/support/loading.gif" algin="left">Đang tải dữ liệu...</div>');
-            }
-        }).done(function (response) {
-            var data = response.data.listing;
-            console.log(data);
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);
-        }).always(function () {
-        });
-    }
-    function drawPolygon(data_input, type = true, full=false) {
-        console.log('Draw polygon...');
-        bounds = new google.maps.LatLngBounds();
-        var data_draw = [];
-        if (type) {
-            data_input.push(data_input[0]);
-            data_draw = data_input;
-            $.each(data_input, function (k, v) {
-                bounds.extend(v);
-            });
-        } else {
-            data_input.push(data_input[0]);
-            $.each(data_input, function (k, v) {
-                data_draw.push(new google.maps.LatLng(v[0], v[1]));
-                bounds.extend(new google.maps.LatLng(v[0], v[1]));
-            });
-        }
-        loadPinMap(data_draw);
-    }
     function drawCircle(point, radius, dir) {
-        var d2r = Math.PI / 180;   // degrees to radians
-        var r2d = 180 / Math.PI;   // radians to degrees
-        var earthsradius = 3963; // 3963 is the radius of the earth in miles
-
+        var d2r = Math.PI / 180;
+        var r2d = 180 / Math.PI;
+        var earthsradius = 3963;
         var points = 32;
-
-        // find the raidus in lat/lon
         var rlat = (radius / earthsradius) * r2d;
         var rlng = rlat / Math.cos(point.lat() * d2r);
-
         var extp = new Array();
         if (dir == 1) {
             var start = 0;
-            var end = points + 1; // one extra here makes sure we connect the path
+            var end = points + 1;
         } else {
             var start = points + 1;
             var end = 0;
         }
         for (var i = start; (dir == 1 ? i < end : i > end); i = i + dir) {
             var theta = Math.PI * (i / (points / 2));
-            ey = point.lng() + (rlng * Math.cos(theta)); // center a + radius x * cos(theta)
-            ex = point.lat() + (rlat * Math.sin(theta)); // center b + radius y * sin(theta)
+            ey = point.lng() + (rlng * Math.cos(theta));
+            ex = point.lat() + (rlat * Math.sin(theta));
             extp.push(new google.maps.LatLng(ex, ey));
         }
         return extp;
@@ -151,16 +96,35 @@ $(document).ready(function() {
         componentRestrictions: {country: 'vn'},
         language: 'vi',
         //bounds: _bounds,
-        strictBounds: true
+        strictBounds: true,
     };
+
     control = document.getElementById('search-map-input');
+    control.addEventListener("keypress", function () {
+        var options = {
+            input: control.value,
+            region: 'VN',
+        };
+        function callback(predictions, status) {
+            if(status=='OK'){
+                for (var i = 0, prediction; prediction = predictions[i]; i++) {
+                    results.push(prediction);
+                }
+                console.log(results);
+            }else{
+                console.log('Đã có lỗi xảy ra, Gửi thông báo cho quản trị viên webite');
+            }
+        }
+        var service = new google.maps.places.AutocompleteService();
+        service.getPlacePredictions(options, callback);
+        var results = [];
+    });
     var searchBox = new google.maps.places.Autocomplete(control, options_auto);
     searchBox.addListener('place_changed', function () {
         var place = searchBox.getPlace();
         if (!place.geometry) {
             return;
         }
-        console.log(place);
         var myLatlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
         $("#search-map-input").data('lat',place.geometry.location.lat());
         $("#search-map-input").data('lgn',place.geometry.location.lng());
@@ -185,7 +149,10 @@ $(document).ready(function() {
             'lat'        : place.geometry.location.lat(),
             'lng'        : place.geometry.location.lng(),
             'adrress'    : place.formatted_address,
+            'types'      : place.types
         };
+        console.log(place);
+        console.log(dataSend);
         setCookie('special_search', JSON.stringify(dataSend));
         $.ajax({
             url: "/find/list/save-special",
@@ -199,11 +166,8 @@ $(document).ready(function() {
 
             }
         }).fail(function () {
-
         }).always(function () {
-
         });
-
     });
     var location_user = {
         'city_location_value': 1,
@@ -214,6 +178,7 @@ $(document).ready(function() {
         'district_slug': 'huyen-binh-chanh',
     };
     setCookie('user_location', JSON.stringify(location_user));
+
     $("#set-location-user").click(function () {
         var dataSave = {
             'city_location_value': $("#city-location").val(),
@@ -231,6 +196,7 @@ $(document).ready(function() {
         setCookie('user_location', JSON.stringify(location_user));
     });
 
+    /* Lấy thông location từ user */
     if (typeof(Storage) !== "undefined") {
         if(!localStorage.getItem("location_user")) {
             setTimeout(function () {
@@ -247,6 +213,7 @@ $(document).ready(function() {
        console.log("Không hỗ trợ localstorage");
     }
 
+    /* Nhấn tìm kiếm phòng trọ */
     $("#btn-s-h").click(function () {
         var params = {};
         $('#price-input').val().trim().length !=0 ? params.gia= parseFloat($('#price-input').val().trim()): false;
@@ -263,19 +230,15 @@ $(document).ready(function() {
         var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         console.log(latlngs);
     }
-
     function error(msg) {
         var s = document.querySelector('#status');
         console.log(arguments);
     }
-
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error);
     } else {
         error('not supported');
     }
-
-
 });
 
 (function($) {

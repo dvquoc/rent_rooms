@@ -28,48 +28,49 @@ if(!isset($_COOKIE['origin_ref']))
                         <?php } ?>
                     <?php } ?>
                     </ol>
-                    <h1 itemprop="name" class="text-center" style="font-size:20px; ">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
                     <a class="view-map" href="/tim-kiem-theo-ban-do" >
                         <span></span>
                         Xem bằng bản đồ
                     </a>
                 </div>
             </div>
-			<div class="row grid" id="featured">
-			<div class="col-md-12 top-title">
-					<h3 style="margin-bottom: 0">Phòng trọ tốt nhất khu vực này</h3>
-			</div>
-			  <div class="owl-carousel col-md-12">
-			    <?php foreach($featured as $item) { ?>
-					<div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
-						<?php 
+
+			<div class="row" id="container-result">
+				<div class="col-md-8 list-result">
+                    <h1 itemprop="name" class="tex-left" style="font-size:20px; ">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
+                    <div class="row grid" id="featured">
+                        <div class="top-title">
+                            <h3 style="margin-bottom: 0">Phòng trọ tốt nhất khu vực này</h3>
+                        </div>
+                        <div class="owl-carousel">
+                            <?php foreach($featured as $item) { ?>
+                            <div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
+                                <?php
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
 							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
 							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
 						?>
-						<a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
-							<button class="context-menu-button icon">test</button>
-							<ul class="dropdown" style="display: none;">
-								<li class="item">Lưu xem sau</li>
-								<li class="item">Chia sẽ</li>
-							</ul>
-							<div class="img">
-								<?php  $img = json_decode($item["images"],true); ?>
-								<img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
-								<div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu/tháng</div>
-								<div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
-							</div>
-							<div class="read">
-								<div class="name cut-text"><?php echo $item['name'];?></div>
-								<div class="address cut-text"><?php echo $item['address'];?></div>
-							</div>
-						</a>
-					</div>
-				<?php }?>
-			  </div>
-			</div>
-			<div class="row" id="container-result">
-				<div class="col-md-8 list-result">
+                                <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
+                                <button class="context-menu-button icon">test</button>
+                                <ul class="dropdown" style="display: none;">
+                                    <li class="item">Lưu xem sau</li>
+                                    <li class="item">Chia sẽ</li>
+                                </ul>
+                                <div class="img">
+                                    <?php  $img = json_decode($item["images"],true); ?>
+                                    <img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
+                                    <div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu/tháng</div>
+                                    <div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
+                                </div>
+                                <div class="read">
+                                    <div class="name cut-text"><?php echo $item['name'];?></div>
+                                    <div class="address cut-text"><?php echo $item['address'];?></div>
+                                </div>
+                                </a>
+                            </div>
+                            <?php }?>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="sort-search" style="padding:10px; border:1px solid #eee; margin-bottom: 15px">
                             <b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span>
@@ -101,7 +102,7 @@ if(!isset($_COOKIE['origin_ref']))
 									</div>
                                     <?php if(isset($point)) { ?>
                                         <div class="i d">
-                                                Cách khoản: <span><?php echo ($item['calculated']>1000 ? round($item['calculated']/1000,1).'Km': round($item['calculated'],0).'m') ?> </span>
+                                                Cách khoản: <span style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;"><?php echo ($item['calculated']>1000 ? round($item['calculated']/1000,1).'Km': round($item['calculated'],0).'m') ?> </span>
                                         </div>
                                     <?php } ?>
 								</div>
@@ -146,23 +147,18 @@ if(!isset($_COOKIE['origin_ref']))
                     </div>
 				</div>
 				<div class="col-md-4 near" id="col-r">
-					<div>
-						<h3>Mọi người cũng tìm kiếm khu vực này</h3>
-					</div>
-					<div class="tag">
-						<a href="" class="arena">Khu công Công nghệ cao</a>
-						<a href="" class="arena">Sư phạm kỹ thuật</a>
-						<a href="" class="arena">Coopmart Quận 9</a>
-						<a href="" class="arena">Cao đẳng Công nghệ thủ đức</a>
-						<a href="" class="arena">Suối tiên</a>
-						<a href="" class="arena">Đường Lê Văn Việt</a>
-						<a href="" class="arena">Nhà văn hóa thanh niên Thử Đức</a>
-                        <a href="" class="arena">Coopmart Quận 9</a>
-
-					</div>
-					<div class="clearfix"></div>
-					
-					<div class="tag-place" style="margin-top: 15px;">
+                    <?php if(!empty($specials)) { ?>
+                        <div>
+                            <h3>Mọi người cũng tìm kiếm khu vực này</h3>
+                        </div>
+                        <div class="tag">
+                                <?php foreach($specials as $special) { ?>
+                                    <a href="/tim-kiem/phong-tro-gan-slug-slug/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena"><?php echo $special['name'] ?></a>
+                                <?php } ?>
+                        </div>
+                        <div class="clearfix" style="margin-bottom: 15px;"></div>
+                    <?php } ?>
+					<div class="tag-place">
 						<h3>Tìm trọ trong khu vực: <?php echo $city['name'] ?></h3>
                         <div class="row">
                             <?php if(!empty($district_in_city)){ ?>
@@ -198,7 +194,7 @@ if(!isset($_COOKIE['origin_ref']))
 		            items:2
 		        },
 		        1000:{
-		            items:5
+		            items:3
 		        }
 		    }
 		})

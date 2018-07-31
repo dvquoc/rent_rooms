@@ -51,7 +51,7 @@
     <!-- script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script -->
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <!--script src='https://www.google.com/recaptcha/api.js'></script-->
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi" type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi&key=AIzaSyBAqWDJPR4hUAraN1rwQIEzP0lAtfu8OmI" type="text/javascript"></script>
     <?php foreach ($scripts as $script) { ?>
         <script type="text/javascript" src="<?php echo $script; ?>"></script>
     <?php } ?>

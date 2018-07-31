@@ -16,6 +16,53 @@ class ModelLocationSpecial extends model{
         $insertOneResult = $this->table->insertOne($data);
         return $insertOneResult->getInsertedId();
     }
+
+    public function update($id, $data){
+        return $this->table->updateOne(
+            ['place_id' =>$id],
+            ['$set' => $data]
+        );
+    }
+
+    public function get_list($data = array()){
+        $filter = [];
+        $options =[
+            'sort' => ['view'=>1],
+            'limit'=>8,
+            'skip' =>0
+        ];
+        if(isset($data['point']) && !empty($data['point'])){
+            $data = array(
+                'type'       =>'Point',
+                'coordinates'=>$data['point']
+            );
+            $pipeline = [
+                [
+                    '$geoNear' => [
+                        'near' =>$data,
+                        'distanceField' => "calculated",
+                        'includeLocs'=> "location",
+                        'maxDistance' => 3000,
+                        'spherical'=> true,
+                    ],
+
+                ],[
+                    '$limit' => 8,
+                ],[
+                    '$skip' =>0
+                ]
+            ];
+            return $this->table->aggregate($pipeline)->toArray();
+        }
+        return false;
+    }
+    public function getSpecialByCity($city_id){
+        return $this->table->find(['city_id'=> (int) $city_id])->toArray();
+    }
+    public function getSpecialByDistrict($district_id){
+        return $this->table->find(['district_id'=> (int) $district_id])->toArray();
+    }
+
     public function getOne($data){
         return $this->table->findOne($data);
     }

@@ -356,7 +356,6 @@ $.extend(mapRooms.prototype, {
         var t = $("#toolip-detail-on-pin");
         var lastClick = {x:0,y:0};
         $(document).on('mousemove','.canvas-marker',function (e) {
-            console.log(e);
             const p = { x: e.offsetX, y: e.offsetY };
             var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
             var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
@@ -877,6 +876,7 @@ $.extend(mapRooms.prototype, {
                 componentRestrictions: {country: 'vn'},
                 language: 'vi',
                 bounds: _bounds,
+                types:['establishment','point_of_interest'],
                 strictBounds: true
             };
             control = document.getElementById('search-map-input');

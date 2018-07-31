@@ -35,8 +35,8 @@ class ModelLocationLocation extends model{
     public function get_city_by_name($name){
         return $this->db->city->findOne(array('name'=> $name));
     }
-    public function get_district_by_name($name,$id_city){
-        return $this->db->district->find(array('name'=> $name,'city_id'=>$id_city))->toArray();
+    public function get_district_by_slug($slug,$id_city){
+        return $this->db->district->findOne(array('slug_district'=> $slug,'city_id'=> (int) $id_city));
     }
     public function getSpecialByLocation(){
 
