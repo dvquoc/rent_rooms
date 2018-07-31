@@ -169,6 +169,8 @@ class ControllerPageRooms extends Controller
             // $data['paginations'] = $this->load->controller('part/pagination', array('total' => $rooms_total, 'url' => $url));
              $data['header'] = $this->load->controller('common/header');
             $this->response->setOutput($this->load->view('default/template/page/rooms_list.tpl', $data));
+        }else{
+             $this->response->redirect('/dang-nhap-chu-phong');
         }
        
     }
