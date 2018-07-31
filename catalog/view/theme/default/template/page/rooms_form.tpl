@@ -443,7 +443,6 @@
           url: '/danh-sach-quan-huyen/'+$(this).val(),
           dataType: 'json',
           success: function(json) {
-            console.log(json);
             $('select[name=\'district_id\']').html('');
             $.map(json, function(item) {
                 $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
