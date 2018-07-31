@@ -6,5 +6,6 @@
 /database/
 database.zip
 convert-mysql-to-mongo.php
-
+environment.php
+config.php
 
