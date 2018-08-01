@@ -27,7 +27,7 @@ class ModelLocationSpecial extends model{
     public function get_list($data = array()){
         $filter = [];
         $options =[
-            'sort' => ['view'=>1],
+            'sort' => ['view'=>-1],
             'limit'=>8,
             'skip' =>0
         ];
@@ -58,10 +58,22 @@ class ModelLocationSpecial extends model{
     }
 
     public function getSpecialByCity($city_id){
-        return $this->table->find(['city_id'=> (int) $city_id])->toArray();
+        return $this->table->find(
+            ['city_id'=> (int) $city_id],
+            [
+                'sort' => ['view'=>-1],
+                'limit'      => 8,
+            ]
+        )->toArray();
     }
     public function getSpecialByDistrict($district_id){
-        return $this->table->find(['district_id'=> (int) $district_id])->toArray();
+        return $this->table->find(
+            ['district_id'=> (int) $district_id],
+            [
+                'sort' => ['view'=>-1],
+                'limit'      => 8,
+            ]
+        )->toArray();
     }
 
     public function getOne($data){

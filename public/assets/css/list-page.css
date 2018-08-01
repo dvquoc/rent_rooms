@@ -85,12 +85,12 @@
     margin-bottom: 5px;
 }
 .mf{
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     margin-top: 10px;
 }
 .mf .i b{
-   font-size: 15px;color: #4e4e4e;
+    font-size: 14px;
+    color: #000000;
 }
 .mf i{
 margin-right: 5px; font-size: 14px;
@@ -181,9 +181,11 @@ margin:3px 0;
     padding: 0px;
 }
 .tag-place a{
-    color: #2196F3;
-    font-size: 14px;
-    font-weight: bold;
+    color: #444444;
+    font-size: 13px;
+    display: inline-block;
+    border-bottom: 1px solid #00ba51;
+    margin-bottom: 6px;
 }
 .owl-carousel .owl-stage-outer{
     padding-top: 15px;
@@ -193,23 +195,24 @@ margin:3px 0;
 }
 .owl-carousel .owl-prev{
     position: absolute;
-    left: -5px;
+    left: 2px;
     top:30%;
 }
-
 .owl-carousel .owl-next{
     position: absolute;
-    right: -5px;
+    right: 2px;
     top:30%;
 }
 .owl-nav >div{
-    width: 40px;
-    height:40px;
+    width: 35px;
+    height: 35px;
     background-color: #fff;
     border-radius: 40px;
     box-shadow: 1px 1px 7px -2px #000;
     text-align: center;
-    line-height: 40px;
+    line-height: 35px;
+    font-size: 13px;
+    font-weight: 400;
 }
  .error{
    color: red;

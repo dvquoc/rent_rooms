@@ -37,7 +37,7 @@ if(!isset($_COOKIE['origin_ref']))
 
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
-                    <h1 itemprop="name" class="tex-left" style="font-size:20px; ">Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</h1>
+                    <h1 itemprop="name" class="tex-left" style="font-size:20px; "><b>Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</b></h1>
                     <div class="row grid" id="featured">
                         <div class="top-title">
                             <h3 style="margin-bottom: 0">Phòng trọ tốt nhất khu vực này</h3>
@@ -94,17 +94,17 @@ if(!isset($_COOKIE['origin_ref']))
                             </div>
 							<div class="col-md-3 list-img">
 								<?php  $img = json_decode($item["images"],true); ?>
-								<img itemprop="image"  alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" src="http://blog.dynamicdrive.com/wp-content/uploads/2017/01/lazyload.png" onerror="this.src='http://blog.dynamicdrive.com/wp-content/uploads/2017/01/lazyload.png" data-src="<?php echo $img[0]['link'];?>" class="lazy img-responsive" >
+								<img itemprop="image"  alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" src="http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif" onerror="this.src='http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif" data-src="<?php echo $img[0]['link'];?>" class="lazy img-responsive" >
 							</div> 
 							<div class="col-md-9 list-info pull-right">
-								<h3 itemprop="name" class="title"><?php echo $item['name'];?> <?php echo $item['name'];?></h3>
+                                <h3 itemprop="name" class="title"><b><?php echo $item['name'];?><?php echo $item['name'];?></b></h3>
 								<div class="f-i">
 									<div class="i d">
 										Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
 									</div>
                                     <?php if(isset($point)) { ?>
                                         <div class="i d">
-                                                Cách khoản: <span style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;"><?php echo ($item['calculated']>1000 ? round($item['calculated']/1000,1).'Km': round($item['calculated'],0).'m') ?> </span>
+                                                Cách khoản: <span style="background-color: #1f6aae;color: #fff;padding: 2px 4px;border-radius: 2px;"><?php echo ($item['calculated']>1000 ? round($item['calculated']/1000,1).' km': round($item['calculated'],0).' m') ?> </span>
                                         </div>
                                         <div class="i d">
                                             <span class="direction-point" data-lat="<?php echo $item['location']['coordinates'][1] ?>" data-lgn="<?php echo $item['location']['coordinates'][0] ?>" style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;">chỉ đường</span>
@@ -124,12 +124,12 @@ if(!isset($_COOKIE['origin_ref']))
 									<div class="i are">
                                         Tiền nước:
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['price_water'];?></b>  Khối / Người
+										<b><?php echo $item['price_water'];?></b>  khối / người
 									</div>
 									<div class="i are">
                                         Tiền điện:
 										<i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-										<b><?php echo $item['price_electricity'];?></b>  kW
+										<b><?php echo $item['price_electricity'];?></b> kw
 									</div>
 								</div>
 								
