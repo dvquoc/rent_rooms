@@ -1,4 +1,5 @@
 <?php
+define('version','1.0');
 $folder='';
 define('URL_HOME','http://'.$_SERVER['HTTP_HOST'].'/'.$folder."");
 define('URL_HOMES','https://'.$_SERVER['HTTP_HOST'].'/'.$folder."");

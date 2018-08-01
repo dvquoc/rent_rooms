@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class ControllerFindList
  * type_page: ['search-city','search-district','search-special']

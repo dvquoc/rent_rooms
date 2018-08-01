@@ -17,13 +17,35 @@
                     <i class="fa fa-map-marker"></i>
                     <input id="search-map-input" type="text" class="item-search form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 440px;" >
                 </li>
-                <li>
+                <li class="dropup">
                     <i class="fa fa-dollar"></i>
-                    <input id="price-input" type="text" class="item-search form-control" placeholder="Giá" style="width:80px;" >
+                    <input data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="price-input" type="text" class="item-search form-control" placeholder="Giá" style="width:80px;" >
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <li><a href="javascript:;">< 1 triệu</a></li>
+                        <li><a href="javascript:;">1 triệu - 1.5 triệu</a></li>
+                        <li><a href="javascript:;">1.5 triệu - 2 triệu</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:;">2 triệu - 2.5 triệu</a></li>
+                        <li><a href="javascript:;">2.5 triệu - 3 triệu</a></li>
+                        <li><a href="javascript:;">3.5 triệu - 4 triệu</a></li>
+                        <li><a href="javascript:;">4.5 triệu - 5 triệu</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:;"> > 5 triệu</a></li>
+                    </ul>
                 </li>
-                <li>
+                <li class="dropup">
                     <i class="fa fa-building"></i>
-                    <input id="area-input" type="text" class="item-search form-control" placeholder="Diện tích" style="width:80px;" >
+                    <input data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="area-input" type="text" class="item-search form-control" placeholder="Diện tích" style="width:80px;" >
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <li><a href="javascript:;">< 10 m2</a></li>
+                        <li><a href="javascript:;">10 m2 - 15 m2</a></li>
+                        <li><a href="javascript:;">15 m2 - 20 m2</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:;">20 m2 - 25 m2</a></li>
+                        <li><a href="javascript:;">25 m2 - 30 m2</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:;"> Nhà nguyên căn</a></li>
+                    </ul>
                 </li>
                 <li>
                     <button id="btn-s-h" style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>

@@ -71,8 +71,8 @@ class ModelLocationSpecial extends model{
     public function getOneByLatLgn($data){
         $point = [
             'type' => "Point",
-            'coordinates' => [ $data ]
-        ]
+            'coordinates' => $data
+        ];
         return $this->table->findOne([
                 'location'=>[
                     '$geoIntersects'=> [
