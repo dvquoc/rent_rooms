@@ -56,6 +56,7 @@ class ModelLocationSpecial extends model{
         }
         return false;
     }
+
     public function getSpecialByCity($city_id){
         return $this->table->find(['city_id'=> (int) $city_id])->toArray();
     }
@@ -67,6 +68,19 @@ class ModelLocationSpecial extends model{
         return $this->table->findOne($data);
     }
 
+    public function getOneByLatLgn($data){
+        $point = [
+            'type' => "Point",
+            'coordinates' => [ $data ]
+        ]
+        return $this->table->findOne([
+                'location'=>[
+                    '$geoIntersects'=> [
+                    '$geometry' =>$point
+                    ]
+                ]
+            ]);
+    }
     public function get_list_filter($data){
         $result = $this->table->find($data);
         return $result->toArray();
