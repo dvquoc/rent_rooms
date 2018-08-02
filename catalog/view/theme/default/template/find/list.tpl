@@ -59,7 +59,7 @@ if(!isset($_COOKIE['origin_ref']))
                                 <div class="img">
                                     <?php  $img = json_decode($item["images"],true); ?>
                                     <img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
-                                    <div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu/tháng</div>
+                                    <div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu / tháng</div>
                                     <div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
                                 </div>
                                 <div class="read">
@@ -88,8 +88,8 @@ if(!isset($_COOKIE['origin_ref']))
 							<div class="dropdown">
                                 <button class="context-menu-button icon" data-toggle="dropdown" id="dropdownMenu<?php echo $item['_id']; ?>" aria-haspopup="true" aria-expanded="true">test</button>
                                 <ul style="right: 0; left: auto" class="dropdown-menu" aria-labelledby="dropdownMenu<?php echo $item['_id']; ?>" style="display: none;">
-                                    <li class="item">Lưu xem sau</li>
-                                    <li class="item">Chia sẽ</li>
+                                    <li class="item"><span href="javascript:;"> Lưu xem sau</span></li>
+                                    <li class="item"><span href="javascript:;">Chia sẽ</span></li>
                                 </ul>
                             </div>
 							<div class="col-md-3 list-img">

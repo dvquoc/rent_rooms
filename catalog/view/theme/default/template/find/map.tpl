@@ -83,10 +83,10 @@
                             <img src="<?php echo  $img[0]['link'] ?>" width="100px" height="70px" onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'">
                         </div>
                         <div class="info" style="margin-left: 115px;">
-                            <h3 class="title" style="margin-bottom: 3px;"><?php echo $item["name"]; ?></h3>
+                            <h3 class="title" style="margin-bottom: 3px;"><b><?php echo $item["name"]; ?></b></h3>
                             <div class="address" style="font-size: 13px"><?php echo $item["address"]; ?></div>
                             <div class="more-info-list">
-                                <span class="item-main"><b><?php echo $item["price"]/1000000; ?></b> Triệu/tháng</span>
+                                <span class="item-main"><b><?php echo $item["price"]/1000000; ?></b> Triệu / tháng</span>
                                 <span class="item-main"><b><?php echo $item["acreage"]; ?></b> m2</span>
                                 <span class="item-more">30m</span>
                             </div>

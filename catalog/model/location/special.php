@@ -46,11 +46,9 @@ class ModelLocationSpecial extends model{
                         'spherical'=> true,
                     ],
 
-                ],[
-                    '$limit' => 8,
-                ],[
-                    '$skip' =>0
-                ]
+                ],
+                ['$limit' => 8],
+                ['$skip' =>0]
             ];
             return $this->table->aggregate($pipeline)->toArray();
         }
@@ -61,8 +59,8 @@ class ModelLocationSpecial extends model{
         return $this->table->find(
             ['city_id'=> (int) $city_id],
             [
-                'sort' => ['view'=>-1],
-                'limit'      => 8,
+                'sort'  => ['view'=>-1],
+                'limit' => 8,
             ]
         )->toArray();
     }
