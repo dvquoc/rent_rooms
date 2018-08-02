@@ -248,12 +248,11 @@ var mapRooms = function ($el, options) {
     this.setting = $.extend(setting, options);
     this.map = _m = new google.maps.Map($el.get(0), this.setting);
     this.element = $el;
-    this.init();
-
     if (!OverlayView.__initialised) {
         OverlayView.prototype = class_ov;
         OverlayView.__initialised = true;
     }
+    this.init();
 };
 // Add prototype for mapRooms and public function in this prototype
 $.extend(mapRooms.prototype, {
@@ -262,6 +261,8 @@ $.extend(mapRooms.prototype, {
         this.controlCustomMap();
         this.eventMap();
         _mr.setOptionForMap({draggable:true,showInforMap:'off'});
+        _mr.overlay(this.setting.overlays);
+
     },
     eventMap:function () {
         /* Zoom change */
@@ -283,6 +284,7 @@ $.extend(mapRooms.prototype, {
         /* dragstart Event */
         var firstMouse = [];
         _m.addListener('dragstart', function () {
+            first_screen = false;
             $("#pin-container").remove();
             firstMouse.push($("#root").offset().left);
             firstMouse.push($("#root").offset().top);
@@ -292,24 +294,27 @@ $.extend(mapRooms.prototype, {
 
         /* Idle Event */
         var count1 = 0;
-
         this.map.addListener( 'idle', function() {
-            console.log('load map finish...');
-            var border = [];
-            border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
-            border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: 20}));
-            border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: _mr.element.height()}));
-            border.push(_mr.fromPixelToLatLng({x: 0, y: _mr.element.height()}));
-            border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
-            if (count1 == 0 && _canvas == null) {
-                _mr.drawCanvas();
-            } else {
-                //$("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
+            if(!first_screen) {
+                var border = [];
+                border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
+                border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: 20}));
+                border.push(_mr.fromPixelToLatLng({
+                    x: _mr.element.width() - $("#content-list").width(),
+                    y: _mr.element.height()
+                }));
+                border.push(_mr.fromPixelToLatLng({x: 0, y: _mr.element.height()}));
+                border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
+                if (count1 == 0 && _canvas == null) {
+                    _mr.drawCanvas();
+                } else {
+                    //$("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
+                }
+                count1++;
+                firstMouse = [];
+                border.push(border[0]);
+                _mr.drawPolygon(border, true, true);
             }
-            count1++;
-            firstMouse = [];
-            border.push(border[0]);
-            _mr.drawPolygon(border, true, true);
         });
 
         /* Center changed Event */
@@ -368,16 +373,6 @@ $.extend(mapRooms.prototype, {
                 if (isIntersect(p, i)) {
                     $(".canvas-marker").css({'cursor':'pointer'});
                     lastClick = i;
-                    //console.log(p);
-                    //console.log(layoutEleData[rowKey][colKey]);
-                    // t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - t.outerHeight(true) - 10});
-                    // t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 10 + "px"});
-                    //
-                    // t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
-                    // t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
-                    // t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
-                    // t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
-                    // t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
                     $("#detail-title").text(i.data.name);
                     $("#show-detail").show();
                     $("#detail-address span").text(i.data.address);

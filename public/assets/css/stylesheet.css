@@ -1,3 +1,6 @@
+.page-layout-box{
+    margin-top: 10px;
+}
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -5,6 +8,9 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently */
+}
+#l-u-s{
+    cursor: pointer;
 }
 #menu-main{
     background-color: #fff;
@@ -16,7 +22,7 @@
     z-index: 10;
     border-bottom: 1px solid #ececec;
 }
-body>.container{
+body>.page-layout-box{
     background-color: #fff;
 }
 .cut-text { 
@@ -120,6 +126,33 @@ body.common-home .city-location-show, body.common-home .district-location-show{
     border-top: 1px solid #e6e6e6;
     font-size: 13px!important;
     color: #999;
+}
+
+#li-price-input:after{
+    content: "Triệu";
+    position: absolute;
+    right: -4px;
+    top: -1px;
+    font-size: 11px;
+    background-color: #F44336;
+    color: #fff;
+    border-radius: 2px;
+    line-height: 100%;
+    padding: 1px 3px;
+    z-index: 2;
+}
+#li-area-input:after{
+    content: "m2";
+    position: absolute;
+    right: -4px;
+    top: -1px;
+    font-size: 11px;
+    background-color: #673AB7;
+    color: #fff;
+    border-radius: 2px;
+    line-height: 100%;
+    padding: 1px 3px;
+    z-index: 2;
 }
 
 @-webkit-keyframes pulse-shadow--collection{

@@ -6,13 +6,17 @@
  * Time: 4:45 PM
  */
 $router =  $registry->get('routes');
-//detail rooms
-$router->add(['/tim-kiem-theo-ban-do','find/map']);
 
+// Find width map
+$router->add(['/map-tim-kiem/phong-tro-gan-{special}/{lat},{lgn}','find/map']);
+$router->add(['/map-tim-kiem/{city}/{district}','find/map']);
+$router->add(['/map-tim-kiem/{city}','find/map']);
+// Find width list
 $router->add(['/tim-kiem/phong-tro-gan-{special}/{lat},{lgn}','find/list']);
 $router->add(['/tim-kiem/{city}/{district}','find/list']);
-
 $router->add(['/tim-kiem/{city}','find/list']);
+
+//detail rooms
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
 //*******************************Owner******************************//
 //Owner login

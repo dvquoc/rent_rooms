@@ -1,6 +1,6 @@
 <?php echo $header ?>
 <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
-<div class="container">
+<div id="content-page" class="container page-layout-box">
 <div class="top-detail">
 	<div class="body-detail">
 			<div class="row">

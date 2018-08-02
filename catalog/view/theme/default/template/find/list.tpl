@@ -4,9 +4,14 @@ if(!isset($_COOKIE['origin_ref']))
     setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
 } ?>
 <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
-<div class="container">
+<div class="top-page-search">
+    <div class="container text-center" style="margin-top: 15px;">
+        <img src="https://file4.batdongsan.com.vn/2018/04/07/RUFz0fap/20180407105303-7dfc.jpg">
+    </div>
+</div>
+<div id="content-page" class="container page-layout-box">
   	<div class="row">
-		<div class="col-md-12 list-right" style="margin-top: 15px">
+		<div class="col-md-12 list-right">
             <div class="row">
                 <div class="col-md-12 text-left">
                     <ol itemscope="" itemtype="http://schema.org/BreadcrumbList" class="breadcrumb _3WIL_EScB1tm02Oqj0vbu8">
@@ -28,7 +33,7 @@ if(!isset($_COOKIE['origin_ref']))
                         <?php } ?>
                     <?php } ?>
                     </ol>
-                    <a class="view-map" href="/tim-kiem-theo-ban-do" >
+                    <a class="view-map" href="/map-tim-kiem<?php echo $url; ?>" >
                         <span></span>
                         Xem bằng bản đồ
                     </a>
@@ -37,13 +42,13 @@ if(!isset($_COOKIE['origin_ref']))
 
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
-                    <h1 itemprop="name" class="tex-left" style="font-size:20px; "><b>Tìm kiếm phòng trọ tốt nhất Hồ Chí Minh, Quận Bình thạnh</b></h1>
+                    <h1 itemprop="name" class="tex-left" style="font-size:20px; "><b>Tìm kiếm phòng trọ tốt nhất <?php echo $info_seo['name']; ?></b></h1>
                     <div class="row grid" id="featured">
                         <div class="top-title">
                             <h3 style="margin-bottom: 0">Phòng trọ tốt nhất khu vực này</h3>
                         </div>
                         <div class="owl-carousel">
-                            <?php foreach($featured as $item) { ?>
+                            <?php foreach($featured as $key=>$item) { ?>
                             <div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
                                 <?php
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
@@ -72,19 +77,30 @@ if(!isset($_COOKIE['origin_ref']))
                         </div>
                     </div>
                     <div class="row">
-                        <div class="sort-search" style="padding:10px; border:1px solid #eee; margin-bottom: 15px">
-                            <b>Sắp xếp: </b> <span><b>Giá</b> từ thấp đến cao</span> <span><b>Diện tích từ lớn đến nhỏ</b> từ thấp đến cao</span>
+                        <div class="sort-search" style="background-color:#eee; border-radius: 1px; padding:7px; border:1px solid #dadada; margin-bottom: 15px">
+                            <div class="row">
+                                <div class="col-md-4"><b style="font-size: 14px; line-height: 28px;">(234)</b> kết quả tìm kiếm</div>
+                                <div class="col-md-8 text-right">
+                                    <b><i class="fa fa-sort"></i> Sắp xếp: </b>
+                                    <select name="sort-price" class="item-sort">
+                                        <option>Giá từ thấp tới cao</option>
+                                    </select>
+                                    <select name="sort-area" class="item-sort">
+                                        <option>Diện tích từ thấp tới cao</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <?php if(!empty($rooms)) { ?>
-					<?php foreach($rooms as $item) { ?>
+					<?php foreach($rooms as $key=>$item) { ?>
 					<div class="row" i-column" itemscope="" itemtype="http://schema.org/Product">
 						<?php
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
 							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
 							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
 						?>
-						<a itemprop="url" href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
+						<a itemprop="url" href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item<?php echo ($key < 3) ? ' is-ads':''; ?>">
 							<div class="dropdown">
                                 <button class="context-menu-button icon" data-toggle="dropdown" id="dropdownMenu<?php echo $item['_id']; ?>" aria-haspopup="true" aria-expanded="true">test</button>
                                 <ul style="right: 0; left: auto" class="dropdown-menu" aria-labelledby="dropdownMenu<?php echo $item['_id']; ?>" style="display: none;">
@@ -97,7 +113,7 @@ if(!isset($_COOKIE['origin_ref']))
 								<img itemprop="image"  alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4" src="http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif" onerror="this.src='http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif" data-src="<?php echo $img[0]['link'];?>" class="lazy img-responsive" >
 							</div> 
 							<div class="col-md-9 list-info pull-right">
-                                <h3 itemprop="name" class="title"><b><?php echo $item['name'];?><?php echo $item['name'];?></b></h3>
+                                <h3 itemprop="name" class="title"><b><?php echo $item['name'];?> <?php echo $item['name'];?></b></h3>
 								<div class="f-i">
 									<div class="i d">
 										Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
@@ -143,10 +159,12 @@ if(!isset($_COOKIE['origin_ref']))
                         <div class="text-center"><h3>Rất tiếc ! Chúng tôi đã không tìm thấy phòng trọ nào</h3></div>
 					<?php } ?>
                     <div class="row ">
-                        <div class="col-md-12 seo_description">
+                        <div class="seo_description">
                             <div>
                                 <h3 class="title">Mô tả HCM</h3>
-                                <p class="text" style="color:#999;">Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit. Get vector icons and social logos on your website with Font Awesome, the web’s most popular icon set and toolkit...</p>
+                                <p class="text" style="color:#999;">
+                                    <?php  echo $info_seo['meta_description']; ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -158,7 +176,7 @@ if(!isset($_COOKIE['origin_ref']))
                         </div>
                         <div class="tag">
                                 <?php foreach($specials as $special) { ?>
-                                    <a href="/tim-kiem/phong-tro-gan-slug-slug/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena"><?php echo $special['name'] ?></a>
+                                    <a href="/tim-kiem/phong-tro-gan-<?php echo $special['slug']; ?>/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena"><?php echo $special['name'] ?></a>
                                 <?php } ?>
                         </div>
                         <div class="clearfix" style="margin-bottom: 15px;"></div>
@@ -177,6 +195,7 @@ if(!isset($_COOKIE['origin_ref']))
 					</div>
 					<div class="ad-r">
 						<img style="margin: 10px 0px" src="https://www.mainguyen.vn/img/2017/09/news/l/11231104_1563154727040692_4481018767909529242_o2373.jpg" class="img-responsive">
+                        <img style="margin-top: 10px;" src="https://static.vecteezy.com/system/resources/previews/000/179/049/non_2x/half-price-sale-banner-poster-or-flyer-template-design-vector.jpg" class="img-responsive">
 					</div>
 				</div>
 			</div>

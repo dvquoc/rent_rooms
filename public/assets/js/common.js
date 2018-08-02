@@ -126,9 +126,10 @@ $(document).ready(function() {
             return;
         }
         var myLatlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
+        var slug = ChangeToSlug(place.name.trim().replace(/\s{1,}/g,'-'));
         $("#search-map-input").data('lat',place.geometry.location.lat());
         $("#search-map-input").data('lgn',place.geometry.location.lng());
-        $("#search-map-input").data('slug', ChangeToSlug(place.name.trim().replace(/\s{1,}/g,'-')));
+        $("#search-map-input").data('slug', slug);
         var location ={
             'city':null,
             'district': null
@@ -149,7 +150,8 @@ $(document).ready(function() {
             'lat'        : place.geometry.location.lat(),
             'lng'        : place.geometry.location.lng(),
             'adrress'    : place.formatted_address,
-            'types'      : place.types
+            'types'      : place.types,
+            'slug'       : slug
         };
         console.log(place);
         console.log(dataSend);
@@ -213,11 +215,16 @@ $(document).ready(function() {
        console.log("Không hỗ trợ localstorage");
     }
 
+    $("ul.list-val-search li a").click(function () {
+        var id = $(this).parents('.list-val-search').first().data('to');
+        $("#"+id).val($(this).data('item-val'));
+    });
+
     /* Nhấn tìm kiếm phòng trọ */
     $("#btn-s-h").click(function () {
         var params = {};
-        $('#price-input').val().trim().length !=0 ? params.gia= parseFloat($('#price-input').val().trim()): false;
-        $('#area-input').val().trim().length !=0 ? params.dien_tich= parseFloat($('#area-input').val().trim()): false;
+        $('#price-input').val().trim().length !=0 ? params.gia= $('#price-input').val().trim(): false;
+        $('#area-input').val().trim().length !=0 ? params.dien_tich= $('#area-input').val().trim(): false;
 
         if(!($("#search-map-input").data('lat') &&  $("#search-map-input").data('lgn'))){
             window.location.href = '/tim-kiem/'+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');

@@ -4,13 +4,13 @@
 }
 .view-map{
     float: right;
-    margin-top: -52px;
+    margin-top: -47px;
     color: #000;
-    font-weight: bold;
     margin-right: 2px;
+    font-size: 13px;
 }
 .view-map span{
-    width: 10px; height: 10px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;
+    width: 5px; height: 5px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;
 }
 #featured{
     margin-bottom: 10px;
@@ -26,10 +26,25 @@
     box-shadow: 0px 0px 2px -1px #000;
     display: inherit;
 }
+a.inner-item.is-ads {
+    box-shadow: 0px 0px 3px -1px #00ba51;
+    border: 1px solid #3abf74;
+}
+.inner-item.is-ads:after{
+    content: "";
+    background: url(../images/icons/medal.png) no-repeat;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    background-size: contain;
+}
 .list-img{
     padding: 0;margin: 0px;
     height:115px;
     overflow: hidden;
+    background-color: #f5f5f5;
 }
 .list-info{
     position: relative;
@@ -166,10 +181,9 @@ margin:3px 0;
     padding: 5px 5px 5px 30px;
     margin: 4px 0px;
     border: 1px solid #d6d6d6;
-    border-radius: 3px;
+    border-radius: 2px;
     display: inherit;
     color: #000;
-    font-size: 14px;
     background: url(https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png) no-repeat #f3f3f3 5px 6px;
     background-size: 20px;
 }
@@ -190,6 +204,11 @@ margin:3px 0;
     border-bottom: 1px solid #00ba51;
     margin-bottom: 6px;
 }
+select.item-sort{
+    padding:5px 5px;
+    border-radius: 2px;
+    margin-left: 3px;
+}
 .owl-carousel .owl-stage-outer{
     padding-top: 15px;
 }
@@ -198,24 +217,28 @@ margin:3px 0;
 }
 .owl-carousel .owl-prev{
     position: absolute;
-    left: 2px;
+    left: 5px;
     top:30%;
 }
 .owl-carousel .owl-next{
     position: absolute;
-    right: 2px;
+    right: 5px;
     top:30%;
 }
 .owl-nav >div{
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background-color: #fff;
     border-radius: 40px;
     box-shadow: 1px 1px 7px -2px #000;
     text-align: center;
-    line-height: 35px;
-    font-size: 13px;
+    line-height: 30px;
+    font-size: 11px;
     font-weight: 400;
+}
+.owl-nav >div:hover{
+    background-color:#00ba51;
+    color:#fff;
 }
  .error{
    color: red;

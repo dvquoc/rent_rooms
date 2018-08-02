@@ -19,11 +19,17 @@ class ModelFindList extends Model {
             'skip' =>0
         ];
         if(isset($data['price']) && !empty($data['price'])){
-            $filter['price']= $data['price'];
+            $filter['price']= [
+                '$gt'=>(float) $data['price'][0]*1000000,
+                '$lt'=>(float) $data['price'][1]*1000000,
+            ];
         }
 
         if(isset($data['acreage']) && !empty($data['acreage'])){
-            $filter['acreage']= $data['acreage'];
+            $filter['acreage']= [
+                '$gt'=>(int) $data['acreage'][0],
+                '$lt'=>(int) $data['acreage'][1],
+            ];
         }
 
         if(isset($data['slug_city_name']) && !empty($data['slug_city_name'])){
@@ -35,6 +41,8 @@ class ModelFindList extends Model {
         }
 
         $filter['status']= 1;
+
+
 
     	if(isset($data['point']) && !empty($data['point'])){
              $data = array(

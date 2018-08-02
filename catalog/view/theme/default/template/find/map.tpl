@@ -149,6 +149,7 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     });
+    var first_screen = <?php echo $first_screen; ?>;
     var region = <?php echo json_encode($region); ?>;
     var listing = <?php echo json_encode($listing); ?>;
     var polygon = [];

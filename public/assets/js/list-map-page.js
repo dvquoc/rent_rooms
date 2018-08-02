@@ -3,9 +3,12 @@ var eShowDetail = getId('show-detail');
 var eShowList = getId('show-list');
 var eContentList = getId('content-list');
 var firstWidth = eMap.outerWidth;
-region.forEach(function(item,key) {
-    polygon.push([item[1],item[0]]);
-});
+if(region!=null){
+    region.forEach(function(item,key) {
+        polygon.push([item[1],item[0]]);
+    });
+}
+
 $(document).ready(function () {
     $("#close-detail").click(function () {
         $("#show-detail").toggle();
@@ -22,6 +25,7 @@ $("#content-detail").css({'height': $(eShowDetail).outerHeight() - 250});
 
 var markers_data = [];
 var bounds = new google.maps.LatLngBounds();
+
 listing.forEach(function(item,key){
     bounds.extend(new google.maps.LatLng(item.location.coordinates[1],item.location.coordinates[0]));
     markers_data.push({

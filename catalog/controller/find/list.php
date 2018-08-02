@@ -19,13 +19,18 @@ class ControllerFindList extends Controller {
 
         $data['type_page'] = false;
         $data['info_seo'] = false;
+        $url = '';
 
         $data_search = ['status' => 1];
-        if (isset($get_request['gia']))
-            $data_search['price'] = ((float)$get_request['gia']) * 1000000;
+        if (isset($get_request['gia'])){
+            $price = explode('-',$get_request['gia']);
+            $data_search['price'] = $price;
+        }
 
-        if (isset($get_request['dien_tich']))
-            $data_search['acreage'] = (float)$get_request['dien_tich'];
+        if (isset($get_request['dien_tich'])){
+            $area = explode('-',$get_request['dien_tich']);
+            $data_search['acreage'] = $area;
+        }
 
         $data['breadcrumbs'] = array([
             'text' => 'Tìm phòng trọ',
@@ -50,13 +55,23 @@ class ControllerFindList extends Controller {
             $data['specials'] = $this->model_location_special->get_list($data_search);
             $data['info_seo'] = $this->model_location_special->getOneByLatLgn($data_search['point']);
 
-            if (isset($_COOKIE['special_search'])) {
-                $info_special = json_decode($_COOKIE['special_search'], true);
+            if(!empty($data['info_seo'])){
                 $data['breadcrumbs'][] = [
                     'text' => 'Gần ' . $data['info_seo']['name'],
                     'href' => ''
                 ];
+                $url="/phong-tro-gan-".$data['info_seo']['slug'].'/'.$params['lat'].','.$params['lgn'];
+            }else{
+                if (isset($_COOKIE['special_search'])) {
+                    $info_special = json_decode($_COOKIE['special_search'], true);
+                    $data['breadcrumbs'][] = [
+                        'text' => 'Gần ' . $info_special['name'],
+                        'href' => ''
+                    ];
+                    $url="/phong-tro-gan-".$info_special['slug'].'/'.$params['lat'].','.$params['lgn'];
+                }
             }
+
         }
 
         /* Check search is city */
@@ -69,6 +84,7 @@ class ControllerFindList extends Controller {
                 'text' => $cityInfoByCache['name'],
                 'href' => '/tim-kiem/' . $params['city']
             ];
+            $url="/".$data['info_seo']['slug_city'];
             $data['specials'] = $this->model_location_special->getSpecialByCity($cityInfoByCache['city_id']);
         }
 
@@ -86,7 +102,7 @@ class ControllerFindList extends Controller {
                     'text' => $districtInfoByCache['name'],
                     'href' => '/tim-kiem/' . $params['city'] . '/' . $params['district']
                 ];
-
+                $url.="/".$data['info_seo']['slug_district'];
                 $data['specials'] = $this->model_location_special->getSpecialByDistrict($districtInfoByCache->district_id);
             }
         }
@@ -96,13 +112,14 @@ class ControllerFindList extends Controller {
         $this->document->setTitle($data['info_seo']['name']);
         $this->document->setDescription($data['info_seo']['meta_description']);
         $this->document->setKeywords($data['info_seo']['meta_keyword']);
-        $this->document->addLink("/tim-kiem/phong-tro-gan-truong-cao-dang-cong-nghe-thu-duc/10.8522445,106.75858930000004", 'canonical');
+        $this->document->addLink("/tim-kiem".$url, 'canonical');
         //$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
         //$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
 
         $data['rooms'] = $this->model_find_list->get_list($data_search);
         $data['featured'] = $this->model_find_list->get_list_featured();
+        $data['url'] = $url;
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
@@ -206,6 +223,7 @@ class ControllerFindList extends Controller {
                 ],
                 'source' => 'font-end',
                 'adrress' => $request_post['address'],
+                'slug' => $request_post['slug'],
                 'meta_keyword' => 'phòng trọ ' . $request_post['name'],
                 'meta_description' => "Phòng trọ gần " . $request_post['name'] . " sẽ giúp cho bạn thuận tiện việc đi lại"
             ];
