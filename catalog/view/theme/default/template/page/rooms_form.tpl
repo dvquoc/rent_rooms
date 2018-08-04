@@ -1,5 +1,7 @@
 <?php echo $header?>
 <script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
+<link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen"/>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">

@@ -51,3 +51,59 @@
 .table thead td {
     font-weight: bold;
 }
+.alert.alert-success {
+    background-color: #5cb860;
+    color: #ffffff;
+    border-radius: 3px;
+}
+.alert-info, .alert-danger, .alert-warning, .alert-success {
+    color: #ffffff;
+}
+.alert, .alert.alert-default {
+    background-color: white;
+    color: #555555;
+    border-radius: 3px;
+}
+.alert {
+    border: 0;
+    border-radius: 0;
+    position: relative;
+    padding: 20px 15px;
+    line-height: 20px;
+}
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+.close {
+    float: right;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+.alert.alert-danger {
+    background-color: #f55a4e;
+    color: #ffffff;
+    border-radius: 3px;
+}
+.alert-info, .alert-danger, .alert-warning, .alert-success {
+    color: #ffffff;
+}
