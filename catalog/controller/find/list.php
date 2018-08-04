@@ -202,29 +202,35 @@ class ControllerFindList extends Controller {
             exit();
 
         $types = [
-            "university",
-            "school",
-            "point_of_interest",
-            "establishment"
+            "university"      =>"Trường đại học", // 
+            "school"          =>"Trường học",
+            "company"         =>"Công ty",
+            "industrial_area" =>"Khu công nghiệp",
+            "strees"          =>"Đường xá",
+            "supermarket"     =>"Trung tâm thương mại",
+            "market"          =>"Chợ",
+            "other"           =>"Khác",
+            "undefined"       =>"Chưa biết"
         ];
         $check = $this->model_location_special->getOne(['place_id' => $request_post['place_id']]);
         if (empty($check)) {
             $input = [
-                'name' => $request_post['name'],
+                'name'        => $request_post['name'],
                 'district_id' => (int)$district['district_id'],
-                'city_id' => (int)$city['city_id'],
-                'view' => 1,
-                'area' => null,
-                'place_id' => $request_post['place_id'],
-                'types' => $request_post['types'],
-                'location' => [
-                    'type' => 'Point',
+                'city_id'     => (int)$city['city_id'],
+                'view'        => 1,
+                'area'        => null,
+                'place_id'    => $request_post['place_id'],
+                'types_source' => $request_post['types'],
+                'types'       => "undefined",
+                'location'    => [
+                    'type'        => 'Point',
                     'coordinates' => [(float)$request_post['lng'], (float)$request_post['lat']]
                 ],
-                'source' => 'font-end',
-                'adrress' => $request_post['address'],
-                'slug' => $request_post['slug'],
-                'meta_keyword' => 'phòng trọ ' . $request_post['name'],
+                'source'           => 'font-end',
+                'adrress'          => $request_post['address'],
+                'slug'             => $request_post['slug'],
+                'meta_keyword'     => 'phòng trọ ' . $request_post['name'],
                 'meta_description' => "Phòng trọ gần " . $request_post['name'] . " sẽ giúp cho bạn thuận tiện việc đi lại"
             ];
             $result = $this->model_location_special->add($input);

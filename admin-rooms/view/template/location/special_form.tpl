@@ -1,6 +1,7 @@
 <?php echo $header; ?>
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
+<script src="view/javascript/jquery/common.js" type="text/javascript"></script>
 <?php echo $column_left; ?>
 <div id="content">
     <div class="page-header">
@@ -46,30 +47,43 @@
                                            <div id="validate_name" hidden><span style="color: red">Trường này không được trống</span></div>
                                             </br>
                                            <input type="hidden" name="id" value="<?php echo isset($special)?(string)$special['_id']:'' ?>">
+                                            <input class="form-control" type="hidden" name="types_source" value="<?php echo $special['types_source']?>">
+                                            <input class="form-control" type="hidden" name="slug" value="<?php echo $special['slug']?>">
                                            <input type="hidden" name="place_id" value="">
-                                            <label class="">Thành phố </label>
-                                                <select class="form-control" name="city">
-                                                    <!-- <option value="null">--- Chọn Tỉnh/Thành phố ---</option> -->
-                                                      <?php foreach($citys as $item) { ?>
-                                                          <?php if($item["city_id"] == $city[0]["city_id"]) { ?>
-                                                                <option selected="selected" value="<?php echo $city[0]['city_id'] ?>"><?php echo $city[0]['name'] ?></option>
-                                                          <?php } else{  ?>
-                                                                <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
-                                                          <?php } ?>
-                                                      <?php } ?>
-                                                </select></br>
-                                            <!--      <input class="form-control" type="text" name="city" value="<?php echo isset($special['name'])?$special['city']:'';?>"></br> -->
-                                           <label class="">Quận </label>
-                                               <select class="form-control" name="district">
-                                                <!-- <option value="null">--- Chọn Quận/Huyện ---</option> -->
-                                                  <?php foreach($districts as $item) { ?>
-                                                      <?php if($item["district_id"] == $district[0]['district_id']) { ?>
-                                                            <option selected="selected" value="<?php echo $district[0]['district_id'] ?>"><?php echo $district[0]['name'] ?></option>
-                                                      <?php } else { ?>
-                                                            <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
+                                            <label class="">Kiểu khu vực </label>
+                                            <select class="form-control" name="types">
+                                                <option value="null">--- Chọn kiểu khu vực ---</option>
+                                                  <?php foreach($types as $key => $value) { ?>
+                                                      <?php if($special['types'] == $key) { ?>
+                                                            <option selected="selected" value="<?php echo  $key ?>"><?php echo $value ?></option>
+                                                      <?php } else{  ?>
+                                                            <option value="<?php echo $key ?>"><?php echo $value ?></option>
                                                       <?php } ?>
                                                   <?php } ?>
-                                              </select></br>
+                                            </select></br>
+                                            <label class="">Thành phố </label>
+                                            <select class="form-control" name="city">
+                                                <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
+                                                  <?php foreach($citys as $item) { ?>
+                                                      <?php if($item["city_id"] == $city[0]["city_id"]) { ?>
+                                                            <option selected="selected" value="<?php echo $city[0]['city_id'] ?>"><?php echo $city[0]['name'] ?></option>
+                                                      <?php } else{  ?>
+                                                            <option value="<?php echo $item['city_id'] ?>"><?php echo $item['name'] ?></option>
+                                                      <?php } ?>
+                                                  <?php } ?>
+                                            </select></br>
+                                            <!--      <input class="form-control" type="text" name="city" value="<?php echo isset($special['name'])?$special['city']:'';?>"></br> -->
+                                           <label class="">Quận </label>
+                                           <select class="form-control" name="district">
+                                            <option value="null">--- Chọn Quận/Huyện ---</option>
+                                              <?php foreach($districts as $item) { ?>
+                                                  <?php if($item["district_id"] == $district[0]['district_id']) { ?>
+                                                        <option selected="selected" value="<?php echo $district[0]['district_id'] ?>"><?php echo $district[0]['name'] ?></option>
+                                                  <?php } else { ?>
+                                                        <option value="<?php echo $item['district_id'] ?>"><?php echo $item['name'] ?></option>
+                                                  <?php } ?>
+                                              <?php } ?>
+                                          </select></br>
                                           <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
                                           
                                            <label class="">Lượt tìm kiếm </label>
@@ -178,7 +192,6 @@
             if (!place.geometry) {
                 return;
             }
-            console.log(place); 
             marker.setMap(null);
             marker = new google.maps.Marker({
                 map: map,
@@ -190,6 +203,8 @@
             map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
             var address_lengh = place.address_components.length;
             var location = {};
+          
+
             for(var i = address_lengh-1; i>=0; i--){
                 if(place.address_components[i].types[0]=='administrative_area_level_1'){
                     location.city= place.address_components[i].long_name;
@@ -204,7 +219,8 @@
             $('input[name=lng]').val(place.geometry.location.lng());
             $('input[name=lat]').val(place.geometry.location.lat());
             $('input[name=place_id]').val(place.place_id);
-            
+            $('input[name=types_source]').val(place.types);
+            $('input[name=slug]').val(ChangeToSlug(location.district+" "+location.city));
             $.each($("select[name=city] option"), function(key, item){
                 if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
                      $("select[name=city]").val($(item).attr('value')).change();

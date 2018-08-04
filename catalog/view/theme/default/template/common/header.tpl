@@ -46,7 +46,6 @@
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
  
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
-    <!--script src='https://www.google.com/recaptcha/api.js'></script-->
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi&key=AIzaSyBAqWDJPR4hUAraN1rwQIEzP0lAtfu8OmI" type="text/javascript"></script>
     <?php foreach ($scripts as $script) { ?>
         <script type="text/javascript" src="<?php echo $script; ?>"></script>
@@ -120,16 +119,15 @@
                         <li class="item">
                             <img src="<?php echo $_SESSION['img']?>">
                         </li>
-                        <div class="dropdown">
-                             <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['name']?> <b class="caret"></b></a>
-                              <ul class="dropdown-menu">
-                                <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
-                                <li><a href="/dang-xuat">Đăng xuất</a></li>
-                               
-                              </ul>
-                            </li>
-                        </div>
+                         <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['name']?> <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
+                            <li><a href="/dang-xuat">Đăng xuất</a></li>
+                           
+                          </ul>
+                        </li>
+                     
                        
                     <?php }else{?>
                         <li class="item">

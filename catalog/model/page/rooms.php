@@ -81,7 +81,7 @@ class ModelPageRooms extends Model {
             'ads_position'      => '',
             'status'            => (int) $data['status'],
             'date_crate'        => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
-            'is_checked'        =>false,
+            'is_checked'        =>0,
             'master_id'         =>$data['id_owner'],
             'source'            =>'front end',
         ]);

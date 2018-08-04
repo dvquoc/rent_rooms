@@ -1,8 +1,7 @@
-
 <?php echo $header; ?>
 <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
 <link href="/public/assets/css/opencart.css" type="text/css" rel="stylesheet" />
-<link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen"/>
 <style type="text/css">
     #filter-rooms .item{
         margin-bottom: 10px;
@@ -63,11 +62,21 @@
                                 <td style="width: 150px;" class="text-center">Ngày chạy</td>
                                 <td style="width: 150px;" class="text-center">Ngày kết thúc</td>
                                 <td class="text-right">Hành động</td>
+                                <td class="text-center">Kiểm duyệt</td>
+
                             </tr>
                             </thead>
                             <tbody>
                             <?php if ($rooms) { ?>
-                            <?php foreach ($rooms as $room) { ?>
+                            <?php foreach ($rooms as $room) { 
+                                if($room['is_checked'] == 0){
+                                    $color = 'red';
+                                    $text_alert = 'Chưa được duyệt';
+                                }else{
+                                    $color = 'green';
+                                    $text_alert = 'Đã được duyệt';
+                                }
+                             ?>
                             <tr>
                                 <td class="text-center"> 
                                     <input type="checkbox" name="selected" value="<?php echo $room['room_id']; ?>" />
@@ -78,10 +87,11 @@
                                 </td>
                                 <td class="text-right"><?php echo $room['text_price']; ?></td>
                                 <td class="text-right"><?php echo $room['text_acreage']; ?></td>
-                                <td class="text-left"><span class="feature"> <?php echo $room['ads'] ? 'Tin quảng cáo': 'Tin bình thường'; ?></span></td>
+                                <td class="text-center"><span class="feature"> <?php echo $room['ads'] ? 'Tin quảng cáo': 'Tin bình thường'; ?></span></td>
                                 <td class="text-left"><?php echo date('d/m/YY',$room['from_date']); ?></td>
                                 <td class="text-left"><?php echo date('d/m/YY',$room['to_date']); ?></td>
                                 <td class="text-right"><a href="/them-phong-tro/<?php echo $room['room_id'] ?>" data-toggle="tooltip" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                                <td class="text-center" style="color: <?php echo $color ?>"><?php echo $text_alert ?></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
@@ -140,7 +150,7 @@
             data:{
                 selected:selected,
             },success:function(data){
-                 slocation.reload();
+                 location.reload();
             }
         })
     }
