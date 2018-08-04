@@ -226,10 +226,12 @@ $(document).ready(function() {
         $('#price-input').val().trim().length !=0 ? params.gia= $('#price-input').val().trim(): false;
         $('#area-input').val().trim().length !=0 ? params.dien_tich= $('#area-input').val().trim(): false;
 
+        var page_search = $("body").hasClass('find-map') ? "/map-tim-kiem/":"/tim-kiem/";
+
         if(!($("#search-map-input").data('lat') &&  $("#search-map-input").data('lgn'))){
-            window.location.href = '/tim-kiem/'+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');
+            window.location.href = page_search+location_user.city_slug+'/'+location_user.district_slug + (!$.isEmptyObject(params) ? "?"+$.param( params ):'');
         }else{
-            window.location.href = '/tim-kiem/phong-tro-gan-'+$("#search-map-input").data('slug')+'/'+$("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn')+(!$.isEmptyObject(params) ? "?"+$.param( params ):'');
+            window.location.href = page_search+'phong-tro-gan-'+$("#search-map-input").data('slug')+'/'+$("#search-map-input").data('lat')+','+$("#search-map-input").data('lgn')+(!$.isEmptyObject(params) ? "?"+$.param( params ):'');
         }
     });
 

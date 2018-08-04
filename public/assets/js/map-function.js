@@ -159,6 +159,7 @@ function OverlayView(map, $div, opts=null) {
     self.getDOMElement = function () {
         return $div[0];
     };
+
 }
 
 var _Canvas = function (element) {
@@ -172,16 +173,13 @@ var _Canvas = function (element) {
     element == undefined ? document.body.appendChild(this.canvas) : element.appendChild(this.canvas);
     this.canvas.addEventListener("click", this.click.bind(this), false);
 }
-
 _Canvas.prototype.of = function (mouse) {
     alert("x: " + mouse[0] + ", y: " + mouse[1]);
 }
-
 _Canvas.prototype.click = function (e) {
     this.mouse = [e.clientX, e.clientY];
     return this.of(this.mouse);
 }
-
 /* Add event click */
 function isIntersect(mp,p) {
     return Math.sqrt((mp.x-p.x) ** 2 + (mp.y - p.y) ** 2) < 6;
@@ -197,7 +195,6 @@ function isInTooltip(mp,o,p) {
         return false;
     return true;
 }
-
 var _m, _mr, polygon_history = [], overlays = [], _bounds = null, _canvas = null, nubLayout = 10, layoutEleData=[];
 var data_maker = [];
 var class_ov = new google.maps.OverlayView();
@@ -261,8 +258,7 @@ $.extend(mapRooms.prototype, {
         this.controlCustomMap();
         this.eventMap();
         _mr.setOptionForMap({draggable:true,showInforMap:'off'});
-        _mr.overlay(this.setting.overlays);
-
+        //_mr.overlay(this.setting.overlays);
     },
     eventMap:function () {
         /* Zoom change */
@@ -284,7 +280,6 @@ $.extend(mapRooms.prototype, {
         /* dragstart Event */
         var firstMouse = [];
         _m.addListener('dragstart', function () {
-            first_screen = false;
             $("#pin-container").remove();
             firstMouse.push($("#root").offset().left);
             firstMouse.push($("#root").offset().top);
@@ -295,7 +290,6 @@ $.extend(mapRooms.prototype, {
         /* Idle Event */
         var count1 = 0;
         this.map.addListener( 'idle', function() {
-            if(!first_screen) {
                 var border = [];
                 border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
                 border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: 20}));
@@ -314,13 +308,12 @@ $.extend(mapRooms.prototype, {
                 firstMouse = [];
                 border.push(border[0]);
                 _mr.drawPolygon(border, true, true);
-            }
         });
 
         /* Center changed Event */
         _m.addListener('center_changed', function () {
             $("#pin-container").remove();
-            if (canvas != null) {
+            if (typeof canvas != "undefined" && canvas != null) {
                 var moveX = firstMouse.length ? -(_mr.element.width() / 2) + (firstMouse[0] - $("#root").offset().left) : -(_mr.element.width() / 2);
                 var moveY = firstMouse.length ? -(_mr.element.height() / 2) + (firstMouse[1] - $("#root").offset().top) : -(_mr.element.height() / 2);
                 $("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + (moveX) + 'px,' + (moveY) + 'px, 0px'});
@@ -328,6 +321,7 @@ $.extend(mapRooms.prototype, {
             }
 
         });
+
     },
     resetDataPinSmall:function(){
         layoutEleData = [];
@@ -717,7 +711,7 @@ $.extend(mapRooms.prototype, {
                     featureType: 'transit',
                     elementType: 'all',
                     stylers: [{
-                        "visibility": showInforMap
+                        "visibility": 'on'
                     }]
                 },
 
@@ -1043,7 +1037,7 @@ $.extend(mapRooms.prototype, {
         point.x = pixel.x / scale + nw.x;
         point.y = pixel.y / scale + nw.y;
         return proj.fromPointToLatLng(point);
-    }
+    },
 });
 $.fn.mapRooms = function (options) {
     //initDefaults();

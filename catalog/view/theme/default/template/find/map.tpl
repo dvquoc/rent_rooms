@@ -65,7 +65,7 @@
     </div>
     <div id="show-list" class="col-md-3 noselect" style=" border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
         <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
-            <a href="/tim-kiem-phong-tro" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
+            <a href="/tim-kiem<?php echo $url; ?>" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
                 <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>
                 Xem dạng danh sách
             </a>
@@ -149,11 +149,11 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     });
-    var first_screen = <?php echo $first_screen; ?>;
     var region = <?php echo json_encode($region); ?>;
     var listing = <?php echo json_encode($listing); ?>;
     var polygon = [];
     var zoom = <?php echo $zoom; ?>;
+    var center = <?php echo json_encode($center); ?>;
     var getId = function(id) {
         return document.getElementById(id);
     }
