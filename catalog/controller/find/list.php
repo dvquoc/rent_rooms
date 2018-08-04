@@ -202,10 +202,15 @@ class ControllerFindList extends Controller {
             exit();
 
         $types = [
-            "university",
-            "school",
-            "point_of_interest",
-            "establishment"
+            "university"=>"Trường đại học", // 
+            "school"=>"Trường học",
+            "company"=>"Công ty",
+            "industrial_area"=>"Khu công nghiệp",
+            "strees"=>"Đường xá",
+            "supermarket"=>"Trung tâm thương mại",
+            "market"=>"Chợ",
+            "other"=>"Khác",
+            "undefined"=>"Chưa biết"
         ];
         $check = $this->model_location_special->getOne(['place_id' => $request_post['place_id']]);
         if (empty($check)) {
@@ -216,7 +221,8 @@ class ControllerFindList extends Controller {
                 'view' => 1,
                 'area' => null,
                 'place_id' => $request_post['place_id'],
-                'types' => $request_post['types'],
+                'types_soure' => $request_post['types'],
+                'types' => "undefined",
                 'location' => [
                     'type' => 'Point',
                     'coordinates' => [(float)$request_post['lng'], (float)$request_post['lat']]
