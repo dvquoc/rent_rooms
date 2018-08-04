@@ -134,7 +134,7 @@ $controller = new Front($registry);
 $controller->addPreAction(new Action('common/login/check'));
 
 // Permission
-$controller->addPreAction(new Action('error/permission/check'));
+//$controller->addPreAction(new Action('error/permission/check'));
 
 // Router
 if (isset($request->get['route'])) {
