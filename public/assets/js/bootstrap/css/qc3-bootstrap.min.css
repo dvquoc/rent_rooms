@@ -123,10 +123,16 @@ body .auth-input {
     margin: 10px 0;
 }
 .login .auth-btn {
-    margin-top: 34px;
+    margin-top: 10px;
+}
+.g-recaptcha{
+    margin: 10px 0px;
+}
+.auth-header{
+    text-align: center;
 }
 .auth-btn {
-    margin-top: 19px;
+    margin-top:10px;
     width: 100%!important;
     font-size: 16px;
     color: #fff;
