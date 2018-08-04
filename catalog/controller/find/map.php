@@ -83,12 +83,12 @@ class ControllerFindMap extends Controller {
         $this->document->setKeywords($data['info_seo']['meta_keyword']);
         $this->document->addLink("/map-tim-kiem".$url, 'canonical');
 
-        var_dump($data['info_seo']); die();
 
-        $data['zoom']=15;
-        $data['first_screen']=true;
-        $data['listing'] = $this->model_find_list->get_list($data_search);
         $data['url'] = $url;
+        $data['zoom']=15;
+        $data['center']= isset($data['info_seo']['location']['coordinates']) ? $data['info_seo']['location']['coordinates'] : [10.7751766,106.6808529] ;
+        $data['listing'] = $this->model_find_list->get_list($data_search);
+
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');

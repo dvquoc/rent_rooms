@@ -149,11 +149,11 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
     });
-    var first_screen = <?php echo $first_screen; ?>;
     var region = <?php echo json_encode($region); ?>;
     var listing = <?php echo json_encode($listing); ?>;
     var polygon = [];
     var zoom = <?php echo $zoom; ?>;
+    var center = <?php echo json_encode($center); ?>;
     var getId = function(id) {
         return document.getElementById(id);
     }
