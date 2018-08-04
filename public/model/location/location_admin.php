@@ -20,14 +20,14 @@ class ModelLocationLocationAdmin extends Model {
     }
 
     function getDistrictByCity($city_id){
-        return $this->db->district->find(['city_id'=> $city_id])->toArray();
+        return $this->db->district->find(['city_id'=> (int) $city_id])->toArray();
     }
     function getCityById($city_id){
         
-        return $this->db->city->find(['city_id'=> $city_id])->toArray();
+        return $this->db->city->find(['city_id'=> (int) $city_id])->toArray();
     }
     function getDistrictById($district_id){
-        return $this->db->district->find(['district_id'=> $district_id])->toArray();
+        return $this->db->district->find(['district_id'=> (int) $district_id])->toArray();
     }
 
     public function get_city_by_name($name){

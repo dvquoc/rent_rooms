@@ -5,12 +5,19 @@
 	<div class="body-detail">
 			<div class="row">
 				<div class="col-md-8 img-rooms" style="padding:15px; padding-top: 10px; padding-right: 0px; position: relative; height: 430px; overflow: hidden">
-					<ul style="background: #2b443661; width:100%; position: absolute; left: 15px; top: 10px; list-style-type: none; margin: 0px; padding: 5px;">
-						<li class="pull-left" style="background-color:#fff; line-height: 16px; padding: 5px;font-size: 12px;">Hình ảnh</li>
-						<li class="pull-left" style="margin-left: 3px; line-height: 16px; background-color:#fff; padding: 5px;font-size: 12px;">Xem map</li>
+					<ul class="control-tabs" style="z-index:1; background: #2b443661; width:100%; position: absolute; left: 15px; top: 10px; list-style-type: none; margin: 0px; padding: 5px;">
+                        <li class="active pull-left"><a style="background-color:#fff; line-height: 16px; padding: 5px;font-size: 12px;" data-toggle="tab" href="#img-detail">Hình ảnh</a></li>
+						<li class="pull-left" style="margin-left: 3px; line-height: 16px; background-color:#fff; padding: 5px;font-size: 12px;"><a style="background-color:#fff; line-height: 16px; padding: 5px;font-size: 12px;" data-toggle="tab" href="#map-detail">Xem vị trí</a></li>
 						<li class="pull-right" style="padding: 5px;font-size: 12px; color: #fff; line-height: 15px; padding-right: 30px;">1/7 hình ảnh</li>
 					</ul>
-					<img src="<?php echo $detail['images'][0]['link']; ?>" class="img-responsive">
+                    <div class="tab-content" style="width: 100%; height: 100%; background-color: #eee">
+                        <div id="img-detail" class="tab-pane fade in active" style="width: 100%; height: 100%;">
+                            <img src="<?php echo $detail['images'][0]['link']; ?>" class="img-responsive">
+                        </div>
+                        <div id="map-detail" class="tab-pane fade" style="width: 100%; height: 100%">
+
+                        </div>
+                    </div>
 				</div>
 				<div class="col-md-4 info-room">
                     <div class="inner" style="background-color: #fff; padding:10px; border: 1px solid #eaeaea; margin-top: 10px; height: 420px;box-shadow: 0px 0px 4px -3px #000;">
@@ -167,4 +174,19 @@
 		</div>
 </div>
 </div>
+<script type="text/javascript">
+    var optionMap = {
+        center: new google.maps.LatLng(<?php echo $detail['location'][1]; ?>, <?php echo $detail['location'][0]; ?>),
+        zoom: 14,
+        scaleControl: false,
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        overviewMapControl: true,
+        scrollwheel: true,
+        disableDoubleClickZoom: true,
+    }
+
+    new google.maps.Map($("#map-detail").get(0),optionMap);
+</script>
 <?php echo $footer; ?>
