@@ -367,10 +367,6 @@ $.extend(mapRooms.prototype, {
                 if (isIntersect(p, i)) {
                     $(".canvas-marker").css({'cursor':'pointer'});
                     lastClick = i;
-                    $("#detail-title").text(i.data.name);
-                    $("#show-detail").show();
-                    $("#detail-address span").text(i.data.address);
-                    var imgs = JSON.parse(i.data.images);
                     return false;
                 }
             });
@@ -958,7 +954,7 @@ $.extend(mapRooms.prototype, {
             var data = response.data.listing;
             markers_data = [];
             _mr.overlayAction('delete');
-
+            $("#content-list").html("");
             $.each(data, function (key, item) {
                 markers_data.push({
                     latitude: item.location.coordinates[1],
@@ -972,6 +968,30 @@ $.extend(mapRooms.prototype, {
                         draggable: true,
                     }
                 });
+                var html = "";
+                    html+='<div class="item-listing" style="overflow: hidden; ">';
+                    html+='<div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_'+item._id.$oid+'">';
+                    var image = item.images;
+                    html+='<div class="img-item" style="float: left; ">';
+                    html+='<img src="sfsdss" width="100px" height="70px" onerror="this.src=\'http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg\'">';
+                    html+='</div>';
+                    html+='<div class="info" style="margin-left: 115px;">';
+                    html+='<h3 class="title" style="margin-bottom: 3px;"><b>'+item.name+'</b></h3>';
+                    html+='<div class="address" style="font-size: 13px">'+item.address+'</div>';
+                    html+='<div class="more-info-list">';
+                    html+='<span class="item-main"><b>'+(item.price/1000000)+'</b> Triệu / tháng</span>';
+                    html+='<span class="item-main"><b>'+item.acreage+'</b> m2</span>';
+                    html+='<span class="item-more">30m</span>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>';
+                $("#content-list").append($(html));
+                $("#content-list").on('click',$(html),function () {
+                    $("#detail-title").text($(this).find(".title").text());
+                    $("#show-detail").show();
+                    $("#detail-address span").text($(this).find(".address").text());
+                })
             });
             _mr.overlay({
                 values: markers_data,
