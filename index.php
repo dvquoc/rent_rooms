@@ -1,4 +1,5 @@
 <?php
+
 // Environment
 if (is_file('environment.php'))
     require_once('environment.php');

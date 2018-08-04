@@ -33,22 +33,21 @@ class ModelFindList extends Model {
         }
 
         if(isset($data['slug_city_name']) && !empty($data['slug_city_name'])){
-            $filter['slug_city_name']= $data['slug_city_name'];
+            $filter['slug_city']= $data['slug_city_name'];
         }
 
         if(isset($data['slug_district_name']) && !empty($data['slug_district_name'])){
-            $filter['slug_district_name']= $data['slug_district_name'];
+            $filter['slug_district']= $data['slug_district_name'];
         }
 
         $filter['status']= 1;
-
-
 
     	if(isset($data['point']) && !empty($data['point'])){
              $data = array(
                  'type'       =>'Point',
                  'coordinates'=>$data['point']
              );
+			
             $pipeline = [
                 [
                     '$geoNear' => [
