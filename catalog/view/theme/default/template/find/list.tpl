@@ -51,9 +51,9 @@ if(!isset($_COOKIE['origin_ref']))
                             <?php foreach($featured as $key=>$item) { ?>
                             <div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
                                 <?php
-							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
-							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
-							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
+							$slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
+							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
+							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
 						?>
                                 <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
                                 <button class="context-menu-button icon">test</button>
@@ -96,9 +96,9 @@ if(!isset($_COOKIE['origin_ref']))
 					<?php foreach($rooms as $key=>$item) { ?>
 					<div class="row" i-column" itemscope="" itemtype="http://schema.org/Product">
 						<?php
-							$slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
-							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
-							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
+							$slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
+							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
+							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
 						?>
 						<a itemprop="url" href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item<?php echo ($key < 3) ? ' is-ads':''; ?>">
 							<div class="dropdown">

@@ -14,13 +14,9 @@ class ModelLocationLocationAdmin extends Model {
     }
 
     function getAllCity(){
-        $citys = $this->cache->get('city-cache');
-        if(!$citys){
-            $result = $this->db->city->find()->toArray();
-            $this->cache->set('city-cache', $result);
-            return $result;
-        }
-        return $citys;
+        $result = $this->db->city->find()->toArray();
+        return $result;
+       
     }
 
     function getDistrictByCity($city_id){
