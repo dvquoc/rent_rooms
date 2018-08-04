@@ -79,7 +79,7 @@ if(!isset($_COOKIE['origin_ref']))
                     <div class="row">
                         <div class="sort-search" style="background-color:#eee; border-radius: 1px; padding:7px; border:1px solid #dadada; margin-bottom: 15px">
                             <div class="row">
-                                <div class="col-md-4"><b style="font-size: 14px; line-height: 28px;">(234)</b> kết quả tìm kiếm</div>
+                                <div class="col-md-4"><b style="font-size: 14px; line-height: 28px;">kết quả tìm kiếm</b></div>
                                 <div class="col-md-8 text-right">
                                     <b><i class="fa fa-sort"></i> Sắp xếp: </b>
                                     <select name="sort-price" class="item-sort">
