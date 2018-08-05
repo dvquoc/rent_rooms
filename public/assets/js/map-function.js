@@ -351,7 +351,21 @@ $.extend(mapRooms.prototype, {
         $div.append('<div id="root" style="font-weight: bold;">!</div>');
         var opts = { offset: {x: 0, y: 0}};
         new OverlayView(_m, $div, opts);
-
+    },
+    addItemToCanvas: function () {
+        layoutEleData.forEach(function (t, k) {
+            t.forEach(function (z,key) {
+                z.forEach(function (i,key) {
+                    _canvas.beginPath();
+                    _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
+                    _canvas.lineWidth = 1;
+                    _canvas.strokeStyle = '#fff';
+                    _canvas.stroke();
+                    _canvas.fill();
+                    _canvas.closePath();
+                });
+            });
+       });
         if(!$.isEmptyObject(layoutEleData)) {
             /* mousemover canvas Event */
             var show = false;
@@ -406,21 +420,6 @@ $.extend(mapRooms.prototype, {
 
             });
         }
-    },
-    addItemToCanvas: function () {
-        layoutEleData.forEach(function (t, k) {
-            t.forEach(function (z,key) {
-                z.forEach(function (i,key) {
-                    _canvas.beginPath();
-                    _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
-                    _canvas.lineWidth = 1;
-                    _canvas.strokeStyle = '#fff';
-                    _canvas.stroke();
-                    _canvas.fill();
-                    _canvas.closePath();
-                });
-            });
-       });
     },
     test: function () {
         console.log("This is Function test");
@@ -664,14 +663,17 @@ $.extend(mapRooms.prototype, {
             }
             $("#content-list .item-listing").remove();
             $.each(data, function (key, item) {
+                var latLgn = _mr.fromLatLngToPixel(new google.maps.LatLng(item.location.coordinates[1], item.location.coordinates[0]));
                 markers_data.push({
                     latitude: item.location.coordinates[1],
                     longitude: item.location.coordinates[0],
                     latLng: [item.location.coordinates[1], item.location.coordinates[0]],
+                    x:latLgn.x,
+                    y:latLgn.y,
                     data: item,
                     options: {
                         pane: "floatPane",
-                        content: '<div  data-toggle="popover" data-lat="'+item.location.coordinates[1]+'" data-lgn="'+item.location.coordinates[0]+'" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
+                        content: '<div  data-toggle="popover" data-x="'+latLgn.x+'" data-y="'+latLgn.y+'" data-lat="'+item.location.coordinates[1]+'" data-lgn="'+item.location.coordinates[0]+'" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
                         offset: {x: 0, y: 0},
                         draggable: true,
                     }
@@ -725,6 +727,7 @@ $.extend(mapRooms.prototype, {
                     data: item
                 });
             });
+
             if(_canvas!=null)
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             _mr.addItemToCanvas();
@@ -787,14 +790,17 @@ $.extend(mapRooms.prototype, {
         }
         $div = $(document.createElement("div")).css({
             border: "none",
-            borderWidth: 0,
             width: 0,
             height: 0,
+            top:0,
+            left:-18,
             position: "absolute"
         });
         $div.attr('id','pin-container');
         $.each(data_overlay.values, function (i, item) {
             $(item.options.content).data('lat',item.latLng[0]);
+            $(item.options.content).data('x',item.x);
+            $(item.options.content).data('y',item.y);
             $(item.options.content).data('lgn',item.latLng[1]);
             $div.append($(item.options.content));
         });
