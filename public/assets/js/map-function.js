@@ -284,7 +284,8 @@ $.extend(mapRooms.prototype, {
             $("#pin-container").remove();
             firstMouse.push($("#root").offset().left);
             firstMouse.push($("#root").offset().top);
-            _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
+            if(typeof canvas != "undefined" && _canvas!=null)
+                _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
         });
 
 
