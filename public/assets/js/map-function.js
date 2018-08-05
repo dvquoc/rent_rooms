@@ -1058,7 +1058,7 @@ $.extend(mapRooms.prototype, {
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             _mr.addItemToCanvas();
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);
+            //console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);
         }).always(function () {
             _mr.element.find('.loadding-map').remove();
         });
