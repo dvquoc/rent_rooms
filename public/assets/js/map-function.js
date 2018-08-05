@@ -268,7 +268,8 @@ $.extend(mapRooms.prototype, {
                 $('.pin-overlay').parent('div').addClass('ping-small');
             if (_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
                 $('.pin-overlay').parent('div').removeClass('ping-small');
-            _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
+            if(typeof canvas != "undefined" && _canvas!=null)
+                _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             $("#toolip-detail-on-pin").fadeOut('fast');
             $("#toolip-detail-on-pin").find('.arrow').fadeOut('fast');
         });
