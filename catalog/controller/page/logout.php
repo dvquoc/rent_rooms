@@ -5,10 +5,10 @@ class ControllerPageLogout extends Controller {
                 require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
                 $hybridauth = new Hybrid_Auth( $config_file_path );
                 $hybridauth->logoutAllProviders();
-                if(isset($_SESSION['source_id'])){
-                	unset($_SESSION['source_id']);
+                if(isset($this->session->data['source_id'])){
+                	unset($this->session->data['source_id']);
                 }
-                unset($_SESSION['id_user']);
+                unset($this->session->data['id_user']);
                 $this->response->redirect('/');
 	}
 }
