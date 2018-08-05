@@ -156,18 +156,23 @@ if(!isset($_COOKIE['origin_ref']))
 					</div>
                     <?php } ?>
 					<?php }else{ ?>
-                        <div class="text-center"><h3>Rất tiếc ! Chúng tôi đã không tìm thấy phòng trọ nào</h3></div>
+                        <div class="text-center">
+                            <img alt="No homes found" src="//static.trulia-cdn.com/images/search-web/no_results.svg">
+                            <h3>Rất tiếc ! Chúng tôi đã không tìm thấy phòng trọ nào</h3>
+                        </div>
 					<?php } ?>
-                    <div class="row ">
-                        <div class="seo_description">
-                            <div>
-                                <h3 class="title">Mô tả HCM</h3>
-                                <p class="text" style="color:#999;">
-                                    <?php  echo $info_seo['meta_description']; ?>
-                                </p>
+                    <?php if(!empty($info_seo['meta_description'])) { ?>
+                        <div class="row ">
+                            <div class="seo_description">
+                                <div>
+                                    <h3 class="title">Mô tả HCM</h3>
+                                    <p class="text" style="color:#999;">
+                                        <?php  echo $info_seo['meta_description']; ?>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php  } ?>
 				</div>
 				<div class="col-md-4 near" id="col-r">
                     <?php if(!empty($specials)) { ?>

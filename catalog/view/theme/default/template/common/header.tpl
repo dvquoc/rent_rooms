@@ -120,7 +120,7 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/quan-ly-phong-tro">Thông tin tài khoản</a></li>
+                                <li><a href="/quan-ly-phong-tro">Quản lý phòng trọ</a></li>
                                 <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
                                 <li><a href="/dang-xuat">Đăng xuất</a></li>
                             </ul>
