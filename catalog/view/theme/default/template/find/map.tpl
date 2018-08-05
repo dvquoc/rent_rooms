@@ -75,6 +75,15 @@
                 <span class="results-heading-title">Kết quả tìm kiếm</span>
             </div>
             <div id="content-list">
+                <div id="loadding-list" style="display:none; position: absolute;
+    top: 50px;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    background-color: #019c4452;
+    padding: 100px;">
+                    <img src="/public/assets/images/icons/loading.svg">
+                </div>
                 <?php foreach($listing as $item) { ?>
                 <div class="item-listing" style="overflow: hidden; ">
                     <div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_<?php echo $item['_id']; ?>">

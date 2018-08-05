@@ -123,7 +123,7 @@ if(!isset($_COOKIE['origin_ref']))
                                                 Cách khoản: <span style="background-color: #1f6aae;color: #fff;padding: 2px 4px;border-radius: 2px;"><?php echo ($item['calculated']>1000 ? round($item['calculated']/1000,1).' km': round($item['calculated'],0).' m') ?> </span>
                                         </div>
                                         <div class="i d">
-                                            <span class="direction-point" data-lat="<?php echo $item['location']['coordinates'][1] ?>" data-lgn="<?php echo $item['location']['coordinates'][0] ?>" style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;">chỉ đường</span>
+                                            <span class="direction-point" data-lat="<?php echo $item['location']['coordinates'][1] ?>" data-lgn="<?php echo $item['location']['coordinates'][0] ?>" style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;"><i class="fa fa-level-down"></i> chỉ đường</span>
                                         </div>
                                     <?php } ?>
 								</div>

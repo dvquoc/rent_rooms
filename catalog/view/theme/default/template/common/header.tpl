@@ -111,7 +111,7 @@
                         <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-search" aria-hidden="true"></span></button>
                     </li>
                 </ul>
-                <ul id="menu-right" class="nav navbar-nav menu-nav pull-right" style="">
+                <ul id="menu-right" class="owner-header pull-right" style="">
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                         <li class="item">
                             <a class="btn btn-primary" href="/quan-ly-phong-tro"><i class="fa fa-user"></i> Chủ phòng</a>
@@ -124,16 +124,22 @@
                           <ul class="dropdown-menu">
                             <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
                             <li><a href="/dang-xuat">Đăng xuất</a></li>
-                           
                           </ul>
                         </li>
-                     
-                       
                     <?php }else{?>
-                        <li class="item">
-                            <a class="btn btn-primary" style="padding: 5px;margin-right: 5px;" href="/dang-nhap-chu-phong"><i class="fa fa-user"></i> Chủ phòng</a>
+                        <li class="item dropup owner-input">
+                            <a class="btn btn-primary" style="padding: 5px;" href="javascript:;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                               <i class="fa fa-plus"></i> Chủ phòng
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                                <li>
+                                    <a class="login-header" href="/dang-nhap-chu-phong"><i class="fa fa-user"></i> Đăng nhập </a>
+                                </li>
+                                <li>
+                                    <a class="login-header" href="/dang-ky-chu-phong"> <i class="fa fa-sign-in"></i> Đăng ký</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="item"><button href="<?php echo $list; ?>" class="btn btn-line" style="border-radius: 3px;"><i class="glyphicon glyphicon-user"></i><a href="/dang-nhap-chu-phong"> Đăng nhập </a>/ <a href="/dang-ky-chu-phong">Đăng ký</a></button></li>
                     <?php }?>
                    
                 </ul>

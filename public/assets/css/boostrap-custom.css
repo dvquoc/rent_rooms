@@ -112,7 +112,7 @@ h6 {
     text-align: left;
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(148, 148, 148, 0.15);
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     -webkit-background-clip: padding-box;
@@ -128,10 +128,6 @@ h6 {
     margin: 9px 0;
     overflow: hidden;
     background-color: #e5e5e5;
-}
-.dropdown-menu > li{
-    padding: 0!important;;
-    margin: 0!important;
 }
 .dropdown-menu > li > a, .dropdown-menu > li > span {
     display: block;
