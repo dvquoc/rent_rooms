@@ -35,7 +35,7 @@ class ModelLocationCity extends Model {
 
     public function updateCity($id,$data){
     	$updateResult =  $this->table->updateOne(
-    	 	['city_id' => $id],
+    	 	['city_id' => (int)$id],
     	 	['$set' => $data]
     	 );
     	return $updateResult;
@@ -43,7 +43,7 @@ class ModelLocationCity extends Model {
 
      public function updateDistrict($id,$data){
         $updateResult =  $this->db->district->updateOne(
-            ['district_id' => $id],
+            ['district_id' => (int)$id],
             ['$set' => $data]
          );
         return $updateResult;

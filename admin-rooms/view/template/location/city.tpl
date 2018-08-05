@@ -11,14 +11,14 @@
 				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#city_<?php echo $city['city_id']?>" aria-expanded="false" aria-controls="collapse_<?php echo $city['city_id']?>">
 				         <?php echo $city['name']?>
 				        </a>
-				        <button style="float: right;" onclick="editCity(<?php echo $city['city_id']?>)">Edit</button>
+				        <button class="btn btn-primary" style="float: right;" onclick="editCity(<?php echo $city['city_id']?>)">Chỉnh sửa</button>
 				      </h4>
 				    </div>
 				    <div id="city_<?php echo $city['city_id']?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_<?php echo $city['city_id']?>">
 				    <?php foreach($city['districts'] as $district ){?>
 				      <div class="panel-body">
 				      	<?php echo $district['name']?>
-				      <button style="float: right;" onclick="editDistrict(<?php echo $district['district_id']?>)">Edit</button>
+				      <button class="btn btn-primary" style="float: right;" onclick="editDistrict(<?php echo $district['district_id']?>)">Chỉnh sửa</button>
 
 				      </div>
 				      <?php } ?>
@@ -30,6 +30,7 @@
 	</div>
 	<div class="col-md-6">
 		<div class="row" id="wrap-city" style="display: none;">
+			<h3>Chỉnh sửa thành phố</h3>
 			<form action="index.php?route=location/city/edit&token=<?php echo $token; ?>" method="POST">	
 				<input type="hidden" name="city_id">
 				<input type="hidden" name="city" value="1">
@@ -60,11 +61,12 @@
 
 				<label>Meta keyword</label>
 				<textarea class="form-control" name="meta_keyword"></textarea> 
-				<button type="submit">Edit</button>
-				<button onclick="cancel('city')">Cancel</button>
+				<button class="btn btn-primary" type="submit">Chỉnh sửa</button>
+				<button class="btn btn-danger" onclick="cancel('city')">Hủy</button>
 			</form>
 		</div>
 		<div class="row" id="wrap-district" style="display: none">
+			<h3>Chỉnh sửa Quận huyện</h3>
 			<form action="index.php?route=location/city/edit&token=<?php echo $token; ?>" method="POST">
 				<input type="hidden" name="district_id">
 				<input type="hidden" name="district" value="1">
@@ -93,8 +95,8 @@
 
 				<label>Meta keyword</label>
 				<textarea class="form-control" name="meta_keyword"></textarea> 
-				<button type="submit">Edit</button>
-				<button onclick="cancel('district')">Cancel</button>
+				<button class="btn btn-primary" type="submit">Chỉnh sửa</button>
+				<button class="btn btn-danger" onclick="cancel('district')">Hủy</button>
 
 			</form>
 		</div>
@@ -110,7 +112,9 @@
 			$('#wrap-district').css('display','none');
 	}
 	function editCity(id){
+		$('#searchresult1').empty();
 		$('#wrap-city').css('display','block');
+		$('#wrap-district').css('display','none');
 		$.ajax({
 			url:'index.php?route=location/city/getCity&token=<?php echo $token; ?>',
 			type:'POST',
@@ -120,7 +124,10 @@
 				$('input[name=city_id]').val(data[0].city_id);
 				$('input[name=name]').val(data[0].name);
 				$('input[name=code]').val(data[0].code);
-				// $('textarea[name=area]').val(JSON.stringify(data[0]['polygon']['coordinates']));
+				if(typeof data[0]['polygon'] != "undefined" && data[0]['polygon']!== null )
+					$('textarea[name=area]').val(JSON.stringify(data[0]['polygon']['coordinates']));
+				else
+					$('textarea[name=area]').val('')
 				$('textarea[name=location]').val(data[0].location['coordinates']);
 				$('textarea[name=description]').val(data[0].description);
 				$('textarea[name=meta_title]').val(data[0].meta_title);
@@ -129,10 +136,11 @@
 				$.ajax({
 					url:"https://nominatim.openstreetmap.org/search?q="+data[0].name+"&format=json&polygon=1&country=Vietnam&country_code=vn&city=Ho%20Chi%20Minh%20City&polygon_geojson=1",
 					success:function(data){
+						console.log(data);
+						array = [];
 						$('#searchresult').empty();
-						
 						$.each(data , function(index, val) { 
-						  $('#searchresult').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >details</a></div>')
+						  $('#searchresult').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
 						  array.push(val);
 						});
 					}
@@ -141,7 +149,9 @@
 		})
 	}
 	function editDistrict(id){
+		$('#searchresult').empty();
 		$('#wrap-district').css('display','block');
+		$('#wrap-city').css('display','none');
 		$.ajax({
 			url:'index.php?route=location/city/getdistrict&token=<?php echo $token; ?>',
 			type:'POST',
@@ -151,7 +161,10 @@
 				$('input[name=district_id]').val(data[0].district_id);
 				$('input[name=name]').val(data[0].name);
 				$('input[name=code]').val(data[0].code);
-				// $('textarea[name=area]').val(JSON.stringify(data[0]['polygon']['coordinates']));
+				if(typeof data[0]['polygon'] != "undefined" && data[0]['polygon']!== null )
+					$('textarea[name=area]').val(JSON.stringify(data[0]['polygon']['coordinates']));
+				else
+					$('textarea[name=area]').val('')
 				$('textarea[name=location]').val(data[0].location['coordinates']);
 				$('textarea[name=description]').val(data[0].description);
 				$('textarea[name=meta_title]').val(data[0].meta_title);
@@ -161,9 +174,10 @@
 					url:"https://nominatim.openstreetmap.org/search?q="+data[0].name+"&format=json&polygon=1&country=Vietnam&country_code=vn&city=Ho%20Chi%20Minh%20City&polygon_geojson=1",
 					success:function(data){
 						$('#searchresult1').empty();
-
+						array = [];
+						console.log(data);
 						$.each(data , function(index, val) { 
-						  $('#searchresult1').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >details</a></div>')
+						  $('#searchresult1').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
 						  array.push(val);
 						});
 					}
@@ -173,7 +187,6 @@
 	}
 	function getPolygon(index){
 		$('textarea[name=location]').val(array[index].lon+','+array[index].lat);
-		console.log(array[index].polygonpoints);
 		$('textarea[name=area]').val(JSON.stringify(array[index].polygonpoints));
 	}
 
