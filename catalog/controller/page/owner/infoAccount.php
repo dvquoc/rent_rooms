@@ -2,7 +2,7 @@
 class ControllerPageOwnerInfoAccount extends Controller {
 	public function index() {
 		$this->load->model('page/owner/register');
-		$id = $_SESSION['id_user'];
+		$id = $this->session->data['id_user']['id_owner'];
         $result = $this->model_page_owner_register->get_user_by_id($id);
         if($result){
             $data['user'] = $result;
@@ -19,7 +19,6 @@ class ControllerPageOwnerInfoAccount extends Controller {
     }
     public function update_account(){
     	$this->load->model('page/owner/register');
-
         $data = [
             'name'       => $_POST['firstname'],
             'gender'     => $_POST['gender'],
@@ -34,10 +33,10 @@ class ControllerPageOwnerInfoAccount extends Controller {
         if(!empty($_POST['password']))
             $data['password'] = md5($_POST['password']);
 
-    	$result = $this->model_page_owner_register->update_account($_SESSION['id_user'],$data);
+    	$result = $this->model_page_owner_register->update_account($this->session->data['id_user'],$data);
     	if($result){
-            $_SESSION['name'] = $data['name'];
-            $_SESSION['img'] = $data['image'];
+            $this->session->data['name'] = $data['name'];
+            $this->session->data['img'] = $data['image'];
     		$this->response->redirect('/');
         }
     	die();

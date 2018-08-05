@@ -51,6 +51,10 @@ class ModelCatalogRooms extends Model {
     }
 
     public function addRooms($data){
+         $point = array(
+            'type' =>'Point',
+            'coordinates'=>[(float) $data['lng'],(float) $data['lat']]
+        );
         $stt = $this->table->findOne([],['sort' => ['room_id' => -1],'projection' => ['room_id' => 1]]);
         return $this->table->insertOne([
             'master_id'         =>0,
