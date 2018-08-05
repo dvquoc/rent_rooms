@@ -9,7 +9,8 @@
     <div class="container-fluid">
 
       <div class="pull-right">
-        <button type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
+        <a id="save" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</a>
+        <button id="btn-save" type="submit" style="display: none" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
     </div>
   </div> 
@@ -90,6 +91,7 @@
                                           <div class="row">
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Tỉnh/Thành phố</label>
+                                                  <input name="slug_city" type="hidden" class="form-control">
                                                   <select class="form-control" name="city_id">
                                                       <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
                                                       <?php foreach($citys as $item) { ?>
@@ -103,6 +105,7 @@
                                               </div>
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Quận/Huyện</label>
+                                                  <input name="slug_district" type="hidden" class="form-control">
                                                   <select class="form-control" name="district_id">
                                                       <option value="null">--- Chọn Quận/Huyện ---</option>
                                                       <?php foreach($districts as $item) { ?>
@@ -151,11 +154,12 @@
                                           <div class="row">
                                               <div class="col-sm-12" style="margin-bottom: 10px;">
                                                   <label class="">Tên hiển thị</label>
-                                                  <div><input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>"></div>
+                                                  <div>
+                                                    <input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>">
+                                                    <input name="slug" type="hidden" class="form-control">
+                                                  </div>
                                               </div>
-
                                               <?php $class = 'show'; ?>
-
                                               <div class="col-md-4 item">
                                                   <div class="feature price">
                                                       <b>Tiền thuê: </b> <?php echo $txt_price; ?>
@@ -216,27 +220,14 @@
                                                   <input type="text" name="amount_people" value="<?php echo $amount_people; ?>"  class="form-control">
                                               </div>
                                           </div>
-                                          <div class="form-group">
-                                              <label class="col-sm-12">Giờ đóng cửa</label>
-                                              <div class="col-md-12">
-                                                  <input type="text" name="close_door" value="<?php echo $close_door; ?>" class="form-control">
-                                              </div>
-                                          </div>
+                                        
                                          
                                       </div>
                                       <div class="col-md-4">
-                                           <div class="form-group">
-                                              <label class="col-sm-12">Tình trạng</label>
+                                             <div class="form-group">
+                                              <label class="col-sm-12">Giờ đóng cửa</label>
                                               <div class="col-md-12">
-                                                  <select name="status" id="input-status" class="form-control">
-                                                      <?php if ($status) { ?>
-                                                      <option value="1" selected="selected">Đang hoạt động</option>
-                                                      <option value="0">tắt</option>
-                                                      <?php } else { ?>
-                                                      <option value="1">Đang hoạt động</option>
-                                                      <option value="0" selected="selected">Tắt</option>
-                                                      <?php } ?>
-                                                  </select>
+                                                  <input type="text" name="close_door" value="<?php echo $close_door; ?>" class="form-control">
                                               </div>
                                           </div>
                                       </div>
@@ -470,6 +461,16 @@
       $('#img-list .img .row').append(html);
       image_row++;
     }
+    $('#save').on('click',function(){
+      var slug_name = $('input[name=name]').val();
+      var slug_city =  $( "select[name=city_id] option:selected" ).text();
+      var slug_district = $( "select[name=district_id] option:selected" ).text();
+
+      $('input[name=slug]').val(ChangeToSlug(slug_name));
+      $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
+      $('input[name=slug_district]').val(ChangeToSlug(slug_district));
+      $('#btn-save').click();  
+    })
   </script>
 </div>
 <style type="text/css">

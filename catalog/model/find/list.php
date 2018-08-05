@@ -31,13 +31,15 @@ class ModelFindList extends Model {
                 '$lt'=>(int) $data['acreage'][1],
             ];
         }
-
+        $this->load->model("location/location");
         if(isset($data['slug_city_name']) && !empty($data['slug_city_name'])){
-            $filter['slug_city']= $data['slug_city_name'];
+           $city = $this->model_location_location->get_city_by_slug($data['slug_city_name']);
+           $filter['city_id'] = $city['city_id'];
         }
 
         if(isset($data['slug_district_name']) && !empty($data['slug_district_name'])){
-            $filter['slug_district']= $data['slug_district_name'];
+             $district = $this->model_location_location->get_district_by_slug($data['slug_district_name'],$filter['city_id']);
+             $filter['district_id']=  $district['district_id'];
         }
 
         $filter['status']= 1;

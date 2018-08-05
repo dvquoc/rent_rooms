@@ -116,7 +116,6 @@ class ControllerFindList extends Controller {
         //$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
         //$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
-
         $data['rooms'] = $this->model_find_list->get_list($data_search);
         $data['featured'] = $this->model_find_list->get_list_featured();
         $data['url'] = $url;
