@@ -113,18 +113,17 @@
                 </ul>
                 <ul id="menu-right" class="owner-header pull-right" style="">
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
-                        <li class="item">
-                            <a class="btn btn-primary" href="/quan-ly-phong-tro"><i class="fa fa-user"></i> Chủ phòng</a>
-                        </li>
-                        <li class="item">
-                            <img src="<?php echo $_SESSION['img']?>">
-                        </li>
-                         <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['name']?> <b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
-                            <li><a href="/dang-xuat">Đăng xuất</a></li>
-                          </ul>
+                        <li class="item dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="<?php echo $_SESSION['img']?>" width="24px" height="24px" style="border-radius: 100%" align="left">
+                                <?php echo $_SESSION['name']?>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/quan-ly-phong-tro">Thông tin tài khoản</a></li>
+                                <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
+                                <li><a href="/dang-xuat">Đăng xuất</a></li>
+                            </ul>
                         </li>
                     <?php }else{?>
                         <li class="item dropup owner-input">
