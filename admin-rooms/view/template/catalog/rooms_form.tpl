@@ -1,11 +1,13 @@
 <?php echo $header; ?>
 <script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
+
 <?php echo $column_left; ?>
 <div id="content">
   <div class="page-header"> 
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
+        <a id="save" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</a>
+        <button id="btn-save" style="display: none" type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
     </div>
   </div>
@@ -82,6 +84,7 @@
                                           <div class="row">
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Tỉnh/Thành phố</label>
+                                                   <input name="slug_city" type="hidden" class="form-control">
                                                   <select class="form-control" name="city_id">
                                                       <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
                                                       <?php foreach($citys as $item) { ?>
@@ -95,6 +98,7 @@
                                               </div>
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Quận/Huyện</label>
+                                                   <input name="slug_district" type="hidden" class="form-control">
                                                   <select class="form-control" name="district_id">
                                                       <option value="null">--- Chọn Quận/Huyện ---</option>
                                                       <?php foreach($districts as $item) { ?>
@@ -143,6 +147,7 @@
                                           <div class="row">
                                               <div class="col-sm-12" style="margin-bottom: 10px;">
                                                   <label class="">Tên hiển thị</label>
+                                                  <input name="slug" type="hidden" class="form-control">
                                                   <div><input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>"></div>
                                               </div>
 
@@ -535,6 +540,16 @@
       $('#img-list .img .row').append(html);
       image_row++;
     }
+    $('#save').on('click',function(){
+      var slug_name = $('input[name=name]').val();
+      var slug_city =  $( "select[name=city_id] option:selected" ).text();
+      var slug_district = $( "select[name=district_id] option:selected" ).text();
+
+      $('input[name=slug]').val(ChangeToSlug(slug_name));
+      $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
+      $('input[name=slug_district]').val(ChangeToSlug(slug_district));
+      $('#btn-save').click();  
+    })
   </script>
 </div>
 <style type="text/css">

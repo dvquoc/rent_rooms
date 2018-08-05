@@ -1,10 +1,24 @@
 <?php echo $header ; 
 ?>
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
-<div id="messenger_dialog" style="display: none;">
-    Chúng tôi không thể cập nhật được số điện thoại của bạn , vui lòng nhập số điện thoại để hoàn thành đăng ký và sử dụng đầy đủ tính năng của website chúng tôi.
+<script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Thông báo</h4>
+            </div>
+            <div class="modal-body">
+                <p>Chúng tôi không thể cập nhật được số điện thoại của bạn , vui lòng nhập số điện thoại để hoàn thành đăng ký và sử dụng đầy đủ tính năng của website chúng tôi.</p>
+                <p class="text-warning"><small>Nêu bạn không hoàn thành bước này chúng thôi không thể tạo tài khoản cho bạn</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn_ok_1"  class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="wrapper" class="simple-page_wrapper">
     <div id="container" class="page_container simple-page_container" style="padding-bottom: 60px;">
@@ -17,9 +31,8 @@
                         <div class="form-errors clearfix" style="display: none;"></div>
                         <div><input type="text" maxlength="11" placeholder="Nhập Số điện thoại" class="auth-input" id="phone" name="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" required></div>
                         <div id="check_phone" style="color: red"></div>
-                   
-                      <!--   <div><input type="password" placeholder="Nhập mật khẩu" class="auth-input" name="password" required></div> -->
-                        <button class="auth-btn js-action-track_event" type="submit" data-track_event-category="Button" data-track_event-action="Login" data-track_event-label="Login page"> Đồng ý</button>
+                        <a class="auth-btn js-action-track_event" id="a-submit"> Đồng ý</a>
+                        <button class="auth-btn js-action-track_event" id="btn-submit" style="display: none"> Đồng ý</button>
                     </form>
                 </div>
             </div>
@@ -28,19 +41,14 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-         $("#messenger_dialog").dialog({
-            autoOpen : true, 
-            show : "blind",
-            hide : "blind",
-            height: 150,
-            width: 350,
-            buttons: {
-                Ok: function() {
-                  $( this ).dialog( "close" );
-                }
-            }
-          });
-         $("#phone").focusout(function(){
+        $("#myModal").modal('show');
+         $("#myModal").on("click","btn-primary", function(){
+            
+         })
+        $("#btn_ok_1").click(function (e) {
+            $( "#phone" ).focus();
+        })
+         $("#a-submit").click(function(){
             var phone_number = $(this).val();
             $.ajax({
                 url:"/kiem-tra-sdt-chu-phong",
@@ -53,6 +61,9 @@
                         $('#check_phone').empty();
                         $('#check_phone').append( "Số điện thoại đã tồn tại" );
                         $('#check_phone').delay(3000).fadeOut();
+                        return false;
+                    }else{
+                        $('#btn-submit').click();
                     }
                 }
             })

@@ -38,13 +38,15 @@
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
     <link rel="stylesheet" href="/public/assets/js/font-awesome/css/font-awesome.min.css">
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
+    <link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen"/>
+    <link href="/public/assets/css/opencart.css" type="text/css" rel="stylesheet" />
     <?php foreach ($styles as $style) { ?>
     <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
     <?php } ?>
 
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
- 
+    
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi&key=AIzaSyBAqWDJPR4hUAraN1rwQIEzP0lAtfu8OmI" type="text/javascript"></script>
     <?php foreach ($scripts as $script) { ?>
