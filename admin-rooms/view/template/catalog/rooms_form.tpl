@@ -382,7 +382,7 @@
 
     }
     var map= new google.maps.Map(document.getElementById('map-address'), {
-        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         zoom: 16,
         scaleControl: false,
         fullscreenControl: false,
@@ -399,7 +399,7 @@
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     var address_components = {};
     var marker = new google.maps.Marker({
-        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $$location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         map: map,
         title: '<?php echo $address;  ?>',
         draggable: true
@@ -418,7 +418,7 @@
             position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
             draggable: true
         });
-
+        map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
         var address_lengh = place.address_components.length;
         var location = {};
         for(var i = address_lengh-1; i>=0; i--){

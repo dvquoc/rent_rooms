@@ -173,10 +173,10 @@ class ControllerPageOwnerRegister extends Controller {
     
     public function update_info(){
         $data['header'] = $this->load->controller('common/header');
-      
         $data['phone'] = $this->session->data['user_profile']['phone'];
-
-
+        if(!isset($this->session->data['user_profile'])){
+           $this->response->redirect('/dang-nhap-chu-phong');
+        }
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/update_info.tpl')) {
             $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/owner/update_info.tpl', $data));
         } else {
