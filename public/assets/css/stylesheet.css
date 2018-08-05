@@ -48,6 +48,17 @@
     line-height: 40px;
     padding:10px!important;
 }
+.info-user{
+    display: inline-flex;
+    background-color: #bfe2ff;
+    padding: 4px 7px;
+    border-radius: 3px;
+    border: 1px solid #96ccfb;
+}
+.info-image{
+    border-radius: 100%;
+    display:inline-block
+}
 body>.page-layout-box{
     background-color: #fff;
 }

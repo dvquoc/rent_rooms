@@ -114,10 +114,9 @@
                 <ul id="menu-right" class="owner-header pull-right" style="">
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                         <li class="item dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?php echo $_SESSION['img']?>" width="24px" height="24px" style="border-radius: 100%" align="left">
-                                <?php echo $_SESSION['name']?>
-                                <b class="caret"></b>
+                            <a href="javascript;;" class="dropdown-toggle info-user" data-toggle="dropdown">
+                                <img src="<?php echo $_SESSION['img']?>" width="24px" height="24px" class="info-image">
+                                <b style="margin-left: 10px;"><?php echo $_SESSION['name']?></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="/quan-ly-phong-tro">Quản lý phòng trọ</a></li>
