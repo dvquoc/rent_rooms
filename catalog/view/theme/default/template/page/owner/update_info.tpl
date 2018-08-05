@@ -3,6 +3,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link href="/public/assets/js/bootstrap/css/qc3-bootstrap.min.css" rel="stylesheet">
 <script src="/public/assets/js/jquery/jquery.validate.min.js" type="text/javascript"></script>
+<style type="text/css">
+    #phone-error{
+        color: red;
+    }
+</style>
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -49,7 +54,7 @@
             $( "#phone" ).focus();
         })
          $("#a-submit").click(function(){
-            var phone_number = $(this).val();
+            var phone_number = $('#phone').val();
             $.ajax({
                 url:"/kiem-tra-sdt-chu-phong",
                 type:"POST",
@@ -57,10 +62,11 @@
                     phone : phone_number,
                 },
                 success: function(data){
+                    $('#check_phone').fadeIn(1000).text("");
                     if(data == 'exist'){
                         $('#check_phone').empty();
                         $('#check_phone').append( "Số điện thoại đã tồn tại" );
-                        $('#check_phone').delay(3000).fadeOut();
+                        $('#check_phone').fadeOut(1000);
                         return false;
                     }else{
                         $('#btn-submit').click();

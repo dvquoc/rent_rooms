@@ -203,7 +203,7 @@ class ControllerPageOwnerRegister extends Controller {
 
     public function check_phone(){
         $this->load->model('page/owner/register');
-        $phone = $_POST['phone'];
+        $phone = $this->request->post['phone'];
         $result = $this->model_page_owner_register->get_phone($phone);
         if($result != 0){
             echo 'exist';

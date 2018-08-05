@@ -9,6 +9,6 @@ class ControllerPageLogout extends Controller {
                 	unset($_SESSION['source_id']);
                 }
                 unset($_SESSION['id_user']);
-                $this->response->redirect('/tim-kiem-phong-tro');
+                $this->response->redirect('/');
 	}
 }
