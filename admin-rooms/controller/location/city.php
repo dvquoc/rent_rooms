@@ -14,14 +14,6 @@ class ControllerLocationCity extends Controller
 				'name'             => $value['name'],
 				'city_id'          =>$value['city_id'],
 				'code'             =>$value['code'],
-				'lat'              =>$value['lat'],
-				'lng'              =>$value['lng'],
-				'districts'        => $this->model_location_location_admin->getDistrictByCity($value['city_id']),
-				'location'         =>$value['location'],
-				'description'      =>$value['description'],
-				'meta_title'       =>$value['meta_title'],
-				'meta_description' =>$value['meta_description'],
-				'meta_keyword'     =>$value['meta_keyword']
         	);
     	}
     	$data['header']      = $this->load->controller('common/header');
@@ -58,7 +50,7 @@ class ControllerLocationCity extends Controller
         	'name' => $this->request->post['name'],
         	'code'=>$this->request->post['code'],
         	'location'=>$point,
-        	'polygon' =>$polygon,
+        	'area' =>$polygon,
         	'description' => $this->request->post['description'],
         	'meta_title'=>$this->request->post['meta_title'],
         	'meta_description'=>$this->request->post['meta_description'],
