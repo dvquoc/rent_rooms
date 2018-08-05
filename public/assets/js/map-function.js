@@ -92,18 +92,12 @@ function OverlayView(map, $div, opts=null) {
     self.setMap(map);
     self.onAdd = function () {
         var panes = self.getPanes();
+        console.log($div.get(0));
         if ($div.hasClass('canvas-marker')){
             panes.overlayImage.appendChild($div.get(0));
-            console.log($div.get(0));
-            //$(panes['overlayLayer']).append($div);
-            $div.get(0).addEventListener("mousemove", function(){
-
-            });
-        }
-        else{
-            $(panes['floatPane']).html("");
-            $(panes['floatPane']).append($div);
+        } else {
             if($div.attr('id') == 'pin-container'){
+                $(panes['floatPane']).find(".pin-overlay").remove();
                 $.each($div.find('.pin-overlay'),function (key,item) {
                     $.each("dblclick click mouseover mousemove mouseout mouseup mousedown".split(" "), function (i, name) {
                         listeners.push(
@@ -114,9 +108,8 @@ function OverlayView(map, $div, opts=null) {
                         );
                     });
                 });
-
             }
-
+            $(panes['floatPane']).append($div);
         }
     };
     self.draw = function () {
@@ -259,7 +252,10 @@ $.extend(mapRooms.prototype, {
         this.eventMap();
         _mr.setOptionForMap({draggable:true,showInforMap:'off'});
         //_mr.overlay(this.setting.overlays);
-        _mr.drawPolygon(this.setting.draws,true,false);
+        if(!$.isEmptyObject(this.setting.draws)){
+            var data_polyon = _mr.formatDataPolygon(this.setting.draws,true);
+            _mr.drawPolygon(data_polyon,true);
+        }
     },
     eventMap:function () {
         /* Zoom change */
@@ -273,12 +269,10 @@ $.extend(mapRooms.prototype, {
             $("#toolip-detail-on-pin").fadeOut('fast');
             $("#toolip-detail-on-pin").find('.arrow').fadeOut('fast');
         });
-
         /* mouseover Event */
         _m.addListener('mouseover', function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-
         /* dragstart Event */
         var firstMouse = [];
         _m.addListener('dragstart', function () {
@@ -288,20 +282,18 @@ $.extend(mapRooms.prototype, {
             if(typeof canvas != "undefined" && _canvas!=null)
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
         });
-
-
         /* Idle Event */
         var count1 = 0;
         this.map.addListener( 'idle', function() {
                 var border = [];
-                border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
-                border.push(_mr.fromPixelToLatLng({x: _mr.element.width() - $("#content-list").width(), y: 20}));
-                border.push(_mr.fromPixelToLatLng({
-                    x: _mr.element.width() - $("#content-list").width(),
-                    y: _mr.element.height()
-                }));
-                border.push(_mr.fromPixelToLatLng({x: 0, y: _mr.element.height()}));
-                border.push(_mr.fromPixelToLatLng({x: 20, y: 20}));
+                var top = _mr.element.offset().top - $("#menu-main").outerHeight(),
+                    left = _mr.element.offset().left,
+                    right = _mr.element.outerWidth() - ($("#content-list").outerWidth()+10),
+                    botton = _mr.element.outerHeight();
+                border.push(_mr.fromPixelToLatLng({x: left, y: top}));
+                border.push(_mr.fromPixelToLatLng({x: right,y: top}));
+                border.push(_mr.fromPixelToLatLng({x: right,y: botton}));
+                border.push(_mr.fromPixelToLatLng({x: left, y: botton}));
                 if (count1 == 0 && _canvas == null) {
                     _mr.drawCanvas();
                 } else {
@@ -310,7 +302,7 @@ $.extend(mapRooms.prototype, {
                 count1++;
                 firstMouse = [];
                 border.push(border[0]);
-                _mr.drawPolygon(border, true, true);
+                _mr.loadPinMap(border);
         });
 
         /* Center changed Event */
@@ -349,63 +341,64 @@ $.extend(mapRooms.prototype, {
 
         /* Add elment root to know move pixel */
         $div = $(document.createElement("div")).css({'color': '#fff'});
-        $div.append('<div id="root" style="display: none; user-select: none;">Root</div>');
+        $div.append('<div id="root" style="font-weight: bold;">Root</div>');
         var opts = { offset: {x: 0, y: 0}};
         new OverlayView(_m, $div, opts);
 
-        /* mousemover canvas Event */
-        var show = false;
-        var t = $("#toolip-detail-on-pin");
-        var lastClick = {x:0,y:0};
-        $(document).on('mousemove','.canvas-marker',function (e) {
-            const p = { x: e.offsetX, y: e.offsetY };
-            var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
-            var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
-            if (!isInTooltip(p, t, lastClick) && lastClick.y!=0) {
-                t.fadeOut(1);
-                t.find('.arrow').fadeOut(1);
-                $(".canvas-marker").css({'cursor':''});
-            }
-            layoutEleData[rowKey][colKey].forEach(function (i, k) {
-                if (isIntersect(p, i)) {
-                    $(".canvas-marker").css({'cursor':'pointer'});
-                    lastClick = i;
-                    return false;
+        if(!$.isEmptyObject(layoutEleData)) {
+            /* mousemover canvas Event */
+            var show = false;
+            var t = $("#toolip-detail-on-pin");
+            var lastClick = {x: 0, y: 0};
+            $(document).on('mousemove', '.canvas-marker', function (e) {
+                const p = {x: e.offsetX, y: e.offsetY};
+                var colKey = Math.ceil((p.x / (_mr.element.width() - $("#content-list").width()) * 100) / nubLayout) - 1;
+                var rowKey = Math.ceil((p.y / _mr.element.height() * 100) / nubLayout) - 1;
+                if (!isInTooltip(p, t, lastClick) && lastClick.y != 0) {
+                    t.fadeOut(1);
+                    t.find('.arrow').fadeOut(1);
+                    $(".canvas-marker").css({'cursor': ''});
                 }
+                layoutEleData[rowKey][colKey].forEach(function (i, k) {
+                    if (isIntersect(p, i)) {
+                        $(".canvas-marker").css({'cursor': 'pointer'});
+                        lastClick = i;
+                        return false;
+                    }
+                });
             });
-
-        });
-        $(document).on('click','.canvas-marker',function (e) {
-            console.log(e);
-            const p = { x: e.offsetX, y: e.offsetY };
-            var colKey = Math.ceil((p.x/(_mr.element.width()-$("#content-list").width())*100)/nubLayout)-1;
-            var rowKey= Math.ceil((p.y/_mr.element.height()*100)/nubLayout)-1;
-            if (!isInTooltip(p, t, lastClick) && lastClick.y!=0) {
-                t.fadeOut(1);
-                t.find('.arrow').fadeOut(1);
-            }
-            layoutEleData[rowKey][colKey].forEach(function (i, k) {
-                if (isIntersect(p, i)) {
-                    $(".canvas-marker").css({'cursor':'pointer'});
-                    lastClick = i;
-                    console.log(layoutEleData[rowKey][colKey]);
-                    t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - (t.outerHeight(true)/2) -30});
-                    t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 2 + "px"});
-
-                    t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
-                    t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
-                    t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
-                    t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
-                    t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
-                    $("#detail-title").text(i.data.name);
-                    $("#show-detail").show();
-                    $("#detail-address span").text(i.data.address);
-                    var imgs = JSON.parse(i.data.images);
-                    return false;
+            $(document).on('click', '.canvas-marker', function (e) {
+                console.log(e);
+                const p = {x: e.offsetX, y: e.offsetY};
+                var colKey = Math.ceil((p.x / (_mr.element.width() - $("#content-list").width()) * 100) / nubLayout) - 1;
+                var rowKey = Math.ceil((p.y / _mr.element.height() * 100) / nubLayout) - 1;
+                if (!isInTooltip(p, t, lastClick) && lastClick.y != 0) {
+                    t.fadeOut(1);
+                    t.find('.arrow').fadeOut(1);
                 }
-            });
+                layoutEleData[rowKey][colKey].forEach(function (i, k) {
+                    if (isIntersect(p, i)) {
+                        $(".canvas-marker").css({'cursor': 'pointer'});
+                        lastClick = i;
+                        console.log(layoutEleData[rowKey][colKey]);
+                        t.fadeIn('fast').css({'left': i.x - t.width() / 2, top: i.y - (t.outerHeight(true) / 2) - 30});
+                        t.find('.arrow').fadeIn('fast').css({'left': (i.x - t.offset().left) - 2 + "px"});
 
-        });
+                        t.find("#show-price-tooltip span").text(i.data.price.toLocaleString('de-DE'));
+                        t.find("#show-acreage-tooltip span").text(i.data.acreage.toLocaleString('de-DE'));
+                        t.find("#show-electricity-tooltip span").text(i.data.price_electricity.toLocaleString('de-DE'));
+                        t.find("#show-water-tooltip span").text(i.data.price_water.toLocaleString('de-DE'));
+                        t.find("#show-deposit-tooltip span").text(i.data.price_deposit.toLocaleString('de-DE'));
+                        $("#detail-title").text(i.data.name);
+                        $("#show-detail").show();
+                        $("#detail-address span").text(i.data.address);
+                        var imgs = JSON.parse(i.data.images);
+                        return false;
+                    }
+                });
+
+            });
+        }
     },
     addItemToCanvas: function () {
         layoutEleData.forEach(function (t, k) {
@@ -622,35 +615,136 @@ $.extend(mapRooms.prototype, {
             });
         }
     },
-    drawPolygon: function (data_input, type = true, full=false) {
-        console.log('Draw polygon...');
+    /* Vẽ Polygon cho map */
+    drawPolygon: function (data_polygon, draw=true) {
+        if (draw){
+            _p.setPaths(data_polygon);
+            _p.setMap(_m);
+            _m.setZoom(_mr.getBoundsZoomLevel(_mr.bounds));
+        }
+        // polygon_history.push(_p);
+    },
+    /* Load pin cho map, Sau khi bản đồ idle Xong */
+    loadPinMap: function (data) {
+        /* Param Data phải là đối tượng path của polygon */
+        this.resetDataPinSmall();
+        var region = [];
+        $.each(data, function (key, item) {
+            region.push([item.lng(), item.lat()])
+        });
+        var dataSend = {
+            region: JSON.stringify(region),
+            other: null
+        };
+        $.ajax({
+            url: "/find/map/find-map",
+            data: dataSend,
+            type: "post",
+            dataType: "json",
+            async:true,
+            cache:false,
+            beforeSend: function (xhr) {
+                _mr.element.append('<div class="loadding-map"><img src="http://www.coinnews.net/files/support/loading.gif" algin="left">Đang tải dữ liệu...</div>');
+            }
+        }).done(function (response) {
+            var data = response.data.listing;
+            markers_data = [];
+            _mr.overlayAction('delete');
+            if($.isEmptyObject(data)){
+                $(".no-result").show();
+            }else{
+                $(".no-result").hide();
+            }
+            $("#content-list .item-listing").remove();
+            $.each(data, function (key, item) {
+                markers_data.push({
+                    latitude: item.location.coordinates[1],
+                    longitude: item.location.coordinates[0],
+                    latLng: [item.location.coordinates[1], item.location.coordinates[0]],
+                    data: item,
+                    options: {
+                        pane: "floatPane",
+                        content: '<div  data-toggle="popover" data-lat="'+item.location.coordinates[1]+'" data-lgn="'+item.location.coordinates[0]+'" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
+                        offset: {x: 0, y: 0},
+                        draggable: true,
+                    }
+                });
+                var html = "";
+                html+='<div class="item-listing" style="overflow: hidden; ">';
+                html+='<div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_'+item._id.$oid+'">';
+                var image = item.images;
+                html+='<div class="img-item" style="float: left; ">';
+                html+='<img src="sfsdss" width="100px" height="70px" onerror="this.src=\'http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg\'">';
+                html+='</div>';
+                html+='<div class="info" style="margin-left: 115px;">';
+                html+='<h3 class="title" style="margin-bottom: 3px;"><b>'+item.name+'</b></h3>';
+                html+='<div class="address" style="font-size: 13px">'+item.address+'</div>';
+                html+='<div class="more-info-list">';
+                html+='<span class="item-main"><b>'+(item.price/1000000)+'</b> Triệu / tháng</span>';
+                html+='<span class="item-main"><b>'+item.acreage+'</b> m2</span>';
+                html+='<span class="item-more">30m</span>';
+                html+='</div>';
+                html+='</div>';
+                html+='</div>';
+                html+='</div>';
+                $("#content-list").append($(html));
+                $("#content-list").on('click',$(html),function () {
+                    $("#detail-title").text($(this).find(".title").text());
+                    $("#show-detail").show();
+                    $("#detail-address span").text($(this).find(".address").text());
+                })
+            });
+            _mr.overlay({
+                values: markers_data,
+                events: {
+                    click: function (overlay, event, context) {
+                        $('.house-overlay-item').removeClass('active');
+                        $(this).find('.house-overlay-item').first().addClass('active');
+                        $("#detail-title").text(context.data.name);
+                        $("#show-detail").show();
+                        $("#detail-address span").text(context.data.address);
+                        var imgs = JSON.parse(context.data.images);
+                    }
+                }
+            });
+            response.data.listing_small.forEach(function(item,k){
+                var latLgn = _mr.fromLatLngToPixel(new google.maps.LatLng(item.location.coordinates[1], item.location.coordinates[0]));
+                var colKey  = Math.ceil(((latLgn.x/(_mr.element.width()-$("#content-list").width()))*100)/nubLayout)-1;
+                var rowKey = Math.ceil(((latLgn.y/_mr.element.height())*100)/nubLayout)-1;
+                layoutEleData[rowKey][colKey].push({
+                    latLng: [item.location.coordinates[1], item.location.coordinates[0]],
+                    x:latLgn.x,
+                    y:latLgn.y,
+                    data: item
+                });
+            });
+            if(_canvas!=null)
+                _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
+            _mr.addItemToCanvas();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);
+        }).always(function () {
+            _mr.element.find('.loadding-map').remove();
+        });
+
+    },
+    /* Định dạng dữ liệu cho Polygon */
+    formatDataPolygon: function(data_input,type=true){
         _mr.bounds = new google.maps.LatLngBounds();
-        var data_draw = [];
+        var data = [];
         if (type) {
-            //data_input.push(data_input[0]);
-            data_draw = data_input;
+            data = data_input;
             $.each(data_input, function (k, v) {
                 _mr.bounds.extend(v);
             });
         } else {
             data_input.push(data_input[0]);
             $.each(data_input, function (k, v) {
-                data_draw.push(new google.maps.LatLng(v[0], v[1]));
+                data.push(new google.maps.LatLng(v[0], v[1]));
                 _mr.bounds.extend(new google.maps.LatLng(v[0], v[1]));
             });
         }
-        _bounds = _mr.bounds;
-        if (!full){
-            _p.setPaths(data_draw);
-            console.log(_p.getPaths());
-            _p.setMap(_m);
-            _m.setZoom(_mr.getBoundsZoomLevel(_bounds));
-        }
-        // polygon_history.push(_p);
-        _mr.loadPinMap(data_draw);
-        // _m.fitBounds(_mr.bounds);
-        // _m.setZoom(_m.getZoom() + 1);
-        // _m.panBy($("#show-list").width()/2,0);
+        return data;
     },
     getBoundsZoomLevel: function(bounds) {
         var WORLD_DIM = { height: 256, width: 256 };
@@ -960,109 +1054,6 @@ $.extend(mapRooms.prototype, {
             extp.push(new google.maps.LatLng(ex, ey));
         }
         return extp;
-    },
-    loadPinMap: function (data) {
-        console.log('load map...');
-        this.resetDataPinSmall();
-        var region = [];
-        $.each(data, function (key, item) {
-            region.push([item.lng(), item.lat()])
-        });
-        var dataSend = {
-            region: JSON.stringify(region),
-            other: null
-        };
-        $.ajax({
-            url: "/find/map/find-map",
-            data: dataSend,
-            type: "post",
-            dataType: "json",
-            async:true,
-            cache:false,
-            beforeSend: function (xhr) {
-                _mr.element.append('<div class="loadding-map"><img src="http://www.coinnews.net/files/support/loading.gif" algin="left">Đang tải dữ liệu...</div>');
-            }
-        }).done(function (response) {
-            var data = response.data.listing;
-            markers_data = [];
-            _mr.overlayAction('delete');
-            if($.isEmptyObject(data)){
-                $(".no-result").show();
-            }else{
-                $(".no-result").hide();
-            }
-            $("#content-list .item-listing").remove();
-            $.each(data, function (key, item) {
-                markers_data.push({
-                    latitude: item.location.coordinates[1],
-                    longitude: item.location.coordinates[0],
-                    latLng: [item.location.coordinates[1], item.location.coordinates[0]],
-                    data: item,
-                    options: {
-                        pane: "floatPane",
-                        content: '<div  data-toggle="popover" data-lat="'+item.location.coordinates[1]+'" data-lgn="'+item.location.coordinates[0]+'" class="pin-overlay house-overlay-item pin_' + item._id.$oid + '" data-tippy-html="#item_' + item._id.$oid + '" title="' + item.title + '"><span>' + item.price / 1000000 + '</span></div>',
-                        offset: {x: 0, y: 0},
-                        draggable: true,
-                    }
-                });
-                var html = "";
-                    html+='<div class="item-listing" style="overflow: hidden; ">';
-                    html+='<div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_'+item._id.$oid+'">';
-                    var image = item.images;
-                    html+='<div class="img-item" style="float: left; ">';
-                    html+='<img src="sfsdss" width="100px" height="70px" onerror="this.src=\'http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg\'">';
-                    html+='</div>';
-                    html+='<div class="info" style="margin-left: 115px;">';
-                    html+='<h3 class="title" style="margin-bottom: 3px;"><b>'+item.name+'</b></h3>';
-                    html+='<div class="address" style="font-size: 13px">'+item.address+'</div>';
-                    html+='<div class="more-info-list">';
-                    html+='<span class="item-main"><b>'+(item.price/1000000)+'</b> Triệu / tháng</span>';
-                    html+='<span class="item-main"><b>'+item.acreage+'</b> m2</span>';
-                    html+='<span class="item-more">30m</span>';
-                    html+='</div>';
-                    html+='</div>';
-                    html+='</div>';
-                    html+='</div>';
-                $("#content-list").append($(html));
-                $("#content-list").on('click',$(html),function () {
-                    $("#detail-title").text($(this).find(".title").text());
-                    $("#show-detail").show();
-                    $("#detail-address span").text($(this).find(".address").text());
-                })
-            });
-            _mr.overlay({
-                values: markers_data,
-                events: {
-                    click: function (overlay, event, context) {
-                        $('.house-overlay-item').removeClass('active');
-                        $(this).find('.house-overlay-item').first().addClass('active');
-                        $("#detail-title").text(context.data.name);
-                        $("#show-detail").show();
-                        $("#detail-address span").text(context.data.address);
-                        var imgs = JSON.parse(context.data.images);
-                    }
-                }
-            });
-            response.data.listing_small.forEach(function(item,k){
-                var latLgn = _mr.fromLatLngToPixel(new google.maps.LatLng(item.location.coordinates[1], item.location.coordinates[0]));
-                var colKey  = Math.ceil(((latLgn.x/(_mr.element.width()-$("#content-list").width()))*100)/nubLayout)-1;
-                var rowKey = Math.ceil(((latLgn.y/_mr.element.height())*100)/nubLayout)-1;
-                layoutEleData[rowKey][colKey].push({
-                    latLng: [item.location.coordinates[1], item.location.coordinates[0]],
-                    x:latLgn.x,
-                    y:latLgn.y,
-                    data: item
-                });
-            });
-            if(_canvas!=null)
-                _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
-            _mr.addItemToCanvas();
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            //console.error("Đã có lỗi xảy ra: " + textStatus, errorThrown);
-        }).always(function () {
-            _mr.element.find('.loadding-map').remove();
-        });
-
     },
     fromLatLngToPixel: function (position) {
         var scale = Math.pow(2, _m.getZoom());

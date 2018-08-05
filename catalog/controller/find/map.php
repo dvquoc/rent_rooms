@@ -91,6 +91,7 @@ class ControllerFindMap extends Controller {
         $data['listing'] = $this->model_find_list->get_list($data_search);
 
 
+
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/find/map.tpl')) {
