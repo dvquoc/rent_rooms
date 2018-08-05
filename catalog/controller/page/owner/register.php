@@ -3,11 +3,13 @@ require_once( "vendor/recaptchalib.php" );
 
 class ControllerPageOwnerRegister extends Controller {
     public function index() {
-        // $this->load->model('page/detail');
-        // $data_search = array(
-        //     'status'=>1
-        // );
-        if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){
+        $data['error_warning'] = '';
+        if(isset($this->session->data['error_warning'])){
+            $data['error_warning']=$this->session->data['error_warning'];
+            unset($this->session->data['error_warning']);
+        }
+
+        if(isset($this->session->data['id_user']) || isset($this->session->data['source_id'])){
             $this->response->redirect('/thong-tin-chu-tro');
         }
         $data['footer'] = $this->load->controller('common/footer');
@@ -28,11 +30,11 @@ class ControllerPageOwnerRegister extends Controller {
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         
         if($user != 0 ){
-            $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user']['id_owner'] = $user['_id'];
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['img'] = $user['image'];
-            $this->response->redirect('/tim-kiem-phong-tro');
+            $this->session->data['source_id'] = $user_profile->identifier;
+            $this->session->data['id_user']['id_owner'] = $user['_id'];
+            $this->session->data['name'] = $user['name'];
+            $this->session->data['img'] = $user['image'];
+            $this->response->redirect('/quan-ly-phong-tro');
         }else{
              $data = [
                 'name'       =>$user_profile->displayName,
@@ -53,16 +55,15 @@ class ControllerPageOwnerRegister extends Controller {
                 'date_add'   =>time(),
                 'status'     =>1,
             ];
-            // $hybridauth->redirect($_COOKIE['origin_ref']);
             if(!empty($user_profile->phone)){
                 $id_user = $this->model_page_owner_register->add_user($data);
-                $_SESSION['source_id'] = $id_source;
-                $_SESSION['id_user']['id_owner'] = $id_user;
-                $_SESSION['name'] = $data['name'];
-                $_SESSION['img'] = $data['image'];
-                $this->response->redirect('/tim-kiem-phong-tro');
+                $this->session->data['source_id'] = $id_source;
+                $this->session->data['id_user']['id_owner'] = $id_user;
+                $this->session->data['name'] = $data['name'];
+                $this->session->data['img'] = $data['image'];
+                 $this->response->redirect('/quan-ly-phong-tro');
             }else{
-                $_SESSION['user_profile'] = $data;
+                $this->session->data['user_profile'] = $data;
                 $this->response->redirect('/cap-nhap-thong-tin-chu-phong');
             }
 
@@ -79,11 +80,11 @@ class ControllerPageOwnerRegister extends Controller {
         $user_profile = $adapter->getUserProfile('google');
         $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
         if($user != 0 ){
-            $_SESSION['source_id'] = $user_profile->identifier;
-            $_SESSION['id_user']['id_owner'] = $user['_id'];
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['img'] = $user['image'];
-            $this->response->redirect('/tim-kiem-phong-tro');
+            $this->session->data['source_id'] = $user_profile->identifier;
+            $this->session->data['id_user']['id_owner'] = $user['_id'];
+            $this->session->data['name'] = $user['name'];
+            $this->session->data['img'] = $user['image'];
+             $this->response->redirect('/quan-ly-phong-tro');
         }else{
              $data = [
             'name'       => $user_profile->displayName,
@@ -106,13 +107,13 @@ class ControllerPageOwnerRegister extends Controller {
             ];
             if(!empty($user_profile->phone)){
                 $id_user = $this->model_page_owner_register->add_user($data);
-                $_SESSION['source_id'] = $id_source;
-                $_SESSION['id_user'] = $id_user;
-                $_SESSION['name'] = $data['name'];
-                $_SESSION['img'] = $data['image'];
-                $this->response->redirect('/tim-kiem-phong-tro');
+                $this->session->data['source_id'] = $id_source;
+                $this->session->data['id_user'] = $id_user;
+                $this->session->data['name'] = $data['name'];
+                $this->session->data['img'] = $data['image'];
+                 $this->response->redirect('/quan-ly-phong-tro');
             }else{
-                $_SESSION['user_profile'] = $data;
+                $this->session->data['user_profile'] = $data;
                 $this->response->redirect('/cap-nhap-thong-tin-chu-phong');
             }
 
@@ -160,10 +161,10 @@ class ControllerPageOwnerRegister extends Controller {
                 'status'     =>1,
             ];
             $id_user = $this->model_page_owner_register->add_user($data);
-            $_SESSION['id_user']['id_owner'] = $id_user;
-            $_SESSION['name'] = $data['name']; 
-            $_SESSION['img'] = '';
-            //$this->response->redirect($_COOKIE['origin_ref']);
+            $this->session->data['id_user']['id_owner'] = $id_user;
+            $this->session->data['name'] = $data['name']; 
+            $this->session->data['img'] = '';
+             $this->response->redirect('/quan-ly-phong-tro');
         }else{
             echo 'capcha';
         }
@@ -173,7 +174,7 @@ class ControllerPageOwnerRegister extends Controller {
     public function update_info(){
         $data['header'] = $this->load->controller('common/header');
       
-        $data['phone'] = $_SESSION['user_profile']['phone'];
+        $data['phone'] = $this->session->data['user_profile']['phone'];
 
 
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/update_info.tpl')) {
@@ -184,18 +185,18 @@ class ControllerPageOwnerRegister extends Controller {
     }
     public function submit_register(){
         $this->load->model('page/owner/register');
-        $id_source = $_SESSION['user_profile']['id_source'];
+        $id_source = $this->session->data['user_profile']['id_source'];
       
-        $_SESSION['user_profile']['phone'] = $_POST['phone'];
+        $this->session->data['user_profile']['phone'] = $_POST['phone'];
 
-        $id_user = $this->model_page_owner_register->add_user($_SESSION['user_profile']);
+        $id_user = $this->model_page_owner_register->add_user($this->session->data['user_profile']);
         if($id_user){
-            $_SESSION['source_id'] = $id_source;
-            $_SESSION['id_user']['id_owner'] = $id_user;
-            $_SESSION['name'] = $_SESSION['user_profile']['name'];
-            $_SESSION['img'] = $_SESSION['user_profile']['image'];
-            unset($_SESSION['user_profile']);
-            $this->response->redirect('/tim-kiem-phong-tro');
+            $this->session->data['source_id'] = $id_source;
+            $this->session->data['id_user']['id_owner'] = $id_user;
+            $this->session->data['name'] = $this->session->data['user_profile']['name'];
+            $this->session->data['img'] = $this->session->data['user_profile']['image'];
+            unset($this->session->data['user_profile']);
+             $this->response->redirect('/quan-ly-phong-tro');
         }
      
     }

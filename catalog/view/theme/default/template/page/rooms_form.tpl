@@ -1,8 +1,8 @@
 <?php echo $header?>
 <script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
 <link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen"/>
-<link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
 <link href="/public/assets/css/opencart.css" type="text/css" rel="stylesheet" />
+<link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <div id="content">
   <div class="page-header">
@@ -220,16 +220,29 @@
                                                   <input type="text" name="amount_people" value="<?php echo $amount_people; ?>"  class="form-control">
                                               </div>
                                           </div>
-                                        
-                                         
+                                          <div class="form-group">
+                                                <label class="col-sm-12">Giờ đóng cửa</label>
+                                                <div class="col-md-12">
+                                                    <input type="text" name="close_door" value="<?php echo $close_door; ?>" class="form-control">
+                                                </div>
+                                          </div>
                                       </div>
                                       <div class="col-md-4">
-                                             <div class="form-group">
-                                              <label class="col-sm-12">Giờ đóng cửa</label>
-                                              <div class="col-md-12">
-                                                  <input type="text" name="close_door" value="<?php echo $close_door; ?>" class="form-control">
-                                              </div>
+                                         <div class="form-group">
+                                          <label class="col-sm-12">Tình trạng</label>
+                                          <div class="col-md-12">
+                                              <select name="status" id="input-status" class="form-control">
+                                                  <?php if ($status) { ?>
+                                                  <option value="1" selected="selected">Đang hoạt động</option>
+                                                  <option value="0">tắt</option>
+                                                  <?php } else { ?>
+                                                  <option value="1">Đang hoạt động</option>
+                                                  <option value="0" selected="selected">Tắt</option>
+                                                  <?php } ?>
+                                              </select>
                                           </div>
+                                      </div>
+                                             
                                       </div>
 
                                   </div></br></br>

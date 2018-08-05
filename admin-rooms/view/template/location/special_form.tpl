@@ -1,7 +1,6 @@
 <?php echo $header; ?>
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
-<script src="view/javascript/jquery/common.js" type="text/javascript"></script>
 <?php echo $column_left; ?>
 <div id="content">
     <div class="page-header">
@@ -30,7 +29,7 @@
                              <div class="row">
                                 <div class="col-sm-12">
                                     <div class="dropdown">
-                                        <input name="address_special" width="90%" id="input-address" class="form-control " value="<?php echo $address; ?>">
+                                        <input name="address_special" width="90%" id="input-address" class="form-control" value="<?php echo $address; ?>">
                                     </div>
                                 </div>
                             </div>
