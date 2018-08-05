@@ -11,14 +11,14 @@
 				        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#city_<?php echo $city['city_id']?>" aria-expanded="false" aria-controls="collapse_<?php echo $city['city_id']?>">
 				         <?php echo $city['name']?>
 				        </a>
-				        <button class="btn btn-primary" style="float: right;" onclick="editCity(<?php echo $city['city_id']?>)">Chỉnh sửa</button>
+				        <button class="btn btn-primary" style="float: right;padding: 0!important" onclick="editCity(<?php echo $city['city_id']?>)">Chỉnh sửa</button>
 				      </h4>
 				    </div>
 				    <div id="city_<?php echo $city['city_id']?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_<?php echo $city['city_id']?>">
 				    <?php foreach($city['districts'] as $district ){?>
 				      <div class="panel-body">
 				      	<?php echo $district['name']?>
-				      <button class="btn btn-primary" style="float: right;" onclick="editDistrict(<?php echo $district['district_id']?>)">Chỉnh sửa</button>
+				      <button class="btn btn-primary" style="float: right;padding: 0!important" onclick="editDistrict(<?php echo $district['district_id']?>)">Chỉnh sửa</button>
 
 				      </div>
 				      <?php } ?>
@@ -112,7 +112,6 @@
 			$('#wrap-district').css('display','none');
 	}
 	function editCity(id){
-		$('#searchresult1').empty();
 		$('#wrap-city').css('display','block');
 		$('#wrap-district').css('display','none');
 		$.ajax({
@@ -120,6 +119,7 @@
 			type:'POST',
 			data:{id:id},
 			dataType: 'json',
+
 			success:function(data){
 				$('input[name=city_id]').val(data[0].city_id);
 				$('input[name=name]').val(data[0].name);
@@ -135,10 +135,17 @@
 				$('textarea[name=meta_keyword]').val(data[0].meta_keyword);
 				$.ajax({
 					url:"https://nominatim.openstreetmap.org/search?q="+data[0].name+"&format=json&polygon=1&country=Vietnam&country_code=vn&city=Ho%20Chi%20Minh%20City&polygon_geojson=1",
-					success:function(data){
-						console.log(data);
+					beforeSend: function() {
+		        	// setting a timeout
 						array = [];
+						$('#searchresult1').empty();
 						$('#searchresult').empty();
+				        $('#searchresult').append('<img class="loading" src="view/image/loading.svg"/>');
+				    },
+					complete: function() {
+				        $('.loading').remove();
+				    },
+					success:function(data){
 						$.each(data , function(index, val) { 
 						  $('#searchresult').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
 						  array.push(val);
@@ -172,6 +179,16 @@
 				$('textarea[name=meta_keyword]').val(data[0].meta_keyword);
 				$.ajax({
 					url:"https://nominatim.openstreetmap.org/search?q="+data[0].name+"&format=json&polygon=1&country=Vietnam&country_code=vn&city=Ho%20Chi%20Minh%20City&polygon_geojson=1",
+					beforeSend: function() {
+		        	// setting a timeout
+						array = [];
+						$('#searchresult1').empty();
+						$('#searchresult').empty();
+				        $('#searchresult1').append('<img class="loading" src="view/image/loading.svg"/>');
+				    },
+					complete: function() {
+				        $('.loading').remove();
+				    },
 					success:function(data){
 						$('#searchresult1').empty();
 						array = [];

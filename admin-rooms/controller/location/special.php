@@ -110,7 +110,7 @@ class ControllerLocationSpecial extends Controller
         $data['cancel'] = $this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
         if( $this->session->data['check_exist']){
             $data['special'] =  $this->session->data['temp_data'];  
-            $data['error_warning'] = 'Tọa độ đã tồn tại';
+            $data['error_warning'] =$this->session->data['check_exist'];
         }
         unset($this->session->data['check_exist']);
 
@@ -158,24 +158,8 @@ class ControllerLocationSpecial extends Controller
         $result = $this->model_location_special->get_location_by_id($this->request->post['place_id']);
         
         if($result != 0){
-            $this->load->public_model('location/location_admin');
-            $data['header']      = $this->load->controller('common/header');
-            $data['column_left'] = $this->load->controller('common/column_left');
-            $data['footer']      = $this->load->controller('common/footer');
-            $data["save"]        = $this->url->link('location/special/save_special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
-            $data['token']     = $this->session->data['token'];
-
-            $data['city']     = $this->model_location_location_admin->getCityById($input['city_id']);
-             $data['district'] = $this->model_location_location_admin->getDistrictById($input['district_id']);
-
-
-            $data['citys']     = $this->model_location_location_admin->getAllCity();
-            $data['districts'] = $this->model_location_location_admin->getDistrictByCity($input['city_id']);
-            $data['cancel'] = $this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL');
-            $data['special'] = $input;
-            $data['error_warning'] = 'Khu vực đã tồn tại';
-
-            $this->response->setOutput($this->load->view('location/special_form.tpl', $data));  
+            $this->page_add_new();
+            $this->session->data['check_exist'] = 'Khu vực đã tồn tại';
         }else{
             if(!empty($this->request->post['id'])){
                 $result = $this->model_location_special->update($this->request->post['id'],$input);
