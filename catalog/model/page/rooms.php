@@ -83,7 +83,10 @@ class ModelPageRooms extends Model {
             'date_crate'        => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
             'is_checked'        =>0,
             'master_id'         =>$data['id_owner'],
-            'source'            =>'front end',
+            'source'            =>'front-end',
+            'slug_name'         => $data['slug'],
+            'slug_city'         =>$data['slug_city'],
+            'slug_district'     =>$data['slug_district'],
         ]);
     }
 
@@ -115,6 +118,9 @@ class ModelPageRooms extends Model {
             'ads' => (int) $data['ads'],
             'ads_position' => $data['ads_position'],
             'status' => (int) $data['status'],
+            'slug_name'         => $data['slug'],
+            'slug_city'         =>$data['slug_city'],
+            'slug_district'     =>$data['slug_district'],
         ];
 
         //var_dump($data_set); die();

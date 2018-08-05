@@ -32,7 +32,7 @@ class ModelPageLocation extends Model {
 
     function getDistrictByCity($city_id){
 
-        return $this->db->district->find(['city_id'=> (string)$city_id])->toArray();
+        return $this->db->district->find(['city_id'=> (int)$city_id])->toArray();
     }
     function getCityById($city_id){
         
