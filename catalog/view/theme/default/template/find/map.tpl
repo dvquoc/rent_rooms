@@ -104,7 +104,7 @@
                 </div>
                 <?php } ?>
                 <div class="no-result text-center" style="display: none; padding: 20px;">
-                    <h3>Không có phòng trọ nào được tìm thấy trong khu vực này</h3>
+                    <h3>Rất tiếc ! Chúng tôi đã không tìm thấy phòng trọ nào</h3>
                     <img alt="No homes found" src="//static.trulia-cdn.com/images/search-web/no_results.svg">
                 </div>
             </div>
