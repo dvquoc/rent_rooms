@@ -24,7 +24,7 @@ eContentList.style.height =  (eShowList - getClass('results-heading')[0].offsetH
 $("#content-detail").css({'height': $(eShowDetail).outerHeight() - 250});
 var region = [];
 $.each(polygon,function(key,item){
-    region.push([parseFloat(item[1]),parseFloat(item[0])]);
+    region.push(new google.maps.LatLng(parseFloat(item[1]),parseFloat(item[0])));
 });
 var markers_data = [];
 var bounds = new google.maps.LatLngBounds();

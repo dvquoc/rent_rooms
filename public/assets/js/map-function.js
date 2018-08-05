@@ -259,7 +259,7 @@ $.extend(mapRooms.prototype, {
         this.eventMap();
         _mr.setOptionForMap({draggable:true,showInforMap:'off'});
         //_mr.overlay(this.setting.overlays);
-        _mr.drawPolygon(this.setting.draws,true);
+        _mr.drawPolygon(this.setting.draws,true,false);
     },
     eventMap:function () {
         /* Zoom change */
@@ -624,13 +624,12 @@ $.extend(mapRooms.prototype, {
         console.log('Draw polygon...');
         _mr.bounds = new google.maps.LatLngBounds();
         var data_draw = [];
-
         if (type) {
-
+            //data_input.push(data_input[0]);
             data_draw = data_input;
-            // $.each(data_input, function (k, v) {
-            //     _mr.bounds.extend(v);
-            // });
+            $.each(data_input, function (k, v) {
+                _mr.bounds.extend(v);
+            });
         } else {
             data_input.push(data_input[0]);
             $.each(data_input, function (k, v) {
@@ -638,16 +637,45 @@ $.extend(mapRooms.prototype, {
                 _mr.bounds.extend(new google.maps.LatLng(v[0], v[1]));
             });
         }
-        console.log(data_input);
-        //_bounds = _mr.bounds;
-        // if (!full)
-        _p.setPaths(data_draw);
-        _p.setMap(_m);
+        _bounds = _mr.bounds;
+        if (!full){
+            _p.setPaths(data_draw);
+            console.log(_p.getPaths());
+            _p.setMap(_m);
+            _m.setZoom(_mr.getBoundsZoomLevel(_bounds));
+        }
         // polygon_history.push(_p);
-        //_mr.loadPinMap(data_draw);
-        //_m.fitBounds(_mr.bounds);
-        //_m.setZoom(_m.getZoom() + 1);
-        //_m.panBy($("#show-list").width()/2,0);
+        _mr.loadPinMap(data_draw);
+        // _m.fitBounds(_mr.bounds);
+        // _m.setZoom(_m.getZoom() + 1);
+        // _m.panBy($("#show-list").width()/2,0);
+    },
+    getBoundsZoomLevel: function(bounds) {
+        var WORLD_DIM = { height: 256, width: 256 };
+        var ZOOM_MAX = 21;
+
+        function latRad(lat) {
+            var sin = Math.sin(lat * Math.PI / 180);
+            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+        }
+
+        function zoom(mapPx, worldPx, fraction) {
+            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+        }
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var latFraction = (latRad(ne.lat()) - latRad(sw.lat())) / Math.PI;
+
+        var lngDiff = ne.lng() - sw.lng();
+        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+        var latZoom = zoom(_mr.element.height(), WORLD_DIM.height, latFraction);
+        var lngZoom = zoom(_mr.element.width(), WORLD_DIM.width, lngFraction);
+
+        return Math.min(latZoom, lngZoom, ZOOM_MAX);
     },
     overlay: function (data_overlay) {
         var objs = [];

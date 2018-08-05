@@ -23,7 +23,7 @@ class ModelFindMap extends Model {
         ];
         $options1 =[
             'sort' => ['room_id'=>-1],
-            'limit'=>1000,
+            'limit'=>10000,
             'skip' =>31
         ];
         $result['data_lagre'] = $this->table->find($filter,$options)->toArray();
