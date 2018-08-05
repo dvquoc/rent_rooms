@@ -44,13 +44,11 @@ class ControllerLocationCity extends Controller
     }
     public function edit(){
     	$this->load->model('location/city');
-    	$lc = explode(" ",$this->request->post['location']);
-
+    	$lc = explode(",",$this->request->post['location']);
     	$point = array(
             'type' =>'Point',
             'coordinates'=>[(double) $lc[0],(double) $lc[1]]
         );
-        
         $polygon = array(
             'type' =>'Polygon',
             'coordinates'=>json_decode(htmlspecialchars_decode($this->request->post['area'])),
