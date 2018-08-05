@@ -347,7 +347,7 @@ $.extend(mapRooms.prototype, {
         _canvas.fillStyle = "#0b8841";
 
         /* Add elment root to know move pixel */
-        $div = $(document.createElement("div")).css({'color': '#fff'});
+        $div = $(document.createElement("div")).css({'color': '#fff','position':'absolute','top':0,'left':0});
         $div.append('<div id="root" style="font-weight: bold;">!</div>');
         var opts = { offset: {x: 0, y: 0}};
         new OverlayView(_m, $div, opts);
