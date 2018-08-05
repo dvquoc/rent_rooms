@@ -87,6 +87,7 @@ class ControllerFindMap extends Controller {
         $data['url'] = $url;
         $data['zoom']=15;
         $data['center']= isset($data['info_seo']['location']['coordinates']) ? $data['info_seo']['location']['coordinates'] : [10.7751766,106.6808529] ;
+        $data['polygon']= isset($data['info_seo']['polygon']['coordinates']) ? $data['info_seo']['polygon']['coordinates'] : [] ;
         $data['listing'] = $this->model_find_list->get_list($data_search);
 
 

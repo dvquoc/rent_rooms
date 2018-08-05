@@ -103,6 +103,10 @@
                     </div>
                 </div>
                 <?php } ?>
+                <div class="no-result text-center" style="display: none; padding: 20px;">
+                    <h3>Không có phòng trọ nào được tìm thấy trong khu vực này</h3>
+                    <img alt="No homes found" src="//static.trulia-cdn.com/images/search-web/no_results.svg">
+                </div>
             </div>
         </div>
     </div>
@@ -160,7 +164,7 @@
     });
     var region = <?php echo json_encode($region); ?>;
     var listing = <?php echo json_encode($listing); ?>;
-    var polygon = [];
+    var polygon = <?php echo json_encode($polygon); ?>;
     var zoom = <?php echo $zoom; ?>;
     var center = <?php echo json_encode($center); ?>;
     var getId = function(id) {

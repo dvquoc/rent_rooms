@@ -259,6 +259,7 @@ $.extend(mapRooms.prototype, {
         this.eventMap();
         _mr.setOptionForMap({draggable:true,showInforMap:'off'});
         //_mr.overlay(this.setting.overlays);
+        _mr.drawPolygon(this.setting.draws,true);
     },
     eventMap:function () {
         /* Zoom change */
@@ -623,12 +624,13 @@ $.extend(mapRooms.prototype, {
         console.log('Draw polygon...');
         _mr.bounds = new google.maps.LatLngBounds();
         var data_draw = [];
+
         if (type) {
-            data_input.push(data_input[0]);
+
             data_draw = data_input;
-            $.each(data_input, function (k, v) {
-                _mr.bounds.extend(v);
-            });
+            // $.each(data_input, function (k, v) {
+            //     _mr.bounds.extend(v);
+            // });
         } else {
             data_input.push(data_input[0]);
             $.each(data_input, function (k, v) {
@@ -636,13 +638,13 @@ $.extend(mapRooms.prototype, {
                 _mr.bounds.extend(new google.maps.LatLng(v[0], v[1]));
             });
         }
-
-        _bounds = _mr.bounds;
+        console.log(data_input);
+        //_bounds = _mr.bounds;
         // if (!full)
-        //     _p.setPaths(data_draw);
-        // _p.setMap(_m);
+        _p.setPaths(data_draw);
+        _p.setMap(_m);
         // polygon_history.push(_p);
-        _mr.loadPinMap(data_draw);
+        //_mr.loadPinMap(data_draw);
         //_m.fitBounds(_mr.bounds);
         //_m.setZoom(_m.getZoom() + 1);
         //_m.panBy($("#show-list").width()/2,0);
@@ -954,7 +956,12 @@ $.extend(mapRooms.prototype, {
             var data = response.data.listing;
             markers_data = [];
             _mr.overlayAction('delete');
-            $("#content-list").html("");
+            if($.isEmptyObject(data)){
+                $(".no-result").show();
+            }else{
+                $(".no-result").hide();
+            }
+            $("#content-list .item-listing").remove();
             $.each(data, function (key, item) {
                 markers_data.push({
                     latitude: item.location.coordinates[1],

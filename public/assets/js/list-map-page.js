@@ -22,7 +22,10 @@ eShowList.style.height =  ((heightShow - getId('menu-main').offsetHeight) - 20) 
 eContentList.style.height =  (eShowList - getClass('results-heading')[0].offsetHeight + 60) + 'px';
 
 $("#content-detail").css({'height': $(eShowDetail).outerHeight() - 250});
-
+var region = [];
+$.each(polygon,function(key,item){
+    region.push([parseFloat(item[1]),parseFloat(item[0])]);
+});
 var markers_data = [];
 var bounds = new google.maps.LatLngBounds();
 
@@ -39,8 +42,8 @@ var optionsMap = {
     overviewMapControl: true,
     scrollwheel: true,
     disableDoubleClickZoom: true,
-    center: new google.maps.LatLng(10.7522818, 106.4810371),
-    draws: polygon,
+    center: new google.maps.LatLng(center[1], center[0]),
+    draws: region,
     controlCustom:['draw-line','draw-popygon'],
 
 };
