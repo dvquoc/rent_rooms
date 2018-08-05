@@ -13,6 +13,15 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
+.result.highlight {
+	padding: 5px;
+	border: 1px solid #79a4bb;
+	border-radius: 3px;
+	margin: 3px 0px;
+	background-color: #a6e0ff;
+	color: #000;
+	font-size: 13px;
+}
 .page-header {
 	vertical-align: middle;
 	margin: 0px 0;
