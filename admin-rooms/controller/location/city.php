@@ -14,6 +14,8 @@ class ControllerLocationCity extends Controller
 				'name'             => $value['name'],
 				'city_id'          =>$value['city_id'],
 				'code'             =>$value['code'],
+				'districts'        => $this->model_location_location_admin->getDistrictByCity($value['city_id']),
+				
         	);
     	}
     	$data['header']      = $this->load->controller('common/header');

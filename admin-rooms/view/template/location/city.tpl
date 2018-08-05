@@ -15,15 +15,17 @@
 				      </h4>
 				    </div>
 				    <div id="city_<?php echo $city['city_id']?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_<?php echo $city['city_id']?>">
-				    <?php foreach($city['districts'] as $district ){?>
-				      <div class="panel-body">
-				      	<?php echo $district['name']?>
-				      <button class="btn btn-primary" style="float: right;padding: 0!important" onclick="editDistrict(<?php echo $district['district_id']?>)">Chỉnh sửa</button>
-
-				      </div>
-				      <?php } ?>
+				   	<?php if(empty($city['districts'])){?>
+				   		<div class="panel-body">Không tồn tại dữ liệu</div>
+				   	<?php }else{?>
+				   		<?php foreach($city['districts'] as $district ){?>
+					      <div class="panel-body">
+					      	<?php echo $district['name']?>
+					      	<button class="btn btn-primary" style="float: right;padding: 0!important" onclick="editDistrict(<?php echo $district['district_id']?>)">Chỉnh sửa</button>
+					      </div>
+					     <?php } ?>
+				   	<?php }?>
 				    </div>
-				    
 				 </div>
 			<?php } ?>
 		</div>
@@ -46,7 +48,7 @@
 				<label>Khu vực</label>
 				<textarea class="form-control" name="area"></textarea> 
 
-				<div id="searchresult">
+				<div id="search-result-city">
 					
 				</div>
 				
@@ -81,7 +83,7 @@
 				
 				<label>Khu vực</label>
 				<textarea class="form-control" name="area"></textarea> 
-				<div id="searchresult1">
+				<div id="search-result-district">
 					
 				</div>
 				<label>Mô tả</label>
@@ -119,13 +121,12 @@
 			type:'POST',
 			data:{id:id},
 			dataType: 'json',
-
 			success:function(data){
 				$('input[name=city_id]').val(data[0].city_id);
 				$('input[name=name]').val(data[0].name);
 				$('input[name=code]').val(data[0].code);
-				if(typeof data[0]['polygon'] != "undefined" && data[0]['polygon']!== null )
-					$('textarea[name=area]').val(JSON.stringify(data[0]['polygon']['coordinates']));
+				if(typeof data[0]['area'] != "undefined" && data[0]['area']!== null )
+					$('textarea[name=area]').val(JSON.stringify(data[0]['area']['coordinates']));
 				else
 					$('textarea[name=area]').val('')
 				$('textarea[name=location]').val(data[0].location['coordinates']);
@@ -136,18 +137,17 @@
 				$.ajax({
 					url:"https://nominatim.openstreetmap.org/search?q="+data[0].name+"&format=json&polygon=1&country=Vietnam&country_code=vn&city=Ho%20Chi%20Minh%20City&polygon_geojson=1",
 					beforeSend: function() {
-		        	// setting a timeout
 						array = [];
-						$('#searchresult1').empty();
-						$('#searchresult').empty();
-				        $('#searchresult').append('<img class="loading" src="view/image/loading.svg"/>');
+						$('#search-result-district').empty();
+						$('#search-result-city').empty();
+				        $('#search-result-city').append('<img class="loading" src="view/image/loading.svg"/>');
 				    },
 					complete: function() {
 				        $('.loading').remove();
 				    },
 					success:function(data){
 						$.each(data , function(index, val) { 
-						  $('#searchresult').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
+						  $('#search-result-city').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
 						  array.push(val);
 						});
 					}
@@ -156,7 +156,6 @@
 		})
 	}
 	function editDistrict(id){
-		$('#searchresult').empty();
 		$('#wrap-district').css('display','block');
 		$('#wrap-city').css('display','none');
 		$.ajax({
@@ -168,8 +167,8 @@
 				$('input[name=district_id]').val(data[0].district_id);
 				$('input[name=name]').val(data[0].name);
 				$('input[name=code]').val(data[0].code);
-				if(typeof data[0]['polygon'] != "undefined" && data[0]['polygon']!== null )
-					$('textarea[name=area]').val(JSON.stringify(data[0]['polygon']['coordinates']));
+				if(typeof data[0]['area'] != "undefined" && data[0]['area']!== null )
+					$('textarea[name=area]').val(JSON.stringify(data[0]['area']['coordinates']));
 				else
 					$('textarea[name=area]').val('')
 				$('textarea[name=location]').val(data[0].location['coordinates']);
@@ -180,21 +179,17 @@
 				$.ajax({
 					url:"https://nominatim.openstreetmap.org/search?q="+data[0].name+"&format=json&polygon=1&country=Vietnam&country_code=vn&city=Ho%20Chi%20Minh%20City&polygon_geojson=1",
 					beforeSend: function() {
-		        	// setting a timeout
 						array = [];
-						$('#searchresult1').empty();
-						$('#searchresult').empty();
-				        $('#searchresult1').append('<img class="loading" src="view/image/loading.svg"/>');
+						$('#search-result-district').empty();
+						$('#search-result-city').empty();
+				        $('#search-result-district').append('<img class="loading" src="view/image/loading.svg"/>');
 				    },
 					complete: function() {
 				        $('.loading').remove();
 				    },
 					success:function(data){
-						$('#searchresult1').empty();
-						array = [];
-						console.log(data);
 						$.each(data , function(index, val) { 
-						  $('#searchresult1').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
+						  $('#search-result-district').append('<div class="result highlight" ><span class="name">'+val['display_name']+'</span> <span class="type">('+val['type']+')</span> <a onclick="getPolygon('+index+')" >Chi tiết</a></div>')
 						  array.push(val);
 						});
 					}
