@@ -92,7 +92,6 @@ function OverlayView(map, $div, opts=null) {
     self.setMap(map);
     self.onAdd = function () {
         var panes = self.getPanes();
-        console.log($div.get(0));
         if ($div.hasClass('canvas-marker')){
             panes.overlayImage.appendChild($div.get(0));
         } else {
@@ -110,17 +109,25 @@ function OverlayView(map, $div, opts=null) {
                 });
             }
             $(panes['floatPane']).append($div);
+
         }
     };
     self.draw = function () {
-        if($div.attr('id') == 'pin-container'){
-            $.each($div.find('.pin-overlay'),function (key,item) {
-                var position = new google.maps.LatLng($(item).data('lat'), $(item).data('lgn'));
-                var ps = self.getProjection().fromLatLngToDivPixel(position);
-                if (!$div.hasClass('canvas-marker'))
-                    $(item).css("left", (ps.x) + "px").css("top", (ps.y) + "px").fadeIn(300);
-            });
+        if (!$div.hasClass('canvas-marker')) {
+            var overlayProjection = self.getProjection();
+            if ($div.attr('id') == 'pin-container') {
 
+                $.each($div.find('.pin-overlay'), function (key, item) {
+                    var position = new google.maps.LatLng($(item).data('lat'), $(item).data('lgn'));
+                    var pssss = overlayProjection.fromLatLngToDivPixel(position);
+                    if (!$div.hasClass('canvas-marker')) {
+                        $(item).css("left", (pssss.x + 25) + "px").css({top: (pssss.y - 25 / 2) + "px"});
+                    }
+                    // console.log(pssss);
+                    $(item).get(0).style.webkitTransform = 'translateZ(0px)';
+                });
+                $div.get(0).style.webkitTransform = 'translateZ(0px)';
+            }
         }
     };
     self.onRemove = function () {
@@ -260,10 +267,10 @@ $.extend(mapRooms.prototype, {
     eventMap:function () {
         /* Zoom change */
         _m.addListener('zoom_changed', function () {
-            if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
-                $('.pin-overlay').parent('div').addClass('ping-small');
-            if (_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
-                $('.pin-overlay').parent('div').removeClass('ping-small');
+            // if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
+            //     $('.pin-overlay').parent('div').addClass('ping-small');
+            // if (_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
+            //     $('.pin-overlay').parent('div').removeClass('ping-small');
             if(typeof canvas != "undefined" && _canvas!=null)
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             $("#toolip-detail-on-pin").fadeOut('fast');
@@ -297,7 +304,7 @@ $.extend(mapRooms.prototype, {
                 if (count1 == 0 && _canvas == null) {
                     _mr.drawCanvas();
                 } else {
-                    //$("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
+                    $("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
                 }
                 count1++;
                 firstMouse = [];
@@ -341,7 +348,7 @@ $.extend(mapRooms.prototype, {
 
         /* Add elment root to know move pixel */
         $div = $(document.createElement("div")).css({'color': '#fff'});
-        $div.append('<div id="root" style="font-weight: bold;">Root</div>');
+        $div.append('<div id="root" style="font-weight: bold;">!</div>');
         var opts = { offset: {x: 0, y: 0}};
         new OverlayView(_m, $div, opts);
 
@@ -781,6 +788,8 @@ $.extend(mapRooms.prototype, {
         $div = $(document.createElement("div")).css({
             border: "none",
             borderWidth: 0,
+            width: 0,
+            height: 0,
             position: "absolute"
         });
         $div.attr('id','pin-container');
@@ -789,7 +798,6 @@ $.extend(mapRooms.prototype, {
             $(item.options.content).data('lgn',item.latLng[1]);
             $div.append($(item.options.content));
         });
-
         var obj = new OverlayView(_m, $div);
         // item.events = data_overlay.events;
         // attachEvents(_m, _mr.element, item, obj, $div);

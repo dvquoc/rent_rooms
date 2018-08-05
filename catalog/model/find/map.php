@@ -18,13 +18,13 @@ class ModelFindMap extends Model {
         $filter['location']= ['$geoWithin'=>['$geometry'=>$data]];
         $options =[
             'sort' => ['room_id'=>-1],
-            'limit'=>30,
+            'limit'=>0,
             'skip' =>0
         ];
         $options1 =[
             'sort' => ['room_id'=>-1],
-            'limit'=>10000,
-            'skip' =>31
+            'limit'=>30,
+            'skip' =>0
         ];
         $result['data_lagre'] = $this->table->find($filter,$options)->toArray();
         $result['data_small'] = $this->table->find($filter,$options1)->toArray();
