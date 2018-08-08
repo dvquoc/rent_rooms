@@ -54,7 +54,7 @@ class ControllerLocationSpecial extends Controller
         $arry_filter = [
             '$or' => array(
                 array('name' => new MongoDB\BSON\Regex("^".$data_filter['name']."","i")),
-                array('city_id' =>$data_filter['city_id'],'district_id' =>$data_filter['district_id'])
+                array('city_id' => $data_filter['city_id'],'district_id' => $data_filter['district_id'])
             )
         ];
         $data_query = array_merge($data_query, $data_filter);
@@ -139,8 +139,8 @@ class ControllerLocationSpecial extends Controller
        
         $input = [
             'name'             =>$this->request->post['name'],
-            'district_id'      =>$this->request->post['district'],
-            'city_id'          =>$this->request->post['city'],
+            'district_id'      => (int) $this->request->post['district'],
+            'city_id'          => (int) $this->request->post['city'],
             'view'             => intval($_POST['view']),
             'area'             =>$polygon,
             'types_source'     =>explode(",",$this->request->post['types_source']),
