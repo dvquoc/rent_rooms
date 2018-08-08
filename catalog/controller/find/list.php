@@ -44,9 +44,10 @@ class ControllerFindList extends Controller {
         /* Check is search special */
         if (isset($params['lat']) && isset($params['lgn'])) {
             $data['type_page'] = 'search-special';
+            $data['has_point'] = true;
             $data['point'] = $point = [
                 'lat' => (double)$params['lat'],
-                'lgn' => (double)$params['lgn']
+                'lng' => (double)$params['lgn']
             ];
             $data_search['point'] = [
                 (double)$params['lgn'],
@@ -115,8 +116,9 @@ class ControllerFindList extends Controller {
         $this->document->addLink("/tim-kiem".$url, 'canonical');
         //$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
         //$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
-
         $data['rooms'] = $this->model_find_list->get_list($data_search);
+        $data['list_content'] = $this->load->view('default/template/part/content/list_content.tpl', $data);
+
         $data['featured'] = $this->model_find_list->get_list_featured();
         $data['url'] = $url;
 
@@ -215,8 +217,8 @@ class ControllerFindList extends Controller {
         if (empty($check)) {
             $input = [
                 'name'        => $request_post['name'],
-                'district_id' => (int)$district['district_id'],
-                'city_id'     => (int)$city['city_id'],
+                'district_id' => (int) $district['district_id'],
+                'city_id'     => (int) $city['city_id'],
                 'view'        => 1,
                 'area'        => null,
                 'place_id'    => $request_post['place_id'],

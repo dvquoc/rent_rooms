@@ -118,8 +118,44 @@
     </div>
     <script type="text/javascript">
         $( document ).ready(function(){
+            var drawPolygonTest = function(){
+                var lat = $('input[name=lat]').val();
+                var lng = $('input[name=lng]').val();
+                var circle = $('textarea[name=circle]').val();
+                var drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                        position: google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: [
+                            'polygon'
+                        ]
+                    },
+                    polygonOptions: {
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 3,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0,
+                        draggable: false,
+                        clickable:false,
+                    }
+                });
+                drawingManager.setMap(map);
+                google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+                    var path = polygon.getPath()
+                    var coordinates = [];
+                    for (var i = 0 ; i < path.length ; i++) {
+                        var point =[];
+                        point.push(path.getAt(i).lat());
+                        point.push(path.getAt(i).lng());
+                        coordinates.push( point);
+                    }
+                    $('textarea[name=circle]').val(JSON.stringify(coordinates));
+                });
+            }
             drawPolygonTest();
-        }); 
+        });
         var geocoder = new google.maps.Geocoder();
         function geocodePosition(pos) {
             geocoder.geocode({
@@ -230,106 +266,40 @@
             google.maps.event.addListener(marker, 'dragend', function() {
                 geocodePosition(marker.getPosition());
             });
+            ///test
+            var coord_polygon = [];
+            var text_area=[];
+            var arr = $('input[name=polygon]').val();
+            if(arr.length != 0){
+                var arr_coords =$.parseJSON(arr);
+                $.each(arr_coords, function (key,item) {
+                    var arr_temp = [];
+                    coord_polygon.push({'lat': parseFloat(item[1]), 'lng': parseFloat(item[0])});
+                    arr_temp.push(parseFloat(item[1]));
+                    arr_temp.push(parseFloat(item[0]));
+                    text_area.push(arr_temp);
+                });
+                $('textarea[name=circle]').val(JSON.stringify(text_area));
+                var bounds=  new google.maps.LatLngBounds();
 
+                var polygon = new google.maps.Polygon({
+                    paths: coord_polygon,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 3,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0,
+                    draggable: false,
+                    clickable:false
+                });
+                polygon.setMap(map);
+            }
         });
 
         google.maps.event.addListener(marker, 'dragend', function() {
             geocodePosition(marker.getPosition());
-             
-
         });
-        ///test
-        var coord_polygon = [];
-        var text_area=[];
-        var arr = $('input[name=polygon]').val();
-        if(arr.length != 0){
-            var arr_coords =$.parseJSON(arr);
-            $.each(arr_coords, function (key,item) {
-                var arr_temp = [];
-                coord_polygon.push({'lat': parseFloat(item[1]), 'lng': parseFloat(item[0])});
-                arr_temp.push(parseFloat(item[1]));
-                arr_temp.push(parseFloat(item[0]));
-                text_area.push(arr_temp);
-            });
-            $('textarea[name=circle]').val(JSON.stringify(text_area));
-            var bounds=  new google.maps.LatLngBounds();
 
-            var polygon = new google.maps.Polygon({
-                paths: coord_polygon,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.5,
-                strokeWeight: 3,
-                fillColor: '#FF0000',
-                fillOpacity: 0,
-                draggable: false,
-                clickable:false
-            });
-            polygon.setMap(map);
-        }
-        
-        ///test
-
-        var drawPolygon = function (data) {
-            var data_draw = [];
-            bounds = new google.maps.LatLngBounds();
-            $.each(data, function (key,item) {
-                data_draw.push({'lat': parseFloat(item[0]), 'lng': parseFloat(item[1])});
-                bounds.extend(new google.maps.LatLng(item[0], item[1]));
-            });
-            polygon.setMap(null);
-            polygon = new google.maps.Polygon({
-                paths: data_draw,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.5,
-                strokeWeight: 3,
-                fillColor: '#FF0000',
-                fillOpacity: 0,
-                draggable: false,
-                clickable:false
-            });
-            polygon.setMap(map);
-            map.fitBounds(bounds);
-            map.setCenter(bounds.getCenter());
-            map.getBoundsZoomLevel(bounds.getBounds());
-            map.setZoom();
-        }
-
-        var drawPolygonTest = function(){
-            var lat = $('input[name=lat]').val();
-            var lng = $('input[name=lng]').val();
-            var circle = $('textarea[name=circle]').val();
-            var drawingManager = new google.maps.drawing.DrawingManager({
-                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
-                    drawingControl: true,
-                    drawingControlOptions: {
-                        position: google.maps.ControlPosition.TOP_CENTER,
-                        drawingModes: [
-                          'polygon'
-                        ]
-                    },
-                    polygonOptions: {
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.5,
-                        strokeWeight: 3,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0,
-                        draggable: false,
-                        clickable:false,
-                    }
-                });
-            drawingManager.setMap(map);
-            google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
-                var path = polygon.getPath()
-                var coordinates = [];
-                for (var i = 0 ; i < path.length ; i++) {
-                    var point =[];
-                    point.push(path.getAt(i).lat());
-                    point.push(path.getAt(i).lng());
-                    coordinates.push( point);                   
-                }
-                $('textarea[name=circle]').val(JSON.stringify(coordinates));
-            });
-        }
         $('.datetime').datetimepicker({
             pickDate: true,
             pickTime: true

@@ -18,7 +18,7 @@ class ModelFindMap extends Model {
         $filter['location']= ['$geoWithin'=>['$geometry'=>$data]];
         $options =[
             'sort' => ['room_id'=>-1],
-            'limit'=>0,
+            'limit'=>1,
             'skip' =>0
         ];
         $options1 =[

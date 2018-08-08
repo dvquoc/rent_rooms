@@ -159,7 +159,6 @@ function OverlayView(map, $div, opts=null) {
     self.getDOMElement = function () {
         return $div[0];
     };
-
 }
 
 var _Canvas = function (element) {
@@ -346,40 +345,21 @@ $.extend(mapRooms.prototype, {
         _canvas = canvas.getContext("2d");
         _canvas.fillStyle = "#0b8841";
 
-        /* Add elment root to know move pixel */
-        $div = $(document.createElement("div")).css({'color': '#fff','position':'absolute','top':0,'left':0});
-        $div.append('<div id="root" style="font-weight: bold;">!</div>');
-        var opts = { offset: {x: 0, y: 0}};
-        new OverlayView(_m, $div, opts);
-    },
-    addItemToCanvas: function () {
-        layoutEleData.forEach(function (t, k) {
-            t.forEach(function (z,key) {
-                z.forEach(function (i,key) {
-                    _canvas.beginPath();
-                    _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
-                    _canvas.lineWidth = 1;
-                    _canvas.strokeStyle = '#fff';
-                    _canvas.stroke();
-                    _canvas.fill();
-                    _canvas.closePath();
-                });
-            });
-       });
-        if(!$.isEmptyObject(layoutEleData)) {
-            /* mousemover canvas Event */
-            var show = false;
-            var t = $("#toolip-detail-on-pin");
-            var lastClick = {x: 0, y: 0};
-            $(document).on('mousemove', '.canvas-marker', function (e) {
-                const p = {x: e.offsetX, y: e.offsetY};
-                var colKey = Math.ceil((p.x / (_mr.element.width() - $("#content-list").width()) * 100) / nubLayout) - 1;
-                var rowKey = Math.ceil((p.y / _mr.element.height() * 100) / nubLayout) - 1;
-                if (!isInTooltip(p, t, lastClick) && lastClick.y != 0) {
-                    t.fadeOut(1);
-                    t.find('.arrow').fadeOut(1);
-                    $(".canvas-marker").css({'cursor': ''});
-                }
+
+        /* mousemover canvas Event */
+        var show = false;
+        var t = $("#toolip-detail-on-pin");
+        var lastClick = {x: 0, y: 0};
+        $(document).on('mousemove', '.canvas-marker', function (e) {
+            const p = {x: e.offsetX, y: e.offsetY};
+            var colKey = Math.ceil((p.x / (_mr.element.width() - $("#content-list").width()) * 100) / nubLayout) - 1;
+            var rowKey = Math.ceil((p.y / _mr.element.height() * 100) / nubLayout) - 1;
+            if (!isInTooltip(p, t, lastClick) && lastClick.y != 0) {
+                t.fadeOut(1);
+                t.find('.arrow').fadeOut(1);
+                $(".canvas-marker").css({'cursor': ''});
+            }
+            if(!$.isEmptyObject(layoutEleData)) {
                 layoutEleData[rowKey][colKey].forEach(function (i, k) {
                     if (isIntersect(p, i)) {
                         $(".canvas-marker").css({'cursor': 'pointer'});
@@ -387,16 +367,18 @@ $.extend(mapRooms.prototype, {
                         return false;
                     }
                 });
-            });
-            $(document).on('click', '.canvas-marker', function (e) {
-                console.log(e);
-                const p = {x: e.offsetX, y: e.offsetY};
-                var colKey = Math.ceil((p.x / (_mr.element.width() - $("#content-list").width()) * 100) / nubLayout) - 1;
-                var rowKey = Math.ceil((p.y / _mr.element.height() * 100) / nubLayout) - 1;
-                if (!isInTooltip(p, t, lastClick) && lastClick.y != 0) {
-                    t.fadeOut(1);
-                    t.find('.arrow').fadeOut(1);
-                }
+            }
+        });
+        $(document).on('click', '.canvas-marker', function (e) {
+            console.log(e);
+            const p = {x: e.offsetX, y: e.offsetY};
+            var colKey = Math.ceil((p.x / (_mr.element.width() - $("#content-list").width()) * 100) / nubLayout) - 1;
+            var rowKey = Math.ceil((p.y / _mr.element.height() * 100) / nubLayout) - 1;
+            if (!isInTooltip(p, t, lastClick) && lastClick.y != 0) {
+                t.fadeOut(1);
+                t.find('.arrow').fadeOut(1);
+            }
+            if(!$.isEmptyObject(layoutEleData)) {
                 layoutEleData[rowKey][colKey].forEach(function (i, k) {
                     if (isIntersect(p, i)) {
                         $(".canvas-marker").css({'cursor': 'pointer'});
@@ -417,9 +399,28 @@ $.extend(mapRooms.prototype, {
                         return false;
                     }
                 });
-
+            }
+        });
+        /* Add elment root to know move pixel */
+        $div = $(document.createElement("div")).css({'color': '#fff','position':'absolute','top':0,'left':0});
+        $div.append('<div id="root" style="font-weight: bold;">!</div>');
+        var opts = { offset: {x: 0, y: 0}};
+        new OverlayView(_m, $div, opts);
+    },
+    addItemToCanvas: function () {
+        layoutEleData.forEach(function (t, k) {
+            t.forEach(function (z,key) {
+                z.forEach(function (i,key) {
+                    _canvas.beginPath();
+                    _canvas.arc(i.x, i.y, 2, 0, 2 * Math.PI, false);
+                    _canvas.lineWidth = 1;
+                    _canvas.strokeStyle = '#fff';
+                    _canvas.stroke();
+                    _canvas.fill();
+                    _canvas.closePath();
+                });
             });
-        }
+       });
     },
     test: function () {
         console.log("This is Function test");

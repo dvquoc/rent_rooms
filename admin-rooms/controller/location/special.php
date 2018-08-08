@@ -40,9 +40,8 @@ class ControllerLocationSpecial extends Controller
 
         $data_filter = [
             'name'        => isset($this->request->get['name']) ? $this->request->get['name'] : -1,
-            
-            'city_id'     => isset($this->request->get['city_id']) ? $this->request->get['city_id'] : '1',
-            'district_id' => isset($this->request->get['district_id']) ? $this->request->get['district_id'] : '1',
+            'city_id'     => isset($this->request->get['city_id']) ? (int) $this->request->get['city_id'] : 1,
+            'district_id' => isset($this->request->get['district_id']) ? (int) $this->request->get['district_id'] : 1,
         ];
        
 

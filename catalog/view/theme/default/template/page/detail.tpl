@@ -101,68 +101,34 @@
 			<div class="col-md-8 room-detail">
 				<h3 class="text-title">Nội quy phòng trọ</h3>
 				<div class="regulation_room" style="padding-left: 30px">
-					<p><?php echo $detail['regulation_room']?> Các phòng trọ được chúng tôi kiểm duyệt, Nếu có thông tin gì sai hãy vui lòng báo cáo lỗi. Để giúp cải thiện dịch vụ tốt nhất.</p>
+					<p><?php echo $detail['regulation_room']?></p>
 				</div>
 				<h3 class="text-title">Điểm nổi bật</h3>
 				<div class="highlight" style="padding-left: 30px">
-					<p><?php echo $detail['highlight']?> Các phòng trọ được chúng tôi kiểm duyệt, Nếu có thông tin gì sai hãy vui lòng báo cáo lỗi. Để giúp cải thiện dịch vụ tốt nhất.</p>
+					<p><?php echo $detail['highlight']?></p>
 				</div>
+                <?php if(!empty($specials)) { ?>
+                    <div class="special">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Mọi người cũng tìm kiếm khu vực này</h3>
+                            </div>
+                            <div class="tag">
+                                <?php foreach($specials as $special) { ?>
+                                <div class="col-md-6">
+                                    <a href="/tim-kiem/phong-tro-gan-<?php echo $special['slug']; ?>/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena"><?php echo $special['name'] ?></a>
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <div class="clearfix" style="margin-bottom: 15px;"></div>
+                        </div>
+                    </div>
+                <?php } ?>
+
                 <div class="room-relative">
                     <h3>Các phòng trọ phù hợp</h1>
                     <div style="margin-left: 15px">
-                        <?php foreach($rooms as $item) { ?>
-                        <div class="row">
-                            <?php
-                            $slugName = urlencode(str_replace(' ','-',trim($item["slug_name"])));
-                            $slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district_name"])));
-                            $slugCity = urlencode(str_replace(' ','-',trim($item["slug_city_name"])));
-                        ?>
-                            <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
-                            <button class="context-menu-button icon">test</button>
-                            <ul class="dropdown" style="display: none;">
-                                <li class="item">Lưu xem sau</li>
-                                <li class="item">Chia sẽ</li>
-                            </ul>
-                            <div class="col-md-3 list-img">
-                                <?php  $img = json_decode($item["images"],true); ?>
-                                <img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive" >
-                            </div>
-                            <div class="col-md-9 list-info pull-right">
-                                <div class="title"><b><?php echo $item['name'];?></b></div>
-                                <div class="f-i">
-                                    <div class="i d">
-                                        Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
-                                    </div>
-                                    <div class="i d">
-                                        Cách khoản: <span>5 Km</span>
-                                    </div>
-                                </div>
-                                <div class="adress" ><?php echo $item['address'];?></div>
-                                <div class="mf">
-                                    <div class="i price" >
-                                        <i class="fa fa-shopping-cart hidden" aria-hidden="true"></i><b><?php echo $item['price']/1000000;?></b> Triệu/tháng
-                                    </div>
-                                    <div class="i are">
-                                        <i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-                                        <b><?php echo $item['acreage'];?></b> m2
-                                    </div>
-                                    <div class="i are"> - </div>
-                                    <div class="i are">
-                                        <i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-                                        <b><?php echo $item['acreage'];?></b> / Khối
-                                    </div>
-                                    <div class="i are">
-                                        <i class="fa fa-area-chart hidden" aria-hidden="true">	</i>
-                                        <b><?php echo $item['acreage'];?></b> / Kg
-                                    </div>
-                                </div>
-
-                                <button class="btn call-button"><i class="fa fa-phone" aria-hidden="true"></i></button>
-                            </div>
-                            <div class="clearfix"></div>
-                            </a>
-                        </div>
-                        <?php } ?>
+                        <?php echo $list_content;  ?>
                     </div>
                 </div>
 			</div>
@@ -186,7 +152,6 @@
         scrollwheel: true,
         disableDoubleClickZoom: true,
     }
-
     new google.maps.Map($("#map-detail").get(0),optionMap);
 </script>
 <?php echo $footer; ?>

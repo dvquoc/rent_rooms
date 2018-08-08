@@ -84,7 +84,7 @@ class ModelCatalogRooms extends Model {
             'status'            => (int) $data['status'],
             'date_crate'        => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
             'source'            =>'back-end',
-            'slug_name'         => $data['slug'],
+            'slug'         => $data['slug'],
             'slug_city'         =>$data['slug_city'],
             'slug_district'     =>$data['slug_district'],
 
@@ -119,7 +119,7 @@ class ModelCatalogRooms extends Model {
             'ads'               => (int) $data['ads'],
             'ads_position'      => $data['ads_position'],
             'status'            => (int) $data['status'],
-            'slug_name'         => $data['slug'],
+            'slug'         => $data['slug'],
             'slug_city'         =>$data['slug_city'],
             'slug_district'     =>$data['slug_district'],
         ];

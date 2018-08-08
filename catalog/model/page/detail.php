@@ -15,6 +15,8 @@ class ModelPageDetail extends Model {
             'projection' => [
                 'name'     =>1,
                 'images'   =>1,
+                'city_id'   =>1,
+                'district_id'=>1,
                 'address'  =>1,
                 'location' =>1,
                 'ads'      =>1,
@@ -32,13 +34,32 @@ class ModelPageDetail extends Model {
     	$result = $this->table->findOne(['_id' => new MongoDB\BSON\ObjectId($id)],$option);
         return $result;
     }
-    public function get_list(){
-         $options =[
-            'sort' => ['room_id'=>1],
-            'limit'=>4,
-            'skip' =>0,
+    public function getRelative($data){
+        $filter = [
+            'city_id' =>$data['city_id'],
+            'district_id' =>$data['district_id'],
         ];
-        $result = $this->table->find(array(),$options);
+        $point = array(
+            'type'       =>'Point',
+            'coordinates'=>$data['point']
+        );
+        $pipeline = [
+            [
+                '$geoNear' => [
+                    'near' =>$point,
+                    'distanceField' => "calculated",
+                    'includeLocs'=> "location",
+                    'maxDistance' => 2000,
+                    'spherical'=> true,
+                    'query'  => $filter
+                ],
+
+            ],
+            ['$limit' => 6],
+            ['$skip' =>0]
+        ];
+
+        $result = $this->table->aggregate($pipeline)->toArray();
         return $result;
     }
 }

@@ -31,6 +31,7 @@ class ModelLocationSpecial extends model{
             'limit'=>8,
             'skip' =>0
         ];
+
         if(isset($data['point']) && !empty($data['point'])){
             $data = array(
                 'type'       =>'Point',

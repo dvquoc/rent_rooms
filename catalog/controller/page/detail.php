@@ -6,15 +6,14 @@ class ControllerPageDetail extends Controller {
             $this->load->controller('error/not_found');
         }
          $this->load->model('page/detail');
-         $this->load->model('find/list');
 
-        // $data_search = array(
-        //     'status'=>1
-        // );
-        $data['rooms'] = $this->model_page_detail->get_list();
+
+        $filter_relative = array(
+            'status'=>1,
+        );
         $detail = $this->model_page_detail->get_room($args['id']);
-        $data['detail'] = [];
         if($detail){
+            $data['detail'] = [];
             $data['detail'] =[
                 'name'     =>$detail['name'],
                 'images'   =>json_decode($detail['images'],true),
@@ -31,6 +30,23 @@ class ControllerPageDetail extends Controller {
                 'highlight'  =>$detail['highlight'],
                 'regulation_room'  =>$detail['regulation_room']
             ];
+            $data['has_point']= true;
+            $data['point']= [
+                'lat'=>(double) $detail['location']['coordinates'][1],
+                'lng'=>(double) $detail['location']['coordinates'][0]
+            ];
+            $filter_relative['city_id'] = $detail['city_id'];
+            $filter_relative['district_id'] = $detail['district_id'];
+            $filter_relative['point'] = [$detail['location']['coordinates'][0],$detail['location']['coordinates'][1]];
+
+            /* Get position near detail */
+            $this->load->model('location/special');
+            $data['specials'] = $this->model_location_special->get_list(['point'=>[$data['point']['lng'],$data['point']['lat']]]);
+
+            /* get relative rooms */
+            $this->load->model('find/list');
+            $data['rooms'] = $this->model_page_detail->getRelative($filter_relative);
+            $data['list_content'] = $this->load->view('default/template/part/content/list_content.tpl', $data);
         }else{
             $this->load->controller('error/not_found');
         }
