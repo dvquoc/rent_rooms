@@ -141,35 +141,38 @@ class ControllerLocationSpecial extends Controller
             'name'             =>$this->request->post['name'],
             'district_id'      => (int) $this->request->post['district'],
             'city_id'          => (int) $this->request->post['city'],
-            'view'             => intval($_POST['view']),
             'area'             =>$polygon,
             'types_source'     =>explode(",",$this->request->post['types_source']),
             'types'            =>$this->request->post['types'],
             'location'         =>$point,
             'source'           =>'back-end',
             'address'          =>$this->request->post['address'],
-            'slug'             =>$this->request->post['slug'],
+            'slug_city'        =>$this->request->post['slug_city'],
+            'slug_district'    =>$this->request->post['slug_district'],
             'place_id'         =>$this->request->post['place_id'],
             'meta_keyword'     =>$this->request->post['seo_key'],
             'meta_description' =>$this->request->post['seo_discription'] 
         ];
         /*fixed*/
         $result = $this->model_location_special->get_location_by_id($this->request->post['place_id']);
-        
         if($result != 0){
-            $this->page_add_new();
-            $this->session->data['check_exist'] = 'Khu vực đã tồn tại';
-        }else{
             if(!empty($this->request->post['id'])){
                 $result = $this->model_location_special->update($this->request->post['id'],$input);
                 $this->session->data['success'] = $this->language->get('text_success');
+                $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
             }else{
-                $id_insert = $this->model_location_special->add($input);
-                $this->session->data['success'] = $this->language->get('text_success');
+                $this->session->data['check_exist'] = 'Khu vực đã tồn tại';
+                $this->response->redirect($this->url->link('location/special/page_add_new', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
             }
-
-           $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
+        }else{
+            $id_insert = $this->model_location_special->add($input);
+            $this->session->data['success'] = $this->language->get('text_success');
+            $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
         } 
+
+        
+        
+        
     }
 
     public function page_edit(){

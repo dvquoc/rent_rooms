@@ -17,7 +17,7 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
-        <input type="hidden" name="polygon" value="<?php echo $area?>">
+        
         <form action="<?php echo $save; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
             <div class="row">
                 <div class="col-md-12">
@@ -47,11 +47,11 @@
                                             </br>
                                            <input type="hidden" name="id" value="<?php echo isset($special)?(string)$special['_id']:'' ?>">
                                             <input class="form-control" type="hidden" name="types_source" value="<?php echo $special['types_source']?>">
-                                            <input class="form-control" type="hidden" name="slug" value="<?php echo $special['slug']?>">
+                                            <input class="form-control" type="hidden" name="slug_city" value="<?php echo $special['slug_city']?>">
+                                            <input class="form-control" type="hidden" name="slug_district" value="<?php echo $special['slug_district']?>">
                                            <input type="hidden" name="place_id" value="">
                                             <label class="">Kiểu khu vực </label>
                                             <select class="form-control" name="types">
-                                                <option value="null">--- Chọn kiểu khu vực ---</option>
                                                   <?php foreach($types as $key => $value) { ?>
                                                       <?php if($special['types'] == $key) { ?>
                                                             <option selected="selected" value="<?php echo  $key ?>"><?php echo $value ?></option>
@@ -60,6 +60,7 @@
                                                       <?php } ?>
                                                   <?php } ?>
                                             </select></br>
+                                             <div id="types" hidden><span style="color: red">Trường này không được trống</span></div>
                                             <label class="">Thành phố </label>
                                             <select class="form-control" name="city">
                                                 <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
@@ -86,9 +87,9 @@
                                           <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
                                           
                                            <label class="">Lượt tìm kiếm </label>
-                                           <input class="form-control" type="text" name="view" value="<?php echo isset($special['view'])?$special['view']:'';?>"></br>
+                                           <input class="form-control" type="text" name="view" readonly value="<?php echo isset($special['view'])?$special['view']:'';?>"></br>
                                            <label class="">Tọa độ khu vực </label>
-                                            <textarea class="form-control" readonly rows="5" name="circle">
+                                            <textarea class="form-control" readonly rows="5" name="circle" value="<?php echo $area?>"><?php echo $area?>
                                             </textarea>
                                            <label class="">Lat</label>
                                            <input class="form-control" readonly type="text" name="lat" value="<?php echo !empty($special['location']['coordinates'])?$special['location']['coordinates'][1]:'';?>">
@@ -118,50 +119,14 @@
     </div>
     <script type="text/javascript">
         $( document ).ready(function(){
-            var drawPolygonTest = function(){
-                var lat = $('input[name=lat]').val();
-                var lng = $('input[name=lng]').val();
-                var circle = $('textarea[name=circle]').val();
-                var drawingManager = new google.maps.drawing.DrawingManager({
-                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
-                    drawingControl: true,
-                    drawingControlOptions: {
-                        position: google.maps.ControlPosition.TOP_CENTER,
-                        drawingModes: [
-                            'polygon'
-                        ]
-                    },
-                    polygonOptions: {
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 0.5,
-                        strokeWeight: 3,
-                        fillColor: '#FF0000',
-                        fillOpacity: 0,
-                        draggable: false,
-                        clickable:false,
-                    }
-                });
-                drawingManager.setMap(map);
-                google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
-                    var path = polygon.getPath()
-                    var coordinates = [];
-                    for (var i = 0 ; i < path.length ; i++) {
-                        var point =[];
-                        point.push(path.getAt(i).lat());
-                        point.push(path.getAt(i).lng());
-                        coordinates.push( point);
-                    }
-                    $('textarea[name=circle]').val(JSON.stringify(coordinates));
-                });
-            }
-            drawPolygonTest();
-        });
+           
+        drawPolygonTest();
+    }); 
         var geocoder = new google.maps.Geocoder();
         function geocodePosition(pos) {
             geocoder.geocode({
                 latLng: pos
             }, function(responses) {
-                console.log(responses);
                 if (responses && responses.length > 0) {
                     var address_lengh = responses[0].address_components.length;
                     var location = {};
@@ -175,7 +140,8 @@
                     }
                     if(!$.isEmptyObject(location)) {
                         updateMarkerAddress(responses[0].formatted_address);
-                        console.log(responses[0]);
+                        updateMarkerPosition(pos.lat(),pos.lng());
+
                     } else {
                         alert('Không tìm thấy địa chỉ');
                     }
@@ -186,9 +152,46 @@
                 }
             });
         }
-        function updateMarkerPosition(latLng) {
-            document.getElementById('input-lat').value = latLng.lat();
-            document.getElementById('input-lng').value = latLng.lng();
+        var drawPolygonTest = function(){
+            var lat = $('input[name=lat]').val();
+            var lng = $('input[name=lng]').val();
+            var circle = $('textarea[name=circle]').val();
+            var drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                        position: google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: [
+                          'polygon'
+                        ]
+                    },
+                    polygonOptions: {
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 3,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0,
+                        draggable: false,
+                        clickable:false,
+                    }
+                });
+            drawingManager.setMap(map);
+            google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+                var path = polygon.getPath()
+                var coordinates = [];
+                for (var i = 0 ; i < path.length ; i++) {
+                    var point =[];
+                    point.push(path.getAt(i).lat());
+                    point.push(path.getAt(i).lng());
+                    coordinates.push( point);                   
+                }
+                $('textarea[name=circle]').val(JSON.stringify(coordinates));
+            });
+        }
+
+        function updateMarkerPosition(lat,Lng) {
+            $('input[name=lng]').val(Lng);
+            $('input[name=lat]').val(lat);
 
         }
         function updateMarkerAddress(str) {
@@ -222,6 +225,7 @@
             draggable: true,
         });
 
+     
         searchBox.addListener('place_changed', function() {
             var place = searchBox.getPlace();
             if (!place.geometry) {
@@ -255,7 +259,9 @@
             $('input[name=lat]').val(place.geometry.location.lat());
             $('input[name=place_id]').val(place.place_id);
             $('input[name=types_source]').val(place.types);
-            $('input[name=slug]').val(ChangeToSlug(location.district+" "+location.city));
+            $('input[name=slug_city]').val(ChangeToSlug(location.city));
+            $('input[name=slug_district]').val(ChangeToSlug(location.district));
+
             $.each($("select[name=city] option"), function(key, item){
                 if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
                      $("select[name=city]").val($(item).attr('value')).change();
@@ -263,43 +269,43 @@
             });
 
             //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
-            google.maps.event.addListener(marker, 'dragend', function() {
-                geocodePosition(marker.getPosition());
-            });
-            ///test
-            var coord_polygon = [];
-            var text_area=[];
-            var arr = $('input[name=polygon]').val();
-            if(arr.length != 0){
-                var arr_coords =$.parseJSON(arr);
-                $.each(arr_coords, function (key,item) {
-                    var arr_temp = [];
-                    coord_polygon.push({'lat': parseFloat(item[1]), 'lng': parseFloat(item[0])});
-                    arr_temp.push(parseFloat(item[1]));
-                    arr_temp.push(parseFloat(item[0]));
-                    text_area.push(arr_temp);
-                });
-                $('textarea[name=circle]').val(JSON.stringify(text_area));
-                var bounds=  new google.maps.LatLngBounds();
 
-                var polygon = new google.maps.Polygon({
-                    paths: coord_polygon,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.5,
-                    strokeWeight: 3,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0,
-                    draggable: false,
-                    clickable:false
-                });
-                polygon.setMap(map);
-            }
         });
 
         google.maps.event.addListener(marker, 'dragend', function() {
             geocodePosition(marker.getPosition());
         });
+       
+        ///test
+        var coord_polygon = [];
+        var arr = $.trim($('textarea[name=circle]').val());
+        if(arr.length > 0){
+            var bounds=  new google.maps.LatLngBounds();
+            var arr_coords =$.parseJSON(arr);
 
+            $.each(arr_coords, function (key,item) {
+                var arr_temp = [];
+                coord_polygon.push({'lat': parseFloat(item[1]), 'lng': parseFloat(item[0])});
+                bounds.extend(new google.maps.LatLng(item[1], item[0]));
+            });
+            var polygon = new google.maps.Polygon({
+                paths: coord_polygon,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.5,
+                strokeWeight: 3,
+                fillColor: '#FF0000',
+                fillOpacity: 0,
+                draggable: false,
+                clickable:false
+            });
+            polygon.setMap(map);
+            map.fitBounds(bounds);
+            map.setCenter(bounds.getCenter());
+            // map.getBoundsZoomLevel(bounds.getBounds());
+            map.setZoom();
+        }
+        
+        
         $('.datetime').datetimepicker({
             pickDate: true,
             pickTime: true
