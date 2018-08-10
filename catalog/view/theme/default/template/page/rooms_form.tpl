@@ -102,6 +102,7 @@
                                                           <?php } ?>
                                                       <?php } ?>
                                                   </select>
+                                                  <div id="validate_city" hidden><span style="color: red">Vui lòng chọn thành phố</span></div>
                                               </div>
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Quận/Huyện</label>
@@ -116,6 +117,7 @@
                                                           <?php } ?>
                                                       <?php } ?>
                                                   </select>
+                                                   <div id="validate_district" hidden><span style="color: red">Vui lòng chọn Quận/Huyện</span></div>
                                               </div>
                                           </div>
                                       </div>
@@ -134,10 +136,12 @@
                                               <div class="col-sm-6">
                                                   <label class="">Kinh độ: </label>
                                                   <div><input name="lat" id="input-lat" class="form-control" value="<?php echo $location['coordinates'][1]; ?>"></div>
+                                                  <div id="validate_lat" hidden><span style="color: red">Trường này không được trống</span></div>
                                               </div>
                                               <div class="col-sm-6">
                                                   <label class="">Vĩ độ: </label>
                                                   <div><input name="lng" id="input-lng" class="form-control" value="<?php echo $location['coordinates'][0]; ?>"></div>
+                                                   <div id="validate_lng" hidden><span style="color: red">Trường này không được trống</span></div>
                                               </div>
                                               <div class="col-md-12">
                                                   <h3 style="font-size: 18px; margin-top: 15px;">Hướng dẫn: </h3>
@@ -158,6 +162,7 @@
                                                     <input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>">
                                                     <input name="slug" type="hidden" class="form-control">
                                                   </div>
+                                                   <div id="validate_name" hidden><span style="color: red">Trường này không được trống</span></div>
                                               </div>
                                               <?php $class = 'show'; ?>
                                               <div class="col-md-4 item">
@@ -475,15 +480,55 @@
       image_row++;
     }
     $('#save').on('click',function(){
-      var slug_name = $('input[name=name]').val();
-      var slug_city =  $( "select[name=city_id] option:selected" ).text();
-      var slug_district = $( "select[name=district_id] option:selected" ).text();
+      var name = $('input[name=name]').val();
+      var lat = $('input[name=lat]').val();
+      var lng = $('input[name=lng]').val();
+      var city = $('select[name=city_id]').val();
+      var district = $('select[name=district_id]').val();
+      console.log(city);
+      if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null'){
+          var slug_name = $('input[name=name]').val();
+          var slug_city =  $( "select[name=city_id] option:selected" ).text();
+          var slug_district = $( "select[name=district_id] option:selected" ).text();
 
-      $('input[name=slug]').val(ChangeToSlug(slug_name));
-      $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
-      $('input[name=slug_district]').val(ChangeToSlug(slug_district));
-      $('#btn-save').click();  
-    })
+          $('input[name=slug]').val(ChangeToSlug(slug_name));
+          $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
+          $('input[name=slug_district]').val(ChangeToSlug(slug_district));
+          $('#btn-save').click();  
+      }else{
+        if(name.length == 0 ){
+          $('#validate_name').show(); 
+          setTimeout(function() {
+            $("#validate_name").hide('blind', {}, 500)
+          }, 3000);
+        };
+        if(lat.length == 0 ){
+         $('#validate_lat').show(); 
+         setTimeout(function() {
+          $("#validate_lat").hide('blind', {}, 500)
+        }, 3000);
+       };
+       if(lng.length == 0 ){
+         $('#validate_lng').show(); 
+         setTimeout(function() {
+          $("#validate_lng").hide('blind', {}, 500)
+        }, 3000);
+       }
+       if(city == 'null' ){
+         $('#validate_city').show(); 
+         setTimeout(function() {
+          $("#validate_city").hide('blind', {}, 500)
+        }, 3000);
+       }
+       if(district == 'null' ){
+         $('#validate_district').show(); 
+         setTimeout(function() {
+          $("#validate_district").hide('blind', {}, 500)
+        }, 3000);
+       }
+     }
+   })
+   
   </script>
 </div>
 <style type="text/css">

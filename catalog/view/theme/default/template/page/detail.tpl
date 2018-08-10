@@ -16,7 +16,7 @@
                         </div>
                         <div id="map-detail" class="tab-pane fade" style="width: 100%; height: 100%">
 
-                        </div>
+                        </div> 
                     </div>
 				</div>
 				<div class="col-md-4 info-room">
@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-md-10 info-master">
                                 <b class="name-master">Người quản lý</b><br>
-                                <b style="font-size: 18px" class="phone-master">0894 232 232</b>
+                                <b style="font-size: 18px" class="phone-master"><?php echo $detail['phone_master']?></b>
                             </div>
                         </div>
                         <div class="des">
@@ -52,13 +52,6 @@
                                 <div style="background-color: #eee; margin:0 15px; padding: 5px;">
                                     <div class="col-md-6"><b>Tình trạng: </b> còn phòng</div>
                                     <div class="col-md-6"><b>Kiểm duyệt: </b> đã duyệt</div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="row item">
-                                <div style="background-color: #ff; margin:0 15px; padding: 5px;">
-                                    <div class="col-md-6"><b>Mạng wifi: </b><span>Tự túc</span></div>
-                                    <div class="col-md-6"><b>Cáp TV: </b><span>Không có</span></div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>

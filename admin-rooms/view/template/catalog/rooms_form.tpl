@@ -138,7 +138,7 @@
                                               </div>
                                           </div>
                                       </div>
-                                  </div>
+                                  </div> 
                               </div>
                               <div class="col-md-7">
                                   <div class="text-center title-info"><h3>Thông tin chính</h3></div>
@@ -242,6 +242,17 @@
                                                       <input type="text" class="form-control" name="_id" value="<?php echo $_id; ?>" >
                                                   </div>
                                             </div>
+                                           <?php if($source == 'front-end') {?>
+                                             <div class="form-group">
+                                              <?php if($is_checked == 1){
+                                                $check = 'checked';
+                                              }?>
+                                                  <label class="col-sm-12">Đã duyệt tin</label>
+                                                   <div class="col-md-12">
+                                                      <input type="checkbox" class="form-control" name="is_check" <?php echo $check ;?> >
+                                                  </div>
+                                            </div>
+                                           <?php }?>
                                         <?php } ?>
                                       </div>
                                       <div class="col-md-4">

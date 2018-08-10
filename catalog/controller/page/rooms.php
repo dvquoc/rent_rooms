@@ -101,42 +101,9 @@ class ControllerPageRooms extends Controller
                 unset($_SESSION['success']);
             }
 
-            // if (isset($this->request->get['page']))
-            //     $page = $this->request->get['page'];
-            // else
-            //     $page = 1;
-
-            // $data_filter = [
-            //     'city_id'     => isset($this->request->get['city_id']) ? $this->request->get['city_id'] : 1,
-            //     'district_id' => isset($this->request->get['district_id']) ? $this->request->get['district_id'] : 1,
-            //     'ads'         => isset($this->request->get['ads']) ? $this->request->get['ads'] : 0,
-            //     'ads_position'=> isset($this->request->get['ads_position']) ? $this->request->get['ads_position'] : -1,
-            //     'status'      => isset($this->request->get['status']) ? $this->request->get['status'] : 1,
-            //     'close_door'  => isset($this->request->get['close_door']) ? $this->request->get['close_door'] : -1,
-            //     'price'       => isset($this->request->get['price']) ? $this->request->get['price'] : '',
-            //     'acreage'     => isset($this->request->get['acreage']) ? $this->request->get['acreage'] : '',
-            //     'name'        => isset($this->request->get['name']) ? $this->request->get['name'] : -1,
-            // ];
-            // $data_query = [
-            //     'sort'  => 'name',
-            //     'order' => 'ASC',
-            //     'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-            //     'limit' => $this->config->get('config_limit_admin')
-            // ];
-
-            // $data_query = array_merge($data_query, $data_filter);
-
-            // $data_url = array_merge($data_query, $this->request->get);
-
-            // $url = http_build_query(array_diff_key($data_url, ['route' => '', 'room_id' => '']));
 
 
              $data['add'] = '/them-phong-tro';
-            // $data['delete'] = $this->url->link('catalog/rooms/delete', $url, 'SSL');
-            // $data['action_fitler'] = str_replace('&amp;', '&', $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'], 'SSL'));
-
-            // $data['sort_title'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, 'SSL');
-            // $data['sort_sort_order'] = $this->url->link('catalog/rooms', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, 'SSL');
 
             $data['rooms'] = array();
            // $rooms_total = $this->model_catalog_rooms->getTotalRooms($data_query);
@@ -152,21 +119,10 @@ class ControllerPageRooms extends Controller
                     'text_price' => format_currency($result['price']),
                     'text_acreage' => format_acreage($result['acreage']),
                     'edit' =>'',
+                    'is_checked'=>$result['is_checked']
                 );
             }
 
-            // $data['selected'] = array();
-            // if (isset($this->request->post['selected']))
-            //     $data['selected'] = (array)$this->request->post['selected'];
-
-
-            // $this->load->public_model('location/location_admin');
-
-            // $data['citys'] = $this->model_location_location_admin->getAllCity();
-            // $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data_filter['city_id'].'');
-
-            // $data['data_filter'] = $data_filter;
-            // $data['paginations'] = $this->load->controller('part/pagination', array('total' => $rooms_total, 'url' => $url));
              $data['header'] = $this->load->controller('common/header');
             $this->response->setOutput($this->load->view('default/template/page/rooms_list.tpl', $data));
         }else{

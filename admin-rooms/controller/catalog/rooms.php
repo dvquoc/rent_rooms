@@ -3,7 +3,7 @@
 class ControllerCatalogRooms extends Controller
 {
     private $error = array();
-
+ 
     public function __construct($registry)
     {
         parent::__construct($registry);
@@ -151,6 +151,8 @@ class ControllerCatalogRooms extends Controller
         $results = $this->model_catalog_rooms->find($data_query);
         foreach ($results as $result) {
             $data['rooms'][] = array(
+                'is_checked'=>$result['is_checked'],
+                'source' =>$result['source'],
                 'room_id' => $result['room_id'],
                 'name' => $result['name'],
                 'address' => $result['address'],

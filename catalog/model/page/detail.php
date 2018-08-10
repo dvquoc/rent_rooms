@@ -12,24 +12,6 @@ class ModelPageDetail extends Model {
     }
     public function get_room($id){
 	    $option = [
-            'projection' => [
-                'name'     =>1,
-                'images'   =>1,
-                'city_id'   =>1,
-                'district_id'=>1,
-                'address'  =>1,
-                'location' =>1,
-                'ads'      =>1,
-                'price'    =>1,
-                'price_electricity'   =>1,
-                'price_water'   =>1,
-                'price_deposit'   =>1,
-                'acreage'  =>1,
-                'amount_people'  =>1,
-                'close_door'  =>1,
-                'highlight'  =>1,
-                'regulation_room'  =>1,
-            ]
         ];
     	$result = $this->table->findOne(['_id' => new MongoDB\BSON\ObjectId($id)],$option);
         return $result;
@@ -61,5 +43,12 @@ class ModelPageDetail extends Model {
 
         $result = $this->table->aggregate($pipeline)->toArray();
         return $result;
+    }
+     public function get_user_by_id($id){
+        $OneResult = $this->db->owner_user->findOne(['_id' =>new MongoDB\BSON\ObjectId($id)]);
+        if($OneResult){
+            return $OneResult;
+        }else
+            return 0;
     }
 }

@@ -6,12 +6,13 @@ class ControllerPageDetail extends Controller {
             $this->load->controller('error/not_found');
         }
          $this->load->model('page/detail');
+         $this->load->model('page/owner/register');
 
-
-        $filter_relative = array(
+        $filter_relative = array( 
             'status'=>1,
         );
         $detail = $this->model_page_detail->get_room($args['id']);
+        $master = $this->model_page_detail->get_user_by_id($detail['master_id']);
         if($detail){
             $data['detail'] = [];
             $data['detail'] =[
@@ -28,7 +29,8 @@ class ControllerPageDetail extends Controller {
                 'amount_people'  =>$detail['amount_people'],
                 'close_door'  =>$detail['close_door'],
                 'highlight'  =>$detail['highlight'],
-                'regulation_room'  =>$detail['regulation_room']
+                'regulation_room'  =>$detail['regulation_room'],
+                'phone_master'=>$master['phone'],
             ];
             $data['has_point']= true;
             $data['point']= [

@@ -19,7 +19,6 @@ class ModelPageOwnerRegister extends Model {
     }
 
     public function get_user_by_id($id){
-       
     	$OneResult = $this->table->findOne(['_id' =>new MongoDB\BSON\ObjectId($id['id_owner'])]);
     	if($OneResult){
     		return $OneResult;
