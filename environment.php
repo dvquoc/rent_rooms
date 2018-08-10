@@ -30,7 +30,11 @@ switch (ENV) {
             //define('URL_DB','mongodb://35.224.9.146:27017' );
         break;
     default:
-            define('URL_DB','mongodb://localhost:27017' );
+            //define('URL_DB','mongodb://localhost:27017' );
+            $user = rawurlencode("rooms");
+            $pass = rawurlencode("123456");
+            $dbName = rawurlencode("rents_room");
+            define('URL_DB','mongodb://'.$user.':'.$pass.'@127.0.0.1:27017/'.$dbName);
         break;
 }
 
