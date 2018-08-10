@@ -52,6 +52,7 @@
                                            <input type="hidden" name="place_id" value="">
                                             <label class="">Kiểu khu vực </label>
                                             <select class="form-control" name="types">
+                                                 <option value="null">--- Chọn khu vực ---</option>
                                                   <?php foreach($types as $key => $value) { ?>
                                                       <?php if($special['types'] == $key) { ?>
                                                             <option selected="selected" value="<?php echo  $key ?>"><?php echo $value ?></option>
@@ -60,7 +61,7 @@
                                                       <?php } ?>
                                                   <?php } ?>
                                             </select></br>
-                                             <div id="types" hidden><span style="color: red">Trường này không được trống</span></div>
+                                            <div id="types" hidden><span style="color: red">Khu vực phải được chọn</span></div>
                                             <label class="">Thành phố </label>
                                             <select class="form-control" name="city">
                                                 <option value="null">--- Chọn Tỉnh/Thành phố ---</option>
@@ -72,6 +73,7 @@
                                                       <?php } ?>
                                                   <?php } ?>
                                             </select></br>
+                                            <div id="city" hidden><span style="color: red">Thành phố phải được chọn</span></div>
                                             <!--      <input class="form-control" type="text" name="city" value="<?php echo isset($special['name'])?$special['city']:'';?>"></br> -->
                                            <label class="">Quận </label>
                                            <select class="form-control" name="district">
@@ -84,13 +86,13 @@
                                                   <?php } ?>
                                               <?php } ?>
                                           </select></br>
+                                          <div id="district" hidden><span style="color: red">Quận/Huyện phải được chọn</span></div>
                                           <!--  <input class="form-control" type="text" name="district" value="<?php echo isset($special['name'])?$special['district']:'';?>"></br> -->
                                           
                                            <label class="">Lượt tìm kiếm </label>
                                            <input class="form-control" type="text" name="view" readonly value="<?php echo isset($special['view'])?$special['view']:'';?>"></br>
                                            <label class="">Tọa độ khu vực </label>
-                                            <textarea class="form-control" readonly rows="5" name="circle" value="<?php echo $area?>"><?php echo $area?>
-                                            </textarea>
+                                            <textarea class="form-control" readonly rows="5" name="circle"><?php echo $area?> </textarea>
                                            <label class="">Lat</label>
                                            <input class="form-control" readonly type="text" name="lat" value="<?php echo !empty($special['location']['coordinates'])?$special['location']['coordinates'][1]:'';?>">
                                             <div id="validate_lat" hidden><span style="color: red">Trường này không được trống</span></div>
@@ -122,25 +124,59 @@
            
         drawPolygonTest();
     }); 
+      
+        var check  = false;
+        var locationData = {};
         var geocoder = new google.maps.Geocoder();
+
+        function resetLocation(){
+            locationData = {};
+        }
+        function setDetectCityDistrict(){
+            if(typeof locationData.city!="undedined"){ 
+                var detect_city = $.each($("select[name=city] option"), function(key, item){
+                    if(new RegExp('[(.*?)\s]?'+locationData.city+"$",'igm').test($(item).text())){
+                         $("select[name=city]").val($(item).attr('value')).change();
+                         check = true;
+                         return false;
+                    }
+                });
+
+                if(!check){
+                    alert('không lấy được thành phố');
+                }
+                check =false;
+            }else{
+                alert("Chưa có locationData, gọi người viết code");
+            }
+            
+        }
         function geocodePosition(pos) {
+            resetLocation();
             geocoder.geocode({
                 latLng: pos
             }, function(responses) {
                 if (responses && responses.length > 0) {
                     var address_lengh = responses[0].address_components.length;
-                    var location = {};
                     for(var i = address_lengh-1; i>=0; i--){
                         if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
-                            location.city= responses[0].address_components[i].long_name;
+                            locationData.city= responses[0].address_components[i].long_name;
                         }
                         if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
-                            location.district= responses[0].address_components[i].long_name;
+                            locationData.district= responses[0].address_components[i].long_name;
                         }
                     }
-                    if(!$.isEmptyObject(location)) {
+                    if(!$.isEmptyObject(locationData)) {
                         updateMarkerAddress(responses[0].formatted_address);
                         updateMarkerPosition(pos.lat(),pos.lng());
+                        $('input[name=name]').val(responses[0].formatted_address);
+                        $('input[name=place_id]').val(responses[0].place_id);
+                        $('input[name=types_source]').val(responses[0].types);
+                        if(typeof locationData.city != 'undefined')
+                            $('input[name=slug_city]').val(ChangeToSlug(locationData.city));
+                        if(typeof locationData.district != 'undefined')
+                            $('input[name=slug_district]').val(ChangeToSlug(locationData.district));
+                        setDetectCityDistrict();
 
                     } else {
                         alert('Không tìm thấy địa chỉ');
@@ -241,16 +277,14 @@
 
             map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
             var address_lengh = place.address_components.length;
-            var location = {};
-          
 
             for(var i = address_lengh-1; i>=0; i--){
                 if(place.address_components[i].types[0]=='administrative_area_level_1'){
-                    location.city= place.address_components[i].long_name;
+                    locationData.city= place.address_components[i].long_name;
                     address_components.city_name = place.address_components[i].long_name;
                 }
                 if(place.address_components[i].types[0]=='administrative_area_level_2'){
-                    location.district= place.address_components[i].long_name;
+                    locationData.district= place.address_components[i].long_name;
                     address_components.district_name = place.address_components[i].long_name;
                 }
             }
@@ -259,16 +293,17 @@
             $('input[name=lat]').val(place.geometry.location.lat());
             $('input[name=place_id]').val(place.place_id);
             $('input[name=types_source]').val(place.types);
-            $('input[name=slug_city]').val(ChangeToSlug(location.city));
-            $('input[name=slug_district]').val(ChangeToSlug(location.district));
+            if(typeof locationData.city != 'undefined')
+                $('input[name=slug_city]').val(ChangeToSlug(locationData.city));
+            if(typeof locationData.district != 'undefined')
+                $('input[name=slug_district]').val(ChangeToSlug(locationData.district));
 
-            $.each($("select[name=city] option"), function(key, item){
-                if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
-                     $("select[name=city]").val($(item).attr('value')).change();
-                }
-            });
+            geocodePosition(marker.getPosition());
 
             //geocodePosition({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+            google.maps.event.addListener(marker, 'dragend', function() {
+                geocodePosition(marker.getPosition());
+            });
 
         });
 
@@ -313,17 +348,28 @@
 
         $("select").change(function () {
             if($(this).attr('name') == 'city'){
+              
                 $.ajax({
                     url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
                     dataType: 'json',
                     success: function(json) {
                         $('select[name=\'district\']').html('');
+                      
                         $.map(json, function(item) {
                             $('select[name=\'district\']').append('<option value="'+item.id+'">'+item.name+'</option>');
-                            if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
-                                 $("select[name=district]").val(item.id).change();
-                            }
                         });
+
+                        $.each($("select[name=district] option"), function(key, item){
+                                if(new RegExp('[(.*?)\s]?'+locationData.district+"$",'igm').test($(item).text())){
+                                     $("select[name=district]").val($(item).attr('value')).change();
+                                     check = true;
+                                     return false;
+                                }
+                        });
+
+                        if(!check){
+                            alert('không lấy được thành phố');
+                        }
                        
 
                     }
@@ -337,7 +383,10 @@
             var name = $('input[name=name]').val();
             var lat = $('input[name=lat]').val();
             var lng = $('input[name=lng]').val();
-            if(name.length != 0 && lat.length != 0 && lng.length != 0){
+            var types = $('select[name=types]').val();
+            var city = $('select[name=city]').val();
+            var district = $('select[name=district]').val();
+            if(name.length != 0 && lat.length != 0 && lng.length != 0 && types != 'null' && city != 'null' && district != 'null'){
                 $('#post_save').trigger('click');
             }else{
                 if(name.length == 0 ){
@@ -356,6 +405,24 @@
                    $('#validate_lng').show(); 
                     setTimeout(function() {
                         $("#validate_lng").hide('blind', {}, 500)
+                    }, 3000);
+                }
+                if(types == 'null' ){
+                   $('#types').show(); 
+                    setTimeout(function() {
+                        $("#types").hide('blind', {}, 500)
+                    }, 3000);
+                }
+                if(city == 'null' ){
+                   $('#city').show(); 
+                    setTimeout(function() {
+                        $("#city").hide('blind', {}, 500)
+                    }, 3000);
+                }
+                if(district == 'null' ){
+                   $('#district').show(); 
+                    setTimeout(function() {
+                        $("#district").hide('blind', {}, 500)
                     }, 3000);
                 }
             }

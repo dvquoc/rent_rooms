@@ -122,7 +122,7 @@ class ControllerLocationSpecial extends Controller
         /*fixed*/ 
         $polygon = array(
             'type' =>'Polygon',
-            'coordinates'=>[],
+            'coordinates'=>'',
         );
 
         if(!empty($_POST['circle'])){
@@ -146,7 +146,6 @@ class ControllerLocationSpecial extends Controller
             'types'            =>$this->request->post['types'],
             'location'         =>$point,
             'source'           =>'back-end',
-            'address'          =>$this->request->post['address'],
             'slug_city'        =>$this->request->post['slug_city'],
             'slug_district'    =>$this->request->post['slug_district'],
             'place_id'         =>$this->request->post['place_id'],
@@ -154,42 +153,41 @@ class ControllerLocationSpecial extends Controller
             'meta_description' =>$this->request->post['seo_discription'] 
         ];
         /*fixed*/
-        $result = $this->model_location_special->get_location_by_id($this->request->post['place_id']);
-        if($result != 0){
-            if(!empty($this->request->post['id'])){
-                $result = $this->model_location_special->update($this->request->post['id'],$input);
-                $this->session->data['success'] = $this->language->get('text_success');
-                $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
-            }else{
-                $this->session->data['check_exist'] = 'Khu vực đã tồn tại';
-                $this->response->redirect($this->url->link('location/special/page_add_new', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
-            }
-        }else{
-            $id_insert = $this->model_location_special->add($input);
+           
+       
+        if(!empty($this->request->post['id'])){
+            $result = $this->model_location_special->update($this->request->post['id'],$input);
             $this->session->data['success'] = $this->language->get('text_success');
             $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
-        } 
-
-        
-        
-        
+        }else{
+            $result = $this->model_location_special->get_location_by_id($this->request->post['place_id']);
+            if($result != 0){
+                $this->session->data['check_exist'] = 'Khu vực đã tồn tại';
+                $this->response->redirect($this->url->link('location/special/page_add_new', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
+            }else{
+                 $id_insert = $this->model_location_special->add($input);
+                $this->session->data['success'] = $this->language->get('text_success');
+                $this->response->redirect($this->url->link('location/special', 'token=' . $this->session->data['token']."&".$url , 'SSL')); 
+            }
+          
+        }
     }
 
     public function page_edit(){
         $this->load->model('location/special');
 
         $this->load->public_model('location/location_admin');
-        $data['token']    = $this->session->data['token'];
+        $data['token']       = $this->session->data['token'];
         
-        $data['types']    = $this->types;
-        $data['special']  = $this->model_location_special->get_special($this->request->get['id_area']);
-        $data['city']     = $this->model_location_location_admin->getCityById($data['special']['city_id']);
-        $data['district'] = $this->model_location_location_admin->getDistrictById($data['special']['district_id']);
+        $data['types']       = $this->types;
+        $data['special']     = $this->model_location_special->get_special($this->request->get['id_area']);
+        $data['city']        = $this->model_location_location_admin->getCityById($data['special']['city_id']);
+        $data['district']    = $this->model_location_location_admin->getDistrictById($data['special']['district_id']);
         
-        $data['citys']     = $this->model_location_location_admin->getAllCity();
-        $data['districts'] = $this->model_location_location_admin->getDistrictByCity($data['special']['city_id']);
+        $data['citys']       = $this->model_location_location_admin->getAllCity();
+        $data['districts']   = $this->model_location_location_admin->getDistrictByCity($data['special']['city_id']);
         
-        $data['area']      = json_encode($data['special']['area']['coordinates']);
+        $data['area']        = !empty($data['special']['area']['coordinates'])?json_encode($data['special']['area']['coordinates']):'';
         
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
