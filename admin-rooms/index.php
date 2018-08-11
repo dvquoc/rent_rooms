@@ -2,14 +2,14 @@
 // Version
 define('VERSION', '2.0.3.1');
 
-// Environment
-if (is_file(dirname(dirname(__FILE__)).'/environment.php'))
-	require_once(dirname(dirname(__FILE__)).'/environment.php');
-
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
 }
+
+// Environment
+if (is_file(dirname(dirname(__FILE__)).'/environment.php'))
+	require_once(dirname(dirname(__FILE__)).'/environment.php');
 
 require '../vendor/autoload.php';
 

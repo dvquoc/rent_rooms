@@ -1,13 +1,14 @@
 <?php
 //phpinfo();
-// Environment
-if (is_file('environment.php'))
-    require_once('environment.php');
 
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
 }
+
+// Environment
+if (is_file('environment.php'))
+	require_once('environment.php');
 
 require 'vendor/autoload.php';
 
