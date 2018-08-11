@@ -359,7 +359,7 @@ $.extend(mapRooms.prototype, {
                 t.find('.arrow').fadeOut(1);
                 $(".canvas-marker").css({'cursor': ''});
             }
-            if(!$.isEmptyObject(layoutEleData)) {
+            if(layoutEleData.length!=0) {
                 layoutEleData[rowKey][colKey].forEach(function (i, k) {
                     if (isIntersect(p, i)) {
                         $(".canvas-marker").css({'cursor': 'pointer'});
@@ -378,7 +378,7 @@ $.extend(mapRooms.prototype, {
                 t.fadeOut(1);
                 t.find('.arrow').fadeOut(1);
             }
-            if(!$.isEmptyObject(layoutEleData)) {
+            if(layoutEleData.length!=0) {
                 layoutEleData[rowKey][colKey].forEach(function (i, k) {
                     if (isIntersect(p, i)) {
                         $(".canvas-marker").css({'cursor': 'pointer'});
@@ -719,14 +719,16 @@ $.extend(mapRooms.prototype, {
             });
             response.data.listing_small.forEach(function(item,k){
                 var latLgn = _mr.fromLatLngToPixel(new google.maps.LatLng(item.location.coordinates[1], item.location.coordinates[0]));
-                var colKey  = Math.ceil(((latLgn.x/(_mr.element.width()-$("#content-list").width()))*100)/nubLayout)-1;
-                var rowKey = Math.ceil(((latLgn.y/_mr.element.height())*100)/nubLayout)-1;
-                layoutEleData[rowKey][colKey].push({
-                    latLng: [item.location.coordinates[1], item.location.coordinates[0]],
-                    x:latLgn.x,
-                    y:latLgn.y,
-                    data: item
-                });
+                var colKey  = Math.ceil(((latLgn.x/(_mr.element.width()-$("#content-list").width()))*10)/nubLayout)-1;
+                var rowKey = Math.ceil(((latLgn.y/_mr.element.height())*10)/nubLayout)-1;
+                if(typeof layoutEleData[rowKey]!= 'undefined' && typeof layoutEleData[rowKey][colKey]!='undefined'){
+                    layoutEleData[rowKey][colKey].push({
+                        latLng: [item.location.coordinates[1], item.location.coordinates[0]],
+                        x:latLgn.x,
+                        y:latLgn.y,
+                        data: item
+                    });
+                }
             });
 
             if(_canvas!=null)

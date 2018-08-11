@@ -31,9 +31,9 @@ define('DIR_CATALOG', DIR_HOME.'/catalog/');
 define('DB_DRIVER', 'mongodb');
 if(DB_DRIVER == 'mongodb') {
     define('DB_HOSTNAME', 'localhost');
-    define('DB_USERNAME', 'root');
-    define('DB_PASSWORD', '');
-    define('DB_DATABASE', 'admin');
+    define('DB_USERNAME', 'rooms');
+    define('DB_PASSWORD', '123456');
+    define('DB_DATABASE', 'rents_room');
     define('DB_PORT', '27017');
     define('DB_PREFIX', 'asdh1_');
 }else{

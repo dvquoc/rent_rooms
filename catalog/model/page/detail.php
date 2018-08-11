@@ -45,10 +45,6 @@ class ModelPageDetail extends Model {
         return $result;
     }
      public function get_user_by_id($id){
-        $OneResult = $this->db->owner_user->findOne(['_id' =>new MongoDB\BSON\ObjectId($id)]);
-        if($OneResult){
-            return $OneResult;
-        }else
-            return 0;
+        return $this->db->owner_user->findOne(['_id' =>new MongoDB\BSON\ObjectId($id)]);
     }
 }

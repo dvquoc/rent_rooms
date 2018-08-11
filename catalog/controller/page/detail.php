@@ -12,7 +12,11 @@ class ControllerPageDetail extends Controller {
             'status'=>1,
         );
         $detail = $this->model_page_detail->get_room($args['id']);
-        $master = $this->model_page_detail->get_user_by_id($detail['master_id']);
+
+        if(!empty($detail['master_id']))
+            $master = $this->model_page_detail->get_user_by_id($detail['master_id']);
+        else
+            $master['phone'] = 034534543535;
         if($detail){
             $data['detail'] = [];
             $data['detail'] =[
