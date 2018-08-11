@@ -11,7 +11,7 @@ define('VERSION', '2.0.3.1');
 define('ENV_SERVER', array('35.224.9.146' , 'conphong.com'));
 define('ENV_NAME', array('GOOGLE' , 'PRODUCTION','LOCAL'));
 
-// Set Environtment name
+// Set Environtment name 
 $server = array_search($_SERVER['SERVER_NAME'], ENV_SERVER, true);
 
 if($server !== false){
