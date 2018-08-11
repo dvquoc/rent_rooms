@@ -4,6 +4,7 @@
 /image/cache/
 /phpmyadmin/
 /database/
+/admin-rooms/config.php
 database.zip
 convert-mysql-to-mongo.php
 environment.php
