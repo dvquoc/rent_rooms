@@ -2,6 +2,10 @@
 // Version
 define('VERSION', '2.0.3.1');
 
+// Environment
+if (is_file(dirname(dirname(__FILE__)).'/environment.php'))
+	require_once(dirname(dirname(__FILE__)).'/environment.php');
+
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
@@ -34,9 +38,9 @@ if(DB_DRIVER == 'mysqli') {
     $registry->set('db', $db);
 }
 if(DB_DRIVER == 'mongodb') {
-    $connect = new \MongoDB\Client();
-    $connect = $connect->selectDatabase("rents_room");
-    $registry->set('db', $connect);
+	$connect = new \MongoDB\Client(URL_DB);
+	$connect = $connect->selectDatabase(DB_DATABASE);
+	$registry->set('db', $connect);
 }
 
 
