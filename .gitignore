@@ -5,8 +5,8 @@
 /phpmyadmin/
 /database/
 /admin-rooms/config.php
-database.zip
-convert-mysql-to-mongo.php
-environment.php
-config.php
+/database.zip
+/convert-mysql-to-mongo.php
+/environment.php
+/config.php
 
