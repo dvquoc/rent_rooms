@@ -6,8 +6,9 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <div id="content">
   <div class="page-header">
+     
     <div class="container-fluid">
-
+      
       <div class="pull-right">
         <a id="save" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</a>
         <button id="btn-save" type="submit" style="display: none" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
@@ -21,15 +22,16 @@
     </div>
     <?php } ?> 
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
+        <div style="position: absolute;top: 50px;right: 160px;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
+        <div class="error-capcha" style="display: none">
+            <p style="color: red">vui lòng check capcha </p>
+        </div>
         <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><i class="fa fa-inbox"></i> <?php echo $text_form; ?></h3>
-                    <div style="float: right;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
-                    <div class="error-capcha" style="display: none">
-                        <p style="color: red">vui lòng check capcha </p>
-                    </div>
+                   
 
               </div>
                 <div class="panel-body">
@@ -169,12 +171,14 @@
                                                   <div class="feature price">
                                                       <b>Tiền thuê: </b> <?php echo $txt_price; ?>
                                                       <input name="price" placeholder="Giá: nhập số và bắt buộc" class="<?php echo $class; ?> form-control" value="<?php echo $price; ?>">
+                                                      <div id="validate_price" hidden><span style="color: red">Trường này không được trống</span></div>
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature acreage">
                                                       <b>Diện tích: </b> <?php echo $acreage; ?> m2
                                                       <input name="acreage" placeholder="Giá: Nhập số và bắt buộc" class="<?php echo $class; ?> form-control" value="<?php echo $acreage; ?>">
+                                                      <div id="validate_acreage" hidden><span style="color: red">Trường này không được trống</span></div>
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
@@ -485,8 +489,11 @@
       var lng = $('input[name=lng]').val();
       var city = $('select[name=city_id]').val();
       var district = $('select[name=district_id]').val();
+      var price = $('input[name=price]').val();
+      var acreage = $('input[name=acreage]').val();
+
       console.log(city);
-      if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null'){
+      if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null' && price.length!= 0 && acreage.length != 0){
           var slug_name = $('input[name=name]').val();
           var slug_city =  $( "select[name=city_id] option:selected" ).text();
           var slug_district = $( "select[name=district_id] option:selected" ).text();
@@ -501,31 +508,50 @@
           setTimeout(function() {
             $("#validate_name").hide('blind', {}, 500)
           }, 3000);
+          $('input[name=name]').focus();
         };
         if(lat.length == 0 ){
          $('#validate_lat').show(); 
          setTimeout(function() {
           $("#validate_lat").hide('blind', {}, 500)
         }, 3000);
+         $('input[name=lat]').focus();
        };
        if(lng.length == 0 ){
          $('#validate_lng').show(); 
          setTimeout(function() {
           $("#validate_lng").hide('blind', {}, 500)
         }, 3000);
+         $('input[name=lng]').focus();
        }
        if(city == 'null' ){
          $('#validate_city').show(); 
          setTimeout(function() {
           $("#validate_city").hide('blind', {}, 500)
         }, 3000);
+         $('input[name=city]').focus();
        }
        if(district == 'null' ){
          $('#validate_district').show(); 
          setTimeout(function() {
           $("#validate_district").hide('blind', {}, 500)
         }, 3000);
+         $('input[name=district]').focus();
        }
+        if(name.length == 0 ){
+          $('#validate_price').show(); 
+          setTimeout(function() {
+            $("#validate_price").hide('blind', {}, 500)
+          }, 3000);
+          $('input[name=price]').focus();
+        };
+         if(name.length == 0 ){
+          $('#validate_acreage').show(); 
+          setTimeout(function() {
+            $("#validate_acreage").hide('blind', {}, 500)
+          }, 3000);
+          $('input[name=acreage]').focus();
+        };
      }
    })
    

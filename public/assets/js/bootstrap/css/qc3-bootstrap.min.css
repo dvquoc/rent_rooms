@@ -234,3 +234,8 @@ body .auth-input {
     text-decoration: underline;
     cursor: pointer;
 }
+.auth-btn:hover {
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(to right,#83c343 ,#369e54);
+}

@@ -80,50 +80,55 @@ class ModelPageRooms extends Model {
             'ads'               => (int) $data['ads'],
             'ads_position'      => '',
             'status'            => (int) $data['status'],
-            'date_crate'        => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
+            'date_crate'        => new MongoDB\BSON\UTCDateTime(time()),
+            'date_update'       => new MongoDB\BSON\UTCDateTime(time()),
             'is_checked'        =>0,
             'master_id'         =>$data['id_owner'],
             'source'            =>'front-end',
-            'slug'         =>$data['slug'],
+            'slug'              =>$data['slug'],
             'slug_city'         =>$data['slug_city'],
             'slug_district'     =>$data['slug_district'],
         ]);
     }
 
     public function editRooms($rooms_id, $data = array()){
+        //var_dump((new dateTime())->getTimestamp());die();
+
+        $room = $this->getRoom($rooms_id);
         $point = array(
-            'type' =>'Point',
-            'coordinates'=>[(float) $data['lng'],(float) $data['lat']]
+            'type'        =>'Point',
+            'coordinates' =>[(float) $data['lng'],(float) $data['lat']]
         );
         $data_set = [
-            'name' => $data['name'],
-            'images' => $data['images'],
-            'city_id' => (int) $data['city_id'],
-            'district_id' => (int) $data['district_id'],
-            'address' => $data['address'],
-            'location' => $point,
-            'price' => (int) $data['price'],
+            'name'              => $data['name'],
+            'images'            => $data['images'],
+            'city_id'           => (int) $data['city_id'],
+            'district_id'       => (int) $data['district_id'],
+            'address'           => $data['address'],
+            'location'          => $point,
+            'price'             => (int) $data['price'],
             'price_electricity' => (int) $data['price_electricity'],
-            'price_water' => (int) $data['price_water'],
-            'price_deposit' => (int) $data['price_deposit'],
-            'acreage' => (int) $data['acreage'],
-            'amount_people' => (int) $data['amount_people'],
-            'close_door' => $data['close_door'],
-            'highlight' => $data['highlight'],
-            'regulation_room' => $data['regulation_room'],
-            'view' => (int) $data['view'],
-            'call' => (int) $data['call'],
-            'from_date' => new MongoDB\BSON\UTCDateTime((int) $data['from_date']),
-            'to_date' => new MongoDB\BSON\UTCDateTime((int) $data['to_date']),
-            'ads' => (int) $data['ads'],
-            'ads_position' => $data['ads_position'],
-            'status' => (int) $data['status'],
-            'slug'         => $data['slug'],
+            'price_water'       => (int) $data['price_water'],
+            'price_deposit'     => (int) $data['price_deposit'],
+            'acreage'           => (int) $data['acreage'],
+            'amount_people'     => (int) $data['amount_people'],
+            'close_door'        => $data['close_door'],
+            'highlight'         => $data['highlight'],
+            'regulation_room'   => $data['regulation_room'],
+            'view'              => (int) $data['view'],
+            'call'              => (int) $data['call'],
+            'from_date'         => new MongoDB\BSON\UTCDateTime((int) $data['from_date']),
+            'to_date'           => new MongoDB\BSON\UTCDateTime((int) $data['to_date']),
+            'ads'               => (int) $data['ads'],
+            'ads_position'      => $data['ads_position'],
+            'status'            => (int) $data['status'],
+            'slug'              => $data['slug'],
             'slug_city'         =>$data['slug_city'],
             'slug_district'     =>$data['slug_district'],
         ];
-
-        //var_dump($data_set); die();
+        if($data_set['status'] != $room['status']){
+            $data_set['date_update'] = new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp());
+        }     
         return $this->table->updateOne(
             ['room_id' => (int) $rooms_id],
             ['$set' => $data_set]

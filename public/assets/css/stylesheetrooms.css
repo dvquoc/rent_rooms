@@ -11,8 +11,7 @@
     margin-bottom: 15px;
     height: 66px;
     box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
-    position: -webkit-sticky;
-    position: sticky;
+    position: initial;
     top: -1px;
     z-index: 9999;
 }

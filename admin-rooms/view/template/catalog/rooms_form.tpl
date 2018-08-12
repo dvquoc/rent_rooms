@@ -239,9 +239,14 @@
                                                   <label class="col-sm-12">Mã tin đăng</label>
                                                   <div class="col-md-12">
                                                       <input type="text" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
-                                                      <input type="text" class="form-control" name="_id" value="<?php echo $_id; ?>" >
                                                   </div>
                                             </div>
+                                             <div class="form-group">
+                                                  <div class="col-md-12">
+                                                    <input type="text" readonly class="form-control" name="_id" value="<?php echo $_id; ?>" >
+                                                  </div>
+                                            </div>
+                                                      
                                            <?php if($source == 'front-end') {?>
                                              <div class="form-group">
                                               <?php if($is_checked == 1){
