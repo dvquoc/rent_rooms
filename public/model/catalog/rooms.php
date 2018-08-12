@@ -83,9 +83,10 @@ class ModelCatalogRooms extends Model {
             'ads_position'      => $data['ads_position'],
             'status'            => (int) $data['status'],
             'date_crate'        => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
+            'date_update'       => new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp()),
             'source'            =>'back-end',
             'is_checked'        =>1,
-            'slug'         => $data['slug'],
+            'slug'              => $data['slug'],
             'slug_city'         =>$data['slug_city'],
             'slug_district'     =>$data['slug_district'],
 
@@ -93,6 +94,7 @@ class ModelCatalogRooms extends Model {
     }
 
     public function editRooms($rooms_id, $data = array()){
+        $room = $this->getRoom($rooms_id);
         $point = array(
             'type' =>'Point',
             'coordinates'=>[(float) $data['lng'],(float) $data['lat']]
@@ -125,8 +127,9 @@ class ModelCatalogRooms extends Model {
             'slug_city'         =>$data['slug_city'],
             'slug_district'     =>$data['slug_district'],
         ];
-
-        //var_dump($data_set); die();
+        if(($data_set['status'] != $room['status']) && $data_set['is_checked'] == 1){
+            $data_set['date_update'] = new MongoDB\BSON\UTCDateTime((new dateTime())->getTimestamp());
+        }  
         return $this->table->updateOne(
             ['room_id' => (int) $rooms_id],
             ['$set' => $data_set]

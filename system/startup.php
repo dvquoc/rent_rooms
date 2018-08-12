@@ -8,9 +8,9 @@ if (version_compare(phpversion(), '5.3.0', '<') == true) {
 	exit('PHP5.3+ Required');
 }
 
-if (!ini_get('date.timezone')) {
-	date_default_timezone_set('Asia/Ho_Chi_Minh');
-}
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+
 
 // Windows IIS Compatibility
 if (!isset($_SERVER['DOCUMENT_ROOT'])) {

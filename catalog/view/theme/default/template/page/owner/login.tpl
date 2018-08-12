@@ -81,7 +81,7 @@
                             $('#form_error').delay(3000).fadeOut();
                             grecaptcha.reset();  
                         }else
-                            window.location.href = "/tim-kiem-phong-tro";
+                            window.location.href = "/quan-ly-phong-tro";
                     }
                 }
             });

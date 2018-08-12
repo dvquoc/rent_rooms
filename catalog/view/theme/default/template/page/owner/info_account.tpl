@@ -100,7 +100,7 @@ span.req {
                 <input class="btn btn-success" type="submit" name="submit_reg" value="Cập nhật">
             </div>
              <div class="form-group">
-                <button class="btn btn-cancel" ><a href="/tim-kiem-phong-tro">Cancel</a></button> 
+                <button class="btn btn-cancel" ><a href="/quan-ly-phong-tro">Cancel</a></button> 
             </div>
             </fieldset>
             </form><!-- ends register form -->

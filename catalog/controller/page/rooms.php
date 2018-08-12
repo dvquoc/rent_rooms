@@ -109,6 +109,7 @@ class ControllerPageRooms extends Controller
            // $rooms_total = $this->model_catalog_rooms->getTotalRooms($data_query);
             $results = $this->model_page_rooms->getRoomByOwner($id_owner);
             foreach ($results as $result) {
+               
                 $data['rooms'][] = array(
                     'room_id' => $result['room_id'],
                     'name' => $result['name'],
@@ -116,13 +117,15 @@ class ControllerPageRooms extends Controller
                     'ads' => $result['ads'],
                     'from_date' => $result['from_date'],
                     'to_date' => $result['to_date'],
+                    'date_update'=>(int)(string)$result['date_update'],
                     'text_price' => format_currency($result['price']),
                     'text_acreage' => format_acreage($result['acreage']),
                     'edit' =>'',
-                    'is_checked'=>$result['is_checked']
+                    'is_checked'=>$result['is_checked'],
                 );
+               
             }
-
+           
              $data['header'] = $this->load->controller('common/header');
             $this->response->setOutput($this->load->view('default/template/page/rooms_list.tpl', $data));
         }else{

@@ -59,8 +59,9 @@
                                 <td class="text-right" width="150px">Giá thuê </td>
                                 <td class="text-right" width="150px">Diện tích</td>
                                 <td style="width: 150px;" class="text-center">Tin quảng cáo</td>
-                                <td style="width: 150px;" class="text-center">Ngày chạy</td>
-                                <td style="width: 150px;" class="text-center">Ngày kết thúc</td>
+                                <td style="width: 150px;" class="text-center">Ngày đăng tin</td>
+                                <td style="width: 150px;display: none" class="text-center">Ngày chạy</td>
+                                <td style="width: 150px;display: none" class="text-center">Ngày kết thúc</td> 
                                 <td class="text-right">Hành động</td>
                                 <td class="text-center">Kiểm duyệt</td>
 
@@ -88,8 +89,11 @@
                                 <td class="text-right"><?php echo $room['text_price']; ?></td>
                                 <td class="text-right"><?php echo $room['text_acreage']; ?></td>
                                 <td class="text-center"><span class="feature"> <?php echo $room['ads'] ? 'Tin quảng cáo': 'Tin bình thường'; ?></span></td>
-                                <td class="text-left"><?php echo date('d/m/YY',$room['from_date']); ?></td>
-                                <td class="text-left"><?php echo date('d/m/YY',$room['to_date']); ?></td>
+
+                                <td class="text-center"><?php echo date('d/m/Y H:i:s', $room['date_update']); ?></td>
+                                <td class="text-left" style="display: none"><?php echo date('d/m/YY',$room['from_date']); ?></td>
+                                <td class="text-left" style="display: none"><?php echo date('d/m/YY',$room['to_date']); ?></td>
+
                                 <td class="text-right"><a href="/them-phong-tro/<?php echo $room['room_id'] ?>" data-toggle="tooltip" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                                 <td class="text-center" style="color: <?php echo $color ?>"><?php echo $text_alert ?></td>
                             </tr>

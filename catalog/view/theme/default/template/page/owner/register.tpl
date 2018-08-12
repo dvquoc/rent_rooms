@@ -134,7 +134,7 @@
                             if(re == 'capcha'){
                                 $('.error-capcha').css('display','block')
                             }else{
-                                window.location.href = "/tim-kiem-phong-tro";
+                                window.location.href = "/quan-ly-phong-tro";
                             }
                         }
                     }); 
