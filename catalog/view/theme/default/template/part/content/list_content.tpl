@@ -2,10 +2,21 @@
 <?php foreach($rooms as $key=>$item) { ?>
 <div class="row" i-column" itemscope="" itemtype="http://schema.org/Product">
 <?php
-            $slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
-            $slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
-            $slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
-						?>
+    $slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
+    $slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
+    $slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
+            
+    $date_current = date('d/m/Y',time());
+    $str_date_update = (string)$item['date_update'];
+    $date_update= date('d/m/Y',$str_date_update);
+    $day = strtotime($date_current) - strtotime($date_update);
+    
+    if($day == 0 ){
+        $time = date('H:i:s',($str_date_update));
+    }else{
+        $time = ($day > 10)?date('d/m/Y',($str_date_update)):$day;
+    }   
+?>
 <a itemprop="url" href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.(string) $item["_id"]; ?>" class="inner-item<?php echo ($key < 3) ? ' is-ads':''; ?>">
 <div class="dropdown">
     <button class="context-menu-button icon" data-toggle="dropdown" id="dropdownMenu<?php echo $item['_id']; ?>"
@@ -28,7 +39,7 @@
     <h3 itemprop="name" class="title"><b><?php echo $item['name'];?> <?php echo $item['name'];?></b></h3>
     <div class="f-i">
         <div class="i d">
-            Ngày đăng: <span><?php echo  date('d/m/Y',trim($item['date_crate']));?></span>
+            Ngày đăng: <span><?php echo $time;?></span>
         </div>
         <?php if(isset($has_point)) { ?>
         <div class="i d">

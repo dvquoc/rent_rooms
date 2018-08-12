@@ -208,13 +208,19 @@
                                   <div class="row">
                                      
                                       <div class="col-md-4">
-                                          <div class="form-group">
+                                         <div class="form-group">
+                                                <label class="col-sm-12">Giờ đóng cửa</label>
+                                                <div class="col-md-12">
+                                                    <input type="text" name="close_door" value="<?php echo $close_door; ?>" class="form-control">
+                                                </div>
+                                          </div>
+                                          <div class="form-group" style="display: none" >
                                               <label class="col-sm-12">Ngày chạy</label>
                                               <div class="col-md-12">
                                                   <input type="text" name="from_date" value="<?php echo $from_date; ?>" class="datetime form-control">
                                               </div>
                                           </div>
-                                          <div class="form-group">
+                                          <div class="form-group" style="display: none">
                                               <label class="col-sm-12">Ngày kết thúc</label>
                                               <div class="col-md-12">
                                                   <input name="to_date" value="<?php echo $to_date; ?>" type="text" class="datetime form-control">
@@ -229,12 +235,7 @@
                                                   <input type="text" name="amount_people" value="<?php echo $amount_people; ?>"  class="form-control">
                                               </div>
                                           </div>
-                                          <div class="form-group">
-                                                <label class="col-sm-12">Giờ đóng cửa</label>
-                                                <div class="col-md-12">
-                                                    <input type="text" name="close_door" value="<?php echo $close_door; ?>" class="form-control">
-                                                </div>
-                                          </div>
+                                         
                                       </div>
                                       <div class="col-md-4">
                                          <div class="form-group">

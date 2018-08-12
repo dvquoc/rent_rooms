@@ -260,7 +260,7 @@
                                            <?php }?>
                                         <?php } ?>
                                       </div>
-                                      <div class="col-md-4">
+                                      <div class="col-md-4" >
                                           <div class="form-group">
                                               <label class="col-sm-12">Ngày chạy</label>
                                               <div class="col-md-12">
