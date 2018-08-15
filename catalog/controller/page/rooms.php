@@ -19,6 +19,7 @@ class ControllerPageRooms extends Controller
 
     public function add()
     {  
+      var_dump($_POST);die();
         $this->request->post['id_owner'] = $_SESSION['id_user']['id_owner'];
         $this->load->model('page/rooms');
 
@@ -36,11 +37,12 @@ class ControllerPageRooms extends Controller
         }
         if($response != null && $response->success) {
             if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-                $this->request->post['images'] = serialize($this->request->post['images']);
-                if (empty($this->request->post['images']))
-                    $this->request->post['images'] = array();
+                $this->request->post['file'] = serialize($this->request->post['file']);
+                if (empty($this->request->post['file']))
+                    $this->request->post['file'] = array();
                 if (empty($this->request->post['date_create']))
                     $this->request->post['date_create'] = 'NOW()';
+                var_dump($this->request->post['file']);die();
                 $this->model_page_rooms->addRooms($this->request->post);
 
                 $this->session->data['success'] = "Thêm thành công";

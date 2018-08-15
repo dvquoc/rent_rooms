@@ -3,7 +3,13 @@
 <link type="text/css" href="/public/assets/css/stylesheetrooms.css" rel="stylesheet" media="screen"/>
 <link href="/public/assets/css/opencart.css" type="text/css" rel="stylesheet" />
 <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
+
 <script src='https://www.google.com/recaptcha/api.js'></script>
+
+<link href="/public/assets/plugins/upload_file/dist/styles.imageuploader.css" type="text/css" rel="stylesheet" />
+<script src="/public/assets/plugins/upload_file/dist/jquery.imageuploader.js"></script>
+
+
 <div id="content">
   <div class="page-header">
      
@@ -44,48 +50,13 @@
                               <div class="col-md-5">
                                   <div class="text-center title-info"><h3>Hình ảnh</h3></div>
                                   <div class="form-group">
-                                      <div class="slider-images col-md-12">
-                                          <?php if(!empty($room_images_lagre)) { ?>
-                                              <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                                  <div class="carousel-inner">
-                                                        <?php foreach($room_images_lagre as $k=>$item){ ?>
-                                                              <div class="item <?php echo $k==0 ? 'active':'' ?>" style="height:430px; overflow: hidden;">
-                                                                  <img onerror="this.src='http://www.venturinistore.it/images/joomlart/demo/default.jpg'" src="<?php echo $item->link; ?>" class="img-responsive">
-                                                              </div>
-                                                        <?php } ?>
-                                                  </div>
-                                                  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                                      <span class="glyphicon glyphicon-chevron-left"></span>
-                                                      <span class="sr-only">Previous</span>
-                                                  </a>
-                                                  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                                      <span class="glyphicon glyphicon-chevron-right"></span>
-                                                      <span class="sr-only">Next</span>
-                                                  </a>
-                                              </div>
-                                          <?php } else{ ?>
-                                                <img src="http://www.venturinistore.it/images/joomlart/demo/default.jpg" class="img-responsive">
-                                          <?php } ?>
-                                          <button type="button" onclick="addImage();" title="" class="add-image pull-right">Thêm ảnh [+]</button>
-                                      </div>
-                                      <div id="img-list" class="col-md-12">
-                                          <div class="img">
-                                              <?php $image_row = 0; ?>
-                                              <div class="row">
-                                                  <?php if($room_images) { ?>
-                                                          <?php foreach($room_images as $key=>$item){ ?>
-                                                              <div class="item-image col-md-3" id="item-<?php echo $key; ?>">
-                                                                  <a href="" style="border: 3px solid #e4e4e4" id="thumb-image<?php echo $key; ?>" data-toggle="image" class="img-thumbnail">
-                                                                      <img width="100%" src="<?php echo $item['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />
-                                                                  </a>
-                                                                  <input type="hidden" name="images[<?php echo $key; ?>]" value="<?php echo $item['image']; ?>" id="input-image<?php echo $key; ?>" />
-                                                                  <button type="button" onclick="$('#item-<?php echo $key; ?>').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>
-                                                              </div>
-                                                          <?php $image_row ++;  } ?>
-                                                  <?php } ?>
-                                              </div>
+                                     <div class="uploader__box js-uploader__box l-center-box">
+                                          <div class="uploader__contents">
+                                              <label class="button button--secondary" for="fileinput">Select Files</label>
+                                              <input id="fileinput" name="images" class="uploader__file-input" type="file" multiple value="Select Files">
                                           </div>
-                                      </div>
+                                    </div>
+
                                   </div>
                                   <div class="form-group">
                                       <div class="text-center title-info"><h3>Địa chỉ chính xác (Map)</h3></div>
@@ -284,36 +255,26 @@
           </div>
       </form>
   </div>
-<script language="javascript" type="text/javascript">
-       var option_tinymce = {
-          selector: '#highlight-rooms',
-         
-          /*skin: 'light',*/
-          height:500,
-          app_default: 'cdv',
-          relative_urls: false,
-          remove_script_host: false,
-          document_base_url : "<?php echo HTTP_CATALOG; ?>",
-          plugin_url : "<?php echo HTTP_SERVER; ?>admin-rooms/view/javascript/tinymce/plugins/",
-          plugins: [
-              "imagetools linktarget advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-              "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-              "save table contextmenu directionality emoticons template textcolor paste codesample example header"
-          ],
-          setup: function(ed) {
-              ed.addContextToolbar('a', 'link unlink');
-          },
-          toolbar1: "undo redo imagetools newdocument cut copy paste pastetext searchreplace print ltr rtl spellchecker visualchars visualblocks nonbreaking code preview fullscreen",
-          toolbar2: "bullist numlist outdent indent blockquote link unlink imagetools example media table anchor removeformat insertdatetime hr  charmap emoticons template pagebreak restoredraft codesample",
-          toolbar3: "bold italic underline strikethrough subscript superscript forecolor backcolor alignleft aligncenter alignright alignjustify header fontselect fontsizeselect",
-          fontsize_formats: '8pt 9pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt',
-          document_app: "<?php echo DIR_APPLICATION; ?>",
-          verify_html: false,
-          forced_root_block : "p",
-      }
 
-</script>
 <script type="text/javascript">
+  $( document ).ready(function() {
+     
+  });
+  
+   var options = {
+    instructionsCopy: 'Drag and Drop, orssss',
+    furtherInstructionsCopy: 'Your can also drop more files, or',
+    selectButtonCopy: 'Select Files',
+    secondarySelectButtonCopy: 'Select More Files',
+    dropZone: $(this),
+    fileTypeWhiteList: ['jpg', 'png', 'jpeg', 'gif', 'pdf'],
+    badFileTypeMessage: 'Sorry, we\'re unable to accept this type of file.',
+    ajaxUrl: '/ajax/upload',
+    testMode: false
+};
+  $('.js-uploader__box').uploader(options);
+
+
 
     var geocoder = new google.maps.Geocoder();
     function geocodePosition(pos) {
@@ -472,18 +433,6 @@
         });
       }
     });
-    var image_row = <?php echo $image_row; ?>;
-    function addImage() {
-      html  = '<div class="item-image col-md-3" id="item-' + image_row + '">';
-        html  += '<a href="" style="border: 1px solid #e4e4e4" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail">';
-          html  += '<img width="100%" src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />';
-        html  += '</a>';
-        html  += '<input type="hidden" name="images[' + image_row + ']" value="" id="input-image' + image_row + '" />';
-        html  += '<button type="button" onclick="$(\'#item-' + image_row + '\').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>';
-      html  += '</div>';
-      $('#img-list .img .row').append(html);
-      image_row++;
-    }
     $('#save').on('click',function(){
       var name = $('input[name=name]').val();
       var lat = $('input[name=lat]').val();
@@ -493,7 +442,7 @@
       var price = $('input[name=price]').val();
       var acreage = $('input[name=acreage]').val();
 
-      console.log(city);
+   
       if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null' && price.length!= 0 && acreage.length != 0){
           var slug_name = $('input[name=name]').val();
           var slug_city =  $( "select[name=city_id] option:selected" ).text();
@@ -555,6 +504,7 @@
         };
      }
    })
+    
    
   </script>
 </div>
