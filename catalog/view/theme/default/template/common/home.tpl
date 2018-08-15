@@ -1,5 +1,9 @@
 <?php echo $header;?>
 <div class="text-center">
+    <form action="/abc" method="POST">
+    <input type="text" name="1">
+    <button type="button">sadas</button>
+  </form>
         <div class="inner-left" style="padding: 40px 0">
             <div id="logo" class="text-center">
                 <h1>Piapy</h1>

@@ -2,6 +2,12 @@
  * ©2016 Quicken Loans Inc. All rights reserved.
  */
 /* global jQuery FormData FileReader */
+  var state = {
+                fileBatch: [],
+                isUploading: false,
+                isOverLimit: false,
+                listIndex: 0
+            };
 (function ($) {
     $.fn.uploader = function (options, testMode) {
         return this.each(function (index) {
@@ -18,12 +24,7 @@
                 testMode: false
             }, options);
 
-            var state = {
-                fileBatch: [],
-                isUploading: false,
-                isOverLimit: false,
-                listIndex: 0
-            };
+          
 
             // create DOM elements
             var dom = {
@@ -179,11 +180,11 @@
 
             function uploadSubmitHandler () {
                 if (state.fileBatch.length !== 0) {
-                    var data = new FormData();
+                    var data = new FormData(); 
                     for (var i = 0; i < state.fileBatch.length; i++) {
                         data.append('files[]', state.fileBatch[i].file, state.fileBatch[i].fileName);
                     }
-                    console.log(state);
+                    console.log(data);
                     return false;
                     $.ajax({
                         type: 'POST',

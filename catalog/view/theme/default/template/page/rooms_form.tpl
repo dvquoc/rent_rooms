@@ -16,11 +16,11 @@
     <div class="container-fluid">
       
       <div class="pull-right">
-        <a id="save" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</a>
-        <button id="btn-save" type="submit" style="display: none" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
+        <button id="save" type="button" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
     </div>
   </div> 
+  
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
@@ -258,9 +258,7 @@
 
 <script type="text/javascript">
   $( document ).ready(function() {
-     
   });
-  
    var options = {
     instructionsCopy: 'Drag and Drop, orssss',
     furtherInstructionsCopy: 'Your can also drop more files, or',
@@ -272,10 +270,7 @@
     ajaxUrl: '/ajax/upload',
     testMode: false
 };
-  $('.js-uploader__box').uploader(options);
-
-
-
+$('.js-uploader__box').uploader(options);
     var geocoder = new google.maps.Geocoder();
     function geocodePosition(pos) {
         geocoder.geocode({
@@ -451,7 +446,24 @@
           $('input[name=slug]').val(ChangeToSlug(slug_name));
           $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
           $('input[name=slug_district]').val(ChangeToSlug(slug_district));
-          $('#btn-save').click();  
+          var data = $('#form-information').serializeArray();
+          var fd = new FormData($('#form-information')[0]);
+           
+          for (var i = 0; i < state.fileBatch.length; i++) {
+            fd.append('files[]', state.fileBatch[i].file, state.fileBatch[i].fileName);
+          }
+          $.ajax({
+            url:'<?php echo $action; ?>',
+            type:'POST',
+            enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            data:fd,
+            success:function(e){
+              window.location.href = "/quan-ly-phong-tro";
+            }
+          })
+         
       }else{
         if(name.length == 0 ){
           $('#validate_name').show(); 

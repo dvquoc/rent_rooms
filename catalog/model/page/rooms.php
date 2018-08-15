@@ -56,10 +56,11 @@ class ModelPageRooms extends Model {
             'type' =>'Point',
             'coordinates'=>[(double) $data['lng'],(double) $data['lat']]
         );
+       
         return $this->table->insertOne([
             'room_id'           => $stt->room_id+1,
             'name'              => $data['name'],
-            'images'            => $data['images'],
+            'images'            => $data['img'],
             'city_id'           => (int) $data['city_id'],
             'district_id'       => (int) $data['district_id'],
             'address'           => $data['address'],

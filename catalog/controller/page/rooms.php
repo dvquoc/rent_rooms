@@ -19,7 +19,6 @@ class ControllerPageRooms extends Controller
 
     public function add()
     {  
-      var_dump($_POST);die();
         $this->request->post['id_owner'] = $_SESSION['id_user']['id_owner'];
         $this->load->model('page/rooms');
 
@@ -37,12 +36,9 @@ class ControllerPageRooms extends Controller
         }
         if($response != null && $response->success) {
             if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-                $this->request->post['file'] = serialize($this->request->post['file']);
-                if (empty($this->request->post['file']))
-                    $this->request->post['file'] = array();
-                if (empty($this->request->post['date_create']))
-                    $this->request->post['date_create'] = 'NOW()';
-                var_dump($this->request->post['file']);die();
+                if(isset($this->request->files)){
+                   $this->request->post['img'] =  $this->uploadImg($this->request->files['files']);
+                }
                 $this->model_page_rooms->addRooms($this->request->post);
 
                 $this->session->data['success'] = "Thêm thành công";
@@ -344,5 +340,17 @@ class ControllerPageRooms extends Controller
         }
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+    public function uploadImg($images){
+        $arr = [];
+        foreach ($images['name'] as $key =>$value) {
+            $new_name = 'file_' .time().'_'. rand(0, 10000).rand(0, 9999).rand(0, 999999) . '.' . end(explode(".", $value));
+            if (move_uploaded_file($images['tmp_name'][$key], 'image/catalog/' . $new_name)) {
+                $arr[] = $new_name;
+            }else{
+               
+            }
+        }
+        return $arr;
     }
 }
