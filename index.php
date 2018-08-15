@@ -84,7 +84,7 @@ if(!$citys) {
 		}
 		$cache->set('city-cache', $q_c);
 	}
-	
+
 }
 
 $config->set('config_url', HTTP_SERVER);
