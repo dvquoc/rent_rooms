@@ -1,14 +1,5 @@
-<?php echo $header;
-if(!isset($_COOKIE['origin_ref']))
-{
-    setcookie('origin_ref', $_SERVER['HTTP_REFERER']);
-} ?>
+<?php echo $header; ?>
 <link href="/public/assets/css/list-page.css" rel="stylesheet" media="screen"/>
-<div class="top-page-search">
-    <div class="container text-center" style="margin-top: 15px;">
-        <img src="https://file4.batdongsan.com.vn/2018/04/07/RUFz0fap/20180407105303-7dfc.jpg">
-    </div>
-</div>
 <div id="content-page" class="container page-layout-box">
   	<div class="row">
 		<div class="col-md-12 list-right">
@@ -39,7 +30,11 @@ if(!isset($_COOKIE['origin_ref']))
                     </a>
                 </div>
             </div>
-
+            <div class="top-page-search row">
+                <div class="col-md-12 text-center">
+                    <img src="https://file4.batdongsan.com.vn/2018/04/07/RUFz0fap/20180407105303-7dfc.jpg">
+                </div>
+            </div>
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
                     <h1 itemprop="name" class="tex-left" style="font-size:20px; "><b>Tìm kiếm phòng trọ tốt nhất <?php echo $info_seo['name']; ?></b></h1>

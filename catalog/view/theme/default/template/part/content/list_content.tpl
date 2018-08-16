@@ -14,7 +14,7 @@
     if($day == 0 ){
         $time = date('H:i:s',($str_date_update));
     }else{
-        $time = ($day > 10)?date('d/m/Y',($str_date_update)):$day;
+        $time = ($day > 10)? date('d/m/Y',($str_date_update)):$day;
     }   
 ?>
 <a itemprop="url" href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.(string) $item["_id"]; ?>" class="inner-item<?php echo ($key < 3) ? ' is-ads':''; ?>">
