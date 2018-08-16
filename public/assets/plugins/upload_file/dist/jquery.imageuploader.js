@@ -13,23 +13,20 @@
         return this.each(function (index) {
             options = $.extend({
                 submitButtonCopy: 'Upload Selected Files',
-                instructionsCopy: 'Drag and Drop, or',
+                instructionsCopy: 'Kéo ảnh vào đây để upload ảnh',
                 furtherInstructionsCopy: 'Your can also drop more files, or',
-                selectButtonCopy: 'Select Files',
-                secondarySelectButtonCopy: 'Select More Files',
+                selectButtonCopy: 'Tải hình ảnh',
+                secondarySelectButtonCopy: 'Tải thêm hình ảnh',
                 dropZone: $(this),
-                fileTypeWhiteList: ['jpg', 'png', 'jpeg', 'gif', 'pdf'],
-                badFileTypeMessage: 'Sorry, we\'re unable to accept this type of file.',
+                fileTypeWhiteList: ['jpg', 'png', 'jpeg', 'gif'],
+                badFileTypeMessage: 'Tập tin bạn bạn chọn không phải hình ảnh',
                 ajaxUrl: '/ajax/upload',
                 testMode: false
             }, options);
-
-          
-
             // create DOM elements
             var dom = {
                 uploaderBox: $(this),
-                submitButton: $('<button class="js-uploader__submit-button uploader__submit-button uploader__hide">' +
+                submitButton: $('<button class="hidden js-uploader__submit-button uploader__submit-button uploader__hide">' +
                     options.submitButtonCopy + '<i class="js-uploader__icon fa fa-upload uploader__icon"></i></button>'),
                 instructions: $('<p class="js-uploader__instructions uploader__instructions">' +
                     options.instructionsCopy + '</p>'),
