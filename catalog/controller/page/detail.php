@@ -52,7 +52,7 @@ class ControllerPageDetail extends Controller {
             /* get relative rooms */
             $this->load->model('find/list');
             $data['rooms'] = $this->model_page_detail->getRelative($filter_relative);
-            $data['list_content'] = $this->load->view('default/template/part/content/list_content.tpl', $data);
+            $data['list_content'] = $this->load->view('part/content/list_content', $data);
         }else{
             $this->load->controller('error/not_found');
         }

@@ -30,11 +30,6 @@
                     </a>
                 </div>
             </div>
-            <div class="top-page-search row">
-                <div class="col-md-12 text-center">
-                    <img src="https://file4.batdongsan.com.vn/2018/04/07/RUFz0fap/20180407105303-7dfc.jpg">
-                </div>
-            </div>
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
                     <h1 itemprop="name" class="tex-left" style="font-size:20px; "><b>Tìm kiếm phòng trọ tốt nhất <?php echo $info_seo['name']; ?></b></h1>
@@ -46,10 +41,10 @@
                             <?php foreach($featured as $key=>$item) { ?>
                             <div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
                                 <?php
-							$slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
-							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
-							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
-						?>
+                                    $slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
+                                    $slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
+                                    $slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
+                                ?>
                                 <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
                                 <button class="context-menu-button icon">test</button>
                                 <ul class="dropdown" style="display: none;">
@@ -74,9 +69,8 @@
                     <div class="row">
                         <div class="sort-search" style="background-color:#eee; border-radius: 1px; padding:7px; border:1px solid #dadada; margin-bottom: 15px">
                             <div class="row">
-                                <div class="col-md-4"><b style="font-size: 14px; line-height: 28px;">kết quả tìm kiếm</b></div>
-                                <div class="col-md-8 text-right">
-                                    <b><i class="fa fa-sort"></i> Sắp xếp: </b>
+                                <div class="col-md-3 col-sm-3 col-xs-3">kết quả tìm kiếm</div>
+                                <div class="col-md-9 col-sm-9 col-xs-9 text-right">
                                     <select name="sort-price" class="item-sort">
                                         <option>Giá từ thấp tới cao</option>
                                     </select>

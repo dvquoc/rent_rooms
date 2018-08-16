@@ -62,85 +62,77 @@
                         <span style="font-weight: bold; font-size: 32px; color: #00BA51; display:block;">Piapy</span>
                         <span style="display:block; font-size: 12px; color: #7b7b7b;">conphong.com</span>
                     </a>
-                </div>
-                <style type="text/css">
-                    #menu-search .form-control, #menu-right .item{
-                        margin: 5px 0!important; font-size: 13px;
-                    }
-                    #menu-search.menu-nav li{
-                        margin-left:5px;
-                    }
-                </style>
-                <ul id="menu-search" class="nav navbar-nav menu-nav pull-left">
-                    <li id="l-u-s" class="small" style="margin-right: 5px; margin-top: 8px" data-toggle="modal" data-target="#get-location-user">
-                        <span class="city-location-show">Hồ Chí Minh</span>
-                        <span class="district-location-show"> Thủ Đức</span>
-                    </li>
-                    <li>
-                        <input id="search-map-input" type="text" name="search-map-input" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom">
-                    </li>
-                    <li id="li-price-input" class="dropup">
-                        <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <ul class="dropdown-menu list-val-search" data-to="price-input"  aria-labelledby="dropdownMenu2">
-                            <li><a data-item-val ="0-1" href="javascript:;">< 1 triệu</a></li>
-                            <li><a data-item-val ="1-1.5" href="javascript:;">1 triệu - 1.5 triệu</a></li>
-                            <li><a data-item-val ="1.5-2" href="javascript:;">1.5 triệu - 2 triệu</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a data-item-val ="2-2.5" href="javascript:;">2 triệu - 2.5 triệu</a></li>
-                            <li><a data-item-val ="2.5-3" href="javascript:;">2.5 triệu - 3 triệu</a></li>
-                            <li><a data-item-val ="3.5-4" href="javascript:;">3.5 triệu - 4 triệu</a></li>
-                            <li><a data-item-val ="4-4.5" href="javascript:;">4.5 triệu - 5 triệu</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a data-price-val ="5-20" href="javascript:;"> > 5 triệu</a></li>
+                    <div id="menu-right" class="owner-header pull-right dropup" style="">
+                        <div class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tìm kiếm</div>
+                        <ul id="menu-search" class="dropdown-menu nav navbar-nav menu-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <li>
+                                <input id="search-map-input" type="text" name="search-map-input" class="form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width:300px;" data-toggle="tooltip" data-placement="bottom">
+                            </li>
+                            <li id="li-price-input" class="dropup">
+                                <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <ul class="dropdown-menu list-val-search" data-to="price-input"  aria-labelledby="dropdownMenu2">
+                                    <li><a data-item-val ="0-1" href="javascript:;">< 1 triệu</a></li>
+                                    <li><a data-item-val ="1-1.5" href="javascript:;">1 triệu - 1.5 triệu</a></li>
+                                    <li><a data-item-val ="1.5-2" href="javascript:;">1.5 triệu - 2 triệu</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a data-item-val ="2-2.5" href="javascript:;">2 triệu - 2.5 triệu</a></li>
+                                    <li><a data-item-val ="2.5-3" href="javascript:;">2.5 triệu - 3 triệu</a></li>
+                                    <li><a data-item-val ="3.5-4" href="javascript:;">3.5 triệu - 4 triệu</a></li>
+                                    <li><a data-item-val ="4-4.5" href="javascript:;">4.5 triệu - 5 triệu</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a data-price-val ="5-20" href="javascript:;"> > 5 triệu</a></li>
+                                </ul>
+                            </li>
+                            <li id="li-area-input" class="dropup">
+                                <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <ul class="dropdown-menu list-val-search" data-to="area-input" aria-labelledby="dropdownMenu2">
+                                    <li><a data-item-val ="0-10" href="javascript:;">< 10 m2</a></li>
+                                    <li><a data-item-val ="10-15" href="javascript:;">10 m2 - 15 m2</a></li>
+                                    <li><a data-item-val ="15-20" href="javascript:;">15 m2 - 20 m2</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a data-item-val ="20-25" href="javascript:;">20 m2 - 25 m2</a></li>
+                                    <li><a data-item-val ="25-30" href="javascript:;">25 m2 - 30 m2</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a data-item-val ="1" href="javascript:;"> Nhà nguyên căn</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-search" aria-hidden="true"></span></button>
+                            </li>
                         </ul>
-                    </li>
-                    <li id="li-area-input" class="dropup">
-                        <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <ul class="dropdown-menu list-val-search" data-to="area-input" aria-labelledby="dropdownMenu2">
-                            <li><a data-item-val ="0-10" href="javascript:;">< 10 m2</a></li>
-                            <li><a data-item-val ="10-15" href="javascript:;">10 m2 - 15 m2</a></li>
-                            <li><a data-item-val ="15-20" href="javascript:;">15 m2 - 20 m2</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a data-item-val ="20-25" href="javascript:;">20 m2 - 25 m2</a></li>
-                            <li><a data-item-val ="25-30" href="javascript:;">25 m2 - 30 m2</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a data-item-val ="1" href="javascript:;"> Nhà nguyên căn</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-search" aria-hidden="true"></span></button>
-                    </li>
-                </ul>
-                <ul id="menu-right" class="owner-header pull-right" style="">
-                    <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
+                    </div>
+                    <div id="menu-right" class="owner-header pull-right hidden" style="">
+                        <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                         <li class="item dropdown">
-                            <a href="javascript;;" class="dropdown-toggle info-user" data-toggle="dropdown">
-                                <img src="<?php echo $_SESSION['img']?>" width="24px" height="24px" class="info-image">
-                                <b style="margin-left: 10px;"><?php echo $_SESSION['name']?></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/quan-ly-phong-tro">Quản lý phòng trọ</a></li>
-                                <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
-                                <li><a href="/dang-xuat">Đăng xuất</a></li>
-                            </ul>
+                        <a href="javascript;;" class="dropdown-toggle info-user" data-toggle="dropdown">
+                        <img src="<?php echo $_SESSION['img']?>" width="24px" height="24px" class="info-image">
+                        <b style="margin-left: 10px;"><?php echo $_SESSION['name']?></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                        <li><a href="/quan-ly-phong-tro">Quản lý phòng trọ</a></li>
+                        <li><a href="/thong-tin-chu-tro">Thông tin tài khoản</a></li>
+                        <li><a href="/dang-xuat">Đăng xuất</a></li>
+                        </ul>
                         </li>
-                    <?php }else{?>
+                        <?php }else{?>
                         <li class="item dropup owner-input">
-                            <a class="btn btn-primary" style="padding: 5px;" href="javascript:;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                               <i class="fa fa-plus"></i> Chủ phòng
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                                <li>
-                                    <a class="login-header" href="/dang-nhap-chu-phong"><i class="fa fa-user"></i> Đăng nhập </a>
-                                </li>
-                                <li>
-                                    <a class="login-header" href="/dang-ky-chu-phong"> <i class="fa fa-sign-in"></i> Đăng ký</a>
-                                </li>
-                            </ul>
+                        <a class="btn btn-primary" style="padding: 5px;" href="javascript:;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fa fa-plus"></i> Chủ phòng
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                        <li>
+                        <a class="login-header" href="/dang-nhap-chu-phong"><i class="fa fa-user"></i> Đăng nhập </a>
                         </li>
-                    <?php }?>
-                   
-                </ul>
+                        <li>
+                        <a class="login-header" href="/dang-ky-chu-phong"> <i class="fa fa-sign-in"></i> Đăng ký</a>
+                        </li>
+                        </ul>
+                        </li>
+                        <?php }?>
+
+                    </div>
+
+                </div>
             </div>
         </nav>
     <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
@@ -166,5 +158,9 @@
             }
             console.log(document.body);
         </script>
+    </div>
+    <div id="l-u-s" class="small" style="margin-right: 5px; margin-top: 8px; position: absolute; bottom: 0; right:0px;" data-toggle="modal" data-target="#get-location-user">
+        <span class="city-location-show">Hồ Chí Minh</span>
+        <span class="district-location-show"> Thủ Đức</span>
     </div>
 

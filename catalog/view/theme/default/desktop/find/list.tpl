@@ -32,7 +32,7 @@
             </div>
             <div class="top-page-search row">
                 <div class="col-md-12 text-center">
-                    <img src="https://file4.batdongsan.com.vn/2018/04/07/RUFz0fap/20180407105303-7dfc.jpg">
+                    <img class="img-responsive" src="https://file4.batdongsan.com.vn/2018/04/07/RUFz0fap/20180407105303-7dfc.jpg">
                 </div>
             </div>
 			<div class="row" id="container-result">
