@@ -117,18 +117,15 @@ class ControllerFindList extends Controller {
         //$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
         //$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
         $data['rooms'] = $this->model_find_list->get_list($data_search);
-        $data['list_content'] = $this->load->view('default/template/part/content/list_content.tpl', $data);
+        $data['list_content'] = $this->load->view('part/content/list_content', $data);
 
         $data['featured'] = $this->model_find_list->get_list_featured();
         $data['url'] = $url;
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/find/list.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/find/list.tpl', $data));
-        } else {
-            $this->response->setOutput($this->load->view('default/template/find/list.tpl', $data));
-        }
+
+        $this->response->setOutput($this->load->view('find/list', $data));
     }
 
     public function findMap()

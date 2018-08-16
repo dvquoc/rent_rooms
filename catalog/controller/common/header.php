@@ -19,11 +19,7 @@ class ControllerCommonHeader extends Controller {
         $this->data['classPage'] = '';
 		if(isset($this->request->get['route']))
             $this->data['classPage'] = str_replace('/','-', $this->request->get['route']);
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $this->data);
-		} else {
-			return $this->load->view('default/template/common/header.tpl', $this->data);
-		}
+        return $this->load->view('common/header', $this->data);
 	}
     public function get_client_ip() {
         $ipaddress = '';

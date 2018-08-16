@@ -15,6 +15,9 @@ require 'vendor/autoload.php';
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+// Include config;
+require_once(DIR_SYSTEM . 'config/contans.php');
+
 // Registry
 $registry = new Registry();
 
@@ -52,22 +55,11 @@ if(DB_DRIVER == 'mongodb') {
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
-// Settings
-$setting = $cache->get('setting-cache');
-if(!$setting) {
-	$query = "query config by mongodb";
-	$cache->set('setting-cache', 'K?t qu? l?y t? mongdb');
-	$setting=false;
+// $configs
+foreach ($configs as $key => $setting) {
+	$config->set($key, $setting);
 }
-if($setting && false) {
-    foreach ($setting as $result) {
-        if (!$result['serialized']) {
-            $config->set($result['key'], $result['value']);
-        } else {
-            $config->set($result['key'], unserialize($result['value']));
-        }
-    }
-}
+
 // Cache file city
 $citys = $cache->get('city-cache');
 if(!$citys) {

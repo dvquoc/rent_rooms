@@ -53,11 +53,7 @@ class ControllerPartRelative extends Controller
             if(isset($setting['theme']))
                 $theme = $setting['theme'];
             $data['col'] = 3;
-            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/part/relative/'.$theme.'.tpl')) {
-                return $this->load->view($this->config->get('config_template') . '/template/part/relative/'.$theme.'.tpl', $data);
-            } else {
-                return $this->load->view('default/template/part/relative/'.$theme.'.tpl', $data);
-            }
+            return $this->load->view('part/relative/'.$theme, $data);
         }
         else{
             return  "<div class='alert alert-danger'>Không load được part sample</div>";

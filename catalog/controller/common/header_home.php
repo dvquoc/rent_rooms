@@ -13,11 +13,8 @@ class ControllerCommonHeaderHome extends Controller {
         $data['classPage'] = '';
 		if(isset($this->request->get['route']))
             $data['classPage'] = str_replace('/','-', $this->request->get['route']);
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header_home.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/header_home.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/header_home.tpl', $data);
-		}
+
+        return $this->load->view('common/header_home', $data);
 	}
     public function get_client_ip() {
         $ipaddress = '';

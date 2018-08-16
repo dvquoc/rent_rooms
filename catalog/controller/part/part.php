@@ -18,11 +18,7 @@ class ControllerPartPart extends Controller
                         $this->document->addStyle($item['link']);
                 }
             }
-            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/'.$args['load_theme'].'.tpl')) {
-                $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/'.$args['load_theme'].'.tpl', $data));
-            } else {
-                $this->response->setOutput($this->load->view('default/template/'.$args['load_theme'].'tpl', $data));
-            }
+            $this->response->setOutput($this->load->view($args['load_theme'], $data));
         }
         else{
             echo "Không load được part sample";

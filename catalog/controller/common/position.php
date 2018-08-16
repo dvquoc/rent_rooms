@@ -46,10 +46,6 @@ class ControllerCommonPosition extends Controller {
         }
         $data['position_prefix'] = $position;
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/position.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/common/position.tpl', $data);
-        } else {
-            return $this->load->view('default/template/common/position.tpl', $data);
-        }
+        return $this->load->view('common/position', $data);
     }
 }

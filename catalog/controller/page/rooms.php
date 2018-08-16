@@ -125,7 +125,7 @@ class ControllerPageRooms extends Controller
             }
            
              $data['header'] = $this->load->controller('common/header');
-            $this->response->setOutput($this->load->view('default/template/page/rooms_list.tpl', $data));
+            $this->response->setOutput($this->load->view('page/rooms_list', $data));
         }else{
              $this->response->redirect('/dang-nhap-chu-phong');
         }
@@ -201,7 +201,7 @@ class ControllerPageRooms extends Controller
              $data['citys'] = $this->model_page_location->getAllCity();
              $data['districts'] = $this->model_page_location->getDistrictByCity($data['city_id']);
             $data['header'] = $this->load->controller('common/header');
-            $this->response->setOutput($this->load->view('default/template/page/rooms_form.tpl', $data));
+            $this->response->setOutput($this->load->view('page/rooms_form', $data));
         }else{
              $this->response->redirect('/dang-nhap-chu-phong');
         }   

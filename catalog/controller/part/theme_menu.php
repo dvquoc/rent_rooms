@@ -8,10 +8,7 @@ class ControllerPartThememenu extends Controller {
         $data['link_category_estate']= $this->url->link('page/category', '&path=66','SSL');
         $data['link_category_laddingpage']= $this->url->link('page/category','&path=62','SSL');
         $data['link_category_all']= $this->url->link('page/category','&path=0','SSL');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/part/theme_menu.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/part/theme_menu.tpl', $data);
-        } else {
-            return $this->load->view('default/template/part/theme_menu.tpl', $data);
-        }
+
+        return $this->load->view('part/theme_menu', $data);
     }
 }
