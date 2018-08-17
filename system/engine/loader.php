@@ -39,7 +39,7 @@ final class Loader {
 	}
 
 	public function view($template, $data = array()) {
-		if(!isset(IS_ADMIN))
+		if(!defined('IS_ADMIN'))
 			$file = DIR_TEMPLATE.DEVICE_LAYOUT.'/'.$template.'.tpl';
 		else
 			$file = $file = DIR_TEMPLATE . $template;
