@@ -12,9 +12,7 @@
 
 <div id="content">
   <div class="page-header">
-     
     <div class="container-fluid">
-      
       <div class="pull-right">
         <button id="save" type="button" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
@@ -22,6 +20,8 @@
   </div> 
   
   <div class="container-fluid">
+    <div id="message_false" class="alert alert-danger" style="display: none">Xóa thất bại<i class="fa fa-exclamation-circle"></i></div>
+    <div id="message_success" class="alert alert-success" style="display: none">Xóa thành công<i class="fa fa-check-circle"></i></div>
     <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -48,8 +48,19 @@
                       <div class="tab-pane active main-infor" id="tab-general">
                           <div class="row">
                               <div class="col-md-5">
-                                  <div class="text-center title-info"><h3>Hình ảnh</h3></div>
+                                  <div class="text-center title-info"><h3>Hình ảnh</h3>
+                                  </div>
+                                  
                                   <div class="form-group">
+                                      <?php foreach($room_images as $key=>$item) { ?>
+                                          <div id="div-img">
+                                              <div class="img">
+                                                  <img src="<?php echo $item['thumb'];?>" class="img-responsive">
+                                                  <input type="hidden" name="img_out[]" value="<?php echo $item['name']?>">
+                                                  <button type="button" class="uploader__icon-button js-upload-remove-button fa fa-times" data-index="0" onclick="delete_image(this)" ></button>
+                                              </div>
+                                          </div>
+                                          <?php }?>
                                      <div class="uploader__box js-uploader__box l-center-box">
                                           <div class="uploader__contents">
                                               <label class="button button--secondary" for="fileinput">Select Files</label>
@@ -516,9 +527,15 @@ $('.js-uploader__box').uploader(options);
         };
      }
    })
-    
+  
+  function delete_image(t_this) {
+      var name  = $(t_this).prev().val();
+      $('#div-img').append('<input type="hidden" value="'+name+'" name="img_del[]">');
+      $(t_this).parent().remove();
+
+  }
    
-  </script>
+</script>
 </div>
 <style type="text/css">
   .img-thumbnail{width: 100%;}

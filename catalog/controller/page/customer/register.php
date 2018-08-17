@@ -7,11 +7,9 @@ class ControllerPageCustomerRegister extends Controller {
             $this->response->redirect('/thong-tin-tai-khoan');
         }
         $data['header'] = $this->load->controller('common/header');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/customer/register.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/customer/register.tpl', $data));
-        } else {
-            $this->response->setOutput($this->load->view('default/template/page/customer/register.tpl', $data));
-        }
+        
+        $this->response->setOutput($this->load->view('page/customer/register', $data));
+        
     }
     public function fb_register(){
         $this->load->model('page/customer/register');

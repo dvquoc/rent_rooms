@@ -36,7 +36,7 @@ class ControllerPageRooms extends Controller
         }
         if($response != null && $response->success) {
             if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-                if(isset($this->request->files)){
+                if(!empty($this->request->files)){
                    $this->request->post['img'] =  $this->uploadImg($this->request->files['files']);
                 }
                 $this->model_page_rooms->addRooms($this->request->post);
@@ -57,10 +57,20 @@ class ControllerPageRooms extends Controller
         $room_id = ltrim(strstr($_GET['_route_'],'/'),'/');
         $this->load->model('page/rooms');
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-            $this->request->post['images'] = serialize($this->request->post['images']);
-            if (empty($this->request->post['images']))
-                $this->request->post['images'] = array();
+           
+            if(!empty($this->request->files)){
+                $this->request->post['img'] =  $this->uploadImg($this->request->files['files']);
+            }
+            $this->request->post['img'] = array_merge($this->request->post['img'],$this->request->post['img_out']);
             $this->model_page_rooms->editRooms($room_id, $this->request->post);
+            if(isset($this->request->post['img_del'])){
+                $filename = $this->request->post['img_del'] ;
+                foreach ($file_del_arr as $key => $value) {
+                    if (file_exists(DIR_IMAGE.$value)) {
+                        unlink(DIR_IMAGE.$value);
+                    } 
+                }
+            }
 
             $this->session->data['success'] = 'cập nhật thành công';
 
@@ -177,26 +187,24 @@ class ControllerPageRooms extends Controller
             $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
              // Images list thumb
-            $room_images = json_decode($room_info['images']);
+            //$room_images = json_decode($room_info['images']);
             if (isset($this->request->post['images']))
             $room_images = $this->request->post['images'];
 
 
             $data['room_images'] = array();
-            foreach ($room_images as $room_image) {
+
+            foreach ($room_info['images'] as $room_image) {
                  $image = 'no_image.png';
                  if (is_file(DIR_IMAGE . $room_image))
                      $image = $room_image;
                  $data['room_images'][] = array(
-                     'image' => $image,
+                    'name' =>$image,
+                     'image' => $this->model_tool_image->resize($image),
                      'thumb' => $this->model_tool_image->resize($image, 100, 100),
                  );
             }
-
-             $data['room_images_lagre'] = $room_images;
-
-             
-
+           
              $this->load->model('page/location');
              $data['citys'] = $this->model_page_location->getAllCity();
              $data['districts'] = $this->model_page_location->getDistrictByCity($data['city_id']);
@@ -345,7 +353,7 @@ class ControllerPageRooms extends Controller
         $arr = [];
         foreach ($images['name'] as $key =>$value) {
             $new_name = 'file_' .time().'_'. rand(0, 10000).rand(0, 9999).rand(0, 999999) . '.' . end(explode(".", $value));
-            if (move_uploaded_file($images['tmp_name'][$key], 'image/catalog/' . $new_name)) {
+            if (move_uploaded_file($images['tmp_name'][$key], DIR_IMAGE. $new_name)) {
                 $arr[] = $new_name;
             }else{
                
