@@ -15,6 +15,8 @@ $router->add(['/map-tim-kiem/{city}','find/map']);
 $router->add(['/tim-kiem/phong-tro-gan-{special}/{lat},{lgn}','find/list']);
 $router->add(['/tim-kiem/{city}/{district}','find/list']);
 $router->add(['/tim-kiem/{city}','find/list']);
+$router->add(['/sap-xep','find/list/setSort']);
+
 
 //detail rooms
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);

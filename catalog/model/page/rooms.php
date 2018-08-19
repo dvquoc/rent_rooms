@@ -98,6 +98,7 @@ class ModelPageRooms extends Model {
             'type'        =>'Point',
             'coordinates' =>[(float) $data['lng'],(float) $data['lat']]
         );
+        
         $data_set = [
             'name'              => $data['name'],
             'images'            => $data['img'],

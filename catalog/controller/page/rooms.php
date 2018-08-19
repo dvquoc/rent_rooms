@@ -1,4 +1,4 @@
-<?php
+<?php 
  require_once( "vendor/recaptchalib.php" );
 class ControllerPageRooms extends Controller
 {
@@ -57,15 +57,23 @@ class ControllerPageRooms extends Controller
         $room_id = ltrim(strstr($_GET['_route_'],'/'),'/');
         $this->load->model('page/rooms');
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-           
             if(!empty($this->request->files)){
                 $this->request->post['img'] =  $this->uploadImg($this->request->files['files']);
+                if(isset($this->request->post['img_out'])){
+                    $this->request->post['img'] = array_merge($this->request->post['img'],$this->request->post['img_out']);
+                }
+            }else{
+                 if(isset($this->request->post['img_out'])){
+                    $this->request->post['img'] = $this->request->post['img_out'];
+                 }else{
+                    $this->request->post['img'] = '';
+                 }
             }
-            $this->request->post['img'] = array_merge($this->request->post['img'],$this->request->post['img_out']);
+                       
             $this->model_page_rooms->editRooms($room_id, $this->request->post);
             if(isset($this->request->post['img_del'])){
                 $filename = $this->request->post['img_del'] ;
-                foreach ($file_del_arr as $key => $value) {
+                foreach ($filename as $key => $value) {
                     if (file_exists(DIR_IMAGE.$value)) {
                         unlink(DIR_IMAGE.$value);
                     } 
@@ -167,6 +175,7 @@ class ControllerPageRooms extends Controller
 
             $data['cancel'] = '/quan-ly-phong-tro';
             if (!empty($room_id)) {
+                $data['room_id'] = $room_id;
                 $array_fomat_txt = ['price', 'price_electricity', 'price_water', 'price_deposit'];
                 $room_info = $this->model_page_rooms->getRoom($room_id);
                 foreach ($room_info as $col => $vaule) {
@@ -188,8 +197,8 @@ class ControllerPageRooms extends Controller
 
              // Images list thumb
             //$room_images = json_decode($room_info['images']);
-            if (isset($this->request->post['images']))
-            $room_images = $this->request->post['images'];
+            // if (isset($this->request->post['images']))
+            // $room_images = $this->request->post['images'];
 
 
             $data['room_images'] = array();

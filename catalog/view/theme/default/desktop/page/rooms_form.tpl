@@ -20,18 +20,18 @@
   </div> 
   
   <div class="container-fluid">
-    <div id="message_false" class="alert alert-danger" style="display: none">Xóa thất bại<i class="fa fa-exclamation-circle"></i></div>
-    <div id="message_success" class="alert alert-success" style="display: none">Xóa thành công<i class="fa fa-check-circle"></i></div>
     <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?> 
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
-        <div style="position: absolute;top: 50px;right: 160px;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
-        <div class="error-capcha" style="display: none">
-            <p style="color: red">vui lòng check capcha </p>
-        </div>
+        <?php if(!isset($room_id)){?>
+          <div style="position: absolute;top: 50px;right: 160px;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
+          <div class="error-capcha" style="display: none">
+              <p style="color: red">vui lòng check capcha </p>
+          </div>
+        <?php }?>
         <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
@@ -50,7 +50,6 @@
                               <div class="col-md-5">
                                   <div class="text-center title-info"><h3>Hình ảnh</h3>
                                   </div>
-                                  
                                   <div class="form-group">
                                       <?php foreach($room_images as $key=>$item) { ?>
                                           <div id="div-img">

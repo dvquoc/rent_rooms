@@ -11,12 +11,10 @@ class ControllerPageOwnerLogin extends Controller {
             $this->response->redirect('/thong-tin-chu-tro');
         }
         $data['header'] = $this->load->controller('common/header');
-         $data['footer'] = $this->load->controller('common/footer');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/login.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/owner/login.tpl', $data));
-        } else {
-            $this->response->setOutput($this->load->view('default/template/page/owner/login.tpl', $data));
-        }
+        $data['footer'] = $this->load->controller('common/footer');
+       
+        $this->response->setOutput($this->load->view('page/owner/login', $data));
+        
     }
     public function fb_login(){
         $this->load->model('page/owner/register');
