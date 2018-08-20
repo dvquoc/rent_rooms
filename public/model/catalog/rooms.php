@@ -61,7 +61,7 @@ class ModelCatalogRooms extends Model {
             'user_id'           =>$this->user->getId(),
             'room_id'           => $stt->room_id+1,
             'name'              => $data['name'],
-            'images'            => $data['images'],
+            'images'            => $data['img'],
             'city_id'           => (int) $data['city_id'],
             'district_id'       => (int) $data['district_id'],
             'address'           => $data['address'],
@@ -101,7 +101,7 @@ class ModelCatalogRooms extends Model {
         );
         $data_set = [
             'name'              => $data['name'],
-            'images'            => $data['images'],
+            'images'            => $data['img'],
             'city_id'           => (int) $data['city_id'],
             'district_id'       => (int) $data['district_id'],
             'address'           => $data['address'],

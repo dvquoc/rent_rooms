@@ -37,8 +37,6 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><i class="fa fa-inbox"></i> <?php echo $text_form; ?></h3>
-                   
-
               </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -267,9 +265,7 @@
   </div>
 
 <script type="text/javascript">
-  $( document ).ready(function() {
-  });
-   var options = {
+  var options = {
     instructionsCopy: 'Drag and Drop, orssss',
     furtherInstructionsCopy: 'Your can also drop more files, or',
     selectButtonCopy: 'Select Files',
@@ -279,37 +275,38 @@
     badFileTypeMessage: 'Sorry, we\'re unable to accept this type of file.',
     ajaxUrl: '/ajax/upload',
     testMode: false
-};
-$('.js-uploader__box').uploader(options);
+  };
+  $('.js-uploader__box').uploader(options);
     var geocoder = new google.maps.Geocoder();
-    function geocodePosition(pos) {
-        geocoder.geocode({
-            latLng: pos
-        }, function(responses) {
-            if (responses && responses.length > 0) {
-                var address_lengh = responses[0].address_components.length;
-                var location = {};
-                for(var i = address_lengh-1; i>=0; i--){
-                    if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
-                        location.city= responses[0].address_components[i].long_name;
-                    }
-                    if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
-                        location.district= responses[0].address_components[i].long_name;
-                    }
-                }
-            } else {
-                alert("Không tìm thấy địa chỉ");
-                alert("NHập địa chỉ");
-                alert("Nhập Nhập thành phố và Quận/Huyện");
+    
+  function geocodePosition(pos) {
+      geocoder.geocode({
+          latLng: pos
+      }, function(responses) {
+          if (responses && responses.length > 0) {
+            var address_lengh = responses[0].address_components.length;
+            var location = {};
+            for(var i = address_lengh-1; i>=0; i--){
+              if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
+                  location.city= responses[0].address_components[i].long_name;
+              }
+              if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
+                  location.district= responses[0].address_components[i].long_name;
+              }
             }
-        });
-    }
-    function updateMarkerPosition(latLng) {
-        document.getElementById('input-lat').value = latLng.lat();
-        document.getElementById('input-lng').value = latLng.lng();
+          } else {
+              alert("Không tìm thấy địa chỉ");
+              alert("NHập địa chỉ");
+              alert("Nhập Nhập thành phố và Quận/Huyện");
+          }
+      });
+  }
+  function updateMarkerPosition(latLng) {
+      document.getElementById('input-lat').value = latLng.lat();
+      document.getElementById('input-lng').value = latLng.lng();
 
-    }
-    var map= new google.maps.Map(document.getElementById('map-address'), {
+  }
+  var map= new google.maps.Map(document.getElementById('map-address'), {
         center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         zoom: 16,
         scaleControl: false,
@@ -447,7 +444,6 @@ $('.js-uploader__box').uploader(options);
       var price = $('input[name=price]').val();
       var acreage = $('input[name=acreage]').val();
 
-   
       if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null' && price.length!= 0 && acreage.length != 0){
           var slug_name = $('input[name=name]').val();
           var slug_city =  $( "select[name=city_id] option:selected" ).text();

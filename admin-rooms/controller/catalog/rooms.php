@@ -1,4 +1,4 @@
-<?php
+<?php 
  
 class ControllerCatalogRooms extends Controller
 {
@@ -23,11 +23,9 @@ class ControllerCatalogRooms extends Controller
         $this->load->public_model('catalog/rooms');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $this->request->post['images'] = serialize($this->request->post['images']);
-            if (empty($this->request->post['images']))
-                $this->request->post['images'] = array();
-            if (empty($this->request->post['date_create']))
-                $this->request->post['date_create'] = 'NOW()';
+            if(!empty($this->request->files)){
+               $this->request->post['img'] =  $this->uploadImg($this->request->files['files']);
+            }
 
             $this->model_catalog_rooms->addRooms($this->request->post);
 
@@ -44,14 +42,32 @@ class ControllerCatalogRooms extends Controller
     {
         $this->load->language('catalog/room');
         $this->document->setTitle("Chỉnh sửa phòng trọ");
-
         $this->load->public_model('catalog/rooms');
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $this->request->post['images'] = serialize($this->request->post['images']);
-            if (empty($this->request->post['images']))
-                $this->request->post['images'] = array();
+        if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+            if(!empty($this->request->files)){
+                $this->request->post['img'] =  $this->uploadImg($this->request->files['files']);
+                if(isset($this->request->post['img_out'])){
+                    $this->request->post['img'] = array_merge($this->request->post['img'],$this->request->post['img_out']);
+                }
+            }else{
+                 if(isset($this->request->post['img_out'])){
+                    $this->request->post['img'] = $this->request->post['img_out'];
+                 }else{
+                    $this->request->post['img'] = '';
+                 }
+            }
+
             $this->model_catalog_rooms->editRooms($this->request->get['room_id'], $this->request->post);
 
+            if(isset($this->request->post['img_del'])){
+                $filename = $this->request->post['img_del'] ;
+                foreach ($filename as $key => $value) {
+                    if (file_exists(DIR_IMAGE.$value)) {
+                        unlink(DIR_IMAGE.$value);
+                    } 
+                }
+            }
+            
             $this->session->data['success'] = $this->language->get('text_success');
 
             $url = http_build_query(array_diff_key($this->request->get, ['route' => '', 'room_id' => '']));
@@ -186,6 +202,8 @@ class ControllerCatalogRooms extends Controller
 
     protected function getForm()
     {
+        $data['token'] = $this->session->data['token'];
+
         $data['text_form'] = !isset($this->request->get['room_id']) ? "Thêm phòng trọ" : "Chỉnh sửa phòng trọ";
 
         $data['error_warning'] = '';
@@ -199,11 +217,12 @@ class ControllerCatalogRooms extends Controller
         $url = http_build_query(array_diff_key($this->request->get, ['route' => '']));
 
         if (!isset($this->request->get['room_id'])) {
-            $data['action'] = $this->url->link('catalog/rooms/add', $url, 'SSL');
+            $data['action'] = 'index.php?route=catalog/rooms/add&token='.$data['token'].'';
         } else {
-            $data['action'] = $this->url->link('catalog/rooms/edit', $url, 'SSL');
+            $data['action'] =  'index.php?route=catalog/rooms/edit&room_id='.$this->request->get['room_id'].'&token='.$data['token'].'';
         }
 
+        $data['redir'] =  'index.php?route=catalog/rooms&token='.$data['token'].'';
         $url = http_build_query(array_diff_key($this->request->get, ['route' => '', 'room_id' => '']));
         $data['cancel'] = $this->url->link('catalog/rooms', $url, 'SSL');
         if (isset($this->request->get['room_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -225,26 +244,22 @@ class ControllerCatalogRooms extends Controller
             }
         }
 
-        $data['token'] = $this->session->data['token'];
 
         $this->load->model('tool/image');
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         // Images list thumb
-        $room_images = json_decode($room_info['images']);
-        if (isset($this->request->post['images']))
-            $room_images = $this->request->post['images'];
-
-
         $data['room_images'] = array();
-        foreach ($room_images as $room_image) {
-            $image = 'no_image.png';
-            if (is_file(DIR_IMAGE . $room_image))
-                $image = $room_image;
-            $data['room_images'][] = array(
-                'image' => $image,
+
+        foreach ($room_info['images'] as $room_image) {
+             $image = 'no_image.png';
+             if (is_file(DIR_IMAGE . $room_image))
+                 $image = $room_image;
+             $data['room_images'][] = array(
+                'name' =>$image,
+                'image' => $this->model_tool_image->resize($image),
                 'thumb' => $this->model_tool_image->resize($image, 100, 100),
-            );
+             );
         }
 
         $data['room_images_lagre'] = $room_images;
@@ -383,5 +398,18 @@ class ControllerCatalogRooms extends Controller
         }
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+
+    public function uploadImg($images){
+        $arr = [];
+        foreach ($images['name'] as $key =>$value) {
+            $new_name = 'file_' .time().'_'. rand(0, 10000).rand(0, 9999).rand(0, 999999) . '.' . end(explode(".", $value));
+            if (move_uploaded_file($images['tmp_name'][$key], DIR_IMAGE. $new_name)) {
+                $arr[] = $new_name;
+            }else{
+               
+            }
+        }
+        return $arr;
     }
 }
