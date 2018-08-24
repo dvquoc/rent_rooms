@@ -15,47 +15,40 @@ class ControllerPageOwnerLogin extends Controller {
        
         $this->response->setOutput($this->load->view('page/owner/login', $data));
         
-    }
-    public function fb_login(){
-        $this->load->model('page/owner/register');
-        $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
-        require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
-        $hybridauth = new Hybrid_Auth( $config_file_path );
-        $adapter  = $hybridauth->authenticate('facebook');
-        $user_profile = $adapter->getUserProfile('facebook');
-        $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
-        if($user != 0 ){
-            $this->session->data['source_id'] = $user_profile->identifier;
-            $this->session->data['id_user']['id_owner'] = $user['_id'];
-            $this->session->data['name'] = $user['name'];
-            $this->session->data['img'] = $user['image']; 
-            $this->response->redirect('/quan-ly-phong-tro');
-        }else{
-            $this->session->data['error_warning'] = 'Bạn chưa có tài khoản vui lòng đăng ký';
-            $this->response->redirect('/dang-ky-chu-phong');
-        }
-        exit();
-    }
+    } 
+    public function login_social(){
+        if (preg_match('/\/facebook$/',$this->request->get['_route_'])) {
+            $type = 'facebook';
+        }elseif(preg_match('/\/google$/',$this->request->get['_route_'])){
+            $type = 'google';
+        }else
+             $type ='';
 
-    public function google_login(){
-        $this->load->model('page/owner/register');
-        $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
-        require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
-        $hybridauth = new Hybrid_Auth( $config_file_path );
-        $adapter  = $hybridauth->authenticate('google');
-        $user_profile = $adapter->getUserProfile('google');
-        $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
-        if($user != 0 ){
-            $this->session->data['source_id'] = $user_profile->identifier;
-            $this->session->data['id_user']['id_owner'] = $user['_id'];
-            $this->session->data['name'] = $user['name'];
-            $this->session->data['img'] = $user['image'];
-            $this->response->redirect('/quan-ly-phong-tro');
+        if(!empty($type)){
+             $this->load->model('page/owner/register');
+            $config_file_path = "vendor/hybridauth/hybridauth/hybridauth/config.php";
+            require_once( "vendor/hybridauth/hybridauth/hybridauth/Hybrid/Auth.php" );
+            $hybridauth = new Hybrid_Auth( $config_file_path );
+            $adapter  = $hybridauth->authenticate($type);
+            $user_profile = $adapter->getUserProfile($type);
+            $user = $this->model_page_owner_register->get_user_by_social($user_profile->identifier);
+            if($user != 0 ){
+                $this->session->data['source_id'] = $user_profile->identifier;
+                $this->session->data['id_user']['id_owner'] = $user['_id'];
+                $this->session->data['name'] = $user['name'];
+                $this->session->data['img'] = $user['image']; 
+                $this->response->redirect('/quan-ly-phong-tro');
+            }else{
+                $this->session->data['error_warning'] = 'Bạn chưa có tài khoản vui lòng đăng ký';
+                $this->response->redirect('/dang-ky-chu-phong');
+            }
         }else{
-            $this->session->data['error_warning'] = 'Bạn chưa có tài khoản vui lòng đăng ký';
-            $this->response->redirect('/dang-ky-chu-phong');
+            $this->session->data['error_warning'] = 'Truy cập không hợp lệ';
+            $this->response->redirect('/dang-nhap-chu-phong');
         }
+       
         exit();
+       
     }
     public function form_login(){
         $this->load->model('page/owner/login');
