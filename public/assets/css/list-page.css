@@ -10,7 +10,15 @@
     font-size: 13px;
 }
 .view-map span{
-    width: 5px; height: 5px; border-radius: 10px; display: inline-block; background-color:#ffffff; margin-right: 10px; -webkit-animation: pulse-shadow--collection 2s infinite;  animation: pulse-shadow--collection 2s infinite;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    background-color:#ffffff;
+    margin-right: 10px;
+    -webkit-animation: pulse-shadow--collection 2s infinite;
+    animation: pulse-shadow--collection 2s infinite;
+    background: url(/public/assets/images/icons/svg-icons.svg) no-repeat -17px -278px transparent;
 }
 #featured{
     margin-bottom: 10px;

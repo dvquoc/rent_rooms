@@ -1,9 +1,5 @@
 <?php echo $header;?>
 <div class="text-center">
-    <form action="/abc" method="POST">
-    <input type="text" name="1">
-    <button type="button">sadas</button>
-  </form>
         <div class="inner-left" style="padding: 40px 0">
             <div id="logo" class="text-center">
                 <h1>Piapy</h1>
@@ -16,13 +12,14 @@
                     <span class="district-location-show">Thủ Đức</span>
                 </div>
             </div>
-            <ul id="search-home">
-                <li>
+            <div id="search-home">
+            <ul class="row">
+                <li class="col-md-7" style="padding: 1px">
                     <i class="fa fa-map-marker"></i>
-                    <input id="search-map-input" type="text" name="search-map-input" class="item-search form-control" placeholder="Nhập trường học, khu công nghiệp, công ty..." style="width: 440px;" >
+                    <input id="search-map-input" type="text" name="search-map-input" class="item-search form-control" placeholder="Nhập trường học, khu công nghiệp, công ty...">
                 </li>
-                <li id="li-price-input" class="dropup">
-                    <input id="price-input" type="text" class="form-control" placeholder="Giá" style="width: 80px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li style="padding: 1px" id="li-price-input" class="dropup col-md-2">
+                    <input id="price-input" type="text" class="form-control" placeholder="Giá" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <ul class="dropdown-menu list-val-search" data-to="price-input"  aria-labelledby="dropdownMenu2">
                         <li><a data-item-val ="0-1" href="javascript:;">< 1 triệu</a></li>
                         <li><a data-item-val ="1-1.5" href="javascript:;">1 triệu - 1.5 triệu</a></li>
@@ -36,8 +33,8 @@
                         <li><a data-price-val ="5-20" href="javascript:;"> > 5 triệu</a></li>
                     </ul>
                 </li>
-                <li id="li-area-input" class="dropup">
-                    <input id="area-input" type="text" class="form-control" placeholder="Diện tích" style="width: 70px;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li style="padding: 1px" id="li-area-input" class="dropup col-md-2">
+                    <input id="area-input" type="text" class="form-control" placeholder="Diện tích" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <ul class="dropdown-menu list-val-search" data-to="area-input" aria-labelledby="dropdownMenu2">
                         <li><a data-item-val ="0-10" href="javascript:;">< 10 m2</a></li>
                         <li><a data-item-val ="10-15" href="javascript:;">10 m2 - 15 m2</a></li>
@@ -49,27 +46,26 @@
                         <li><a data-item-val ="1" href="javascript:;"> Nhà nguyên căn</a></li>
                     </ul>
                 </li>
-                <li>
+                <li style="padding: 1px" class="col-md-1">
                     <button id="btn-s-h" style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>
                 </li>
             </ul>
-
-
             <?php if(!empty($specials)){ ?>
             <div id="sugget-special">
                 <div class="inner-sugget">
                     <ul>
                         <?php foreach($specials as $special){ ?>
-                            <li>
-                                <a href="/tim-kiem/phong-tro-gan-slug-slug/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena">
-                                    <?php echo $special['name'] ?>
-                                </a>
-                            </li>
+                        <li>
+                            <a href="/tim-kiem/phong-tro-gan-slug-slug/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena">
+                                <?php echo $special['name'] ?>
+                            </a>
+                        </li>
                         <?php } ?>
                     </ul>
                 </div>
             </div>
             <?php } ?>
+            </div>
 
             <div id="other-service">
                 <h2 class="title-other-service">Các dịch vụ khác</h2>

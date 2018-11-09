@@ -34,7 +34,8 @@
 
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
-   
+
+    <link href="/public/assets/css/menu-bar.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
     <link rel="stylesheet" href="/public/assets/js/font-awesome/css/font-awesome.min.css">
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
@@ -51,28 +52,21 @@
         <script type="text/javascript" src="<?php echo $script; ?>"></script>
     <?php } ?>
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
-            <div class="<?php echo $classPage !='find-map' ? 'container' : 'container-fluid' ?>">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" id="menu-toggle" onclick="openNav()" data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+            <div class="clearfix <?php echo $classPage !='find-map' ? 'container' : 'container-fluid' ?>">
+                <div class="navbar-header pull-left">
+                    <button type="button" class="navbar-toggle pull-left" id="menu-toggle" onclick="openNav()" data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
+
                     </button>
-                    <a class="navbar-brand logo" style="text-decoration: none; margin-right: 20px; margin-left:5px; margin-top: 3px;" href="/">
-                        <span style="font-weight: bold; font-size: 32px; color: #00BA51; display:block;">Piapy</span>
-                        <span style="display:block; font-size: 12px; color: #7b7b7b;">conphong.com</span>
+                    <a class="pull-left logo" href="/">
+                        <span class="logo-site">Conphong.<span style="color: #FF9800">com</span></span>
+                        <span class="slogan">Gõ là có, tìm được ngay</span>
                     </a>
                 </div>
-                <style type="text/css">
-                    #menu-search .form-control, #menu-right .item{
-                        margin: 5px 0!important; font-size: 13px;
-                    }
-                    #menu-search.menu-nav li{
-                        margin-left:5px;
-                    }
-                </style>
-                <ul id="menu-search" class="nav navbar-nav menu-nav pull-left">
-                    <li id="l-u-s" class="small" style="margin-right: 5px; margin-top: 8px" data-toggle="modal" data-target="#get-location-user">
+                <ul class="navbar-nav pull-left">
+                    <li id="l-u-s" class="small" data-toggle="modal" data-target="#get-location-user">
+                        <svg class="down-location-user" aria-hidden="true" data-prefix="fal" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                            <path fill="currentColor" d="M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z"></path>
+                        </svg>
                         <span class="city-location-show">Hồ Chí Minh</span>
                         <span class="district-location-show"> Thủ Đức</span>
                     </li>
@@ -108,10 +102,10 @@
                         </ul>
                     </li>
                     <li>
-                        <button id="btn-s-h" class="form-control btn btn-primary" style="border-radius: 3px;"><span class="fa fa-search" aria-hidden="true"></span></button>
+                        <button id="btn-s-h" class="form-control btn btn-yellow"><span class="fa fa-search" aria-hidden="true"></span></button>
                     </li>
                 </ul>
-                <ul id="menu-right" class="owner-header pull-right" style="">
+                <ul class="menu-right owner-header pull-right">
                     <?php if(isset($_SESSION['id_user']) || isset($_SESSION['source_id'])){?>
                         <li class="item dropdown">
                             <a href="javascript;;" class="dropdown-toggle info-user" data-toggle="dropdown">
@@ -126,7 +120,7 @@
                         </li>
                     <?php }else{?>
                         <li class="item dropup owner-input">
-                            <a class="btn btn-primary" style="padding: 5px;" href="javascript:;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <a class="btn btn-yellow" href="javascript:;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                <i class="fa fa-plus"></i> Chủ phòng
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">

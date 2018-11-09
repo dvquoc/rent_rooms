@@ -1,0 +1,118 @@
+#menu-main{
+    background-color: #00BA51;
+    box-shadow: 2px 0px 20px -10px #000;
+    position: sticky;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 10;
+}
+#menu-main .navbar-toggle{
+    background: url(/public/assets/images/icons/svg-icons.svg) no-repeat -17px -11px transparent;
+    display: inline-block;
+    width: 27px;
+    height: 18px;
+    border:0px;
+    margin: 10px 7px 10px 0px;
+    cursor: pointer;
+}
+#menu-main  ul.navbar-nav{
+    list-style-type: none;
+    margin:0px;
+    margin-top: 1px;
+}
+#menu-main .navbar-nav li{
+    float:left;
+}
+
+#menu-main .logo{
+    text-decoration: none;
+    margin-right: 20px;
+    margin-left:5px;
+}
+
+#menu-main .logo .logo-site{
+    font-weight: bold;
+    font-size: 22px;
+    color: #fff;
+    display:block;
+    line-height: 24px;
+}
+#menu-main .logo .slogan{
+    display: block;
+    font-size: 11px;
+    color: #fff;
+    font-style: italic;
+    line-height: 14px;
+}
+#l-u-s{
+    cursor: pointer;
+    color: #fff;
+    font-size: 11px;
+    background-color: #067235;
+    padding: 5px 20px 5px 8px;
+    height: 35px;
+    border-radius: 3px 0px 0px 3px;
+    margin-right: -2px;
+    z-index: 1;
+    position: relative;
+}
+#l-u-s .down-location-user{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 22px;
+    right: 1px;
+    top: -1px;
+    font-size: 18px;
+}
+.city-location-show{
+    display: block;
+    line-height: 10px;
+    font-weight: bold;
+}
+.district-location-show{
+    display: block;
+    font-size: 10px;
+}
+
+#menu-main input[type='text']{
+    border: 0px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+.menu-right{
+    padding: 0;
+    margin: 1px 0 0 0;
+    list-style-type: none;
+    position: relative;
+}
+.owner-input .dropdown-menu{
+    padding:5px;
+}
+.owner-input .dropdown-menu li{
+    margin: 5px;
+}
+.login-header{
+    background: #ffc70c;
+    color: #000;
+    border-radius: 3px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    line-height: 40px;
+    padding:10px!important;
+}
+.info-user{
+    display: inline-flex;
+    background-color: #bfe2ff;
+    padding: 4px 7px;
+    border-radius: 3px;
+    border: 1px solid #96ccfb;
+}
+.info-image{
+    border-radius: 100%;
+    display:inline-block
+}

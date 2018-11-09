@@ -9,56 +9,6 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently */
 }
-#l-u-s{
-    cursor: pointer;
-}
-#menu-main{
-    background-color: #fff;
-    box-shadow: 2px 0px 20px -10px #000;
-    position: sticky;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    z-index: 10;
-    border-bottom: 1px solid #ececec;
-}
-#menu-right{
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-    position: relative;
-}
-#menu-right {
-    margin:0x;
-}
-.owner-input .dropdown-menu{
-    padding:5px;
-}
-.owner-input .dropdown-menu li{
-    margin: 5px;
-}
-.login-header{
-    background: #ffc70c;
-    color: #000;
-    border-radius: 3px;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    line-height: 40px;
-    padding:10px!important;
-}
-.info-user{
-    display: inline-flex;
-    background-color: #bfe2ff;
-    padding: 4px 7px;
-    border-radius: 3px;
-    border: 1px solid #96ccfb;
-}
-.info-image{
-    border-radius: 100%;
-    display:inline-block
-}
 body>.page-layout-box{
     background-color: #fff;
 }
@@ -133,16 +83,6 @@ footer{
     color: #fff;
     font-size: 22px;
 }
-.city-location-show{
-    display: block;
-    line-height: 14px;
-    font-size: 13px;
-    font-weight: bold;
-}
-.district-location-show{
-    display: block;
-    font-size: 12px;
-}
 body.common-home .city-location-show, body.common-home .district-location-show{
     display: inherit;
 }
@@ -165,32 +105,6 @@ body.common-home .city-location-show, body.common-home .district-location-show{
     color: #999;
 }
 
-#li-price-input:after{
-    content: "Triệu";
-    position: absolute;
-    right: -4px;
-    top: -1px;
-    font-size: 11px;
-    background-color: #F44336;
-    color: #fff;
-    border-radius: 2px;
-    line-height: 100%;
-    padding: 1px 3px;
-    z-index: 2;
-}
-#li-area-input:after{
-    content: "m2";
-    position: absolute;
-    right: -4px;
-    top: -1px;
-    font-size: 11px;
-    background-color: #673AB7;
-    color: #fff;
-    border-radius: 2px;
-    line-height: 100%;
-    padding: 1px 3px;
-    z-index: 2;
-}
 
 @-webkit-keyframes pulse-shadow--collection{
     0%{
