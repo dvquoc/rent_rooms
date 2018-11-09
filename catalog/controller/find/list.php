@@ -9,7 +9,6 @@ class ControllerFindList extends Controller {
         $this->load->model('find/list');
         $this->load->model('location/location');
         $this->load->model('location/special');
-
         $get_request = $this->request->get;
         if (isset($_COOKIE['user_location'])) {
             $params;
@@ -116,12 +115,20 @@ class ControllerFindList extends Controller {
         $this->document->addLink("/tim-kiem".$url, 'canonical');
         //$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
         //$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
-        $data['rooms'] = $this->model_find_list->get_list($data_search);
+       
+        $sort['acreage'] = isset($this->session->data['sort_area'])?$this->session->data['sort_area']:1;
+        $sort['price'] = isset($this->session->data['sort_price'])?$this->session->data['sort_area']:1;
+        $rooms = $this->model_find_list->get_list($data_search,$sort);
+        $data['sort'] = $sort;
+
+        $data['rooms'] = $this->setImg($rooms);
+
         $data['list_content'] = $this->load->view('part/content/list_content', $data);
 
-        $data['featured'] = $this->model_find_list->get_list_featured();
+        $featured = $this->model_find_list->get_list_featured();
         $data['url'] = $url;
-
+        $data['featured'] = $this->setImg($featured);
+        
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');
 
@@ -237,4 +244,40 @@ class ControllerFindList extends Controller {
         }
         exit();
     }
+
+    public function setImg($data){
+        $this->load->model('tool/image');
+        foreach ($data as $key => $value) {
+            $link_img =[];
+            if(!empty($value['images'][0]))
+                $img = $value['images'][0];
+            else
+                $img ='no_image.png';
+            if (file_exists(DIR_IMAGE.$img) && !empty($img)) {
+                $link_img['thumb'] = $this->model_tool_image->resize($img, 100, 100);
+                $link_img['link_img'] = $this->model_tool_image->resize($img);
+            } 
+           $rooms[] = array_merge((array) $value,$link_img);
+        }
+        return $rooms;
+    }
+
+    public function setSort() {
+       if(isset($this->request->post['price'])){
+            if($this->request->post['price'] == 0)
+                $this->session->data['sort_price'] = 1;
+            else
+                $this->session->data['sort_price'] = -1;
+        }else
+            $this->session->data['sort_price'] = 1;
+
+        if(isset($this->request->post['area'])){
+            if($this->request->post['area'] == 0)
+                $this->session->data['sort_area'] = 1;
+            else
+                $this->session->data['sort_area'] = -1;
+        }else
+            $this->session->data['sort_area'] = 1;
+    }
+
 }

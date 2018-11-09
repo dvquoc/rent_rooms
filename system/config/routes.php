@@ -15,17 +15,20 @@ $router->add(['/map-tim-kiem/{city}','find/map']);
 $router->add(['/tim-kiem/phong-tro-gan-{special}/{lat},{lgn}','find/list']);
 $router->add(['/tim-kiem/{city}/{district}','find/list']);
 $router->add(['/tim-kiem/{city}','find/list']);
+$router->add(['/sap-xep','find/list/setSort']);
+
 
 //detail rooms
 $router->add(['/phong-tro-{district}/{city}/{slug}-code-{id}','page/detail']);
 //*******************************Owner******************************//
 //Owner login
 $router->add(['/dang-nhap-chu-phong','page/owner/login']);
-$router->add(['/dang-nhap-fb-chu-phong','page/owner/login/fb_login']);
-$router->add(['/dang-nhap-google-chu-phong','page/owner/login/google_login']);
+$router->add(['/dang-nhap-chu-phong/{type}','page/owner/login/login_social']);
 $router->add(['/dang-nhap-form-chu-phong','page/owner/login/form_login']);
 //Owner register 
 $router->add(['/dang-ky-chu-phong','page/owner/register']);
+$router->add(['/dang-ky-chu-phong/{type}','page/owner/register/register_social']);
+
 $router->add(['/dang-ky-fb-chu-phong','page/owner/register/fb_register']);
 $router->add(['/dang-ky-google-chu-phong','page/owner/register/google_register']);
 $router->add(['/dang-ky-form-chu-phong','page/owner/register/form_register']);

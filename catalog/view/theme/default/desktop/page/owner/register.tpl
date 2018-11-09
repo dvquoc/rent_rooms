@@ -31,12 +31,12 @@
                         <div class="sign-up-container">
                             <div class="sign-up-social">
                                 <p class="mgB20">Đăng kí với tài khoản mạng xã hội:</p>
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-fb-chu-phong"><div class="auth-facebook-icon">
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-chu-phong/facebook"><div class="auth-facebook-icon">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-google-chu-phong" >
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visitedjs-action-track_event" href="/dang-ky-chu-phong/google" >
                                     <div class="auth-google-icon">
                                           <i class="fa fa-google fa-fw"></i>
                                     </div>

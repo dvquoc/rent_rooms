@@ -93,16 +93,15 @@ class ModelPageRooms extends Model {
     }
 
     public function editRooms($rooms_id, $data = array()){
-        //var_dump((new dateTime())->getTimestamp());die();
-
         $room = $this->getRoom($rooms_id);
         $point = array(
             'type'        =>'Point',
             'coordinates' =>[(float) $data['lng'],(float) $data['lat']]
         );
+        
         $data_set = [
             'name'              => $data['name'],
-            'images'            => $data['images'],
+            'images'            => $data['img'],
             'city_id'           => (int) $data['city_id'],
             'district_id'       => (int) $data['district_id'],
             'address'           => $data['address'],

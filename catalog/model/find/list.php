@@ -10,11 +10,11 @@ class ModelFindList extends Model {
         parent::__construct($registry);
         $this->table = $this->db->rooms;
     }
-    public function get_list($data = array()){
+    public function get_list($data = array(),$sort){
 
         $filter = [];
-    	 $options =[
-            'sort' => ['rooms_id'=>1],
+    	$options =[
+            'sort' => ['price'=>$sort['price'],'acreage' =>$sort['acreage'] ],
             'limit'=>20,
             'skip' =>0
         ];

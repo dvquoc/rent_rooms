@@ -34,13 +34,13 @@
                                 <div class="login-line"></div>
                             </div>
                             <div class="login-social-buttons">
-                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-nhap-fb-chu-phong" >
+                                <a class="auth-facebook-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-nhap-chu-phong/facebook" >
                                     <div class="auth-facebook-icon">
                                         <i class="fa fa-facebook fa-fw"></i>
                                     </div>
                                     <span>Facebook</span>
                                 </a>
-                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-nhap-google-chu-phong">
+                                <a class="auth-google-btn auth-clear-hover auth-clear-visited js-action-track_event" href="/dang-nhap-chu-phong/google">
                                     <div class="auth-google-icon">
                                          <i class="fa fa-google fa-fw"></i>
                                     </div>

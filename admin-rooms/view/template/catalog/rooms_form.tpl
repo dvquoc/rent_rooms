@@ -1,13 +1,13 @@
 <?php echo $header; ?>
 <script src="http://maps.googleapis.com/maps/api/js?&libraries=places,drawing&language=vi&key=AIzaSyDDN318nA97mr0gEWZ0nd6SokteK0Y0w08" type="text/javascript"></script>
-
+<link href="view/javascript/upload_file/dist/styles.imageuploader.css" type="text/css" rel="stylesheet" />
+<script src="view/javascript/upload_file/dist/jquery.imageuploader.js"></script>
 <?php echo $column_left; ?>
 <div id="content">
   <div class="page-header"> 
     <div class="container-fluid">
       <div class="pull-right">
-        <a id="save" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</a>
-        <button id="btn-save" style="display: none" type="submit" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
+        <button id="save" type="button" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
     </div>
   </div>
@@ -17,7 +17,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
+      <form  method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
         <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
@@ -35,48 +35,21 @@
                               <div class="col-md-5">
                                   <div class="text-center title-info"><h3>Hình ảnh</h3></div>
                                   <div class="form-group">
-                                      <div class="slider-images col-md-12">
-                                          <?php if(!empty($room_images_lagre)) { ?>
-                                              <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                                  <div class="carousel-inner">
-                                                        <?php foreach($room_images_lagre as $k=>$item){ ?>
-                                                              <div class="item <?php echo $k==0 ? 'active':'' ?>" style="height:430px; overflow: hidden;">
-                                                                  <img onerror="this.src='http://www.venturinistore.it/images/joomlart/demo/default.jpg'" src="<?php echo $item->link; ?>" class="img-responsive">
-                                                              </div>
-                                                        <?php } ?>
-                                                  </div>
-                                                  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                                                      <span class="glyphicon glyphicon-chevron-left"></span>
-                                                      <span class="sr-only">Previous</span>
-                                                  </a>
-                                                  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                                                      <span class="glyphicon glyphicon-chevron-right"></span>
-                                                      <span class="sr-only">Next</span>
-                                                  </a>
-                                              </div>
-                                          <?php } else{ ?>
-                                                <img src="http://www.venturinistore.it/images/joomlart/demo/default.jpg" class="img-responsive">
-                                          <?php } ?>
-                                          <button type="button" onclick="addImage();" title="" class="add-image pull-right">Thêm ảnh [+]</button>
-                                      </div>
-                                      <div id="img-list" class="col-md-12">
+                                     <?php foreach($room_images as $key=>$item) { ?>
+                                      <div id="div-img">
                                           <div class="img">
-                                              <?php $image_row = 0; ?>
-                                              <div class="row">
-                                                  <?php if($room_images) { ?>
-                                                          <?php foreach($room_images as $key=>$item){ ?>
-                                                              <div class="item-image col-md-3" id="item-<?php echo $key; ?>">
-                                                                  <a href="" style="border: 3px solid #e4e4e4" id="thumb-image<?php echo $key; ?>" data-toggle="image" class="img-thumbnail">
-                                                                      <img width="100%" src="<?php echo $item['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />
-                                                                  </a>
-                                                                  <input type="hidden" name="images[<?php echo $key; ?>]" value="<?php echo $item['image']; ?>" id="input-image<?php echo $key; ?>" />
-                                                                  <button type="button" onclick="$('#item-<?php echo $key; ?>').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>
-                                                              </div>
-                                                          <?php $image_row ++;  } ?>
-                                                  <?php } ?>
-                                              </div>
+                                              <img src="<?php echo $item['thumb'];?>" class="img-responsive">
+                                              <input type="hidden" name="img_out[]" value="<?php echo $item['name']?>">
+                                              <button type="button" class="uploader__icon-button js-upload-remove-button fa fa-times" data-index="0" onclick="delete_image(this)" ></button>
                                           </div>
                                       </div>
+                                      <?php } ?>
+                                     <div class="uploader__box js-uploader__box l-center-box">
+                                          <div class="uploader__contents">
+                                              <label class="button button--secondary" for="fileinput">Select Files</label>
+                                              <input id="fileinput" name="images" class="uploader__file-input" type="file" multiple value="Select Files">
+                                          </div>
+                                    </div>
                                   </div>
                                   <div class="form-group">
                                       <div class="text-center title-info"><h3>Địa chỉ chính xác (Map)</h3></div>
@@ -95,6 +68,7 @@
                                                           <?php } ?>
                                                       <?php } ?>
                                                   </select>
+                                                  <div id="validate_city" hidden><span style="color: red">Vui lòng chọn thành phố</span></div>
                                               </div>
                                               <div class="col-sm-6" style="margin-bottom: 10px;">
                                                   <label class="">Quận/Huyện</label>
@@ -109,6 +83,7 @@
                                                           <?php } ?>
                                                       <?php } ?>
                                                   </select>
+                                                  <div id="validate_district" hidden><span style="color: red">Vui lòng chọn Quận/Huyện</span></div>
                                               </div>
                                           </div>
                                       </div>
@@ -127,10 +102,12 @@
                                               <div class="col-sm-6">
                                                   <label class="">Kinh độ: </label>
                                                   <div><input name="lat" id="input-lat" class="form-control" value="<?php echo $location['coordinates'][1]; ?>"></div>
+                                                  <div id="validate_lat" hidden><span style="color: red">Trường này không được trống</span></div>
                                               </div>
                                               <div class="col-sm-6">
                                                   <label class="">Vĩ độ: </label>
                                                   <div><input name="lng" id="input-lng" class="form-control" value="<?php echo $location['coordinates'][0]; ?>"></div>
+                                                   <div id="validate_lng" hidden><span style="color: red">Trường này không được trống</span></div>
                                               </div>
                                               <div class="col-md-12">
                                                   <h3 style="font-size: 18px; margin-top: 15px;">Hướng dẫn: </h3>
@@ -149,6 +126,7 @@
                                                   <label class="">Tên hiển thị</label>
                                                   <input name="slug" type="hidden" class="form-control">
                                                   <div><input name="name" id="input-name" class="form-control" value="<?php echo $name; ?>"></div>
+                                                  <div id="validate_name" hidden><span style="color: red">Trường này không được trống</span></div>
                                               </div>
 
                                               <?php $class = 'show'; if(isset($room_id)) $class = 'hidden';  ?>
@@ -157,12 +135,14 @@
                                                   <div class="feature price">
                                                       <b>Tiền thuê: </b> <?php echo $txt_price; ?>
                                                       <input name="price" placeholder="Giá: nhập số và bắt buộc" class="<?php echo $class; ?> form-control" value="<?php echo $price; ?>">
+                                                      <div id="validate_price" hidden><span style="color: red">Trường này không được trống</span></div>
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
                                                   <div class="feature acreage">
                                                       <b>Diện tích: </b> <?php echo $acreage; ?> m2
                                                       <input name="acreage" placeholder="Giá: Nhập số và bắt buộc" class="<?php echo $class; ?> form-control" value="<?php echo $acreage; ?>">
+                                                      <div id="validate_acreage" hidden><span style="color: red">Trường này không được trống</span></div>
                                                   </div>
                                               </div>
                                               <div class="col-md-4 item">
@@ -341,232 +321,288 @@
       </form>
   </div>
 <script type="text/javascript">
-      var option_tinymce = {
-          selector: '#highlight-rooms',
-          language:'<?php global $registry;  echo $registry->get("language")->get('code');  ?>',
-          /*skin: 'light',*/
-          height:500,
-          app_default: 'cdv',
-          relative_urls: false,
-          remove_script_host: false,
-          document_base_url : "<?php echo HTTP_CATALOG; ?>",
-          plugin_url : "<?php echo HTTP_SERVER; ?>view/javascript/tinymce/plugins/",
-          plugins: [
-              "imagetools linktarget advlist textcolor colorpicker autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-              "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-              "save table contextmenu directionality emoticons template textcolor paste codesample example header"
-          ],
-          setup: function(ed) {
-              ed.addContextToolbar('a', 'link unlink');
-          },
-          toolbar1: "undo redo imagetools newdocument cut copy paste pastetext searchreplace print ltr rtl spellchecker visualchars visualblocks nonbreaking code preview fullscreen",
-          toolbar2: "bullist numlist outdent indent blockquote link unlink imagetools example media table anchor removeformat insertdatetime hr  charmap emoticons template pagebreak restoredraft codesample",
-          toolbar3: "bold italic underline strikethrough subscript superscript forecolor backcolor alignleft aligncenter alignright alignjustify header fontselect fontsizeselect",
-          fontsize_formats: '8pt 9pt 10pt 11pt 12pt 13pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt',
-          document_app: "<?php echo DIR_APPLICATION; ?>",
-          verify_html: false,
-          forced_root_block : "p",
+  var options = {
+    instructionsCopy: 'Drag and Drop, orssss',
+    furtherInstructionsCopy: 'Your can also drop more files, or',
+    selectButtonCopy: 'Select Files',
+    secondarySelectButtonCopy: 'Select More Files',
+    dropZone: $(this),
+    fileTypeWhiteList: ['jpg', 'png', 'jpeg', 'gif', 'pdf'],
+    badFileTypeMessage: 'Sorry, we\'re unable to accept this type of file.',
+    ajaxUrl: '/ajax/upload',
+    testMode: false
+  };
+  $('.js-uploader__box').uploader(options);
+  var geocoder = new google.maps.Geocoder();
+  function geocodePosition(pos) {
+      geocoder.geocode({
+          latLng: pos
+      }, function(responses) {
+          if (responses && responses.length > 0) {
+              var address_lengh = responses[0].address_components.length;
+              var location = {};
+              for(var i = address_lengh-1; i>=0; i--){
+                  if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
+                      location.city= responses[0].address_components[i].long_name;
+                  }
+                  if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
+                      location.district= responses[0].address_components[i].long_name;
+                  }
+              }
+          } else {
+              alert("Không tìm thấy địa chỉ");
+              alert("NHập địa chỉ");
+              alert("Nhập Nhập thành phố và Quận/Huyện");
+          }
+      });
+  }
+  function updateMarkerPosition(latLng) {
+      document.getElementById('input-lat').value = latLng.lat();
+      document.getElementById('input-lng').value = latLng.lng();
+
+  }
+  var map= new google.maps.Map(document.getElementById('map-address'), {
+      center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+      zoom: 16,
+      scaleControl: false,
+      fullscreenControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      overviewMapControl: true,
+      scrollwheel: true,
+      disableDoubleClickZoom: true,
+  });
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('input-address');
+  var searchBox = new google.maps.places.Autocomplete(input);
+  searchBox.setTypes(['address']);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  var address_components = {};
+  var marker = new google.maps.Marker({
+      position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
+      map: map,
+      title: '<?php echo $address;  ?>',
+      draggable: true
+  });
+
+  searchBox.addListener('place_changed', function() {
+      var place = searchBox.getPlace();
+      if (!place.geometry) {
+          return;
       }
+
+      marker.setMap(null);
+      marker = new google.maps.Marker({
+          map: map,
+          title: place.name,
+          position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
+          draggable: true
+      });
+      map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
+      var address_lengh = place.address_components.length;
+      var location = {};
+      for(var i = address_lengh-1; i>=0; i--){
+          if(place.address_components[i].types[0]=='administrative_area_level_1'){
+              location.city= place.address_components[i].long_name;
+               address_components.city_name = place.address_components[i].long_name;
+          }
+          if(place.address_components[i].types[0]=='administrative_area_level_2'){
+              location.district= place.address_components[i].long_name;
+              address_components.district_name = place.address_components[i].long_name;
+          }
+      }
+      $('input[name=lng]').val(place.geometry.location.lng());
+      $('input[name=lat]').val(place.geometry.location.lat());
+
+      $.each($("select[name=city_id] option"), function(key, item){
+          if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
+               $("select[name=city_id]").val($(item).attr('value')).change();
+          }
+      });
+
+      google.maps.event.addListener(marker, 'drag', function() {
+          updateMarkerPosition(marker.getPosition());
+      });
+      google.maps.event.addListener(marker, 'dragend', function() {
+          geocodePosition(marker.getPosition());
+      });
+  });
+
+
+  google.maps.event.addListener(marker, 'drag', function() {
+      updateMarkerPosition(marker.getPosition());
+  });
+  google.maps.event.addListener(marker, 'dragend', function() {
+      geocodePosition(marker.getPosition());
+  });
+
+  var bounds=  new google.maps.LatLngBounds();
+
+  var polygon = new google.maps.Polygon({
+      paths: [],
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.5,
+      strokeWeight: 3,
+      fillColor: '#FF0000',
+      fillOpacity: 0,
+      draggable: false,
+      clickable:false
+  });
+
+  var drawPolygon = function (data) {
+      var data_draw = [];
+      bounds = new google.maps.LatLngBounds();
+      $.each(data, function (key,item) {
+          data_draw.push({'lat': parseFloat(item[0]), 'lng': parseFloat(item[1])});
+          bounds.extend(new google.maps.LatLng(item[0], item[1]));
+      });
+      polygon.setMap(null);
+      polygon = new google.maps.Polygon({
+          paths: data_draw,
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.5,
+          strokeWeight: 3,
+          fillColor: '#FF0000',
+          fillOpacity: 0,
+          draggable: false,
+          clickable:false
+      });
+      polygon.setMap(map);
+      map.fitBounds(bounds);
+      map.setCenter(bounds.getCenter());
+      map.getBoundsZoomLevel(bounds.getBounds());
+      map.setZoom();
+  }
+
+  $('.datetime').datetimepicker({
+      pickDate: true,
+      pickTime: true
+  });
+  $("#tab-general select").change(function () {
+      if($(this).attr('name') == 'city_id'){
+          $.ajax({
+              url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
+              dataType: 'json',
+              success: function(json) {
+                $('select[name=\'district_id\']').html('');
+                $.map(json, function(item) {
+                    $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
+                    if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
+                         $("select[name=district_id]").val(item.id).change();
+                    }
+                });
+              }
+          });
+      }
+      if($(this).attr('name') == 'district_id'){
+          var district_select = $(this).val();
+          console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
+          $.ajax({
+              url: 'index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select,
+              dataType: 'json',
+              success: function(json) {
+                  console.log(JSON.parse(json['location']));
+                  drawPolygon(JSON.parse(json['location']));
+              }
+          });
+      }
+  });
+
+  $('#save').on('click',function(){
+      var name = $('input[name=name]').val();
+      var lat = $('input[name=lat]').val();
+      var lng = $('input[name=lng]').val();
+      var city = $('select[name=city_id]').val();
+      var district = $('select[name=district_id]').val();
+      var price = $('input[name=price]').val();
+      var acreage = $('input[name=acreage]').val();
+
+      if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null' && price.length!= 0 && acreage.length != 0){
+          var slug_name = $('input[name=name]').val();
+          var slug_city =  $( "select[name=city_id] option:selected" ).text();
+          var slug_district = $( "select[name=district_id] option:selected" ).text();
+
+          $('input[name=slug]').val(ChangeToSlug(slug_name));
+          $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
+          $('input[name=slug_district]').val(ChangeToSlug(slug_district));
+
+          var data = $('#form-information').serializeArray();
+          var fd = new FormData($('#form-information')[0]);
+           
+          for (var i = 0; i < state.fileBatch.length; i++) {
+            fd.append('files[]', state.fileBatch[i].file, state.fileBatch[i].fileName);
+          }
+          $.ajax({
+            url:'<?php echo $action ?>',
+            type:'POST',
+            enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            data:fd,
+            success:function(e){
+              window.location.href = '<?php echo $redir?>';
+            }
+          })
+         
+      }else{
+        if(name.length == 0 ){
+          $('#validate_name').show(); 
+          setTimeout(function() {
+            $("#validate_name").hide('blind', {}, 500)
+          }, 3000);
+          $('input[name=name]').focus();
+        };
+        if(lat.length == 0 ){
+         $('#validate_lat').show(); 
+         setTimeout(function() {
+          $("#validate_lat").hide('blind', {}, 500)
+        }, 3000);
+         $('input[name=lat]').focus();
+       };
+       if(lng.length == 0 ){
+         $('#validate_lng').show(); 
+         setTimeout(function() {
+          $("#validate_lng").hide('blind', {}, 500)
+        }, 3000);
+         $('input[name=lng]').focus();
+       }
+       if(city == 'null' ){
+         $('#validate_city').show(); 
+         setTimeout(function() {
+          $("#validate_city").hide('blind', {}, 500)
+        }, 3000);
+         $('input[name=city]').focus();
+       }
+       if(district == 'null' ){
+         $('#validate_district').show(); 
+         setTimeout(function() {
+          $("#validate_district").hide('blind', {}, 500)
+        }, 3000);
+         $('input[name=district]').focus();
+       }
+        if(name.length == 0 ){
+          $('#validate_price').show(); 
+          setTimeout(function() {
+            $("#validate_price").hide('blind', {}, 500)
+          }, 3000);
+          $('input[name=price]').focus();
+        };
+         if(name.length == 0 ){
+          $('#validate_acreage').show(); 
+          setTimeout(function() {
+            $("#validate_acreage").hide('blind', {}, 500)
+          }, 3000);
+          $('input[name=acreage]').focus();
+        };
+     }
+   })
+  
+  function delete_image(t_this) {
+    var name  = $(t_this).prev().val();
+    $('#div-img').append('<input type="hidden" value="'+name+'" name="img_del[]">');
+    $(t_this).parent().remove();
+  }
 </script>
-<script type="text/javascript">
-    var geocoder = new google.maps.Geocoder();
-    function geocodePosition(pos) {
-        geocoder.geocode({
-            latLng: pos
-        }, function(responses) {
-            if (responses && responses.length > 0) {
-                var address_lengh = responses[0].address_components.length;
-                var location = {};
-                for(var i = address_lengh-1; i>=0; i--){
-                    if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
-                        location.city= responses[0].address_components[i].long_name;
-                    }
-                    if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
-                        location.district= responses[0].address_components[i].long_name;
-                    }
-                }
-            } else {
-                alert("Không tìm thấy địa chỉ");
-                alert("NHập địa chỉ");
-                alert("Nhập Nhập thành phố và Quận/Huyện");
-            }
-        });
-    }
-    function updateMarkerPosition(latLng) {
-        document.getElementById('input-lat').value = latLng.lat();
-        document.getElementById('input-lng').value = latLng.lng();
-
-    }
-    var map= new google.maps.Map(document.getElementById('map-address'), {
-        center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
-        zoom: 16,
-        scaleControl: false,
-        fullscreenControl: false,
-        mapTypeControl: false,
-        streetViewControl: false,
-        overviewMapControl: true,
-        scrollwheel: true,
-        disableDoubleClickZoom: true,
-    });
-    // Create the search box and link it to the UI element.
-    var input = document.getElementById('input-address');
-    var searchBox = new google.maps.places.Autocomplete(input);
-    searchBox.setTypes(['address']);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    var address_components = {};
-    var marker = new google.maps.Marker({
-        position: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
-        map: map,
-        title: '<?php echo $address;  ?>',
-        draggable: true
-    });
-
-    searchBox.addListener('place_changed', function() {
-        var place = searchBox.getPlace();
-        if (!place.geometry) {
-            return;
-        }
-
-        marker.setMap(null);
-        marker = new google.maps.Marker({
-            map: map,
-            title: place.name,
-            position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
-            draggable: true
-        });
-        map.setCenter({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()});
-        var address_lengh = place.address_components.length;
-        var location = {};
-        for(var i = address_lengh-1; i>=0; i--){
-            if(place.address_components[i].types[0]=='administrative_area_level_1'){
-                location.city= place.address_components[i].long_name;
-                 address_components.city_name = place.address_components[i].long_name;
-            }
-            if(place.address_components[i].types[0]=='administrative_area_level_2'){
-                location.district= place.address_components[i].long_name;
-                address_components.district_name = place.address_components[i].long_name;
-            }
-        }
-        $('input[name=lng]').val(place.geometry.location.lng());
-        $('input[name=lat]').val(place.geometry.location.lat());
-
-        $.each($("select[name=city_id] option"), function(key, item){
-            if(new RegExp('[(.*?)\s]?'+location.city+"$",'igm').test($(item).text())){
-                 $("select[name=city_id]").val($(item).attr('value')).change();
-            }
-        });
-
-        google.maps.event.addListener(marker, 'drag', function() {
-            updateMarkerPosition(marker.getPosition());
-        });
-        google.maps.event.addListener(marker, 'dragend', function() {
-            geocodePosition(marker.getPosition());
-        });
-    });
-
-
-    google.maps.event.addListener(marker, 'drag', function() {
-        updateMarkerPosition(marker.getPosition());
-    });
-    google.maps.event.addListener(marker, 'dragend', function() {
-        geocodePosition(marker.getPosition());
-    });
-
-    var bounds=  new google.maps.LatLngBounds();
-
-    var polygon = new google.maps.Polygon({
-        paths: [],
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.5,
-        strokeWeight: 3,
-        fillColor: '#FF0000',
-        fillOpacity: 0,
-        draggable: false,
-        clickable:false
-    });
-    
-    var drawPolygon = function (data) {
-        var data_draw = [];
-        bounds = new google.maps.LatLngBounds();
-        $.each(data, function (key,item) {
-            data_draw.push({'lat': parseFloat(item[0]), 'lng': parseFloat(item[1])});
-            bounds.extend(new google.maps.LatLng(item[0], item[1]));
-        });
-        polygon.setMap(null);
-        polygon = new google.maps.Polygon({
-            paths: data_draw,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.5,
-            strokeWeight: 3,
-            fillColor: '#FF0000',
-            fillOpacity: 0,
-            draggable: false,
-            clickable:false
-        });
-        polygon.setMap(map);
-        map.fitBounds(bounds);
-        map.setCenter(bounds.getCenter());
-        map.getBoundsZoomLevel(bounds.getBounds());
-        map.setZoom();
-    }
-    
-    $('.datetime').datetimepicker({
-        pickDate: true,
-        pickTime: true
-    });
-    $("#tab-general select").change(function () {
-        if($(this).attr('name') == 'city_id'){
-            $.ajax({
-                url: 'index.php?route=catalog/rooms/getDistricts&token=<?php echo $token; ?>&city_id='+$(this).val(),
-                dataType: 'json',
-                success: function(json) {
-                  $('select[name=\'district_id\']').html('');
-                  $.map(json, function(item) {
-                      $('select[name=\'district_id\']').append('<option value="'+item.id+'">'+item.name+'</option>');
-                      if(new RegExp('[(.*?)\s]?'+address_components.district_name+"$",'igm').test(item.name)){
-                           $("select[name=district_id]").val(item.id).change();
-                      }
-                  });
-                }
-            });
-        }
-        if($(this).attr('name') == 'district_id'){
-            var district_select = $(this).val();
-            console.log('index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select);
-            $.ajax({
-                url: 'index.php?route=catalog/rooms/getLocation&token=<?php echo $token; ?>&district_id='+district_select,
-                dataType: 'json',
-                success: function(json) {
-                    console.log(JSON.parse(json['location']));
-                    drawPolygon(JSON.parse(json['location']));
-                }
-            });
-        }
-    });
-
-    var image_row = <?php echo $image_row; ?>;
-    function addImage() {
-      html  = '<div class="item-image col-md-3" id="item-' + image_row + '">';
-        html  += '<a href="" style="border: 1px solid #e4e4e4" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail">';
-          html  += '<img width="100%" src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />';
-        html  += '</a>';
-        html  += '<input type="hidden" name="images[' + image_row + ']" value="" id="input-image' + image_row + '" />';
-        html  += '<button type="button" onclick="$(\'#item-' + image_row + '\').remove();" data-toggle="tooltip" title="Xóa" class="remove-imge"><i class="fa fa-minus-circle"></i></button>';
-      html  += '</div>';
-      $('#img-list .img .row').append(html);
-      image_row++;
-    }
-    $('#save').on('click',function(){
-      var slug_name = $('input[name=name]').val();
-      var slug_city =  $( "select[name=city_id] option:selected" ).text();
-      var slug_district = $( "select[name=district_id] option:selected" ).text();
-
-      $('input[name=slug]').val(ChangeToSlug(slug_name));
-      $('input[name=slug_city]').val(ChangeToSlug(slug_city)); 
-      $('input[name=slug_district]').val(ChangeToSlug(slug_district));
-      $('#btn-save').click();  
-    })
-  </script>
 </div>
 <style type="text/css">
   .img-thumbnail{width: 100%;}

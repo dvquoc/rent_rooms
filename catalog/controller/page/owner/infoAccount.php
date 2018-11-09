@@ -11,11 +11,9 @@ class ControllerPageOwnerInfoAccount extends Controller {
         }
         $data['header'] = $this->load->controller('common/header');
          $data['footer'] = $this->load->controller('common/footer');
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/page/owner/info_account.tpl')) {
-            $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/page/owner/info_account.tpl', $data));
-        } else {
-            $this->response->setOutput($this->load->view('default/template/page/owner/info_account.tpl', $data));
-        }
+      
+        $this->response->setOutput($this->load->view('page/owner/info_account.tpl', $data));
+        
     }
     public function update_account(){
     	$this->load->model('page/owner/register');
