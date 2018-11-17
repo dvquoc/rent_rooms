@@ -48,10 +48,13 @@ class ControllerFindList extends Controller {
                 'lat' => (double)$params['lat'],
                 'lng' => (double)$params['lgn']
             ];
+
             $data_search['point'] = [
                 (double)$params['lgn'],
                 (double)$params['lat']
             ];
+
+            /* get special from latitue and lontitue */
             $data['specials'] = $this->model_location_special->get_list($data_search);
             $data['info_seo'] = $this->model_location_special->getOneByLatLgn($data_search['point']);
 
@@ -118,6 +121,7 @@ class ControllerFindList extends Controller {
        
         $sort['acreage'] = isset($this->session->data['sort_area'])?$this->session->data['sort_area']:1;
         $sort['price'] = isset($this->session->data['sort_price'])?$this->session->data['sort_area']:1;
+       
         $rooms = $this->model_find_list->get_list($data_search,$sort);
         $data['sort'] = $sort;
 

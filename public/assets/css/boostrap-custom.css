@@ -74,9 +74,9 @@ h6 {
     max-width: 100%;
     height: auto;
 }
+
 /* --------------------- Breadcrums --------- */
 .breadcrumb {
-    border-bottom: 1px solid #ececec;
     list-style-type: none;
     background-color: #ffffff;
     margin: 0px 0 20px 0px;
@@ -117,8 +117,11 @@ h6 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
+    border-radius: 3px;
 }
-
+.dropup.open{
+    position: relative;
+}
 .dropdown-menu.pull-right {
     right: 0;
     left: auto;
@@ -844,8 +847,9 @@ input, button, select, textarea {
 }
 .btn-yellow {
     color: #ffffff;
-    background-color: #FF9800;
-    border:2px solid #FF9800;
+    background-color: #f47f28;
+    border: 2px solid #f47f28;
+}
 }
 .btn-danger {
     color: #ffffff;

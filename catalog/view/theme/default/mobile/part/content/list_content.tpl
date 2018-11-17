@@ -29,11 +29,10 @@
     </ul>
 </div>
 <div class="col-md-3 list-img">
-    <?php  $img = json_decode($item["images"],true); ?>
     <img itemprop="image" alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4"
          src="http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif"
          onerror="this.src='http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif"
-         data-src="<?php echo $img[0]['link'];?>" class="lazy img-responsive">
+         data-src="<?php echo $item[link_img];?>" class="lazy img-responsive">
 </div>
 <div class="col-md-9 list-info pull-right">
     <h3 itemprop="name" class="title"><b><?php echo $item['name'];?> <?php echo $item['name'];?></b></h3>

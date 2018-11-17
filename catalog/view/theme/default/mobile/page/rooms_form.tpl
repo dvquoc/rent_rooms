@@ -12,9 +12,7 @@
 
 <div id="content">
   <div class="page-header">
-     
     <div class="container-fluid">
-      
       <div class="pull-right">
         <button id="save" type="button" form="form-information" class="btn btn-primary"><i class="fa fa-save"></i> Lưu</button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> Hủy</a></div>
@@ -28,17 +26,17 @@
     </div>
     <?php } ?> 
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
-        <div style="position: absolute;top: 50px;right: 160px;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
-        <div class="error-capcha" style="display: none">
-            <p style="color: red">vui lòng check capcha </p>
-        </div>
+        <?php if(!isset($room_id)){?>
+          <div style="position: absolute;top: 50px;right: 160px;" class="g-recaptcha" data-sitekey="6LfgN2EUAAAAABaWW9V_kzQLRliZnWxg5hp1H__j"></div>
+          <div class="error-capcha" style="display: none">
+              <p style="color: red">vui lòng check capcha </p>
+          </div>
+        <?php }?>
         <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><i class="fa fa-inbox"></i> <?php echo $text_form; ?></h3>
-                   
-
               </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -48,8 +46,18 @@
                       <div class="tab-pane active main-infor" id="tab-general">
                           <div class="row">
                               <div class="col-md-5">
-                                  <div class="text-center title-info"><h3>Hình ảnh</h3></div>
+                                  <div class="text-center title-info"><h3>Hình ảnh</h3>
+                                  </div>
                                   <div class="form-group">
+                                      <?php foreach($room_images as $key=>$item) { ?>
+                                          <div id="div-img">
+                                              <div class="img">
+                                                  <img src="<?php echo $item['thumb'];?>" class="img-responsive">
+                                                  <input type="hidden" name="img_out[]" value="<?php echo $item['name']?>">
+                                                  <button type="button" class="uploader__icon-button js-upload-remove-button fa fa-times" data-index="0" onclick="delete_image(this)" ></button>
+                                              </div>
+                                          </div>
+                                          <?php }?>
                                      <div class="uploader__box js-uploader__box l-center-box">
                                           <div class="uploader__contents">
                                               <label class="button button--secondary" for="fileinput">Select Files</label>
@@ -257,9 +265,7 @@
   </div>
 
 <script type="text/javascript">
-  $( document ).ready(function() {
-  });
-   var options = {
+  var options = {
     instructionsCopy: 'Drag and Drop, orssss',
     furtherInstructionsCopy: 'Your can also drop more files, or',
     selectButtonCopy: 'Select Files',
@@ -269,37 +275,38 @@
     badFileTypeMessage: 'Sorry, we\'re unable to accept this type of file.',
     ajaxUrl: '/ajax/upload',
     testMode: false
-};
-$('.js-uploader__box').uploader(options);
+  };
+  $('.js-uploader__box').uploader(options);
     var geocoder = new google.maps.Geocoder();
-    function geocodePosition(pos) {
-        geocoder.geocode({
-            latLng: pos
-        }, function(responses) {
-            if (responses && responses.length > 0) {
-                var address_lengh = responses[0].address_components.length;
-                var location = {};
-                for(var i = address_lengh-1; i>=0; i--){
-                    if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
-                        location.city= responses[0].address_components[i].long_name;
-                    }
-                    if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
-                        location.district= responses[0].address_components[i].long_name;
-                    }
-                }
-            } else {
-                alert("Không tìm thấy địa chỉ");
-                alert("NHập địa chỉ");
-                alert("Nhập Nhập thành phố và Quận/Huyện");
+    
+  function geocodePosition(pos) {
+      geocoder.geocode({
+          latLng: pos
+      }, function(responses) {
+          if (responses && responses.length > 0) {
+            var address_lengh = responses[0].address_components.length;
+            var location = {};
+            for(var i = address_lengh-1; i>=0; i--){
+              if(responses[0].address_components[i].types[0]=='administrative_area_level_1'){
+                  location.city= responses[0].address_components[i].long_name;
+              }
+              if(responses[0].address_components[i].types[0]=='administrative_area_level_2'){
+                  location.district= responses[0].address_components[i].long_name;
+              }
             }
-        });
-    }
-    function updateMarkerPosition(latLng) {
-        document.getElementById('input-lat').value = latLng.lat();
-        document.getElementById('input-lng').value = latLng.lng();
+          } else {
+              alert("Không tìm thấy địa chỉ");
+              alert("NHập địa chỉ");
+              alert("Nhập Nhập thành phố và Quận/Huyện");
+          }
+      });
+  }
+  function updateMarkerPosition(latLng) {
+      document.getElementById('input-lat').value = latLng.lat();
+      document.getElementById('input-lng').value = latLng.lng();
 
-    }
-    var map= new google.maps.Map(document.getElementById('map-address'), {
+  }
+  var map= new google.maps.Map(document.getElementById('map-address'), {
         center: {lat: <?php echo $location['coordinates'][1] ? $location['coordinates'][1] : '10.7654001'; ?>, lng: <?php echo $location['coordinates'][0] ? $location['coordinates'][0] : '106.6813622'; ?>},
         zoom: 16,
         scaleControl: false,
@@ -437,7 +444,6 @@ $('.js-uploader__box').uploader(options);
       var price = $('input[name=price]').val();
       var acreage = $('input[name=acreage]').val();
 
-   
       if(name.length != 0 && lat.length != 0 && lng.length != 0 && city != 'null' && district != 'null' && price.length!= 0 && acreage.length != 0){
           var slug_name = $('input[name=name]').val();
           var slug_city =  $( "select[name=city_id] option:selected" ).text();
@@ -516,9 +522,15 @@ $('.js-uploader__box').uploader(options);
         };
      }
    })
-    
+  
+  function delete_image(t_this) {
+      var name  = $(t_this).prev().val();
+      $('#div-img').append('<input type="hidden" value="'+name+'" name="img_del[]">');
+      $(t_this).parent().remove();
+
+  }
    
-  </script>
+</script>
 </div>
 <style type="text/css">
   .img-thumbnail{width: 100%;}

@@ -10,8 +10,7 @@ class ModelFindList extends Model {
         parent::__construct($registry);
         $this->table = $this->db->rooms;
     }
-    public function get_list($data = array(),$sort){
-
+    public function get_list($data = array(),$sort=['price'=>1,'acreage'=>1]){
         $filter = [];
     	$options =[
             'sort' => ['price'=>$sort['price'],'acreage' =>$sort['acreage'] ],
@@ -60,7 +59,6 @@ class ModelFindList extends Model {
                         'spherical'=> true,
                         'query'=>$filter
                     ],
-
                 ],[
                     '$limit' => 10,
                 ],[
@@ -81,6 +79,4 @@ class ModelFindList extends Model {
         $result = $this->table->find(array(),$options)->toArray();
         return $result;
     }
-
-  
 }

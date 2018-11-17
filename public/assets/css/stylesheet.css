@@ -1,5 +1,5 @@
 .page-layout-box{
-    margin-top: 10px;
+    padding-top: 10px;
 }
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -11,6 +11,14 @@
 }
 body>.page-layout-box{
     background-color: #fff;
+}
+.before-background{
+    position: relative;
+}
+.before-background:before{
+    content: "";
+    position: absolute!important;
+    background: url(/public/assets/images/icons/svg-icons.svg) no-repeat transparent;
 }
 .cut-text { 
   text-overflow: ellipsis;
@@ -83,9 +91,7 @@ footer{
     color: #fff;
     font-size: 22px;
 }
-body.common-home .city-location-show, body.common-home .district-location-show{
-    display: inherit;
-}
+
 .pac-container{
     width: 505px!important;
 }

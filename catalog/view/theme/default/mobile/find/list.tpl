@@ -33,49 +33,19 @@
 			<div class="row" id="container-result">
 				<div class="col-md-8 list-result">
                     <h1 itemprop="name" class="tex-left" style="font-size:20px; "><b>Tìm kiếm phòng trọ tốt nhất <?php echo $info_seo['name']; ?></b></h1>
-                    <div class="row grid" id="featured">
-                        <div class="top-title">
-                            <h3 style="margin-bottom: 0">Phòng trọ tốt nhất khu vực này</h3>
-                        </div>
-                        <div class="owl-carousel">
-                            <?php foreach($featured as $key=>$item) { ?>
-                            <div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
-                                <?php
-                                    $slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
-                                    $slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
-                                    $slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
-                                ?>
-                                <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
-                                <button class="context-menu-button icon">test</button>
-                                <ul class="dropdown" style="display: none;">
-                                    <li class="item">Lưu xem sau</li>
-                                    <li class="item">Chia sẽ</li>
-                                </ul>
-                                <div class="img">
-                                    <?php  $img = json_decode($item["images"],true); ?>
-                                    <img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $img[0]['link'];?>" class="img-responsive">
-                                    <div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu / tháng</div>
-                                    <div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
-                                </div>
-                                <div class="read">
-                                    <div class="name cut-text"><?php echo $item['name'];?></div>
-                                    <div class="address cut-text"><?php echo $item['address'];?></div>
-                                </div>
-                                </a>
-                            </div>
-                            <?php }?>
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="sort-search" style="background-color:#eee; border-radius: 1px; padding:7px; border:1px solid #dadada; margin-bottom: 15px">
+                        <div class="sort-search">
                             <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-3">kết quả tìm kiếm</div>
-                                <div class="col-md-9 col-sm-9 col-xs-9 text-right">
-                                    <select name="sort-price" class="item-sort">
-                                        <option>Giá từ thấp tới cao</option>
+                                <div class="col-md-4"><span style="font-size: 15px; line-height: 28px;">Kết quả tìm kiếm</span></div>
+                                <div class="col-md-8 text-right">
+                                    <span><i class="fa fa-sort"></i> Sắp xếp: </span>
+                                    <select id="sort_price" name="sort-price" class="item-sort">
+                                        <option value="0" <?php echo ($sort['price'] == 1)?'selected':'' ?>>Giá tăng dần</option>
+                                        <option value="1" <?php echo ($sort['price'] == -1)?'selected':'' ?>>Giá giảm dần</option>
                                     </select>
-                                    <select name="sort-area" class="item-sort">
-                                        <option>Diện tích từ thấp tới cao</option>
+                                    <select id="sort_area" name="sort-area" class="item-sort">
+                                        <option value="0" <?php echo ($sort['acreage'] == 1)?'selected':'' ?> >Diện tích tăng dần</option>
+                                        <option value="1" <?php echo ($sort['acreage'] == -1)?'selected':'' ?> >Diện tích giảm dần</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,6 +65,38 @@
                             </div>
                         </div>
                     <?php  } ?>
+                    <div class="row grid" id="featured">
+                        <div class="top-title">
+                            <h3 style="margin-bottom: 0">Phòng trọ tốt nhất khu vực này</h3>
+                        </div>
+                        <div class="owl-carousel">
+                            <?php foreach($featured as $key=>$item) { ?>
+                            <div class=" i-column" itemscope="" itemtype="http://schema.org/Product">
+                                <?php
+							$slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
+							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
+							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
+						?>
+                                <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
+                                <button class="context-menu-button icon">test</button>
+                                <ul class="dropdown" style="display: none;">
+                                    <li class="item">Lưu xem sau</li>
+                                    <li class="item">Chia sẽ</li>
+                                </ul>
+                                <div class="img">
+                                    <img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $item['link_img'];?>" class="img-responsive">
+                                    <div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu / tháng</div>
+                                    <div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
+                                </div>
+                                <div class="read">
+                                    <div class="name cut-text"><?php echo $item['name'];?></div>
+                                    <div class="address cut-text"><?php echo $item['address'];?></div>
+                                </div>
+                                </a>
+                            </div>
+                            <?php }?>
+                        </div>
+                    </div>
 				</div>
 				<div class="col-md-4 near" id="col-r">
                     <?php if(!empty($specials)) { ?>
@@ -130,6 +132,40 @@
 </div>
 <script src="/public/assets/js/jquery/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+    $( "#sort_area" ).change(function() {
+        var price = $("select[name=sort-price]").val();
+        var area = $("select[name=sort-area]").val();
+        $.ajax({
+            url:'/sap-xep',
+            type:'POST',
+            data:{
+                area:area,
+                price:price
+            },
+            success:function(e){
+                window.location.href=window.location.href
+            }
+
+        })
+        
+    });
+     $( "#sort_price" ).change(function() {
+        var price = $("select[name=sort-price]").val();
+        var area = $("select[name=sort-area]").val();
+        $.ajax({
+            url:'/sap-xep',
+            type:'POST',
+            data:{
+                price:price,
+                area:area,
+            },
+            success:function(e){
+                window.location.href=window.location.href
+            }
+
+        })
+        
+    });
 	$(document).ready(function(){
 		$('.owl-carousel').owlCarousel({
 		    stagePadding: 50,

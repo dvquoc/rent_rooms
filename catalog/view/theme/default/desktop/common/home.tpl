@@ -1,24 +1,23 @@
 <?php echo $header;?>
 <div class="text-center">
-        <div class="inner-left" style="padding: 40px 0">
-            <div id="logo" class="text-center">
-                <h1>Piapy</h1>
-                <span>conphong.com</span>
-            </div>
-            <div class="location-home">
-                <div style="display: inline-block; cursor: pointer" data-toggle="modal" data-target="#get-location-user">
-                    <i class="fa fa-street-view"></i>
-                    <b class="city-location-show">Hồ Chí Minh </b> /
-                    <span class="district-location-show">Thủ Đức</span>
-                </div>
+        <div class="inner">
+            <div id="logo" class="text-left">
+                <h1><span style="color: #00BA51">Conphong.</span><span style="color: #FF9800">com</span></h1>
+                <i>Gõ là có, tìm được ngay</i>
             </div>
             <div id="search-home">
-            <ul class="row">
-                <li class="col-md-7" style="padding: 1px">
-                    <i class="fa fa-map-marker"></i>
+            <ul class="clearfix">
+                <li class="location-home" data-toggle="modal" data-target="#get-location-user">
+                    <b class="city-location-show">Hồ Chí Minh </b>
+                    <span class="district-location-show">Thủ Đức</span>
+                    <svg class="down-location-user" aria-hidden="true" data-prefix="fal" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+                        <path fill="currentColor" d="M119.5 326.9L3.5 209.1c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0L128 287.3l100.4-102.2c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L136.5 327c-4.7 4.6-12.3 4.6-17-.1z"></path>
+                    </svg>
+                </li>
+                <li class="keyword before-background">
                     <input id="search-map-input" type="text" name="search-map-input" class="item-search form-control" placeholder="Nhập trường học, khu công nghiệp, công ty...">
                 </li>
-                <li style="padding: 1px" id="li-price-input" class="dropup col-md-2">
+                <li class="price dropup">
                     <input id="price-input" type="text" class="form-control" placeholder="Giá" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <ul class="dropdown-menu list-val-search" data-to="price-input"  aria-labelledby="dropdownMenu2">
                         <li><a data-item-val ="0-1" href="javascript:;">< 1 triệu</a></li>
@@ -33,7 +32,7 @@
                         <li><a data-price-val ="5-20" href="javascript:;"> > 5 triệu</a></li>
                     </ul>
                 </li>
-                <li style="padding: 1px" id="li-area-input" class="dropup col-md-2">
+                <li class="area dropup">
                     <input id="area-input" type="text" class="form-control" placeholder="Diện tích" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <ul class="dropdown-menu list-val-search" data-to="area-input" aria-labelledby="dropdownMenu2">
                         <li><a data-item-val ="0-10" href="javascript:;">< 10 m2</a></li>
@@ -46,14 +45,14 @@
                         <li><a data-item-val ="1" href="javascript:;"> Nhà nguyên căn</a></li>
                     </ul>
                 </li>
-                <li style="padding: 1px" class="col-md-1">
-                    <button id="btn-s-h" style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>
+                <li class="btn-search">
+                    <button style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>
                 </li>
             </ul>
             <?php if(!empty($specials)){ ?>
             <div id="sugget-special">
                 <div class="inner-sugget">
-                    <ul>
+                    <ul class="clearfix">
                         <?php foreach($specials as $special){ ?>
                         <li>
                             <a href="/tim-kiem/phong-tro-gan-slug-slug/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena">

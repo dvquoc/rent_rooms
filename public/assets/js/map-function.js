@@ -221,6 +221,7 @@ var mapRooms = function ($el, options) {
         center: [10.7522818, 106.4810371],
         zoom: 14,
         scaleControl: false,
+        zoomControl: false,
         fullscreenControl: false,
         mapTypeControl: false,
         streetViewControl: false,
@@ -433,7 +434,8 @@ $.extend(mapRooms.prototype, {
                 tooltip: 'Xem sau và so sánh',
                 class: 'glyphicon glyphicon-heart',
                 id: 'save-map',
-                position: google.maps.ControlPosition.LEFT_TOP,
+                text: 'Xe và so sánh',
+                position: google.maps.ControlPosition.RIGHT_TOP,
                 events: {
                     click: function (event) {
                         $("#addRoom").modal('show');
@@ -453,7 +455,8 @@ $.extend(mapRooms.prototype, {
                 tooltip: 'Vẽ tùy chỉnh',
                 class: 'draw-listing glyphicon glyphicon-pencil',
                 id: 'draw-listing',
-                position: google.maps.ControlPosition.LEFT_TOP,
+                position: google.maps.ControlPosition.RIGHT_TOP,
+                text:'Vẽ',
                 events: {
                     click: function (event) {
                         if (!$(this).hasClass('active')) {
@@ -518,7 +521,8 @@ $.extend(mapRooms.prototype, {
                 tooltip: 'Vẽ đa giác để chọn phòng',
                 class: 'polygon-draw glyphicon glyphicon-pushpin',
                 id: 'polygon-draw',
-                position: google.maps.ControlPosition.LEFT_TOP,
+                text:'Vẽ đa giác',
+                position: google.maps.ControlPosition.RIGHT_TOP,
                 events: {
                     click: function (event) {
                         if (!$(this).hasClass('active')) {
@@ -581,7 +585,8 @@ $.extend(mapRooms.prototype, {
                 tooltip: 'Lấy vị trí của tôi',
                 class: 'my-location glyphicon glyphicon-record',
                 id: 'my-location',
-                position: google.maps.ControlPosition.LEFT_TOP,
+                text:'Vị trí của tôi',
+                position: google.maps.ControlPosition.RIGHT_TOP,
                 events: {
                     click: function (event) {
                         alert("Lấy vị trí hiện tại");
@@ -596,7 +601,8 @@ $.extend(mapRooms.prototype, {
                 tooltip: 'Hướng dẫn sử dụng',
                 class: 'guid-map glyphicon glyphicon-book',
                 id: 'guid-map',
-                position: google.maps.ControlPosition.LEFT_TOP,
+                position: google.maps.ControlPosition.RIGHT_TOP,
+                text:'Hướng dẫn',
                 events: {
                     click: function (event) {
                         $("#guidMap").modal('show');
@@ -970,6 +976,7 @@ $.extend(mapRooms.prototype, {
             control.style.marginTop = '10px';
             control.style.marginLeft = '10px';
             control.index = 1;
+            options.text ? control.innerHTML = options.text : false;
             options.gmap.controls[options.position].push(control);
             $.each(options, function (name, val) {
                 if (name == 'events')

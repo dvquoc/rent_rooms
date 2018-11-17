@@ -30,10 +30,7 @@ var markers_data = [];
 var bounds = new google.maps.LatLngBounds();
 
 var optionsMap = {
-    zoomControl: true,
-    zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_TOP
-    },
+    zoomControl: false,
     scaleControl: false,
     fullscreenControl: false,
     mapTypeControl: false,
