@@ -217,6 +217,7 @@ var mapRooms = function ($el, options) {
     var seft = this;
     this.bounds = new google.maps.LatLngBounds();
     this.infowindow = new google.maps.InfoWindow();
+    /* Setting default */
     var setting = {
         center: [10.7522818, 106.4810371],
         zoom: 14,
@@ -267,19 +268,17 @@ $.extend(mapRooms.prototype, {
     eventMap:function () {
         /* Zoom change */
         _m.addListener('zoom_changed', function () {
-            // if (_m.getZoom() <= 13 && !$('.pin-overlay').parent('div').hasClass("ping-small"))
-            //     $('.pin-overlay').parent('div').addClass('ping-small');
-            // if (_m.getZoom() >= 13 && $('.pin-overlay').parent('div').hasClass("ping-small"))
-            //     $('.pin-overlay').parent('div').removeClass('ping-small');
             if(typeof canvas != "undefined" && _canvas!=null)
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             $("#toolip-detail-on-pin").fadeOut('fast');
             $("#toolip-detail-on-pin").find('.arrow').fadeOut('fast');
         });
+
         /* mouseover Event */
         _m.addListener('mouseover', function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+
         /* dragstart Event */
         var firstMouse = [];
         _m.addListener('dragstart', function () {
@@ -290,23 +289,31 @@ $.extend(mapRooms.prototype, {
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
         });
         /* Idle Event */
-        var count1 = 0;
+        var firstLoadMap = true;
         this.map.addListener( 'idle', function() {
+                /**
+                 * KHai báo khung để load pin trên bản đồ
+                 * Width left add $("#content-list").outerWidth() to prevent load down this element.
+                 */
                 var border = [];
                 var top = _mr.element.offset().top - $("#menu-main").outerHeight(),
-                    left = _mr.element.offset().left,
-                    right = _mr.element.outerWidth() - ($("#content-list").outerWidth()+10),
+                    left = _mr.element.offset().left+$("#content-list").outerWidth()+10,
+                    right = _mr.element.outerWidth(),
                     botton = _mr.element.outerHeight();
                 border.push(_mr.fromPixelToLatLng({x: left, y: top}));
                 border.push(_mr.fromPixelToLatLng({x: right,y: top}));
                 border.push(_mr.fromPixelToLatLng({x: right,y: botton}));
                 border.push(_mr.fromPixelToLatLng({x: left, y: botton}));
-                if (count1 == 0 && _canvas == null) {
+
+                if (firstLoadMap && _canvas == null) {
+                    /* Draw container canvas first time load */
                     _mr.drawCanvas();
+                    firstLoadMap = false;
                 } else {
+                    /* Had container is transform when map change */
                     $("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + -(_mr.element.width() / 2) + 'px,' + -(_mr.element.height() / 2) + 'px, 0px'});
+
                 }
-                count1++;
                 firstMouse = [];
                 border.push(border[0]);
                 _mr.loadPinMap(border);
@@ -314,14 +321,18 @@ $.extend(mapRooms.prototype, {
 
         /* Center changed Event */
         _m.addListener('center_changed', function () {
+            /**
+             * When change center map, we reset canvas
+             * NOTE: Position of canvas center map. We must set to left:0, Top:0 by transform.
+             */
             $("#pin-container").remove();
             if (typeof canvas != "undefined" && canvas != null) {
                 var moveX = firstMouse.length ? -(_mr.element.width() / 2) + (firstMouse[0] - $("#root").offset().left) : -(_mr.element.width() / 2);
                 var moveY = firstMouse.length ? -(_mr.element.height() / 2) + (firstMouse[1] - $("#root").offset().top) : -(_mr.element.height() / 2);
                 $("#fastmarker-overlay-canvas").css({'transform': 'translate3d(' + (moveX) + 'px,' + (moveY) + 'px, 0px'});
+                /* Clear canvas when change reload at event idle of map */
                 _canvas.clearRect(0, 0, _mr.element.width(), _mr.element.height());
             }
-
         });
 
     },
@@ -687,10 +698,10 @@ $.extend(mapRooms.prototype, {
                 });
                 var html = "";
                 html+='<div class="item-listing" style="overflow: hidden; ">';
-                html+='<div class="inner-item" style="padding: 12px 12px 7px; border-bottom: 1px solid #eee;" id="item_'+item._id.$oid+'">';
+                html+='<div class="inner-item" style="padding: 12px 12px 15px 12px; border-bottom: 1px solid #eee;" id="item_'+item._id.$oid+'">';
                 var image = item.images;
                 html+='<div class="img-item" style="float: left; ">';
-                html+='<img src="sfsdss" width="100px" height="70px" onerror="this.src=\'http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg\'">';
+                html+='<img src="/public/assets/images/no-img.svg" width="100px" height="70px" onerror="this.src=\'/public/assets/images/no-img.svg\'">';
                 html+='</div>';
                 html+='<div class="info" style="margin-left: 115px;">';
                 html+='<h3 class="title" style="margin-bottom: 3px;"><b>'+item.name+'</b></h3>';

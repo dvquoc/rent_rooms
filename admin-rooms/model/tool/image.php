@@ -1,9 +1,18 @@
 <?php
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height,$type='') {
+	public function resize($filename, $width = false, $height= false, $type='') {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			return;
 		}
+
+		if(!$width || !$height){
+			if ($this->request->server['HTTPS']) {
+				return $this->config->get('config_ssl') . 'image/' . $filename;
+			} else {
+				return $this->config->get('config_url') . 'image/' . $filename;
+			}
+		}
+
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
 		$old_image = $filename;

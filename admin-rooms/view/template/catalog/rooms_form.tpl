@@ -35,15 +35,17 @@
                               <div class="col-md-5">
                                   <div class="text-center title-info"><h3>Hình ảnh</h3></div>
                                   <div class="form-group">
-                                     <?php foreach($room_images as $key=>$item) { ?>
-                                      <div id="div-img">
-                                          <div class="img">
-                                              <img src="<?php echo $item['thumb'];?>" class="img-responsive">
-                                              <input type="hidden" name="img_out[]" value="<?php echo $item['name']?>">
-                                              <button type="button" class="uploader__icon-button js-upload-remove-button fa fa-times" data-index="0" onclick="delete_image(this)" ></button>
+                                      <div class="clearfix">
+                                         <?php foreach($room_images as $key=>$item) { ?>
+                                          <div id="div-img" class="pull-left" style="margin-bottom: 20px;">
+                                              <div class="img" style="position: relative">
+                                                  <img src="<?php echo $item['thumb'];?>" class="img-responsive">
+                                                  <input type="hidden" name="img_out[]" value="<?php echo $item['name']?>">
+                                                  <button style="width:15px; height: 15px; position: absolute; right: 5px; top: 5px;" type="button" class="uploader__icon-button js-upload-remove-button fa fa-times" data-index="0" onclick="delete_image(this)" ></button>
+                                              </div>
                                           </div>
+                                          <?php } ?>
                                       </div>
-                                      <?php } ?>
                                      <div class="uploader__box js-uploader__box l-center-box">
                                           <div class="uploader__contents">
                                               <label class="button button--secondary" for="fileinput">Select Files</label>
@@ -218,7 +220,7 @@
                                             <div class="form-group">
                                                   <label class="col-sm-12">Mã tin đăng</label>
                                                   <div class="col-md-12">
-                                                      <input type="text" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
+                                                      <input type="text" readonly="readonly" class="form-control" name="room_id" value="<?php echo $room_id; ?>" >
                                                   </div>
                                             </div>
                                              <div class="form-group">
@@ -256,7 +258,7 @@
                                           <div class="form-group">
                                               <label class="col-sm-12">Mã chủ phòng</label>
                                               <div class="col-md-12">
-                                                  <input type="text" class="form-control" name="master_id" value="<?php echo $master_id; ?>" >
+                                                  <input type="text" readonly="readonly" class="form-control" name="master_id" value="<?php echo $master_id; ?>" >
                                               </div>
                                           </div>
                                       </div>
@@ -532,6 +534,7 @@
           for (var i = 0; i < state.fileBatch.length; i++) {
             fd.append('files[]', state.fileBatch[i].file, state.fileBatch[i].fileName);
           }
+
           $.ajax({
             url:'<?php echo $action ?>',
             type:'POST',

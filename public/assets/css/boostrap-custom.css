@@ -134,7 +134,7 @@ h6 {
 }
 .dropdown-menu > li > a, .dropdown-menu > li > span {
     display: block;
-    padding: 5px 15px!important;
+    padding: 5px 15px;
     clear: both;
     font-weight: normal;
     line-height: 1.42857143;

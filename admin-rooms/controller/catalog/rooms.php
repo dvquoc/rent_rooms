@@ -246,13 +246,13 @@ class ControllerCatalogRooms extends Controller
 
 
         $this->load->model('tool/image');
-        $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+        $data['placeholder'] = $this->model_tool_image->resize('/public/assets/images/no-img.svg');
 
         // Images list thumb
         $data['room_images'] = array();
 
         foreach ($room_info['images'] as $room_image) {
-             $image = 'no_image.png';
+             $image = '/public/assets/images/no-img.svg';
              if (is_file(DIR_IMAGE . $room_image))
                  $image = $room_image;
              $data['room_images'][] = array(

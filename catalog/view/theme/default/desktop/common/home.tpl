@@ -46,7 +46,7 @@
                     </ul>
                 </li>
                 <li class="btn-search">
-                    <button style="background-color: #f47f28; border-color: #f47f28"><i class="fa fa-search"></i> Tìm kiếm</button>
+                    <button class="before-background">Tìm kiếm</button>
                 </li>
             </ul>
             <?php if(!empty($specials)){ ?>

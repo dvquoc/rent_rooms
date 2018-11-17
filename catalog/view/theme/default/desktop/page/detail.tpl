@@ -13,7 +13,13 @@
 					</ul>
                     <div class="tab-content" style="width: 100%; height: 100%; background-color: #eee">
                         <div id="img-detail" class="tab-pane fade in active" style="width: 100%; height: 100%;">
-                            <img src="<?php echo $detail['images'][0]['link']; ?>" class="img-responsive">
+                            <?php foreach($detail['images'] as $key => $image){ ?>
+                                <?php if($key==0) { ?>
+                                    <img src="<?php echo $image; ?>" class="img-responsive">
+                                <?php } else { ?>
+                                    <img data-src="<?php echo $image; ?>" class="img-responsive">
+                                <?php } ?>
+                            <?php } ?>
                         </div>
                         <div id="map-detail" class="tab-pane fade" style="width: 100%; height: 100%">
                         </div>

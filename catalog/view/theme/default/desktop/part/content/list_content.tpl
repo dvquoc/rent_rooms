@@ -30,15 +30,15 @@
 </div>
 <div class="col-md-3 list-img">
     <img itemprop="image" alt="PHÒNG TRỌ CHO NAM ĐẦY ĐỦ TIỆN NGHI 1T3NGƯỜI QUẬN 4"
-         src="http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif"
-         onerror="this.src='http://www.justitiarul.ro/wp-content/themes/ar2-d57c18d/images/empty_thumbnail.gif"
+         src="/public/assets/images/no-img.svg"
+         onerror="this.src='/public/assets/images/no-img.svg"
          data-src="<?php echo $item[link_img];?>" class="lazy img-responsive">
 </div>
 <div class="col-md-9 list-info pull-right">
     <h3 itemprop="name" class="title"><b><?php echo $item['name'];?> <?php echo $item['name'];?></b></h3>
     <div class="f-i">
         <div class="i d">
-            Ngày đăng: <span><?php echo $time;?></span>
+            Ngày đăng: <span><?php echo $time;?> 20/05/2018</span>
         </div>
         <?php if(isset($has_point)) { ?>
         <div class="i d">
@@ -49,8 +49,7 @@
         <div class="i d">
             <span class="direction-point" data-lat="<?php echo $item['location']['coordinates'][1] ?>"
                   data-lgn="<?php echo $item['location']['coordinates'][0] ?>"
-                  style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;"><i
-                        class="fa fa-level-down"></i> chỉ đường</span>
+                  style="background-color: #00ba51;color: #fff;padding: 2px 4px;border-radius: 2px;"><i class="fa fa-level-down"></i> chỉ đường</span>
         </div>
         <?php } ?>
     </div>
@@ -59,8 +58,9 @@
     <div class="mf" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
         <div class="i price" itemprop="price" content="<?php echo $item['price']/1000000;?>">
             <i class="fa fa-shopping-cart hidden" aria-hidden="true"></i><b><?php echo $item['price']/1000000;?></b>
-            Triệu/tháng
+            triệu
         </div>
+        <div class="i are"> |</div>
         <div class="i are">
             <i class="fa fa-area-chart hidden" aria-hidden="true"> </i>
             <b><?php echo $item['acreage'];?></b> m2

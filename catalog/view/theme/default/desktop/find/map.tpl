@@ -3,7 +3,7 @@
 <!--declare-->
 <div class="contain-map contain-fluid-full" style="position: relative">
     <div id="test1" class="gmap3" style="width: 100%; height:950px; position: relative"></div>
-    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
+    <div id="show-detail" class="col-md-3" style="display:none; z-index: 2; border-radius: 3px; position: absolute; left:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px; box-shadow: rgba(0, 0, 0, 0.23) 0px 0px 6px 1px">
         <div class="inner" style="position: relative">
             <div id="close-detail">
                 <button class="widget-pane-toggle-button noprint"><i class="glyphicon glyphicon-chevron-right"></i></button>
@@ -63,15 +63,15 @@
             </div>
         </div>
     </div>
-    <div id="show-list" class="col-md-3 noselect" style=" border-radius: 3px; position: absolute; right:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
-        <div style="position: absolute; left: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
-            <a href="/tim-kiem<?php echo $url; ?>" class="btn" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
+    <div id="show-list" class="col-md-3 noselect" style="border-radius: 3px; position: absolute; left:10px; bottom:10px; height: 100%; background-color: #fff; padding: 0px;box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+        <div style="position: absolute; right: -167px; top: 0px; z-index: 1; border-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;">
+            <a href="/tim-kiem<?php echo $url; ?>" class="btn show-list before-background" style="background-color: #fff" data-toggle="tooltip" data-placement="bottom" title="Chúng tối hỗ trợ bạn xem ở chế độ danh sách">
                 <i class="glyphicon glyphicon-list-alt" style="margin-right: 2px;"></i>
                 Xem dạng danh sách
             </a>
         </div>
         <div class="inner" style="overflow-y: scroll; position: relative; overflow: hidden; height: 100%">
-            <div class="results-heading" style="position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
+            <div class="results-heading" style="border-radius:2px 2px 0px 0px; position: relative;background-color:#00BA51; color: #fff; font-size: 16px; padding: 15px 10px;">
                 <span class="results-heading-title">Kết quả tìm kiếm</span>
             </div>
             <div id="content-list">
@@ -103,9 +103,9 @@
                     </div>
                 </div>
                 <?php } ?>
-                <div class="no-result text-center" style="display: none; padding: 20px;">
+                <div class="no-result text-center" style="display: none; padding: 140px 10px;">
                     <h3>Rất tiếc ! Chúng tôi đã không tìm thấy phòng trọ nào</h3>
-                    <img alt="No homes found" src="//static.trulia-cdn.com/images/search-web/no_results.svg">
+                    <img alt="No homes found" src="/public/assets/images/no-img.svg">
                 </div>
             </div>
         </div>
@@ -223,4 +223,6 @@
     }
 </script>
 </div>
+<div class="hidden">
 <?php echo $footer; ?>
+</div>

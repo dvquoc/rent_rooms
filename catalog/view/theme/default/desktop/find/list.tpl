@@ -81,7 +81,7 @@
 							$slugName = urlencode(str_replace(' ','-',trim($item["slug"])));
 							$slugDistrict = urlencode(str_replace(' ','-',trim($item["slug_district"])));
 							$slugCity = urlencode(str_replace(' ','-',trim($item["slug_city"])));
-						?>
+						        ?>
                                 <a href="<?php echo '/phong-tro-'.$slugDistrict.'/'.$slugCity.'/'.$slugName.'-code-'.$item["_id"];?>" class="inner-item">
                                 <button class="context-menu-button icon">test</button>
                                 <ul class="dropdown" style="display: none;">
@@ -89,7 +89,7 @@
                                     <li class="item">Chia sẽ</li>
                                 </ul>
                                 <div class="img">
-                                    <img onerror="this.src='http://cdn.propzy.vn/images/806ecb4587f5350590834aac79d44759_image.jpg'" src="<?php echo $item['link_img'];?>" class="img-responsive">
+                                    <img onerror="this.src='/public/assets/images/no-img.svg'" src="<?php echo $item['link_img'];?>" class="img-responsive">
                                     <div class="i price"><b><?php echo $item['price']/1000000;?></b> Triệu / tháng</div>
                                     <div class="i area"><b><?php echo $item['price']/1000000;?></b> m2</div>
                                 </div>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="tag">
                                 <?php foreach($specials as $special) { ?>
-                                    <a href="/tim-kiem/phong-tro-gan-<?php echo $special['slug']; ?>/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena"><?php echo $special['name'] ?></a>
+                                    <a href="/tim-kiem/phong-tro-gan-<?php echo $special['slug']; ?>/<?php echo $special['location']['coordinates'][1] ?>,<?php echo $special['location']['coordinates'][0] ?>" class="arena before-background"><?php echo $special['name'] ?></a>
                                 <?php } ?>
                         </div>
                         <div class="clearfix" style="margin-bottom: 15px;"></div>
@@ -128,7 +128,6 @@
                         </div>
 					</div>
 					<div class="ad-r">
-						<img style="margin: 10px 0px" src="https://www.mainguyen.vn/img/2017/09/news/l/11231104_1563154727040692_4481018767909529242_o2373.jpg" class="img-responsive">
                         <img style="margin-top: 10px;" src="https://static.vecteezy.com/system/resources/previews/000/179/049/non_2x/half-price-sale-banner-poster-or-flyer-template-design-vector.jpg" class="img-responsive">
 					</div>
 				</div>
@@ -173,7 +172,7 @@
     });
 	$(document).ready(function(){
 		$('.owl-carousel').owlCarousel({
-		    stagePadding: 50,
+		    stagePadding: false,
 		    loop:true,
 		    margin:10,
 		    nav:true,

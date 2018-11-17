@@ -26,45 +26,6 @@ body>.page-layout-box{
   width: 100%; 
   white-space: nowrap;
 }
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: -300px;
-    background-color: #fff;
-    overflow-x: hidden;
-    transition: 0.2s;
-    padding-top: 90px;
-    box-shadow: 2px 0 20px -10px #000;
-}
-#inner-body{
-    transition: 0.2s;
-}
-.sidenav .sidenav-footer{
-    padding: 20px;
-    font-size: 14px;
-    color: #9a9a9a;
-    position: absolute;
-    bottom: 0;
-    line-height: 20px;
-    border-top: 1px solid #eee;
-    background-color: #eee;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 16px;
-    text-decoration: none;
-    font-size: 14px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #00ba51;
-}
 /* Footer */
 footer{
     background-color:#f9f9f9;

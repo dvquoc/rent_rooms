@@ -6,6 +6,7 @@ class ControllerPageDetail extends Controller {
             $this->load->controller('error/not_found');
         }
          $this->load->model('page/detail');
+         $this->load->model('tool/image');
          $this->load->model('page/owner/register');
 
         $filter_relative = array( 
@@ -19,9 +20,14 @@ class ControllerPageDetail extends Controller {
             $master['phone'] = 034534543535;
         if($detail){
             $data['detail'] = [];
+            // Set image for detail, Include full and thumb
+            $images = $detail['images'];
+            foreach ($images as $key=>$image){
+                $images[$key]= $this->model_tool_image->resize($image);
+            }
             $data['detail'] =[
                 'name'     =>$detail['name'],
-                'images'   =>json_decode($detail['images'],true),
+                'images'   =>$images,
                 'address'  =>$detail['address'],
                 'location' =>$detail['location']['coordinates'],
                 'ads'      =>$detail['ads'],

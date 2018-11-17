@@ -229,7 +229,8 @@ margin: 5px 0;
     background-color: #ffffff;
     color: #000;
     position: absolute;
-    top:12px; left: 60px;
+    top:50%;
+    left: 60%;
     padding:5px 10px;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
@@ -266,4 +267,14 @@ margin: 5px 0;
     background-color: #fff;
     padding: 6px 6px;
     border-radius: 3px;
+}
+.show-list{
+    padding: 8px 8px 8px 30px;
+}
+.show-list:before{
+    width: 30px;
+    height: 30px;
+    background-position: -528px -818px;
+    left: 5px;
+    top: 8px;
 }

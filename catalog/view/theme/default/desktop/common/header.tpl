@@ -16,7 +16,7 @@
     <meta name="description" content="<?php echo $meta_description; ?>">
     <meta name="keywords" content="SATELLITE">
 
-    <link rel="shortcut icon" href="https://www.renderitcreative.com/wp-content/uploads/2016/05/renderitcreative_new-favicon-05.2016-1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/public/assets/images/icons/pin.png" type="image/x-icon">
     <link rel="canonical" href="https://thachpham.com/wordpress/wordpress-development/wordpress-loop-cac-tham-quan-trong.html">
     <link rel="publisher" href="https://plus.google.com/b/113591657045991604117/+Thachpham">
     <?php foreach ($links as $link) { ?>
@@ -31,21 +31,16 @@
     <meta property="og:image" content="<?php echo 'http://yhay.info/aliweb/image/catalog/logo.png'; ?>">
 </head>
 <body class="<?php echo $classPage ?>">
-
     <link href="/public/assets/css/layout.css" rel="stylesheet" media="screen"/>
     <link href="/public/assets/css/boostrap-custom.css" rel="stylesheet" media="screen"/>
-
+    <link href="/public/assets/css/stylesheet.css" rel="stylesheet">
     <link href="/public/assets/css/menu-bar.css" rel="stylesheet" media="screen"/>
-    <link href="/public/assets/css/stylesheet.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="/public/assets/js/font-awesome/css/font-awesome.min.css">
     <link href="/public/assets/js/jquery/owl-carousel/owl.carousel.min.css" rel="stylesheet">
     <?php foreach ($styles as $style) { ?>
     <link rel="<?php echo $style['rel']; ?>" type="text/css" href="<?php echo $style['href']; ?>" media="<?php echo $style['media']; ?>" />
     <?php } ?>
-
     <script src="/public/assets/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="/public/assets/js/bootstrap/js/bootstrap.min.js" defer type="text/javascript"></script>
-    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script src="/public/assets/js/common.js" type="text/javascript"></script>
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing,places&region=vn&language=vi&key=AIzaSyBAqWDJPR4hUAraN1rwQIEzP0lAtfu8OmI" type="text/javascript"></script>
     <?php foreach ($scripts as $script) { ?>
@@ -54,9 +49,17 @@
         <nav id="menu-main" class="navbar" style="padding: 5px 0px;">
             <div class="clearfix <?php echo $classPage !='find-map' ? 'container' : 'container-fluid' ?>">
                 <div class="navbar-header pull-left">
-                    <button type="button" class="navbar-toggle pull-left" id="menu-toggle" onclick="openNav()" data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
-
+                    <button type="button" class="navbar-toggle pull-left" id="menu-toggle" data-toggle="dropdown"  data-toggle="tooltip" data-placement="right" title="Nhấp chuột để xem các dịc vụ khác">
                     </button>
+                    <div id="mySidenav" class="dropdown-menu sidenav"  aria-labelledby="dropdownMenu2">
+                        <a href="#">Thuê nhà nguyên căn</a>
+                        <a href="#">Vận chuyển</a>
+                        <a href="#">Dụng cụ phòng trọ</a>
+                        <a href="#">Giới thiệu</a>
+                        <div class="sidenav-footer">
+                            Copyright @ conphong.com, Data from google
+                        </div>
+                    </div>
                     <a class="pull-left logo" href="/">
                         <span class="logo-site">Conphong.<span style="color: #FF9800">com</span></span>
                         <span class="slogan">Gõ là có, tìm được ngay</span>
@@ -102,7 +105,7 @@
                         </ul>
                     </li>
                     <li>
-                        <button id="btn-s-h" class="form-control btn btn-yellow"><span class="fa fa-search" aria-hidden="true"></span> Tìm kiếm</button>
+                        <button id="btn-s-h" class="form-control btn btn-yellow">Tìm kiếm</button>
                     </li>
                 </ul>
                 <ul class="menu-right owner-header pull-right">
@@ -158,27 +161,4 @@
                 </ul>
             </div>
         </nav>
-    <div id="mySidenav" class="sidenav" onmouseleave="closeNav()">
-        <a href="#">Thuê nhà nguyên căn</a>
-        <a href="#">Vận chuyển</a>
-        <a href="#">Dụng cụ phòng trọ</a>
-        <a href="#">Giới thiệu</a>
-        <div class="sidenav-footer">
-            Copyright @ conphong.com, Data from google
-        </div>
-    </div>
-    <div id="inner-body" style=" position: relative">
-        <script>
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "250px";
-                document.getElementById("mySidenav").style.left = "0";
-                document.getElementById("inner-body").style.marginLeft = "250px";
-            }
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-                document.getElementById("mySidenav").style.left = "-250px";
-                document.getElementById("inner-body").style.marginLeft = "0";
-            }
-        </script>
-    </div>
 

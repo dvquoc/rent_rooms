@@ -212,18 +212,26 @@ margin:3px 0;
 .tag .arena{
     padding: 7px 5px 7px 30px;
     margin: 4px 0px;
-    border: 1px solid #03A9F4;
+    border: 1px solid #eee;
     border-radius: 2px;
     display: inherit;
     color: #000;
-    background: url(https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png) no-repeat #9fdaf5 5px 6px;
-    background-size: 20px;
+}
+.tag .arena:before{
+    width: 30px;
+    height: 30px;
+    left: 0px;
+    top: 0;
+    background-position: -369px -812px;
 }
 .tag .arena:hover{
     border: 1px solid #03A9F4;
-    background: url("https://static.chotot.com.vn/storage/NHA_CDN_PRODUCTION/9fcda47ac73ec5deb8298a9a649681d1.png") no-repeat #fafafa 5px 6px;
+    background: url(/public/assets/images/icons/pin.png) no-repeat #fafafa 5px 6px;
     background-size: 20px;
 }
+
+
+
 .tag-place ul{
     list-style-type: none;
     margin: 0px;
