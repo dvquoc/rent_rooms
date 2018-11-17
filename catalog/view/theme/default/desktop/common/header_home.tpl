@@ -19,7 +19,6 @@
     <meta property="og:site_name" content="<?php echo $title; ?>">
     <meta property="og:image" content="<?php echo 'http://yhay.info/aliweb/image/catalog/logo.png'; ?>">
 </head>
-
 <body class="<?php echo $classPage ?>">
     <link href="/public/assets/css/stylesheet.css" rel="stylesheet" type="text/css">
     <link href="/public/assets/css/load-font.css" rel="stylesheet" type="text/css">
