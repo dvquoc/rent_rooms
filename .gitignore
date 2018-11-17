@@ -9,4 +9,7 @@
 /convert-mysql-to-mongo.php
 /environment.php
 /config.php
+/composer.json
+/composer.lock
+/.gitignore
 
