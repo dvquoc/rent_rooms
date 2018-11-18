@@ -139,7 +139,7 @@ $registry->set('request', $request);
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$response->setCompression(9);
+$response->setCompression(0);
 $registry->set('response', $response);
 
 // Session

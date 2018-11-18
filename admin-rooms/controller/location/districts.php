@@ -47,7 +47,6 @@ class ControllerLocationdistricts extends Controller
             } else {
                 if(isset(json_decode($response)[0]->polygonpoints)){
                     $polygons = json_decode($response);
-                    var_dump($polygons); die();
                     foreach ($polygons as $polygon){
                         if($polygon->type =='administrative') {
                             $data = array();

@@ -13,7 +13,6 @@ class ControllerCommonHeaderHome extends Controller {
         $data['classPage'] = '';
 		if(isset($this->request->get['route']))
             $data['classPage'] = str_replace('/','-', $this->request->get['route']);
-
         return $this->load->view('common/header_home', $data);
 	}
     public function get_client_ip() {
