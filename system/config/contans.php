@@ -6,6 +6,7 @@
  */
 $configs =array(
     'config_limit_admin'=>20,
-    'config_template' =>'default'
+    'config_template' =>'default',
+    'config_maintenance'=>true,
 );
 

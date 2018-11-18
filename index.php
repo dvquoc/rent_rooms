@@ -156,7 +156,7 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 $controller = new Front($registry);
 
 // Maintenance Mode
-//$controller->addPreAction(new Action('common/maintenance'));
+$controller->addPreAction(new Action('common/maintenance'));
 
 // router
 $routes = new Routes();
